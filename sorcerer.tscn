@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bgd2bh1dj4h4s"]
+
+[ext_resource type="Script" uid="uid://b7cwfl6277f1o" path="res://sorcerer.gd" id="1_4rrgj"]
+[ext_resource type="Texture2D" uid="uid://b54t4e0oqpihu" path="res://assets/sprites/Sorcier_V1.png" id="1_n72ae"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4rrgj"]
+size = Vector2(61, 111)
+
+[node name="Sorcerer" type="CharacterBody2D" unique_id=1462313974]
+script = ExtResource("1_4rrgj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1115763323]
+texture = ExtResource("1_n72ae")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1715000558]
+position = Vector2(14, 8)
+shape = SubResource("RectangleShape2D_4rrgj")
+metadata/_edit_group_ = true

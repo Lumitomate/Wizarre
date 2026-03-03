@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bgd2bh1dj4h4s" path="res://sorcerer.tscn" id="1_u52ul"]
 [ext_resource type="Texture2D" uid="uid://8wtt5eu5vor2" path="res://assets/sprites/Sol1_V1_70.png" id="2_vonw3"]
+[ext_resource type="PackedScene" uid="uid://bxwef34mmsuye" path="res://gemme.tscn" id="3_oi3di"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oi3di"]
 texture = ExtResource("2_vonw3")
@@ -32,3 +33,9 @@ tile_set = SubResource("TileSet_0b4ue")
 rendering_quadrant_size = 64
 collision_visibility_mode = 1
 physics_quadrant_size = 64
+
+[node name="Gemme" parent="." unique_id=223549949 instance=ExtResource("3_oi3di")]
+position = Vector2(114, 585)
+
+[node name="Gemme2" parent="." unique_id=1771336560 instance=ExtResource("3_oi3di")]
+position = Vector2(856, 602)

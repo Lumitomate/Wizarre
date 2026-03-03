@@ -1,16 +1,78 @@
 [gd_scene format=3 uid="uid://bgd2bh1dj4h4s"]
 
 [ext_resource type="Script" uid="uid://b7cwfl6277f1o" path="res://sorcerer.gd" id="1_4rrgj"]
+[ext_resource type="Texture2D" uid="uid://cbj5nyoc8d1w4" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v1.png" id="2_s6och"]
+[ext_resource type="Texture2D" uid="uid://bog18072uth5h" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v2.png" id="3_5vnj0"]
+[ext_resource type="Texture2D" uid="uid://dabi3nkpg4i8p" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v3.png" id="4_r15jp"]
+[ext_resource type="Texture2D" uid="uid://084upincaxx5" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v4.png" id="5_7rarh"]
+[ext_resource type="Texture2D" uid="uid://b7pov0fefqr68" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v5.png" id="6_6gwab"]
+[ext_resource type="Texture2D" uid="uid://ck2aafy5ranom" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v6.png" id="7_2nyo1"]
+[ext_resource type="Texture2D" uid="uid://duu5qs8kktkvf" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v7.png" id="8_jqa5j"]
+[ext_resource type="Texture2D" uid="uid://24jr0eiiqqsh" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v8.png" id="9_wy0ap"]
+[ext_resource type="Texture2D" uid="uid://byaoqyf2crkfo" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v9.png" id="10_ca6ul"]
+[ext_resource type="Texture2D" uid="uid://dou78c5mebtjp" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v10.png" id="11_o0r7a"]
+[ext_resource type="Texture2D" uid="uid://dnqauoxq4ll30" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v11.png" id="12_kmbe6"]
+[ext_resource type="Texture2D" uid="uid://ke7pgq3ggnsw" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v12.png" id="13_7hbde"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6urby"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_s6och")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5vnj0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_r15jp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7rarh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6gwab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_2nyo1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jqa5j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_wy0ap")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ca6ul")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_o0r7a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_kmbe6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_7hbde")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 24.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4rrgj"]
-size = Vector2(61, 111)
+size = Vector2(39, 68)
 
 [node name="Sorcerer" type="CharacterBody2D" unique_id=1462313974]
 script = ExtResource("1_4rrgj")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=92979516]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=92979516]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_6urby")
+animation = &"walk"
+frame = 11
+frame_progress = 0.20116477
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1715000558]
-position = Vector2(14, 8)
+position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_4rrgj")
 metadata/_edit_group_ = true

@@ -18,6 +18,9 @@ sources/0 = SubResource("TileSetAtlasSource_oi3di")
 
 [node name="Sorcerer" parent="." unique_id=1462313974 instance=ExtResource("1_u52ul")]
 position = Vector2(536, 544)
+speed = null
+jump_impulse = null
+fall_acceleration = null
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1983324273]
 anchor_mode = 0

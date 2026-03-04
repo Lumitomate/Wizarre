@@ -90,18 +90,6 @@ func _physics_process(delta: float) -> void:
 	
 	if not is_on_floor():
 		velocity.y += fall_acceleration * delta
-
-	# Collisions
-	for index in range(get_slide_collision_count()):
-		var collider = get_slide_collision(index).get_collider()
-
-		if collider == null:
-			continue
-		elif collider.is_in_group("gemme_group"):
-			ammunitions[0] += 1
-			ammo_changed.emit(0, ammunitions[0])
-			var gemme: Gemme = collider
-			gemme.delete()
 	
 	# Gesion de la physique
 	move_and_slide()
@@ -139,6 +127,12 @@ func fire_attack(attack_type:AttackType) -> void:
 		can_fire = false
 		for attack in attack_list:
 			self.get_parent().add_child(attack)
+
+
+func add_ammo(ammo_type: int, ammo_amount: int) -> void:
+	ammunitions[ammo_type] += ammo_amount
+	ammo_changed.emit(ammo_type, ammunitions[ammo_type])
+	
 
 
 func hit(damage: int):

@@ -9,6 +9,7 @@ var can_take_damage: bool = true
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("default")
+	velocity = Vector2(1 - 2 * randf(), 1 - 2 * randf()).normalized() * speed
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
@@ -17,12 +18,17 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			target=body
 
 
+func _process(delta: float) -> void:
+	if velocity.x > 0:
+		$AnimatedSprite2D.flip_h = true
+	elif velocity.x < 0:
+		$AnimatedSprite2D.flip_h = false
+
+
 func _physics_process(_delta: float) -> void:
 	if target!=null:
-		velocity=(target.position-position).normalized()*speed
-	else:
-		velocity=Vector2.ZERO
-		
+		velocity=(target.position-position).normalized() * speed
+	
 		# Collisions
 	for index in range(get_slide_collision_count()):
 		var collider = get_slide_collision(index).get_collider()

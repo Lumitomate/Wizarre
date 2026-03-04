@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dig4mpq1rxqfl"]
+
+[ext_resource type="Script" uid="uid://mexra65pmnxf" path="res://scripts/spawner_ennemy.gd" id="1_kuoj2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l0152"]
+radius = 211.25577
+
+[node name="EnnemySpawner" type="Area2D" unique_id=1560592956]
+scale = Vector2(2, 2)
+script = ExtResource("1_kuoj2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1871249474]
+shape = SubResource("CircleShape2D_l0152")
+
+[node name="SpawnCooldown" type="Timer" parent="." unique_id=1270937810]
+wait_time = 10.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="SpawnCooldown" to="." method="_on_spawn_cooldown_timeout"]

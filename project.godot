@@ -16,6 +16,13 @@ config/features=PackedStringArray("4.6", "Mobile")
 boot_splash/bg_color=Color(0.18035066, 0.13539705, 0, 1)
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/mode=2
+window/stretch/mode="canvas_items"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"

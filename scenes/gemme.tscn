@@ -2,10 +2,36 @@
 
 [ext_resource type="Script" uid="uid://dv32u1jo7805i" path="res://scripts/gemme.gd" id="1_t3frf"]
 [ext_resource type="Texture2D" uid="uid://57mql3nc0xwq" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu1.png" id="1_xq1s0"]
+[ext_resource type="Texture2D" uid="uid://bpnpsqv0ugmeq" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_Glace1.png" id="2_1eoqf"]
 [ext_resource type="Texture2D" uid="uid://dbrmawj3wc7tl" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu2.png" id="2_t3frf"]
+[ext_resource type="Texture2D" uid="uid://bvryw55sh6bd4" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_Glace2.png" id="3_msjm0"]
+[ext_resource type="Texture2D" uid="uid://wa1pylbpkhwg" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_Plante1.png" id="4_dg5nj"]
+[ext_resource type="Texture2D" uid="uid://dvmmval8ljttg" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_Plante2.png" id="5_2c2j5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xnphv"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1eoqf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_msjm0")
+}],
+"loop": true,
+"name": &"shine_blue",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_dg5nj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_2c2j5")
+}],
+"loop": true,
+"name": &"shine_green",
+"speed": 6.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_xq1s0")
@@ -14,15 +40,15 @@ animations = [{
 "texture": ExtResource("2_t3frf")
 }],
 "loop": true,
-"name": &"shine",
-"speed": 2.0
+"name": &"shine_red",
+"speed": 6.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2gl1y"]
 radius = 8.0
 height = 26.0
 
-[node name="Gemme" type="StaticBody2D" unique_id=223549949 groups=["gemme_group"]]
+[node name="Gemme" type="Area2D" unique_id=491087806 groups=["gemme_group"]]
 scale = Vector2(2, 2)
 collision_layer = 4
 script = ExtResource("1_t3frf")
@@ -30,10 +56,10 @@ script = ExtResource("1_t3frf")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=863865798]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xnphv")
-animation = &"shine"
-frame = 1
-frame_progress = 0.020445967
+animation = &"shine_red"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=535685155]
 position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_2gl1y")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

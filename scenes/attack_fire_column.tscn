@@ -71,6 +71,28 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmisn"]
 size = Vector2(58, 32)
 
+[sub_resource type="Gradient" id="Gradient_s64up"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4imbg"]
+gradient = SubResource("Gradient_s64up")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s64up"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, 16, 0)
+emission_shape = 3
+emission_box_extents = Vector3(32, 1, 1)
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 54.69
+initial_velocity_max = 54.69
+gravity = Vector3(0, -98, 0)
+tangential_accel_min = -64.0
+tangential_accel_max = 63.999996
+scale_min = 2.0
+scale_max = 4.0
+color = Color(1, 1, 0.3372549, 1)
+color_ramp = SubResource("GradientTexture1D_4imbg")
+
 [node name="AttackFireColumn" type="Area2D" unique_id=34713465]
 top_level = true
 z_index = 1000
@@ -81,13 +103,17 @@ script = ExtResource("1_s64up")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=708753227]
 sprite_frames = SubResource("SpriteFrames_x8eq2")
-animation = &"idle"
+animation = &"spawn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1105243161]
 shape = SubResource("RectangleShape2D_pmisn")
 
 [node name="Timeout" type="Timer" parent="." unique_id=1217347723]
 wait_time = 2.0
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1246607818]
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_s64up")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

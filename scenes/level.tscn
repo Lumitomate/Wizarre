@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://5gcf6jt1wdlb" path="res://scripts/level.gd" id="1_0b4ue"]
 [ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Terrains/TileMap_Terrain1.png" id="3_f2txt"]
-[ext_resource type="PackedScene" uid="uid://djvw6uji3ywqf" path="res://scenes/EnnemiVolant.tscn" id="4_0b4ue"]
+[ext_resource type="PackedScene" uid="uid://djvw6uji3ywqf" path="res://scenes/ennemy_flying.tscn" id="4_0b4ue"]
+[ext_resource type="PackedScene" uid="uid://dig4mpq1rxqfl" path="res://scenes/spawner_ennemy.tscn" id="4_mx8sn"]
+[ext_resource type="PackedScene" uid="uid://bullkflr3xioa" path="res://scenes/spawner_gemme.tscn" id="5_ppgk2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oi3di"]
 texture = ExtResource("3_f2txt")
@@ -72,4 +74,21 @@ anchor_mode = 0
 
 [node name="EnnemiVolant" parent="." unique_id=1939251830 instance=ExtResource("4_0b4ue")]
 position = Vector2(853, 231)
-scale = Vector2(2, 2)
+
+[node name="EnnemySpawner" parent="." unique_id=1560592956 instance=ExtResource("4_mx8sn")]
+position = Vector2(194, 209)
+
+[node name="EnnemySpawner2" parent="." unique_id=331910012 instance=ExtResource("4_mx8sn")]
+position = Vector2(221, 678)
+
+[node name="EnnemySpawner3" parent="." unique_id=1960936975 instance=ExtResource("4_mx8sn")]
+position = Vector2(1197, 670)
+
+[node name="EnnemySpawner4" parent="." unique_id=390343883 instance=ExtResource("4_mx8sn")]
+position = Vector2(1203, 329)
+
+[node name="SpawnerGemme" parent="." unique_id=2066530359 instance=ExtResource("5_ppgk2")]
+position = Vector2(172, 278)
+
+[node name="SpawnerGemme2" parent="." unique_id=600840344 instance=ExtResource("5_ppgk2")]
+position = Vector2(677, 217)

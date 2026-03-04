@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bullkflr3xioa"]
+
+[ext_resource type="Script" uid="uid://b60eoa5s4hqjh" path="res://scripts/spawner_gemme.gd" id="1_ad16d"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ad16d"]
+radius = 16.0
+height = 52.0
+
+[node name="SpawnerGemme" type="Area2D" unique_id=2066530359]
+script = ExtResource("1_ad16d")
+
+[node name="SpawnCooldown" type="Timer" parent="." unique_id=1887344925]
+wait_time = 20.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1712059018]
+shape = SubResource("CapsuleShape2D_ad16d")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="SpawnCooldown" to="." method="_on_spawn_cooldown_timeout"]

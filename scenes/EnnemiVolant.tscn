@@ -19,10 +19,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uf735"]
-radius = 30.016663
+radius = 14.035668
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_18tsl"]
-radius = 280.0875
+radius = 139.60658
 
 [node name="EnnemiVolant" type="CharacterBody2D" unique_id=1939251830 groups=["ennemy_group"]]
 collision_mask = 5
@@ -30,7 +30,6 @@ script = ExtResource("1_jiy37")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=262320199]
 texture_filter = 1
-scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_lmfbf")
 frame_progress = 0.27683645
 

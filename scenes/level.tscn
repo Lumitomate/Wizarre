@@ -1,10 +1,15 @@
 [gd_scene format=4 uid="uid://diof008bvy13y"]
 
-[ext_resource type="Script" uid="uid://5gcf6jt1wdlb" path="res://level.gd" id="1_0b4ue"]
+[ext_resource type="Script" uid="uid://5gcf6jt1wdlb" path="res://scripts/level.gd" id="1_0b4ue"]
 [ext_resource type="Texture2D" uid="uid://8wtt5eu5vor2" path="res://assets/sprites/Sol1_V1_70.png" id="2_vonw3"]
+<<<<<<< HEAD:level.tscn
 [ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Terrains/TileMap_Terrain1.png" id="3_f2txt"]
 [ext_resource type="PackedScene" uid="uid://bxwef34mmsuye" path="res://gemme.tscn" id="3_oi3di"]
 [ext_resource type="PackedScene" uid="uid://djvw6uji3ywqf" path="res://EnnemiVolant.tscn" id="4_0b4ue"]
+=======
+[ext_resource type="PackedScene" uid="uid://bxwef34mmsuye" path="res://scenes/gemme.tscn" id="3_oi3di"]
+[ext_resource type="PackedScene" uid="uid://djvw6uji3ywqf" path="res://scenes/EnnemiVolant.tscn" id="4_0b4ue"]
+>>>>>>> 36ba76e4673b962b393b79dfad30c6d743e45c99:scenes/level.tscn
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oi3di"]
 texture = ExtResource("2_vonw3")
@@ -57,7 +62,7 @@ position = Vector2(856, 602)
 
 [node name="Gemme3" parent="." unique_id=1918831979 instance=ExtResource("3_oi3di")]
 texture_filter = 1
-position = Vector2(619, 150)
+position = Vector2(618, 150)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1983324273]
 anchor_mode = 0

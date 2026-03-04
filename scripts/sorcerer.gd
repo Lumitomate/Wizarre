@@ -7,6 +7,14 @@ enum SorcererColor {
 	Yellow
 }
 
+enum AttackType {
+	Red,
+	Green,
+	Blue
+}
+
+signal ammo_changed
+
 @export var speed: int = 500
 @export var jump_impulse: int = 1500
 @export var fall_acceleration: int = 5000
@@ -14,11 +22,11 @@ enum SorcererColor {
 @export var controller_id: int = 0
 @export var lives: int = 3
 
-var fireball_scene = preload("res://attack_fireball.tscn")
+var fireball_scene = preload("res://scenes/attack_fireball.tscn")
 
 var screen_size: Vector2
 var direction: Vector2 = Vector2.RIGHT
-var ammunition: Array = [3, 3, 3]
+var ammunitions: Array = [3, 3, 3]
 var animation_suffix: String
 var can_fire: bool = true
 
@@ -51,28 +59,15 @@ func _process(_delta: float) -> void:
 		$AnimatedSprite2D.stop()
 		
 	if can_fire:
-		if  (Input.is_joy_button_pressed(controller_id, JOY_BUTTON_B) and ammunition[0] > 0) or (Input.is_joy_button_pressed(controller_id, JOY_BUTTON_X) and ammunition[1] > 0) or (Input.is_joy_button_pressed(controller_id, JOY_BUTTON_Y) and ammunition[2] > 0):
-			var fireball = fireball_scene.instantiate()
-			fireball.position = position + 60 * direction
-			fireball.direction = direction
-			if Input.is_joy_button_pressed(controller_id, JOY_BUTTON_B):
-				fireball.color_mod = Color(1, 0, 0)
-				ammunition[0] -= 1
-				print("Remaining red: " + str(ammunition[0]))
+		if Input.is_joy_button_pressed(controller_id, JOY_BUTTON_B):
+			fire_attack(AttackType.Red)
+		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_X):
+			fire_attack(AttackType.Green)
+		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_Y):
+			fire_attack(AttackType.Blue)
 
-			elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_X):
-				fireball.color_mod = Color(0, 1, 0)
-				ammunition[1] -= 1
-				print("Remaining green: " + str(ammunition[1]))
 
-			elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_Y):
-				fireball.color_mod = Color(0, 0, 1)
-				ammunition[2] -= 1
-				print("Remaining blue: " + str(ammunition[2]))
 
-			$AttackCooldown.start()
-			can_fire = false
-			self.get_parent().add_child(fireball)
 
 func _physics_process(delta: float) -> void:
 	
@@ -98,15 +93,35 @@ func _physics_process(delta: float) -> void:
 		if collider == null:
 			continue
 		elif collider.is_in_group("gemme_group"):
-			ammunition[0] += 1
+			ammunitions[0] += 1
+			ammo_changed.emit(0, ammunitions[0])
 			var gemme = collider
 			gemme.delete()
-		#elif collider.is_in_group("attack_group"):
-			#print("Touché!")
-			#lives -= 1
 	
 	# Gesion de la physique
 	move_and_slide()
+
+func fire_attack(attack_type:AttackType) -> void:
+	if ammunitions[attack_type] > 0:
+		var fireball = fireball_scene.instantiate()
+		fireball.position = position + 60 * direction
+		fireball.direction = direction
+		
+		var color_mod = Color(1, 1, 1)
+		match attack_type:
+			AttackType.Red:
+				color_mod = Color(1, 0, 0)
+			AttackType.Green:
+				color_mod = Color(0, 1, 0)
+			AttackType.Blue:
+				color_mod = Color(0, 0, 1)
+		
+		fireball.color_mod = color_mod
+		ammunitions[attack_type] -= 1
+		ammo_changed.emit(attack_type, ammunitions[attack_type])
+		$AttackCooldown.start()
+		can_fire = false
+		self.get_parent().add_child(fireball)
 
 func hit(damage: int):
 	lives -= damage

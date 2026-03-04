@@ -3,7 +3,8 @@ extends Node2D
 #@export var player_spawn_position: Vector2 = Vector2(40, 40)
 
 var known_controllers:Array[int] = []
-var sorcerer_scene: PackedScene = preload("res://sorcerer.tscn")
+var sorcerer_scene: PackedScene = preload("res://scenes/sorcerer.tscn")
+var player_info_scene: PackedScene = preload("res://scenes/players_info.tscn")
 
 func _ready() -> void:
 	for controller_id in Input.get_connected_joypads():
@@ -22,6 +23,11 @@ func add_player(controller_id):
 	known_controllers.append(controller_id)
 	var sorcerer = sorcerer_scene.instantiate()
 	sorcerer.controller_id = controller_id
-	sorcerer.sorcerer_color = controller_id
-	#sorcerer.position = player_spawn_position
+	sorcerer.sorcerer_color = controller_id % 4
+	
+	var player_info = player_info_scene.instantiate()
+	player_info.position = Vector2(0, 32 * controller_id)
+	sorcerer.ammo_changed.connect(player_info._on_ammo_changed)
+	
 	self.add_child(sorcerer)
+	self.add_child(player_info)

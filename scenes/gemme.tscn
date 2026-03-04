@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bxwef34mmsuye"]
 
-[ext_resource type="Script" uid="uid://dv32u1jo7805i" path="res://gemme.gd" id="1_t3frf"]
+[ext_resource type="Script" uid="uid://dv32u1jo7805i" path="res://scripts/gemme.gd" id="1_t3frf"]
 [ext_resource type="Texture2D" uid="uid://57mql3nc0xwq" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu1.png" id="1_xq1s0"]
 [ext_resource type="Texture2D" uid="uid://dbrmawj3wc7tl" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu2.png" id="2_t3frf"]
 

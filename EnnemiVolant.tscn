@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://djvw6uji3ywqf"]
+
+[ext_resource type="Script" uid="uid://dc1hi8w3i7en0" path="res://ennemi_volant.gd" id="1_jiy37"]
+[ext_resource type="Texture2D" uid="uid://drbue7epok3o1" path="res://assets/sprites/Monstres/MonstreVolant/Monstre_v1.png" id="2_k1557"]
+[ext_resource type="Texture2D" uid="uid://dan7ldq7vnaff" path="res://assets/sprites/Monstres/MonstreVolant/Monstre_v2.png" id="3_byye5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lmfbf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_k1557")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_byye5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uf735"]
+radius = 30.016663
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_18tsl"]
+radius = 280.0875
+
+[node name="EnnemiVolant" type="CharacterBody2D" unique_id=1939251830]
+collision_mask = 5
+script = ExtResource("1_jiy37")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=262320199]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_lmfbf")
+frame_progress = 0.27683645
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1330916767]
+shape = SubResource("CircleShape2D_uf735")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1942281896]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=127581465]
+shape = SubResource("CircleShape2D_18tsl")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

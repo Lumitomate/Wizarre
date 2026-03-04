@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://5gcf6jt1wdlb" path="res://level.gd" id="1_0b4ue"]
 [ext_resource type="Texture2D" uid="uid://8wtt5eu5vor2" path="res://assets/sprites/Sol1_V1_70.png" id="2_vonw3"]
 [ext_resource type="PackedScene" uid="uid://bxwef34mmsuye" path="res://gemme.tscn" id="3_oi3di"]
+[ext_resource type="PackedScene" uid="uid://djvw6uji3ywqf" path="res://EnnemiVolant.tscn" id="4_0b4ue"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oi3di"]
 texture = ExtResource("2_vonw3")
@@ -38,3 +39,6 @@ position = Vector2(619, 150)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1983324273]
 anchor_mode = 0
+
+[node name="EnnemiVolant" parent="." unique_id=1939251830 instance=ExtResource("4_0b4ue")]
+position = Vector2(261, 223)

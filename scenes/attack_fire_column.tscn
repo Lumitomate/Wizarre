@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://gvbui20wfhrp"]
 
-[ext_resource type="Script" path="res://scripts/attack_fire_column.gd" id="1_s64up"]
+[ext_resource type="Script" uid="uid://cb6fycdskruds" path="res://scripts/attack_fire_column.gd" id="1_s64up"]
 [ext_resource type="Texture2D" uid="uid://bocwsu2s37cxf" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F1.png" id="2_he5u3"]
 [ext_resource type="Texture2D" uid="uid://tcpr64mausgq" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F2.png" id="3_6rop7"]
 [ext_resource type="Texture2D" uid="uid://ccx2dt3el2x5m" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F3.png" id="4_d8hkh"]
@@ -143,11 +143,7 @@ script = ExtResource("1_s64up")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=708753227]
 sprite_frames = SubResource("SpriteFrames_x8eq2")
-<<<<<<< HEAD
 animation = &"spawn"
-=======
-animation = &"pre_spawn"
->>>>>>> 6c45d5119f5d7a09a5583cb4710cef3734f0b7f2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1105243161]
 shape = SubResource("RectangleShape2D_pmisn")

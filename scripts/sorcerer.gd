@@ -95,7 +95,7 @@ func _physics_process(delta: float) -> void:
 		elif collider.is_in_group("gemme_group"):
 			ammunitions[0] += 1
 			ammo_changed.emit(0, ammunitions[0])
-			var gemme = collider
+			var gemme: Gemme = collider
 			gemme.delete()
 	
 	# Gesion de la physique
@@ -110,11 +110,11 @@ func fire_attack(attack_type:AttackType) -> void:
 		var color_mod = Color(1, 1, 1)
 		match attack_type:
 			AttackType.Red:
-				color_mod = Color(1, 0, 0)
+				color_mod = Color(1.0, 0.469, 0.401, 1.0)
 			AttackType.Green:
-				color_mod = Color(0, 1, 0)
+				color_mod = Color(0.561, 1.0, 0.529, 1.0)
 			AttackType.Blue:
-				color_mod = Color(0, 0, 1)
+				color_mod = Color(0.359, 0.558, 1.0, 1.0)
 		
 		fireball.color_mod = color_mod
 		ammunitions[attack_type] -= 1

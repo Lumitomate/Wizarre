@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://diof008bvy13y"]
 
-[ext_resource type="PackedScene" uid="uid://bgd2bh1dj4h4s" path="res://sorcerer.tscn" id="1_u52ul"]
+[ext_resource type="Script" uid="uid://5gcf6jt1wdlb" path="res://level.gd" id="1_0b4ue"]
 [ext_resource type="Texture2D" uid="uid://8wtt5eu5vor2" path="res://assets/sprites/Sol1_V1_70.png" id="2_vonw3"]
 [ext_resource type="PackedScene" uid="uid://bxwef34mmsuye" path="res://gemme.tscn" id="3_oi3di"]
 
@@ -12,26 +12,18 @@ texture_region_size = Vector2i(64, 64)
 
 [sub_resource type="TileSet" id="TileSet_0b4ue"]
 tile_size = Vector2i(64, 64)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 4
 sources/0 = SubResource("TileSetAtlasSource_oi3di")
 
 [node name="Level" type="Node2D" unique_id=68664965]
-
-[node name="Sorcerer" parent="." unique_id=1462313974 instance=ExtResource("1_u52ul")]
-position = Vector2(536, 544)
-speed = null
-jump_impulse = null
-fall_acceleration = null
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1983324273]
-anchor_mode = 0
+script = ExtResource("1_0b4ue")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1625668394]
+z_index = 50
 position = Vector2(11, 1)
-tile_map_data = PackedByteArray("AAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAoAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAAFAAoAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAANAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAPAAoAAAAAAAAAAAAQAAoAAAAAAAAAAAARAAoAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAAFAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAIAAMAAAAAAAAAAAAJAAMAAAAAAAAAAAAKAAMAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_0b4ue")
 rendering_quadrant_size = 64
-collision_visibility_mode = 1
 physics_quadrant_size = 64
 
 [node name="Gemme" parent="." unique_id=223549949 instance=ExtResource("3_oi3di")]
@@ -39,3 +31,10 @@ position = Vector2(114, 585)
 
 [node name="Gemme2" parent="." unique_id=1771336560 instance=ExtResource("3_oi3di")]
 position = Vector2(856, 602)
+
+[node name="Gemme3" parent="." unique_id=1918831979 instance=ExtResource("3_oi3di")]
+texture_filter = 1
+position = Vector2(619, 150)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1983324273]
+anchor_mode = 0

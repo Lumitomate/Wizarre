@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bwpoubvmixorv"]
 
-[ext_resource type="Script" uid="uid://do2ms5rk5hhha" path="res://scripts/attack_fireball.gd" id="1_g6rmt"]
-[ext_resource type="Texture2D" uid="uid://dbp5efdel2fey" path="res://assets/sprites/BouleDeFeu_V1.png" id="1_irjc6"]
+[ext_resource type="Script" uid="uid://do2ms5rk5hhha" path="res://scripts/attack_fireball.gd" id="1_1akuv"]
+[ext_resource type="Texture2D" uid="uid://dbp5efdel2fey" path="res://assets/sprites/BouleDeFeu_V1.png" id="2_phbcd"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g6rmt"]
 radius = 9.0
@@ -13,10 +13,10 @@ z_index = 1000
 z_as_relative = false
 collision_layer = 3
 collision_mask = 3
-script = ExtResource("1_g6rmt")
+script = ExtResource("1_1akuv")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1111308342]
-texture = ExtResource("1_irjc6")
+texture = ExtResource("2_phbcd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=826326378]
 rotation = 1.5707964

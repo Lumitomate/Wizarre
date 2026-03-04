@@ -1,93 +1,93 @@
 [gd_scene format=3 uid="uid://bgd2bh1dj4h4s"]
 
-[ext_resource type="Script" uid="uid://b7cwfl6277f1o" path="res://scripts/sorcerer.gd" id="1_4rrgj"]
-[ext_resource type="Texture2D" uid="uid://c47c2pecbkiaw" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v1.png" id="2_a5a8m"]
-[ext_resource type="Texture2D" uid="uid://cbj5nyoc8d1w4" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v1.png" id="2_s6och"]
-[ext_resource type="Texture2D" uid="uid://bog18072uth5h" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v2.png" id="3_5vnj0"]
-[ext_resource type="Texture2D" uid="uid://bebum0s1mbfnx" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v2.png" id="3_ibytn"]
-[ext_resource type="Texture2D" uid="uid://bqmwhlunesuvy" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v3.png" id="4_m80sj"]
-[ext_resource type="Texture2D" uid="uid://dabi3nkpg4i8p" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v3.png" id="4_r15jp"]
-[ext_resource type="Texture2D" uid="uid://084upincaxx5" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v4.png" id="5_7rarh"]
-[ext_resource type="Texture2D" uid="uid://indjmh6qylpq" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v4.png" id="5_o4xnc"]
-[ext_resource type="Texture2D" uid="uid://b7pov0fefqr68" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v5.png" id="6_6gwab"]
-[ext_resource type="Texture2D" uid="uid://pi5g44l7f27l" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v5.png" id="6_k8ekf"]
-[ext_resource type="Texture2D" uid="uid://ck2aafy5ranom" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v6.png" id="7_2nyo1"]
-[ext_resource type="Texture2D" uid="uid://bes8aec1mww0e" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v6.png" id="7_fjg7m"]
-[ext_resource type="Texture2D" uid="uid://b8txtsunbumne" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v7.png" id="8_4dg0p"]
-[ext_resource type="Texture2D" uid="uid://duu5qs8kktkvf" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v7.png" id="8_jqa5j"]
-[ext_resource type="Texture2D" uid="uid://sck2rtimgind" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v8.png" id="9_gwima"]
-[ext_resource type="Texture2D" uid="uid://24jr0eiiqqsh" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v8.png" id="9_wy0ap"]
-[ext_resource type="Texture2D" uid="uid://c8brqyvrb6hdd" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v9.png" id="10_ah8kd"]
-[ext_resource type="Texture2D" uid="uid://byaoqyf2crkfo" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v9.png" id="10_ca6ul"]
-[ext_resource type="Texture2D" uid="uid://cviftetme4wi2" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v10.png" id="11_fqt2a"]
-[ext_resource type="Texture2D" uid="uid://dou78c5mebtjp" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v10.png" id="11_o0r7a"]
-[ext_resource type="Texture2D" uid="uid://dnqauoxq4ll30" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v11.png" id="12_kmbe6"]
-[ext_resource type="Texture2D" uid="uid://b6ci70hye23ei" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v11.png" id="12_sf8ws"]
-[ext_resource type="Texture2D" uid="uid://ke7pgq3ggnsw" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v12.png" id="13_7hbde"]
-[ext_resource type="Texture2D" uid="uid://cdxyljl65qrfi" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v12.png" id="13_amh4h"]
-[ext_resource type="Texture2D" uid="uid://bnj384ytu6c1o" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v1.png" id="14_gfosc"]
-[ext_resource type="Texture2D" uid="uid://bonqil47j62a5" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v2.png" id="15_7lbux"]
-[ext_resource type="Texture2D" uid="uid://ci4odn1ra728o" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v3.png" id="16_pgbqn"]
-[ext_resource type="Texture2D" uid="uid://d3lbyytflj6bp" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v4.png" id="17_sw7w3"]
-[ext_resource type="Texture2D" uid="uid://ild5qtbjys27" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v5.png" id="18_jitbe"]
-[ext_resource type="Texture2D" uid="uid://bonl256lrslcg" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v6.png" id="19_7fxs8"]
-[ext_resource type="Texture2D" uid="uid://ci4hsu00kuye6" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v7.png" id="20_tycmk"]
-[ext_resource type="Texture2D" uid="uid://b4gbjitkfbdgb" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v8.png" id="21_xe7mg"]
-[ext_resource type="Texture2D" uid="uid://dl6yyhagvjlvu" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v9.png" id="22_vq4d2"]
-[ext_resource type="Texture2D" uid="uid://l4upjn3b7qc5" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v10.png" id="23_jlvvn"]
-[ext_resource type="Texture2D" uid="uid://yt8nf0jskfml" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v11.png" id="24_enxgk"]
-[ext_resource type="Texture2D" uid="uid://dyygyifrpfj0f" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v12.png" id="25_ecfoh"]
-[ext_resource type="Texture2D" uid="uid://dm4watddfelvy" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v1.png" id="38_xeip7"]
-[ext_resource type="Texture2D" uid="uid://c5mckpn6e6aiq" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v2.png" id="39_ecmdw"]
-[ext_resource type="Texture2D" uid="uid://xfogn3bm3eox" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v3.png" id="40_y2sqk"]
-[ext_resource type="Texture2D" uid="uid://k4q17rm01tqf" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v4.png" id="41_heb0j"]
-[ext_resource type="Texture2D" uid="uid://y6ko8hjqck1j" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v5.png" id="42_ae0go"]
-[ext_resource type="Texture2D" uid="uid://0e6hvxfaj1og" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v6.png" id="43_05nop"]
-[ext_resource type="Texture2D" uid="uid://rpw054xb7wk8" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v7.png" id="44_2fep4"]
-[ext_resource type="Texture2D" uid="uid://bs4wdj0nef3w4" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v8.png" id="45_oaaak"]
-[ext_resource type="Texture2D" uid="uid://mlykqkb3pql4" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v9.png" id="46_3qdh1"]
-[ext_resource type="Texture2D" uid="uid://dq8lqq06oymdp" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v10.png" id="47_8y4nb"]
-[ext_resource type="Texture2D" uid="uid://dk5t7u6487ksr" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v11.png" id="48_qcesa"]
-[ext_resource type="Texture2D" uid="uid://cxp46qxj36gas" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v12.png" id="49_7sad0"]
+[ext_resource type="Script" uid="uid://b7cwfl6277f1o" path="res://scripts/sorcerer.gd" id="1_oqr0g"]
+[ext_resource type="Texture2D" uid="uid://c47c2pecbkiaw" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v1.png" id="2_yaoji"]
+[ext_resource type="Texture2D" uid="uid://bebum0s1mbfnx" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v2.png" id="3_vdsmq"]
+[ext_resource type="Texture2D" uid="uid://bqmwhlunesuvy" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v3.png" id="4_77m8j"]
+[ext_resource type="Texture2D" uid="uid://indjmh6qylpq" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v4.png" id="5_swp75"]
+[ext_resource type="Texture2D" uid="uid://pi5g44l7f27l" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v5.png" id="6_hyydt"]
+[ext_resource type="Texture2D" uid="uid://bes8aec1mww0e" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v6.png" id="7_aucua"]
+[ext_resource type="Texture2D" uid="uid://b8txtsunbumne" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v7.png" id="8_7nksc"]
+[ext_resource type="Texture2D" uid="uid://sck2rtimgind" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v8.png" id="9_f3anc"]
+[ext_resource type="Texture2D" uid="uid://c8brqyvrb6hdd" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v9.png" id="10_lscw3"]
+[ext_resource type="Texture2D" uid="uid://cviftetme4wi2" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v10.png" id="11_frhmv"]
+[ext_resource type="Texture2D" uid="uid://b6ci70hye23ei" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v11.png" id="12_jmmtn"]
+[ext_resource type="Texture2D" uid="uid://cdxyljl65qrfi" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v12.png" id="13_wit2s"]
+[ext_resource type="Texture2D" uid="uid://bnj384ytu6c1o" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v1.png" id="14_sfvui"]
+[ext_resource type="Texture2D" uid="uid://bonqil47j62a5" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v2.png" id="15_reskl"]
+[ext_resource type="Texture2D" uid="uid://ci4odn1ra728o" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v3.png" id="16_2doh5"]
+[ext_resource type="Texture2D" uid="uid://d3lbyytflj6bp" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v4.png" id="17_wypf7"]
+[ext_resource type="Texture2D" uid="uid://ild5qtbjys27" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v5.png" id="18_y00md"]
+[ext_resource type="Texture2D" uid="uid://bonl256lrslcg" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v6.png" id="19_wlgxp"]
+[ext_resource type="Texture2D" uid="uid://ci4hsu00kuye6" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v7.png" id="20_lhjkn"]
+[ext_resource type="Texture2D" uid="uid://b4gbjitkfbdgb" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v8.png" id="21_055gf"]
+[ext_resource type="Texture2D" uid="uid://dl6yyhagvjlvu" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v9.png" id="22_6mxxl"]
+[ext_resource type="Texture2D" uid="uid://l4upjn3b7qc5" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v10.png" id="23_pbdmq"]
+[ext_resource type="Texture2D" uid="uid://yt8nf0jskfml" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v11.png" id="24_4kxw1"]
+[ext_resource type="Texture2D" uid="uid://dyygyifrpfj0f" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v12.png" id="25_4moqe"]
+[ext_resource type="Texture2D" uid="uid://cbj5nyoc8d1w4" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v1.png" id="26_nno4w"]
+[ext_resource type="Texture2D" uid="uid://bog18072uth5h" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v2.png" id="27_yejxi"]
+[ext_resource type="Texture2D" uid="uid://dabi3nkpg4i8p" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v3.png" id="28_5jpjj"]
+[ext_resource type="Texture2D" uid="uid://084upincaxx5" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v4.png" id="29_j8q1y"]
+[ext_resource type="Texture2D" uid="uid://b7pov0fefqr68" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v5.png" id="30_5h7ek"]
+[ext_resource type="Texture2D" uid="uid://ck2aafy5ranom" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v6.png" id="31_3djkk"]
+[ext_resource type="Texture2D" uid="uid://duu5qs8kktkvf" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v7.png" id="32_1vl3h"]
+[ext_resource type="Texture2D" uid="uid://24jr0eiiqqsh" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v8.png" id="33_rml7m"]
+[ext_resource type="Texture2D" uid="uid://byaoqyf2crkfo" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v9.png" id="34_nui5y"]
+[ext_resource type="Texture2D" uid="uid://dou78c5mebtjp" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v10.png" id="35_b0q08"]
+[ext_resource type="Texture2D" uid="uid://dnqauoxq4ll30" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v11.png" id="36_mllas"]
+[ext_resource type="Texture2D" uid="uid://ke7pgq3ggnsw" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v12.png" id="37_eid8g"]
+[ext_resource type="Texture2D" uid="uid://dm4watddfelvy" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v1.png" id="38_gfp4p"]
+[ext_resource type="Texture2D" uid="uid://c5mckpn6e6aiq" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v2.png" id="39_y4j31"]
+[ext_resource type="Texture2D" uid="uid://xfogn3bm3eox" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v3.png" id="40_twoyl"]
+[ext_resource type="Texture2D" uid="uid://k4q17rm01tqf" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v4.png" id="41_ifeai"]
+[ext_resource type="Texture2D" uid="uid://y6ko8hjqck1j" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v5.png" id="42_nlovw"]
+[ext_resource type="Texture2D" uid="uid://0e6hvxfaj1og" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v6.png" id="43_e4siq"]
+[ext_resource type="Texture2D" uid="uid://rpw054xb7wk8" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v7.png" id="44_picrv"]
+[ext_resource type="Texture2D" uid="uid://bs4wdj0nef3w4" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v8.png" id="45_36gsu"]
+[ext_resource type="Texture2D" uid="uid://mlykqkb3pql4" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v9.png" id="46_px00v"]
+[ext_resource type="Texture2D" uid="uid://dq8lqq06oymdp" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v10.png" id="47_4op1o"]
+[ext_resource type="Texture2D" uid="uid://dk5t7u6487ksr" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v11.png" id="48_pk67m"]
+[ext_resource type="Texture2D" uid="uid://cxp46qxj36gas" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v12.png" id="49_1wugf"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6urby"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_a5a8m")
+"texture": ExtResource("2_yaoji")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_ibytn")
+"texture": ExtResource("3_vdsmq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_m80sj")
+"texture": ExtResource("4_77m8j")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_o4xnc")
+"texture": ExtResource("5_swp75")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_k8ekf")
+"texture": ExtResource("6_hyydt")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_fjg7m")
+"texture": ExtResource("7_aucua")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_4dg0p")
+"texture": ExtResource("8_7nksc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_gwima")
+"texture": ExtResource("9_f3anc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_ah8kd")
+"texture": ExtResource("10_lscw3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_fqt2a")
+"texture": ExtResource("11_frhmv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_sf8ws")
+"texture": ExtResource("12_jmmtn")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_amh4h")
+"texture": ExtResource("13_wit2s")
 }],
 "loop": true,
 "name": &"walk_blue",
@@ -95,40 +95,40 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("14_gfosc")
+"texture": ExtResource("14_sfvui")
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_7lbux")
+"texture": ExtResource("15_reskl")
 }, {
 "duration": 1.0,
-"texture": ExtResource("16_pgbqn")
+"texture": ExtResource("16_2doh5")
 }, {
 "duration": 1.0,
-"texture": ExtResource("17_sw7w3")
+"texture": ExtResource("17_wypf7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("18_jitbe")
+"texture": ExtResource("18_y00md")
 }, {
 "duration": 1.0,
-"texture": ExtResource("19_7fxs8")
+"texture": ExtResource("19_wlgxp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("20_tycmk")
+"texture": ExtResource("20_lhjkn")
 }, {
 "duration": 1.0,
-"texture": ExtResource("21_xe7mg")
+"texture": ExtResource("21_055gf")
 }, {
 "duration": 1.0,
-"texture": ExtResource("22_vq4d2")
+"texture": ExtResource("22_6mxxl")
 }, {
 "duration": 1.0,
-"texture": ExtResource("23_jlvvn")
+"texture": ExtResource("23_pbdmq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("24_enxgk")
+"texture": ExtResource("24_4kxw1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("25_ecfoh")
+"texture": ExtResource("25_4moqe")
 }],
 "loop": true,
 "name": &"walk_green",
@@ -136,40 +136,40 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_s6och")
+"texture": ExtResource("26_nno4w")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_5vnj0")
+"texture": ExtResource("27_yejxi")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_r15jp")
+"texture": ExtResource("28_5jpjj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_7rarh")
+"texture": ExtResource("29_j8q1y")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_6gwab")
+"texture": ExtResource("30_5h7ek")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_2nyo1")
+"texture": ExtResource("31_3djkk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_jqa5j")
+"texture": ExtResource("32_1vl3h")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_wy0ap")
+"texture": ExtResource("33_rml7m")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_ca6ul")
+"texture": ExtResource("34_nui5y")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_o0r7a")
+"texture": ExtResource("35_b0q08")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_kmbe6")
+"texture": ExtResource("36_mllas")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_7hbde")
+"texture": ExtResource("37_eid8g")
 }],
 "loop": true,
 "name": &"walk_red",
@@ -177,52 +177,53 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("38_xeip7")
+"texture": ExtResource("38_gfp4p")
 }, {
 "duration": 1.0,
-"texture": ExtResource("39_ecmdw")
+"texture": ExtResource("39_y4j31")
 }, {
 "duration": 1.0,
-"texture": ExtResource("40_y2sqk")
+"texture": ExtResource("40_twoyl")
 }, {
 "duration": 1.0,
-"texture": ExtResource("41_heb0j")
+"texture": ExtResource("41_ifeai")
 }, {
 "duration": 1.0,
-"texture": ExtResource("42_ae0go")
+"texture": ExtResource("42_nlovw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("43_05nop")
+"texture": ExtResource("43_e4siq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("44_2fep4")
+"texture": ExtResource("44_picrv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("45_oaaak")
+"texture": ExtResource("45_36gsu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("46_3qdh1")
+"texture": ExtResource("46_px00v")
 }, {
 "duration": 1.0,
-"texture": ExtResource("47_8y4nb")
+"texture": ExtResource("47_4op1o")
 }, {
 "duration": 1.0,
-"texture": ExtResource("48_qcesa")
+"texture": ExtResource("48_pk67m")
 }, {
 "duration": 1.0,
-"texture": ExtResource("49_7sad0")
+"texture": ExtResource("49_1wugf")
 }],
 "loop": true,
 "name": &"walk_yellow",
 "speed": 24.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4rrgj"]
-size = Vector2(39, 64)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oqr0g"]
+radius = 25.0
+height = 64.0
 
 [node name="Sorcerer" type="CharacterBody2D" unique_id=1462313974 groups=["player_group"]]
 collision_mask = 5
-script = ExtResource("1_4rrgj")
+script = ExtResource("1_oqr0g")
 sorcerer_color = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=92979516]
@@ -232,8 +233,8 @@ sprite_frames = SubResource("SpriteFrames_6urby")
 animation = &"walk_blue"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1715000558]
-position = Vector2(0.5, 0)
-shape = SubResource("RectangleShape2D_4rrgj")
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_oqr0g")
 metadata/_edit_group_ = true
 
 [node name="AttackCooldown" type="Timer" parent="." unique_id=681222162]

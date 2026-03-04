@@ -2,27 +2,29 @@
 
 [ext_resource type="Script" uid="uid://cge3ebap03toc" path="res://scripts/players_info.gd" id="1_7gnvh"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_7gnvh"]
+font_color = Color(0, 0, 0, 1)
+
 [node name="PlayersInfo" type="Control" unique_id=1538734950]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -852.0
+offset_bottom = -618.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7gnvh")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1224019641]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.192
-anchor_bottom = 0.062000003
-offset_right = -0.18400574
-offset_bottom = -0.1760025
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 30.0
 
 [node name="Label" type="Label" parent="." unique_id=1116790855]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.192
-anchor_bottom = 0.062000003
-offset_right = -0.18400574
-offset_bottom = -0.1760025
+layout_mode = 0
+offset_left = 10.0
+offset_top = 3.0
+offset_right = 11.0
+offset_bottom = 26.0
+label_settings = SubResource("LabelSettings_7gnvh")

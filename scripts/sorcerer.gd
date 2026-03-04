@@ -23,6 +23,7 @@ signal ammo_changed
 @export var lives: int = 3
 
 var fireball_scene = preload("res://scenes/attack_fireball.tscn")
+var lightray_scene = preload("res://scenes/attack_ray.tscn")
 
 var screen_size: Vector2
 var direction: Vector2 = Vector2.RIGHT
@@ -103,25 +104,31 @@ func _physics_process(delta: float) -> void:
 
 func fire_attack(attack_type:AttackType) -> void:
 	if ammunitions[attack_type] > 0:
-		var fireball = fireball_scene.instantiate()
-		fireball.position = position + 60 * direction
-		fireball.direction = direction
+		var attack_list = []
 		
-		var color_mod = Color(1, 1, 1)
 		match attack_type:
 			AttackType.Red:
-				color_mod = Color(1.0, 0.469, 0.401, 1.0)
+				var fireball = fireball_scene.instantiate()
+				fireball.position = position + 60 * direction
+				fireball.direction = direction
+				attack_list.append(fireball)
 			AttackType.Green:
-				color_mod = Color(0.561, 1.0, 0.529, 1.0)
+				var fireball = fireball_scene.instantiate()
+				fireball.position = position + 60 * direction
+				fireball.direction = direction
+				attack_list.append(fireball)
 			AttackType.Blue:
-				color_mod = Color(0.359, 0.558, 1.0, 1.0)
+				for i in range(screen_size.x / 32):
+					var lightray = lightray_scene.instantiate()
+					lightray.position = Vector2(i * 32, position.y)
+					attack_list.append(lightray)
 		
-		fireball.color_mod = color_mod
 		ammunitions[attack_type] -= 1
 		ammo_changed.emit(attack_type, ammunitions[attack_type])
 		$AttackCooldown.start()
 		can_fire = false
-		self.get_parent().add_child(fireball)
+		for attack in attack_list:
+			self.get_parent().add_child(attack)
 
 func hit(damage: int):
 	lives -= damage

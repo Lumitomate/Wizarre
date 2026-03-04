@@ -1,17 +1,9 @@
 [gd_scene format=4 uid="uid://diof008bvy13y"]
 
-<<<<<<< HEAD
 [ext_resource type="Script" uid="uid://5gcf6jt1wdlb" path="res://scripts/level.gd" id="1_mx8sn"]
 [ext_resource type="Texture2D" uid="uid://8wtt5eu5vor2" path="res://assets/sprites/Sol1_V1_70.png" id="2_ppgk2"]
 [ext_resource type="PackedScene" uid="uid://bxwef34mmsuye" path="res://scenes/gemme.tscn" id="3_2r41h"]
 [ext_resource type="PackedScene" uid="uid://djvw6uji3ywqf" path="res://scenes/EnnemiVolant.tscn" id="4_klq6b"]
-=======
-[ext_resource type="Script" uid="uid://5gcf6jt1wdlb" path="res://scripts/level.gd" id="1_0b4ue"]
-[ext_resource type="Texture2D" uid="uid://8wtt5eu5vor2" path="res://assets/sprites/Sol1_V1_70.png" id="2_vonw3"]
-[ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Terrains/TileMap_Terrain1.png" id="3_f2txt"]
-[ext_resource type="PackedScene" uid="uid://bxwef34mmsuye" path="res://gemme.tscn" id="3_oi3di"]
-[ext_resource type="PackedScene" uid="uid://djvw6uji3ywqf" path="res://EnnemiVolant.tscn" id="4_0b4ue"]
->>>>>>> 6635a4fc985f84f3c23b257eacfae95e53985e55
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oi3di"]
 texture = ExtResource("2_ppgk2")
@@ -19,42 +11,8 @@ texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, -32, -32, -32, -32, 32, 32, 32)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ainy"]
-texture = ExtResource("3_f2txt")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_0b4ue"]
-tile_size = Vector2i(32, 32)
-physics_layer_0/collision_layer = 4
-sources/0 = SubResource("TileSetAtlasSource_oi3di")
-sources/1 = SubResource("TileSetAtlasSource_1ainy")
-
 [node name="Level" type="Node2D" unique_id=68664965]
 script = ExtResource("1_mx8sn")
-
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1625668394]
-z_index = 50
-position = Vector2(11, 1)
-tile_map_data = PackedByteArray("AAAAABMAAQABAAAAAAABABMAAQABAAAAAAACABMAAQABAAAAAAADABMAAQABAAAAAAAEABMAAQABAAAAAAAFABMAAQABAAAAAAAGABMAAQABAAAAAAAHABMAAQABAAAAAAAIABMAAQABAAAAAAAJABMAAQABAAAAAAAKABMAAQABAAAAAAALABMAAQABAAAAAAAMABMAAQABAAAAAAANABMAAQABAAAAAAAOABMAAQABAAAAAAAPABMAAQABAAAAAAAQABMAAQABAAAAAAARABMAAQABAAAAAAASABMAAQABAAAAAAATABMAAQABAAAAAAAUABMAAQABAAAAAAAVABMAAQABAAAAAAAWABMAAQABAAAAAAAXABMAAQABAAAAAAAYABMAAQABAAAAAAAZABMAAQABAAAAAAAaABMAAQABAAAAAAAbABMAAQABAAAAAAAcABMAAQABAAAAAAAdABMAAQABAAAAAAAeABMAAQABAAAAAAA=")
-tile_set = SubResource("TileSet_0b4ue")
-rendering_quadrant_size = 32
-physics_quadrant_size = 32
 
 [node name="Gemme" parent="." unique_id=223549949 instance=ExtResource("3_2r41h")]
 position = Vector2(114, 585)
@@ -69,10 +27,5 @@ position = Vector2(618, 150)
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1983324273]
 anchor_mode = 0
 
-<<<<<<< HEAD
 [node name="EnnemiVolant" parent="." unique_id=1939251830 instance=ExtResource("4_klq6b")]
 position = Vector2(261, 223)
-=======
-[node name="EnnemiVolant" parent="." unique_id=1939251830 instance=ExtResource("4_0b4ue")]
-position = Vector2(787, 225)
->>>>>>> 6635a4fc985f84f3c23b257eacfae95e53985e55

@@ -239,7 +239,6 @@ metadata/_edit_group_ = true
 wait_time = 0.4
 
 [node name="DamageCooldown" type="Timer" parent="." unique_id=1327057034]
-wait_time = 0.5
 
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="DamageCooldown" to="." method="_on_damage_cooldown_timeout"]

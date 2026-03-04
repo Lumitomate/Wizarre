@@ -1,9 +1,10 @@
-extends Area2D
+class_name AttackLightRay extends Area2D
 
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("pre_spawn")
 	$CollisionShape2D.disabled = true
+
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	match $AnimatedSprite2D.animation:

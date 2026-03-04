@@ -1,10 +1,9 @@
 extends Node2D
 
-#@export var player_spawn_position: Vector2 = Vector2(40, 40)
-
 var known_controllers:Array[int] = []
 var sorcerer_scene: PackedScene = preload("res://scenes/sorcerer.tscn")
 var player_info_scene: PackedScene = preload("res://scenes/players_info.tscn")
+
 
 func _ready() -> void:
 	for controller_id in Input.get_connected_joypads():
@@ -12,11 +11,13 @@ func _ready() -> void:
 			add_player(controller_id)
 	Input.connect("joy_connection_changed", _on_joy_connection_changed)
 
+
 func _on_joy_connection_changed(_device: int, _connected: bool) -> void:
 	Input.get_connected_joypads()
 	for controller_id in Input.get_connected_joypads():
 		if not controller_id in known_controllers:
 			add_player(controller_id)
+
 
 func add_player(controller_id):
 	print("Adding player: " + str(controller_id))

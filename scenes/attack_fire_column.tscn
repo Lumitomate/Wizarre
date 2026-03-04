@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://gvbui20wfhrp"]
+
+[ext_resource type="Script" uid="uid://cb6fycdskruds" path="res://scripts/attack_fire_column.gd" id="1_s64up"]
+[ext_resource type="Texture2D" uid="uid://bnj7qyjuvvmqf" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition11.png" id="2_4imbg"]
+[ext_resource type="Texture2D" uid="uid://doswwl3r08j7n" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition12.png" id="3_5d6a1"]
+[ext_resource type="Texture2D" uid="uid://ct6w37va3gh8j" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition1.png" id="4_swwps"]
+[ext_resource type="Texture2D" uid="uid://pqsg5k3bg5kh" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition2.png" id="5_ugm7p"]
+[ext_resource type="Texture2D" uid="uid://oxqoiofl7aol" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition3.png" id="6_gsq3q"]
+[ext_resource type="Texture2D" uid="uid://c6he868hptovo" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition4.png" id="7_mulkv"]
+[ext_resource type="Texture2D" uid="uid://cniffbq4iwp6f" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition5.png" id="8_o28ch"]
+[ext_resource type="Texture2D" uid="uid://dt3hlq5pcsb32" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition6.png" id="9_ulj1b"]
+[ext_resource type="Texture2D" uid="uid://cny4f01qrxm7" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition7.png" id="10_cya4q"]
+[ext_resource type="Texture2D" uid="uid://boy6m8j50pha7" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition8.png" id="11_he5u3"]
+[ext_resource type="Texture2D" uid="uid://boeqgbesbnxm4" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition9.png" id="12_6rop7"]
+[ext_resource type="Texture2D" uid="uid://blgcnkbfxtat1" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition10.png" id="13_d8hkh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x8eq2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4imbg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_5d6a1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 48.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_swwps")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ugm7p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gsq3q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_mulkv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_o28ch")
+}],
+"loop": false,
+"name": &"pre_spawn",
+"speed": 48.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_ulj1b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_cya4q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_he5u3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_6rop7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_d8hkh")
+}],
+"loop": false,
+"name": &"spawn",
+"speed": 48.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmisn"]
+size = Vector2(58, 32)
+
+[node name="AttackFireColumn" type="Area2D" unique_id=34713465]
+top_level = true
+z_index = 1000
+z_as_relative = false
+texture_filter = 1
+scale = Vector2(2, 2)
+script = ExtResource("1_s64up")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=708753227]
+sprite_frames = SubResource("SpriteFrames_x8eq2")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1105243161]
+shape = SubResource("RectangleShape2D_pmisn")
+
+[node name="Timeout" type="Timer" parent="." unique_id=1217347723]
+wait_time = 2.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="Timeout" to="." method="_on_timeout_timeout"]

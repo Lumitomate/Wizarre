@@ -41,4 +41,7 @@ shape = SubResource("CircleShape2D_uf735")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=127581465]
 shape = SubResource("CircleShape2D_18tsl")
 
+[node name="DamageCooldown" type="Timer" parent="." unique_id=776927860]
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="DamageCooldown" to="." method="_on_damage_cooldown_timeout"]

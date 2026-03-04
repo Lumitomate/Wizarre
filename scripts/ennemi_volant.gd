@@ -4,16 +4,19 @@ extends CharacterBody2D
 @export var lives = 3
 
 var target : Node2D = null
+var can_take_damage: bool = true
 
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("default")
 
+
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_group"):
 		if target == null or position.distance_to(target.position) > position.distance_to(body.position):
 			target=body
-		
+
+
 func _physics_process(_delta: float) -> void:
 	if target!=null:
 		velocity=(target.position-position).normalized()*speed
@@ -28,14 +31,23 @@ func _physics_process(_delta: float) -> void:
 			continue
 		elif collider.is_in_group("player_group"):
 			var player: Sorcerer = collider
+			player.hit(1)
 		
 	move_and_slide()
 
 
 func hit(damage: int):
-	lives -= damage
-	if lives == 0:
-		die()
+	if can_take_damage:
+		lives -= damage
+		if lives == 0:
+			die()
+		$DamageCooldown.start()
+		can_take_damage = false
+
 
 func die():
 	queue_free()
+
+
+func _on_damage_cooldown_timeout() -> void:
+	can_take_damage = true

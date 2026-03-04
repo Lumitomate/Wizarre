@@ -167,6 +167,7 @@ top_level = true
 z_index = 1000
 z_as_relative = false
 texture_filter = 1
+scale = Vector2(2, 2)
 script = ExtResource("1_42uw2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1449287384]

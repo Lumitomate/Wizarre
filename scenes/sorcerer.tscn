@@ -218,22 +218,20 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oqr0g"]
-radius = 25.0
-height = 64.0
 
 [node name="Sorcerer" type="CharacterBody2D" unique_id=1462313974 groups=["player_group"]]
+scale = Vector2(2, 2)
 collision_mask = 5
 script = ExtResource("1_oqr0g")
 sorcerer_color = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=92979516]
 texture_filter = 1
-scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_6urby")
 animation = &"walk_blue"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1715000558]
-position = Vector2(1, 0)
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_oqr0g")
 metadata/_edit_group_ = true
 
@@ -241,6 +239,7 @@ metadata/_edit_group_ = true
 wait_time = 0.4
 
 [node name="DamageCooldown" type="Timer" parent="." unique_id=1327057034]
+wait_time = 0.5
 
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="DamageCooldown" to="." method="_on_damage_cooldown_timeout"]

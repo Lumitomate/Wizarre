@@ -23,6 +23,7 @@ radius = 8.0
 height = 26.0
 
 [node name="Gemme" type="StaticBody2D" unique_id=223549949 groups=["gemme_group"]]
+scale = Vector2(2, 2)
 collision_layer = 4
 script = ExtResource("1_t3frf")
 

@@ -17,7 +17,7 @@ signal ammo_changed
 
 @export var speed: int = 500
 @export var jump_impulse: int = 1500
-@export var fall_acceleration: int = 5000
+@export var fall_acceleration: int = 4000
 @export var sorcerer_color: SorcererColor = SorcererColor.Blue
 @export var controller_id: int = 0
 @export var lives: int = 3

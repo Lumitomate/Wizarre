@@ -6,6 +6,9 @@
 font_color = Color(0, 0, 0, 1)
 
 [node name="PlayersInfo" type="Control" unique_id=1538734950]
+top_level = true
+z_index = 2000
+z_as_relative = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bgd2bh1dj4h4s"]
 
-[ext_resource type="Script" uid="uid://b7cwfl6277f1o" path="res://sorcerer.gd" id="1_4rrgj"]
+[ext_resource type="Script" uid="uid://b7cwfl6277f1o" path="res://scripts/sorcerer.gd" id="1_4rrgj"]
 [ext_resource type="Texture2D" uid="uid://c47c2pecbkiaw" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Marche/SorciersBleu_v1.png" id="2_a5a8m"]
 [ext_resource type="Texture2D" uid="uid://cbj5nyoc8d1w4" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v1.png" id="2_s6och"]
 [ext_resource type="Texture2D" uid="uid://bog18072uth5h" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Marche/SorciersRouge_v2.png" id="3_5vnj0"]

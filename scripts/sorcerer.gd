@@ -22,7 +22,7 @@ signal ammo_changed
 @export var controller_id: int = 0
 @export var lives: int = 3
 
-var fireball_scene = preload("res://attack_fireball.tscn")
+var fireball_scene = preload("res://scenes/attack_fireball.tscn")
 
 var screen_size: Vector2
 var direction: Vector2 = Vector2.RIGHT

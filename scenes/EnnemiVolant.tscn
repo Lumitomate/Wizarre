@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://djvw6uji3ywqf"]
 
-[ext_resource type="Script" uid="uid://dc1hi8w3i7en0" path="res://ennemi_volant.gd" id="1_jiy37"]
+[ext_resource type="Script" uid="uid://dc1hi8w3i7en0" path="res://scripts/ennemi_volant.gd" id="1_jiy37"]
 [ext_resource type="Texture2D" uid="uid://drbue7epok3o1" path="res://assets/sprites/Monstres/MonstreVolant/Monstre_v1.png" id="2_k1557"]
 [ext_resource type="Texture2D" uid="uid://dan7ldq7vnaff" path="res://assets/sprites/Monstres/MonstreVolant/Monstre_v2.png" id="3_byye5"]
 
@@ -24,7 +24,7 @@ radius = 30.016663
 [sub_resource type="CircleShape2D" id="CircleShape2D_18tsl"]
 radius = 280.0875
 
-[node name="EnnemiVolant" type="CharacterBody2D" unique_id=1939251830]
+[node name="EnnemiVolant" type="CharacterBody2D" unique_id=1939251830 groups=["ennemy_group"]]
 collision_mask = 5
 script = ExtResource("1_jiy37")
 

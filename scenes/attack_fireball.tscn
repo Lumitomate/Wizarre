@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bwpoubvmixorv"]
 
-[ext_resource type="Script" uid="uid://do2ms5rk5hhha" path="res://attack_fireball.gd" id="1_g6rmt"]
+[ext_resource type="Script" uid="uid://do2ms5rk5hhha" path="res://scripts/attack_fireball.gd" id="1_g6rmt"]
 [ext_resource type="Texture2D" uid="uid://dbp5efdel2fey" path="res://assets/sprites/BouleDeFeu_V1.png" id="1_irjc6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g6rmt"]

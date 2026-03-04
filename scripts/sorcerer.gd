@@ -23,13 +23,14 @@ signal ammo_changed
 @export var lives: int = 3
 
 var fireball_scene = preload("res://scenes/attack_fireball.tscn")
-var lightray_scene = preload("res://scenes/attack_ray.tscn")
+var lightray_scene = preload("res://scenes/attack_light_ray.tscn")
 
 var screen_size: Vector2
 var direction: Vector2 = Vector2.RIGHT
 var ammunitions: Array = [3, 3, 3]
 var animation_suffix: String
 var can_fire: bool = true
+var can_take_damage: bool = true
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -131,13 +132,20 @@ func fire_attack(attack_type:AttackType) -> void:
 			self.get_parent().add_child(attack)
 
 func hit(damage: int):
-	lives -= damage
-	print("Remaining lives:" + str(lives))
-	if lives == 0:
-		die()
+	if can_take_damage:
+		lives -= damage
+		print("Remaining lives:" + str(lives))
+		if lives == 0:
+			die()
+		$DamageCooldown.start()
+		can_take_damage = false
 	
 func die():
 	queue_free()
 
 func _on_attack_cooldown_timeout() -> void:
 	can_fire = true
+
+
+func _on_damage_cooldown_timeout() -> void:
+	can_take_damage = true

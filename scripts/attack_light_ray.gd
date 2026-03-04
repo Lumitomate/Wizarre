@@ -3,13 +3,13 @@ extends Area2D
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("pre_spawn")
-	scale.x = 0
+	$CollisionShape2D.disabled = true
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	match $AnimatedSprite2D.animation:
 		&"pre_spawn":
 			$AnimatedSprite2D.play("spawn")
-			scale.x = 1
+			$CollisionShape2D.disabled = false
 		&"spawn":
 			queue_free()
 

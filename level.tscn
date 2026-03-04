@@ -34,7 +34,7 @@ position = Vector2(856, 602)
 
 [node name="Gemme3" parent="." unique_id=1918831979 instance=ExtResource("3_oi3di")]
 texture_filter = 1
-position = Vector2(619, 150)
+position = Vector2(618, 150)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1983324273]
 anchor_mode = 0

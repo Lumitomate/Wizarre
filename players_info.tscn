@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://ofcko3su01m"]
+
+[ext_resource type="Script" uid="uid://cge3ebap03toc" path="res://players_info.gd" id="1_pd648"]
+
+[node name="PlayersInfo" type="Control" unique_id=1538734950]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pd648")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1224019641]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.192
+anchor_bottom = 0.062000003
+offset_right = -0.18400574
+offset_bottom = -0.1760025
+
+[node name="Label" type="Label" parent="." unique_id=1116790855]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.192
+anchor_bottom = 0.062000003
+offset_right = -0.18400574
+offset_bottom = -0.1760025

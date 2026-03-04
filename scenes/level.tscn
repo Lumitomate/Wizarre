@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://djvw6uji3ywqf" path="res://scenes/EnnemiVolant.tscn" id="4_0b4ue"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oi3di"]
-texture = ExtResource("2_ppgk2")
+texture = ExtResource("3_f2txt")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, -32, -32, -32, -32, 32, 32, 32)
@@ -71,16 +71,6 @@ tile_map_data = PackedByteArray("AAAAABMAAQABAAEAAAABABMAAQABAAAAAAACABMAAQABAAA
 tile_set = SubResource("TileSet_0b4ue")
 rendering_quadrant_size = 32
 physics_quadrant_size = 32
-
-[node name="Gemme" parent="." unique_id=223549949 instance=ExtResource("3_2r41h")]
-position = Vector2(114, 585)
-
-[node name="Gemme2" parent="." unique_id=1771336560 instance=ExtResource("3_oi3di")]
-position = Vector2(849, 593)
-
-[node name="Gemme3" parent="." unique_id=1918831979 instance=ExtResource("3_2r41h")]
-texture_filter = 1
-position = Vector2(618, 150)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1983324273]
 anchor_mode = 0

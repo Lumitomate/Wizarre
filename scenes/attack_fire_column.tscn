@@ -1,27 +1,67 @@
 [gd_scene format=3 uid="uid://gvbui20wfhrp"]
 
-[ext_resource type="Script" uid="uid://cb6fycdskruds" path="res://scripts/attack_fire_column.gd" id="1_s64up"]
-[ext_resource type="Texture2D" uid="uid://bnj7qyjuvvmqf" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition11.png" id="2_4imbg"]
-[ext_resource type="Texture2D" uid="uid://doswwl3r08j7n" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition12.png" id="3_5d6a1"]
+[ext_resource type="Script" path="res://scripts/attack_fire_column.gd" id="1_s64up"]
+[ext_resource type="Texture2D" uid="uid://bocwsu2s37cxf" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F1.png" id="2_he5u3"]
+[ext_resource type="Texture2D" uid="uid://tcpr64mausgq" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F2.png" id="3_6rop7"]
+[ext_resource type="Texture2D" uid="uid://ccx2dt3el2x5m" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F3.png" id="4_d8hkh"]
 [ext_resource type="Texture2D" uid="uid://ct6w37va3gh8j" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition1.png" id="4_swwps"]
 [ext_resource type="Texture2D" uid="uid://pqsg5k3bg5kh" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition2.png" id="5_ugm7p"]
+[ext_resource type="Texture2D" uid="uid://u0judcvctnby" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F4.png" id="5_x8eq2"]
 [ext_resource type="Texture2D" uid="uid://oxqoiofl7aol" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition3.png" id="6_gsq3q"]
+[ext_resource type="Texture2D" uid="uid://dytc8b5efr5ui" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F5.png" id="6_pmisn"]
+[ext_resource type="Texture2D" uid="uid://c5uvxnslyxkq2" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F6.png" id="7_l5tk3"]
 [ext_resource type="Texture2D" uid="uid://c6he868hptovo" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition4.png" id="7_mulkv"]
+[ext_resource type="Texture2D" uid="uid://cbl558txai2hq" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F7.png" id="8_do1je"]
 [ext_resource type="Texture2D" uid="uid://cniffbq4iwp6f" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition5.png" id="8_o28ch"]
+[ext_resource type="Texture2D" uid="uid://bj2ry4knnwuk8" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F8.png" id="9_gtncw"]
 [ext_resource type="Texture2D" uid="uid://dt3hlq5pcsb32" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition6.png" id="9_ulj1b"]
+[ext_resource type="Texture2D" uid="uid://c0dlcoww28dh2" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F9.png" id="10_1e5gl"]
 [ext_resource type="Texture2D" uid="uid://cny4f01qrxm7" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition7.png" id="10_cya4q"]
+[ext_resource type="Texture2D" uid="uid://ba3wrjlnhvb3q" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F10.png" id="11_bwalr"]
 [ext_resource type="Texture2D" uid="uid://boy6m8j50pha7" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition8.png" id="11_he5u3"]
 [ext_resource type="Texture2D" uid="uid://boeqgbesbnxm4" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition9.png" id="12_6rop7"]
+[ext_resource type="Texture2D" uid="uid://dp733f2volnqq" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F11.png" id="12_kvk3t"]
+[ext_resource type="Texture2D" uid="uid://x1ll4hunoblh" path="res://assets/sprites/Attaques/Feu/Atk_F_Idle/Atk_F12.png" id="13_5r0p1"]
 [ext_resource type="Texture2D" uid="uid://blgcnkbfxtat1" path="res://assets/sprites/Attaques/Feu/Atk_F_Apparition/Atk_F_Apparition10.png" id="13_d8hkh"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x8eq2"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_4imbg")
+"texture": ExtResource("2_he5u3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_5d6a1")
+"texture": ExtResource("3_6rop7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_d8hkh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_x8eq2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_pmisn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_l5tk3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_do1je")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_gtncw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_1e5gl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_bwalr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_kvk3t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_5r0p1")
 }],
 "loop": true,
 "name": &"idle",
@@ -103,7 +143,11 @@ script = ExtResource("1_s64up")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=708753227]
 sprite_frames = SubResource("SpriteFrames_x8eq2")
+<<<<<<< HEAD
 animation = &"spawn"
+=======
+animation = &"pre_spawn"
+>>>>>>> 6c45d5119f5d7a09a5583cb4710cef3734f0b7f2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1105243161]
 shape = SubResource("RectangleShape2D_pmisn")

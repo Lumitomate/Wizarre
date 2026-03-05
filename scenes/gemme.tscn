@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://bvryw55sh6bd4" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_Glace2.png" id="3_msjm0"]
 [ext_resource type="Texture2D" uid="uid://wa1pylbpkhwg" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_Plante1.png" id="4_dg5nj"]
 [ext_resource type="Texture2D" uid="uid://dvmmval8ljttg" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_Plante2.png" id="5_2c2j5"]
+[ext_resource type="Texture2D" uid="uid://x35ewtq35s2i" path="res://assets/sprites/Gemnes/Gemne_Lumiere/Gemne_Lumiere1.png" id="8_dg5nj"]
+[ext_resource type="Texture2D" uid="uid://brhj44oxlbbgy" path="res://assets/sprites/Gemnes/Gemne_Lumiere/Gemne_Lumiere2.png" id="9_2c2j5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xnphv"]
 animations = [{
@@ -42,6 +44,17 @@ animations = [{
 "loop": true,
 "name": &"shine_red",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_dg5nj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2c2j5")
+}],
+"loop": true,
+"name": &"shine_yellow",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2gl1y"]
@@ -56,7 +69,7 @@ script = ExtResource("1_t3frf")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=863865798]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xnphv")
-animation = &"shine_red"
+animation = &"shine_yellow"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=535685155]
 position = Vector2(0, -3)

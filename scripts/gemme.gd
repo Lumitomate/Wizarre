@@ -2,8 +2,8 @@ class_name Gemme extends Area2D
 
 enum GemmeColor {
 	Red,
-	Green,
 	Blue,
+	Yellow,
 }
 
 
@@ -19,8 +19,8 @@ func _ready() -> void:
 			animation_suffix = "blue"
 		GemmeColor.Red:
 			animation_suffix = "red"
-		GemmeColor.Green:
-			animation_suffix = "green"
+		GemmeColor.Yellow:
+			animation_suffix = "yellow"
 	$AnimatedSprite2D.play("shine_" + animation_suffix)
 
 

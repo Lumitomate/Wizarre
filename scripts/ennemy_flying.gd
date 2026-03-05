@@ -15,9 +15,10 @@ var damage_label_scene = preload("res://scenes/damage_label.tscn")
 
 
 func _ready() -> void:
+	var screen_size = get_viewport_rect().size
 	level_scale = get_parent().transform.get_scale()
 	$AnimatedSprite2D.play("default")
-	velocity = Vector2(1 - 2 * randf(), 1 - 2 * randf()).normalized() * speed
+	velocity = position.direction_to(screen_size / 2).rotated( 0.1  *randf()).normalized() * speed
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:

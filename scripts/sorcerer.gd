@@ -107,15 +107,19 @@ func fire_attack(attack_family:AttackFamily) -> void:
 	if ammunitions[attack_family] > 0:
 		
 		var attack_type: int
+		var attack_tier: int
 		match attack_family:
 			AttackFamily.Red:
 				attack_type = attack_launcher.AttackType.FIRECOLUMN
+				attack_tier = attack_launcher.AttackTier.I
 			AttackFamily.Blue:
 				attack_type = attack_launcher.AttackType.ICEBALL
+				attack_tier = attack_launcher.AttackTier.I
 			AttackFamily.Yellow:
 				attack_type = attack_launcher.AttackType.LIGHTRAY
+				attack_tier = attack_launcher.AttackTier.I
 
-		var attack_list = attack_launcher.spawn_attack(attack_type, position, direction, screen_size, level_scale)
+		var attack_list = attack_launcher.spawn_attack(attack_type, attack_tier, position, direction, screen_size, level_scale)
 
 		ammunitions[attack_family] -= 1
 		ammo_changed.emit(attack_family, ammunitions[attack_family])

@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://ckrks82n238sb"
-path="res://.godot/imported/Chronicles_of_ArkMar.ttf-dd485dcc206475996879110f1578aafd.fontdata"
+path="res://.godot/imported/Chronicles_of_ArkMar.ttf-a2d997145ff53aec04bb6b73a71125ad.fontdata"
 
 [deps]
 
-source_file="res://font/Chronicles_of_ArkMar.ttf"
-dest_files=["res://.godot/imported/Chronicles_of_ArkMar.ttf-dd485dcc206475996879110f1578aafd.fontdata"]
+source_file="res://assets/font/Chronicles_of_ArkMar.ttf"
+dest_files=["res://.godot/imported/Chronicles_of_ArkMar.ttf-a2d997145ff53aec04bb6b73a71125ad.fontdata"]
 
 [params]
 

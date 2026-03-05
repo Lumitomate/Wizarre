@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cev3h38vue6f1"]
 
-[ext_resource type="FontFile" uid="uid://ckrks82n238sb" path="res://font/Chronicles_of_ArkMar.ttf" id="1_deb5q"]
+[ext_resource type="FontFile" uid="uid://ckrks82n238sb" path="res://assets/font/Chronicles_of_ArkMar.ttf" id="1_deb5q"]
 [ext_resource type="Script" uid="uid://dxcbymjm52cdr" path="res://scripts/damage_label.gd" id="1_ovn2n"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ovn2n"]

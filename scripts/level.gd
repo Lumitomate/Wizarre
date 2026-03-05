@@ -17,6 +17,7 @@ func _ready() -> void:
 			add_player(controller_id)
 	Input.connect("joy_connection_changed", _on_joy_connection_changed)
 	$ProgressBar.set_percent(0)
+	$AudioStreamPlayer.play()
 
 
 func _on_joy_connection_changed(_device: int, _connected: bool) -> void:

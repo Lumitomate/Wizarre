@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://co1gwjkps8hvc" path="res://scenes/torche.tscn" id="8_b121j"]
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Terrains/Terrain1_Fond.png" id="9_8c41q"]
 [ext_resource type="PackedScene" uid="uid://uar7blb4jike" path="res://scenes/progress_bar.tscn" id="9_olg7q"]
+[ext_resource type="AudioStream" uid="uid://x8r5wa8nng4e" path="res://assets/sound/theme.mp3" id="10_olg7q"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8gofh"]
 texture = ExtResource("3_f2txt")
@@ -64,7 +65,6 @@ sources/0 = SubResource("TileSetAtlasSource_8gofh")
 texture_filter = 1
 scale = Vector2(0.7, 0.7)
 script = ExtResource("1_0b4ue")
-ennemies_to_kill = 1
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1625668394]
 z_index = 50
@@ -140,6 +140,9 @@ offset_left = 547.0
 offset_top = 46.0
 offset_right = 547.07996
 offset_bottom = 46.079998
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=580644228]
+stream = ExtResource("10_olg7q")
 
 [connection signal="block_spawn" from="." to="EnnemySpawner" method="_on_block_spawn"]
 [connection signal="block_spawn" from="." to="EnnemySpawner2" method="_on_block_spawn"]

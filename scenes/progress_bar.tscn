@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://uar7blb4jike"]
 
 [ext_resource type="Script" uid="uid://cau6ufohpebi5" path="res://scripts/progress_bar.gd" id="1_vt3ux"]
-[ext_resource type="FontFile" uid="uid://ckrks82n238sb" path="res://font/Chronicles_of_ArkMar.ttf" id="2_8un81"]
+[ext_resource type="FontFile" uid="uid://ckrks82n238sb" path="res://assets/font/Chronicles_of_ArkMar.ttf" id="2_8un81"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wqjxn"]
 font = ExtResource("2_8un81")

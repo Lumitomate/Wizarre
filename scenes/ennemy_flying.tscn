@@ -28,6 +28,7 @@ radius = 139.60658
 scale = Vector2(2, 2)
 collision_mask = 5
 script = ExtResource("1_jiy37")
+lives = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=262320199]
 texture_filter = 1

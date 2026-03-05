@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cmoijb06mogww"]
+
+[ext_resource type="Texture2D" uid="uid://bb3plykqg6dvk" path="res://assets/sprites/Terrains/Torche_1/Torche1.png" id="1_6h7qi"]
+[ext_resource type="Texture2D" uid="uid://bba4srgdrx583" path="res://assets/sprites/Terrains/Torche_1/Torche2.png" id="2_jmw1a"]
+[ext_resource type="Texture2D" uid="uid://dkgvmhpm26ico" path="res://assets/sprites/Terrains/Torche_1/Torche3.png" id="3_xjcid"]
+[ext_resource type="Texture2D" uid="uid://b3h0d4viookkg" path="res://assets/sprites/Terrains/Torche_1/Torche4.png" id="4_mn4lm"]
+[ext_resource type="Texture2D" uid="uid://bkpi4ckhnjqfd" path="res://assets/sprites/Terrains/Torche_1/Torche5.png" id="5_o3rey"]
+[ext_resource type="Texture2D" uid="uid://cxp76vasgy273" path="res://assets/sprites/Terrains/Torche_1/Torche6.png" id="6_754vi"]
+[ext_resource type="Texture2D" uid="uid://w2w726ouo51k" path="res://assets/sprites/Terrains/Torche_1/Torche7.png" id="7_tj0kg"]
+[ext_resource type="Texture2D" uid="uid://b5odu2dfbldyq" path="res://assets/sprites/Terrains/Torche_1/Torche8.png" id="8_edkvv"]
+[ext_resource type="Texture2D" uid="uid://bc8sc26yehegr" path="res://assets/sprites/Terrains/Torche_1/Torche9.png" id="9_yytnv"]
+[ext_resource type="Texture2D" uid="uid://coqi0df2pc3wq" path="res://assets/sprites/Terrains/Torche_1/Torche10.png" id="10_qrd1i"]
+[ext_resource type="Texture2D" uid="uid://c7rr13byp07lh" path="res://assets/sprites/Terrains/Torche_1/Torche11.png" id="11_7gx5c"]
+[ext_resource type="Texture2D" uid="uid://dvgn2mxdbtw8b" path="res://assets/sprites/Terrains/Torche_1/Torche12.png" id="12_tm7fo"]
+[ext_resource type="Script" uid="uid://ckaonnsdo7bcn" path="res://scripts/torche.gd" id="13_ra5nj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u10ce"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6h7qi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_jmw1a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_xjcid")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_mn4lm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_o3rey")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_754vi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_tj0kg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_edkvv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_yytnv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_qrd1i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_7gx5c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_tm7fo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 24.0
+}]
+
+[node name="Torche" type="AnimatedSprite2D" unique_id=1194411659]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_u10ce")
+script = ExtResource("13_ra5nj")

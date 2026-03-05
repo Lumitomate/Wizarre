@@ -1,9 +1,166 @@
 [gd_scene format=3 uid="uid://dig4mpq1rxqfl"]
 
 [ext_resource type="Script" uid="uid://mexra65pmnxf" path="res://scripts/spawner_ennemy.gd" id="1_kuoj2"]
+[ext_resource type="Texture2D" uid="uid://vtvu6ucmbft4" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn1.png" id="2_w6ubc"]
+[ext_resource type="Texture2D" uid="uid://cxdm275aydrt1" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn2.png" id="3_dgmrw"]
+[ext_resource type="Texture2D" uid="uid://c3k3rw1g6ftku" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn3.png" id="4_6diyj"]
+[ext_resource type="Texture2D" uid="uid://nv5jxs6iwi2h" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn4.png" id="5_h7ekj"]
+[ext_resource type="Texture2D" uid="uid://d31jlujvqattb" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn5.png" id="6_stn82"]
+[ext_resource type="Texture2D" uid="uid://bse3in5do12v5" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn6.png" id="7_ic36u"]
+[ext_resource type="Texture2D" uid="uid://c4qfc6jbprsdg" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn7.png" id="8_hvw5g"]
+[ext_resource type="Texture2D" uid="uid://ua8v3xrfrr4t" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn8.png" id="9_t4a2t"]
+[ext_resource type="Texture2D" uid="uid://c4wix4k2xjfwh" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn9.png" id="10_e0gd6"]
+[ext_resource type="Texture2D" uid="uid://ct8jqb3gu7p2v" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn10.png" id="11_pq0jv"]
+[ext_resource type="Texture2D" uid="uid://cxhismp2cprwx" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn11.png" id="12_rjkjr"]
+[ext_resource type="Texture2D" uid="uid://b243rl3f2mrmr" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn12.png" id="13_4ego4"]
+[ext_resource type="Texture2D" uid="uid://bnjbgn8h2iesh" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn13.png" id="14_h5ivs"]
+[ext_resource type="Texture2D" uid="uid://ibmlti7axthx" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn14.png" id="15_qmwe1"]
+[ext_resource type="Texture2D" uid="uid://c4s1c6kesllh0" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn15.png" id="16_6btjo"]
+[ext_resource type="Texture2D" uid="uid://cdlswu0gex1iy" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn16.png" id="17_s322x"]
+[ext_resource type="Texture2D" uid="uid://fs8ecu5p4uai" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn17.png" id="18_pnlvt"]
+[ext_resource type="Texture2D" uid="uid://b55ktamgjogob" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn18.png" id="19_l7ikb"]
+[ext_resource type="Texture2D" uid="uid://d1sxrno67y343" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn19.png" id="20_e3loc"]
+[ext_resource type="Texture2D" uid="uid://dbnufsao512el" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn20.png" id="21_7fxiq"]
+[ext_resource type="Texture2D" uid="uid://b5gkan228smck" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn21.png" id="22_mhaih"]
+[ext_resource type="Texture2D" uid="uid://lulo7n0h57k6" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn22.png" id="23_cb1x5"]
+[ext_resource type="Texture2D" uid="uid://cyits6k41nnxu" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn23.png" id="24_xmvy2"]
+[ext_resource type="Texture2D" uid="uid://np1rr7o0b717" path="res://assets/sprites/Monstres/PortailSpawn/PortailSpawn24.png" id="25_m8bjp"]
+[ext_resource type="Texture2D" uid="uid://sq8c6c0kmjgu" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V2.png" id="26_av3aq"]
+[ext_resource type="Texture2D" uid="uid://bupuf75hg7pta" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V3.png" id="27_2ttgb"]
+[ext_resource type="Texture2D" uid="uid://b046s3vgbmd2t" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V4.png" id="28_7qui7"]
+[ext_resource type="Texture2D" uid="uid://gfj56dwbjvho" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V5.png" id="29_hp1w8"]
+[ext_resource type="Texture2D" uid="uid://cyi7fepueggrl" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V6.png" id="30_hio4a"]
+[ext_resource type="Texture2D" uid="uid://cw1c6rx2ptfgv" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V7.png" id="31_w8ir1"]
+[ext_resource type="Texture2D" uid="uid://dhp43c632u6og" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V8.png" id="32_wsuw7"]
+[ext_resource type="Texture2D" uid="uid://n8wo1u4llyjp" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V9.png" id="33_7g7wb"]
+[ext_resource type="Texture2D" uid="uid://gkj8jy5ynxun" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V10.png" id="34_3temx"]
+[ext_resource type="Texture2D" uid="uid://beqccbkln3yx1" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V11.png" id="35_itb3f"]
+[ext_resource type="Texture2D" uid="uid://bmsie4xg4flll" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V12.png" id="36_0i6ru"]
+[ext_resource type="Texture2D" uid="uid://bjshy6a44s0pv" path="res://assets/sprites/Monstres/PortailIdle_v2/PortailIdle_V13.png" id="37_77tlp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l0152"]
 radius = 211.25577
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aqq4q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_w6ubc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_dgmrw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6diyj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_h7ekj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_stn82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ic36u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hvw5g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_t4a2t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_e0gd6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_pq0jv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_rjkjr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_4ego4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_h5ivs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_qmwe1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_6btjo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_s322x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_pnlvt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_l7ikb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_e3loc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_7fxiq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_mhaih")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_cb1x5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_xmvy2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_m8bjp")
+}],
+"loop": false,
+"name": &"SpawnerApparition",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_av3aq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_2ttgb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_7qui7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_hp1w8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_hio4a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_w8ir1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_wsuw7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_7g7wb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_3temx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_itb3f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_0i6ru")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_77tlp")
+}],
+"loop": true,
+"name": &"SpawnerIdle",
+"speed": 12.0
+}]
 
 [node name="EnnemySpawner" type="Area2D" unique_id=1560592956]
 scale = Vector2(2, 2)
@@ -15,6 +172,12 @@ shape = SubResource("CircleShape2D_l0152")
 [node name="SpawnCooldown" type="Timer" parent="." unique_id=1270937810]
 wait_time = 10.0
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1497100654]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_aqq4q")
+animation = &"SpawnerApparition"
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="timeout" from="SpawnCooldown" to="." method="_on_spawn_cooldown_timeout"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

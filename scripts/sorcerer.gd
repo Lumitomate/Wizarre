@@ -95,6 +95,7 @@ func _physics_process(delta: float) -> void:
 
 func fire_attack(attack_family:AttackFamily) -> void:
 	var attack_launcher = attack_launcher_script.new()
+	var scale: Vector2 = get_parent().transform.get_scale()
 	
 	if ammunitions[attack_family] > 0:
 		
@@ -107,7 +108,7 @@ func fire_attack(attack_family:AttackFamily) -> void:
 			AttackFamily.Blue:
 				attack_type = attack_launcher.AttackType.LIGHTRAY
 
-		var attack_list = attack_launcher.spawn_attack(attack_type, position, direction, screen_size)
+		var attack_list = attack_launcher.spawn_attack(attack_type, scale * position, direction, screen_size)
 
 		ammunitions[attack_family] -= 1
 		ammo_changed.emit(attack_family, ammunitions[attack_family])

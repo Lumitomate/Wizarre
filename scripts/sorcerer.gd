@@ -25,6 +25,7 @@ signal ammo_changed
 @export var lives: int = 3
 
 const attack_launcher_script = preload("res://scripts/spawner_attack.gd")
+var damage_label_scene = preload("res://scenes/damage_label.tscn")
 
 var screen_size: Vector2
 var direction: Vector2 = Vector2.RIGHT
@@ -32,10 +33,13 @@ var ammunitions: Array = [3, 3, 3]
 var animation_suffix: String
 var can_fire: bool = true
 var can_take_damage: bool = true
+var level_scale: Vector2
 
 
 func _ready() -> void:
+	print("pop")
 	screen_size = get_viewport_rect().size
+	level_scale = get_parent().transform.get_scale()
 	position = screen_size / 2
 	position += Vector2(0, SPRITE_SIZE * controller_id)
 
@@ -52,14 +56,17 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if Input.get_joy_axis(controller_id, JOY_AXIS_LEFT_X) < -0.2:
+	var new_direction = Vector2(Input.get_joy_axis(controller_id, JOY_AXIS_LEFT_X), Input.get_joy_axis(controller_id, JOY_AXIS_LEFT_Y))
+	if new_direction.length() > 0.2:
+		direction = new_direction
+	else:
+		direction = Vector2(Vector2.RIGHT.dot(direction), 0.00001).normalized() * 0.1
+	if direction.x < -0.2:
 		$AnimatedSprite2D.flip_h = true
 		$AnimatedSprite2D.play("walk_" + animation_suffix)
-		direction = Vector2.LEFT
-	elif Input.get_joy_axis(controller_id, JOY_AXIS_LEFT_X) > 0.2:
+	elif direction.x > 0.2:
 		$AnimatedSprite2D.flip_h = false
 		$AnimatedSprite2D.play("walk_" + animation_suffix)
-		direction = Vector2.RIGHT
 	else:
 		$AnimatedSprite2D.stop()
 		
@@ -95,7 +102,6 @@ func _physics_process(delta: float) -> void:
 
 func fire_attack(attack_family:AttackFamily) -> void:
 	var attack_launcher = attack_launcher_script.new()
-	var scale: Vector2 = get_parent().transform.get_scale()
 	
 	if ammunitions[attack_family] > 0:
 		
@@ -108,7 +114,7 @@ func fire_attack(attack_family:AttackFamily) -> void:
 			AttackFamily.Blue:
 				attack_type = attack_launcher.AttackType.LIGHTRAY
 
-		var attack_list = attack_launcher.spawn_attack(attack_type, scale * position, direction, screen_size)
+		var attack_list = attack_launcher.spawn_attack(attack_type, level_scale * position, direction, screen_size)
 
 		ammunitions[attack_family] -= 1
 		ammo_changed.emit(attack_family, ammunitions[attack_family])
@@ -127,6 +133,9 @@ func add_ammo(ammo_type: int, ammo_amount: int) -> void:
 func hit(damage: int):
 	if can_take_damage:
 		lives -= damage
+		var damage_label = damage_label_scene.instantiate()
+		damage_label.position = level_scale * (position - Vector2(0, 64))
+		get_parent().add_child(damage_label)
 		if lives == 0:
 			die()
 		$DamageCooldown.start()

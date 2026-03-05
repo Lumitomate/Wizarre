@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ofcko3su01m"]
 
 [ext_resource type="Script" uid="uid://cge3ebap03toc" path="res://scripts/players_info.gd" id="1_7gnvh"]
+[ext_resource type="FontFile" uid="uid://ckrks82n238sb" path="res://font/Chronicles_of_ArkMar.ttf" id="2_bu7jh"]
 [ext_resource type="Texture2D" uid="uid://57mql3nc0xwq" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu1.png" id="2_eads4"]
 [ext_resource type="Texture2D" uid="uid://dbrmawj3wc7tl" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu2.png" id="3_qsx5x"]
 [ext_resource type="Texture2D" uid="uid://wa1pylbpkhwg" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_Plante1.png" id="4_ht4ja"]
@@ -9,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bvryw55sh6bd4" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_Glace2.png" id="7_pi2wo"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7gnvh"]
+font = ExtResource("2_bu7jh")
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0uv2a"]
@@ -55,8 +57,9 @@ animations = [{
 
 [node name="PlayersInfo" type="Control" unique_id=1538734950]
 top_level = true
-z_index = 2000
+z_index = 700
 z_as_relative = false
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

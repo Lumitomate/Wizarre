@@ -10,9 +10,13 @@ signal ennemy_killed
 var target : Node2D = null
 var can_take_damage: bool = true
 var is_bouncing: bool = false
+var level_scale: Vector2
+
+var damage_label_scene = preload("res://scenes/damage_label.tscn")
 
 
 func _ready() -> void:
+	level_scale = get_parent().transform.get_scale()
 	$AnimatedSprite2D.play("default")
 	velocity = Vector2(1 - 2 * randf(), 1 - 2 * randf()).normalized() * speed
 
@@ -23,7 +27,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			target=body
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !is_bouncing:
 		if velocity.x > 0:
 			$AnimatedSprite2D.flip_h = true
@@ -60,6 +64,10 @@ func bounce_on(collider: CollisionObject2D) -> void:
 
 
 func hit(damage: int):
+	var damage_label = damage_label_scene.instantiate()
+	damage_label.position = level_scale * (position - Vector2(0, 64))
+	damage_label.amount = damage
+	get_parent().add_child(damage_label)
 	if can_take_damage:
 		lives -= damage
 		if lives == 0:

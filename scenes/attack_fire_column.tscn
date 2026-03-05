@@ -149,7 +149,7 @@ animation = &"spawn"
 shape = SubResource("RectangleShape2D_pmisn")
 
 [node name="Timeout" type="Timer" parent="." unique_id=1217347723]
-wait_time = 2.0
+wait_time = 3.0
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1246607818]
 amount = 30

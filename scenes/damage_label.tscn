@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cev3h38vue6f1"]
+
+[ext_resource type="FontFile" uid="uid://ckrks82n238sb" path="res://font/Chronicles_of_ArkMar.ttf" id="1_deb5q"]
+[ext_resource type="Script" uid="uid://dxcbymjm52cdr" path="res://scripts/damage_label.gd" id="1_ovn2n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ovn2n"]
+font = ExtResource("1_deb5q")
+font_size = 12
+
+[node name="DamageLabel" type="Label" unique_id=199994268]
+top_level = true
+z_index = 1200
+z_as_relative = false
+texture_filter = 1
+text = "-1"
+label_settings = SubResource("LabelSettings_ovn2n")
+script = ExtResource("1_ovn2n")
+
+[node name="Opacity" type="Timer" parent="." unique_id=1912702160]
+wait_time = 0.7
+
+[connection signal="timeout" from="Opacity" to="." method="_on_opacity_timeout"]

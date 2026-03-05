@@ -1,20 +1,25 @@
 class_name PlayerInfo extends Control
 
 enum ColorId {
-	Blue,
 	Red,
 	Green,
+	Blue,
 	Yellow
 }
 
 var ammunitions: Array[int] = [0, 0, 0]
 
 func _ready() -> void:
+	$AnimatedSprite2DRed.play()
+	$AnimatedSprite2DGreen.play()
+	$AnimatedSprite2DBlue.play()
 	refresh_text()
 
 
 func refresh_text() -> void:
-	$Label.text = "[Red: " + str(ammunitions[0]) + "] [Blue: " + str(ammunitions[1]) + "] [Green: " + str(ammunitions[2]) + "]"
+	$LabelRed.text = "x" + str(ammunitions[0])
+	$LabelGreen.text = "x" + str(ammunitions[1])
+	$LabelBlue.text = "x" + str(ammunitions[2])
 
 
 func set_bg_color(color_id: ColorId):

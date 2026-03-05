@@ -1,9 +1,9 @@
 class_name Gemme extends Area2D
 
 enum GemmeColor {
-	Blue,
 	Red,
-	Green
+	Green,
+	Blue,
 }
 
 

@@ -6,8 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://bullkflr3xioa" path="res://scenes/spawner_gemme.tscn" id="5_ppgk2"]
 [ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Terrains/Terrain1_PortesEntree.png" id="6_klq6b"]
 [ext_resource type="Texture2D" uid="uid://b5vfvxr5ve361" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture1.png" id="7_b121j"]
-[ext_resource type="PackedScene" uid="uid://cmoijb06mogww" path="res://scenes/Torche.tscn" id="8_b121j"]
+[ext_resource type="PackedScene" uid="uid://co1gwjkps8hvc" path="res://scenes/Torche.tscn" id="8_b121j"]
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Terrains/Terrain1_Fond.png" id="9_8c41q"]
+[ext_resource type="PackedScene" uid="uid://uar7blb4jike" path="res://scenes/progress_bar.tscn" id="9_olg7q"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oi3di"]
 texture = ExtResource("3_f2txt")
@@ -135,3 +136,9 @@ z_index = -1000
 position = Vector2(903.05194, 577.1428)
 scale = Vector2(2.0819807, 2.1996753)
 texture = ExtResource("9_8c41q")
+
+[node name="ProgressBar" parent="." unique_id=542118470 instance=ExtResource("9_olg7q")]
+offset_left = 547.0
+offset_top = 46.0
+offset_right = 547.07996
+offset_bottom = 46.079998

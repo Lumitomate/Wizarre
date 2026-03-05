@@ -41,7 +41,7 @@ func add_player(controller_id):
 	
 	# Adding HUD for player
 	var player_info : PlayerInfo = player_info_scene.instantiate()
-	player_info.position = Vector2(8, 46) + Vector2(269 * (controller_id + controller_id / 2), 0)
+	player_info.position = Vector2(8, 25) + Vector2(269 * (controller_id + controller_id / 2), 0)
 	player_info.set_bg_color(controller_id % 4)
 	player_info.ammunitions = ammunitions
 	player_info.lives = lives

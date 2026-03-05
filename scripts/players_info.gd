@@ -72,15 +72,7 @@ func refresh_status() -> void:
 				$HudGemneG.frame = ammo_nb
 
 func set_bg_color(color_id: ColorId):
-	match color_id:
-		ColorId.Blue:
-			$ColorRect.color = Color(0.379, 0.573, 1.0, 1.0)
-		ColorId.Red:
-			$ColorRect.color = Color(1.0, 0.313, 0.345, 1.0)
-		ColorId.Green:
-			$ColorRect.color = Color(0.53, 1.0, 0.528, 1.0)
-		ColorId.Yellow:
-			$ColorRect.color = Color(1.0, 0.87, 0.277, 1.0)
+		$SorcereColor.frame=color_id
 
 
 func _on_ammo_changed(ammunition_type: int, ammunition_amount: int):

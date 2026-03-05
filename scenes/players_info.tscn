@@ -24,6 +24,9 @@
 [ext_resource type="Texture2D" uid="uid://d3v07r2ujc5pv" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L5.png" id="22_pgsuc"]
 [ext_resource type="Texture2D" uid="uid://dmisep5hf2178" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L6.png" id="23_g10hg"]
 [ext_resource type="Texture2D" uid="uid://b4tmr2miuxa01" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Statique/Sorciers_v1.png" id="24_kjyfp"]
+[ext_resource type="Texture2D" uid="uid://bnj384ytu6c1o" path="res://assets/sprites/Sorciers/SorcierVert/SorcierVert_Marche/SorciersVert_v1.png" id="25_66dwk"]
+[ext_resource type="Texture2D" uid="uid://6ad6gkd6gxo1" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierBleu_Statique/Sorciers_v1.png" id="26_00fc2"]
+[ext_resource type="Texture2D" uid="uid://dm4watddfelvy" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJaune_Marche/SorciersJaune_v1.png" id="27_kca0o"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_krlww"]
 animations = [{
@@ -123,6 +126,26 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_5d6nw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_kjyfp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_66dwk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_00fc2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_kca0o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="PlayersInfo" type="Control" unique_id=1538734950]
 top_level = true
 z_index = 700
@@ -164,8 +187,8 @@ texture_filter = 1
 position = Vector2(108, 48)
 sprite_frames = SubResource("SpriteFrames_ofu1f")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1854751032]
+[node name="SorcereColor" type="AnimatedSprite2D" parent="." unique_id=1271559708]
 texture_filter = 1
 position = Vector2(16, 16)
 scale = Vector2(0.875, 0.875)
-texture = ExtResource("24_kjyfp")
+sprite_frames = SubResource("SpriteFrames_5d6nw")

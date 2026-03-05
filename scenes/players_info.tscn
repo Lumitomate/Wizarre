@@ -1,54 +1,124 @@
 [gd_scene format=3 uid="uid://ofcko3su01m"]
 
 [ext_resource type="Script" uid="uid://cge3ebap03toc" path="res://scripts/players_info.gd" id="1_7gnvh"]
-[ext_resource type="Texture2D" uid="uid://57mql3nc0xwq" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu1.png" id="2_eads4"]
-[ext_resource type="Texture2D" uid="uid://dbrmawj3wc7tl" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu2.png" id="3_qsx5x"]
-[ext_resource type="Texture2D" uid="uid://wa1pylbpkhwg" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_Plante1.png" id="4_ht4ja"]
-[ext_resource type="Texture2D" uid="uid://dvmmval8ljttg" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_Plante2.png" id="5_bu7jh"]
-[ext_resource type="Texture2D" uid="uid://bpnpsqv0ugmeq" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_Glace1.png" id="6_8x07w"]
-[ext_resource type="Texture2D" uid="uid://bvryw55sh6bd4" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_Glace2.png" id="7_pi2wo"]
+[ext_resource type="Texture2D" uid="uid://bjyatq7byftyo" path="res://assets/sprites/HUD/HUD_Vie/HUD1.png" id="2_44t8h"]
+[ext_resource type="Texture2D" uid="uid://dy0ntiq0rsfnx" path="res://assets/sprites/HUD/HUD_Vie/HUD2.png" id="3_b3nex"]
+[ext_resource type="Texture2D" uid="uid://dehjusowfnr0n" path="res://assets/sprites/HUD/HUD_Vie/HUD3.png" id="4_j6iyc"]
+[ext_resource type="Texture2D" uid="uid://b645khx6o4sq4" path="res://assets/sprites/HUD/HUD_Vie/HUD4.png" id="5_66dwk"]
+[ext_resource type="Texture2D" uid="uid://c1hja8b1dm3x5" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F1.png" id="6_00fc2"]
+[ext_resource type="Texture2D" uid="uid://ckquxqx53uskj" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F2.png" id="7_kca0o"]
+[ext_resource type="Texture2D" uid="uid://bxpy0hg8pbxma" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F3.png" id="8_5d6nw"]
+[ext_resource type="Texture2D" uid="uid://c6ideklyy74b4" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F4.png" id="9_kgxd7"]
+[ext_resource type="Texture2D" uid="uid://glyaoctiq3rm" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F5.png" id="10_l2hgu"]
+[ext_resource type="Texture2D" uid="uid://b6h0c1wbo7kjr" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F6.png" id="11_mxla8"]
+[ext_resource type="Texture2D" uid="uid://bagrsnju38cve" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G1.png" id="12_umabx"]
+[ext_resource type="Texture2D" uid="uid://16yvwx6xipsp" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G2.png" id="13_n0qsi"]
+[ext_resource type="Texture2D" uid="uid://dvyqnf2o3svhq" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G3.png" id="14_a6tsk"]
+[ext_resource type="Texture2D" uid="uid://b0rf7tjyrlstl" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G4.png" id="15_78uoy"]
+[ext_resource type="Texture2D" uid="uid://wyrr2betk6nx" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G5.png" id="16_cyygo"]
+[ext_resource type="Texture2D" uid="uid://b12sgj6r4v27y" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G6.png" id="17_okm7f"]
+[ext_resource type="Texture2D" uid="uid://wjxaitdmlvtg" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L1.png" id="18_538yq"]
+[ext_resource type="Texture2D" uid="uid://iajnw1y6gnbw" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L2.png" id="19_hmiu3"]
+[ext_resource type="Texture2D" uid="uid://c77ma44aggiko" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L3.png" id="20_gl62j"]
+[ext_resource type="Texture2D" uid="uid://dmigmo53d870d" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L4.png" id="21_8uo1w"]
+[ext_resource type="Texture2D" uid="uid://d3v07r2ujc5pv" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L5.png" id="22_pgsuc"]
+[ext_resource type="Texture2D" uid="uid://dmisep5hf2178" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L6.png" id="23_g10hg"]
+[ext_resource type="Texture2D" uid="uid://b4tmr2miuxa01" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierRouge_Statique/Sorciers_v1.png" id="24_kjyfp"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_7gnvh"]
-font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_0uv2a"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_krlww"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_eads4")
+"texture": ExtResource("2_44t8h")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_qsx5x")
+"texture": ExtResource("3_b3nex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_j6iyc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_66dwk")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_mg6rk"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_sc1xs"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_ht4ja")
+"texture": ExtResource("6_00fc2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_bu7jh")
+"texture": ExtResource("7_kca0o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5d6nw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_kgxd7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_l2hgu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_mxla8")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_mmaxw"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ifto1"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_8x07w")
+"texture": ExtResource("12_umabx")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_pi2wo")
+"texture": ExtResource("13_n0qsi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_a6tsk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_78uoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_cyygo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_okm7f")
 }],
-"loop": true,
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ofu1f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_538yq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_hmiu3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_gl62j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_8uo1w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_pgsuc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_g10hg")
+}],
+"loop": false,
 "name": &"default",
 "speed": 5.0
 }]
@@ -61,70 +131,40 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1102.0
-offset_bottom = -676.0
+offset_right = -1152.0
+offset_bottom = -656.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7gnvh")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1224019641]
 layout_mode = 0
-offset_right = 178.0
-offset_bottom = 44.0
+offset_right = 128.0
+offset_bottom = 64.0
+color = Color(0, 0, 0, 1)
 
-[node name="LabelRed" type="Label" parent="." unique_id=1116790855]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 30.0
-offset_top = 10.0
-offset_right = -112.0
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "x3"
-label_settings = SubResource("LabelSettings_7gnvh")
-
-[node name="LabelGreen" type="Label" parent="." unique_id=153474684]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 87.0
-offset_top = 10.0
-offset_right = -55.0
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "x3"
-label_settings = SubResource("LabelSettings_7gnvh")
-
-[node name="LabelBlue" type="Label" parent="." unique_id=1061213937]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 145.0
-offset_top = 10.0
-offset_right = 3.0
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "x3"
-label_settings = SubResource("LabelSettings_7gnvh")
-
-[node name="AnimatedSprite2DRed" type="AnimatedSprite2D" parent="." unique_id=1532890294]
+[node name="HudVie" type="AnimatedSprite2D" parent="." unique_id=483132872]
 texture_filter = 1
-position = Vector2(19, 26)
-sprite_frames = SubResource("SpriteFrames_0uv2a")
+position = Vector2(64, 16)
+sprite_frames = SubResource("SpriteFrames_krlww")
 
-[node name="AnimatedSprite2DGreen" type="AnimatedSprite2D" parent="." unique_id=2076161793]
+[node name="HudGemneF" type="AnimatedSprite2D" parent="." unique_id=1959046259]
 texture_filter = 1
-position = Vector2(76, 26)
-sprite_frames = SubResource("SpriteFrames_mg6rk")
+position = Vector2(20, 48)
+sprite_frames = SubResource("SpriteFrames_sc1xs")
 
-[node name="AnimatedSprite2DBlue" type="AnimatedSprite2D" parent="." unique_id=2145334365]
+[node name="HudGemneG" type="AnimatedSprite2D" parent="." unique_id=1989531344]
 texture_filter = 1
-position = Vector2(135, 26)
-sprite_frames = SubResource("SpriteFrames_mmaxw")
+position = Vector2(64, 48)
+sprite_frames = SubResource("SpriteFrames_ifto1")
+
+[node name="HudGemneL" type="AnimatedSprite2D" parent="." unique_id=1325858854]
+texture_filter = 1
+position = Vector2(108, 48)
+sprite_frames = SubResource("SpriteFrames_ofu1f")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1854751032]
+texture_filter = 1
+position = Vector2(16, 16)
+scale = Vector2(0.875, 0.875)
+texture = ExtResource("24_kjyfp")

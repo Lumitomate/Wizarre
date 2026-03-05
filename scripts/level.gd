@@ -27,19 +27,23 @@ func add_player(controller_id):
 	print("Adding player: " + str(controller_id))
 	known_controllers.append(controller_id)
 	var ammunitions: Array[int] = [3, 3, 3]
+	var lives: int = 3
 	
 	# Initialize player for controller
 	var sorcerer : Sorcerer = sorcerer_scene.instantiate()
 	sorcerer.controller_id = controller_id
 	sorcerer.sorcerer_color = controller_id % 4
 	sorcerer.ammunitions = ammunitions
+	sorcerer.lives = lives
 	
 	# Adding HUD for player
 	var player_info : PlayerInfo = player_info_scene.instantiate()
 	player_info.position = Vector2(8, 46) + Vector2(269 * (controller_id + controller_id / 2), 0)
 	player_info.set_bg_color(controller_id % 4)
 	player_info.ammunitions = ammunitions
+	player_info.lives = lives
 	sorcerer.ammo_changed.connect(player_info._on_ammo_changed)
+	sorcerer.life_changed.connect(player_info._on_life_changed)
 	
 	self.add_child(sorcerer)
 	self.add_child(player_info)

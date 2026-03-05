@@ -11,21 +11,22 @@ enum SorcererColor {
 
 enum AttackFamily {
 	Red,
-	Green,
-	Blue
+	Blue,
+	Yellow
 }
 
 signal ammo_changed
+signal life_changed
 
 @export var speed: int = 500
 @export var jump_impulse: int = 1500
 @export var fall_acceleration: int = 4000
 @export var sorcerer_color: SorcererColor = SorcererColor.Blue
 @export var controller_id: int = 0
-@export var lives: int = 3
 
 const attack_launcher_script = preload("res://scripts/spawner_attack.gd")
 
+var lives: int = 3
 var screen_size: Vector2
 var direction: Vector2 = Vector2.RIGHT
 var ammunitions: Array = [3, 3, 3]
@@ -64,12 +65,12 @@ func _process(_delta: float) -> void:
 		$AnimatedSprite2D.stop()
 		
 	if can_fire:
-		if Input.is_joy_button_pressed(controller_id, JOY_BUTTON_B):
+		if Input.is_joy_button_pressed(controller_id, JOY_BUTTON_X):
 			fire_attack(AttackFamily.Red)
-		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_X):
-			fire_attack(AttackFamily.Green)
 		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_Y):
 			fire_attack(AttackFamily.Blue)
+		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_B):
+			fire_attack(AttackFamily.Yellow)
 
 
 func _physics_process(delta: float) -> void:
@@ -95,6 +96,7 @@ func _physics_process(delta: float) -> void:
 
 func fire_attack(attack_family:AttackFamily) -> void:
 	var attack_launcher = attack_launcher_script.new()
+	@warning_ignore("shadowed_variable_base_class")
 	var scale: Vector2 = get_parent().transform.get_scale()
 	
 	if ammunitions[attack_family] > 0:
@@ -102,10 +104,10 @@ func fire_attack(attack_family:AttackFamily) -> void:
 		var attack_type: int
 		match attack_family:
 			AttackFamily.Red:
-				attack_type = attack_launcher.AttackType.FIREBALL
-			AttackFamily.Green:
 				attack_type = attack_launcher.AttackType.FIRECOLUMN
 			AttackFamily.Blue:
+				attack_type = attack_launcher.AttackType.FIREBALL
+			AttackFamily.Yellow:
 				attack_type = attack_launcher.AttackType.LIGHTRAY
 
 		var attack_list = attack_launcher.spawn_attack(attack_type, scale * position, direction, screen_size)
@@ -127,6 +129,8 @@ func add_ammo(ammo_type: int, ammo_amount: int) -> void:
 func hit(damage: int):
 	if can_take_damage:
 		lives -= damage
+		life_changed.emit(lives)
+		print("Je prends des dégats (" + str(lives) + ")")
 		if lives == 0:
 			die()
 		$DamageCooldown.start()

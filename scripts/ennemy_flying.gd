@@ -27,9 +27,13 @@ func _process(delta: float) -> void:
 			$AnimatedSprite2D.flip_h = false
 
 
-func _physics_process(_delta: float) -> void:
-	if target!=null and !is_bouncing:
-		velocity = (target.position - position).normalized() * speed
+func _physics_process(delta: float) -> void:
+	if target!=null:
+		var velocity_trg = (target.position - position).normalized() * speed
+		if velocity.dot(velocity_trg) <= 0 or velocity.length() < velocity_trg.length():
+			velocity += 5 * velocity_trg * delta
+		else:
+			velocity = velocity_trg
 	
 		# Collisions
 	for index in range(get_slide_collision_count()):

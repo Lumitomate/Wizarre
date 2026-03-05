@@ -1,9 +1,57 @@
 [gd_scene format=3 uid="uid://ofcko3su01m"]
 
 [ext_resource type="Script" uid="uid://cge3ebap03toc" path="res://scripts/players_info.gd" id="1_7gnvh"]
+[ext_resource type="Texture2D" uid="uid://57mql3nc0xwq" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu1.png" id="2_eads4"]
+[ext_resource type="Texture2D" uid="uid://dbrmawj3wc7tl" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu2.png" id="3_qsx5x"]
+[ext_resource type="Texture2D" uid="uid://wa1pylbpkhwg" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_Plante1.png" id="4_ht4ja"]
+[ext_resource type="Texture2D" uid="uid://dvmmval8ljttg" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_Plante2.png" id="5_bu7jh"]
+[ext_resource type="Texture2D" uid="uid://bpnpsqv0ugmeq" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_Glace1.png" id="6_8x07w"]
+[ext_resource type="Texture2D" uid="uid://bvryw55sh6bd4" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_Glace2.png" id="7_pi2wo"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7gnvh"]
 font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0uv2a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_eads4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qsx5x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mg6rk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ht4ja")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bu7jh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mmaxw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_8x07w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_pi2wo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="PlayersInfo" type="Control" unique_id=1538734950]
 top_level = true
@@ -13,21 +61,70 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -852.0
-offset_bottom = -618.0
+offset_right = -1102.0
+offset_bottom = -676.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7gnvh")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1224019641]
 layout_mode = 0
-offset_right = 250.0
-offset_bottom = 30.0
+offset_right = 178.0
+offset_bottom = 44.0
 
-[node name="Label" type="Label" parent="." unique_id=1116790855]
-layout_mode = 0
-offset_left = 10.0
-offset_top = 3.0
-offset_right = 11.0
-offset_bottom = 26.0
+[node name="LabelRed" type="Label" parent="." unique_id=1116790855]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = 10.0
+offset_right = -112.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "x3"
 label_settings = SubResource("LabelSettings_7gnvh")
+
+[node name="LabelGreen" type="Label" parent="." unique_id=153474684]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 87.0
+offset_top = 10.0
+offset_right = -55.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "x3"
+label_settings = SubResource("LabelSettings_7gnvh")
+
+[node name="LabelBlue" type="Label" parent="." unique_id=1061213937]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 145.0
+offset_top = 10.0
+offset_right = 3.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "x3"
+label_settings = SubResource("LabelSettings_7gnvh")
+
+[node name="AnimatedSprite2DRed" type="AnimatedSprite2D" parent="." unique_id=1532890294]
+texture_filter = 1
+position = Vector2(19, 26)
+sprite_frames = SubResource("SpriteFrames_0uv2a")
+
+[node name="AnimatedSprite2DGreen" type="AnimatedSprite2D" parent="." unique_id=2076161793]
+texture_filter = 1
+position = Vector2(76, 26)
+sprite_frames = SubResource("SpriteFrames_mg6rk")
+
+[node name="AnimatedSprite2DBlue" type="AnimatedSprite2D" parent="." unique_id=2145334365]
+texture_filter = 1
+position = Vector2(135, 26)
+sprite_frames = SubResource("SpriteFrames_mmaxw")

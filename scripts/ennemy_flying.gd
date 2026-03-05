@@ -1,4 +1,8 @@
-extends CharacterBody2D
+class_name EnnemyFlying extends CharacterBody2D
+
+
+signal ennemy_killed
+
 
 @export var speed = 200
 @export var lives = 3
@@ -65,6 +69,7 @@ func hit(damage: int):
 
 
 func die():
+	ennemy_killed.emit()
 	queue_free()
 
 

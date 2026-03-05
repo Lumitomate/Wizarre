@@ -3,9 +3,9 @@ class_name Sorcerer extends CharacterBody2D
 const SPRITE_SIZE = 64
 
 enum SorcererColor {
-	Blue,
 	Red,
 	Green,
+	Blue,
 	Yellow
 }
 

@@ -1,8 +1,11 @@
 extends Node2D
 
+@export var ennemies_to_kill: int = 25
+
 var known_controllers:Array[int] = []
 var sorcerer_scene: PackedScene = preload("res://scenes/sorcerer.tscn")
 var player_info_scene: PackedScene = preload("res://scenes/players_info.tscn")
+var ennemies_killed: int = 0
 
 
 func _ready() -> void:
@@ -10,6 +13,7 @@ func _ready() -> void:
 		if not controller_id in known_controllers:
 			add_player(controller_id)
 	Input.connect("joy_connection_changed", _on_joy_connection_changed)
+	$ProgressBar.set_percent(0)
 
 
 func _on_joy_connection_changed(_device: int, _connected: bool) -> void:
@@ -32,10 +36,15 @@ func add_player(controller_id):
 	
 	# Adding HUD for player
 	var player_info : PlayerInfo = player_info_scene.instantiate()
-	player_info.position = Vector2(0, 20) + Vector2(0, 40 * controller_id)
+	player_info.position = Vector2(8, 46) + Vector2(269 * (controller_id + controller_id / 2), 0)
 	player_info.set_bg_color(controller_id % 4)
 	player_info.ammunitions = ammunitions
 	sorcerer.ammo_changed.connect(player_info._on_ammo_changed)
 	
 	self.add_child(sorcerer)
 	self.add_child(player_info)
+
+
+func _on_ennemy_killed() -> void:
+	ennemies_killed +=1
+	$ProgressBar.set_percent(float(ennemies_killed) / float(ennemies_to_kill))

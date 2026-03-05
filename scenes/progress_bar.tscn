@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://uar7blb4jike"]
+
+[ext_resource type="Script" uid="uid://cau6ufohpebi5" path="res://scripts/progress_bar.gd" id="1_vt3ux"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wqjxn"]
+font_size = 12
+
+[node name="ProgressBar" type="Control" unique_id=542118470]
+top_level = true
+z_index = 2000
+z_as_relative = false
+layout_mode = 3
+anchor_right = 0.13900001
+anchor_bottom = 0.061000004
+offset_right = 0.07998657
+offset_bottom = 0.07999802
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vt3ux")
+
+[node name="Label" type="Label" parent="." unique_id=160920828]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -41.0
+offset_right = 41.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Left to kill:"
+label_settings = SubResource("LabelSettings_wqjxn")
+horizontal_alignment = 1
+
+[node name="Fond" type="ColorRect" parent="." unique_id=1507990547]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.4
+anchor_right = 0.95
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.3854925, 0.38549247, 0.38549247, 1)
+
+[node name="Progress" type="ColorRect" parent="Fond" unique_id=99034624]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.688
+anchor_bottom = 1.0
+grow_vertical = 2
+color = Color(0.4698922, 0.085969634, 0.9600126, 1)

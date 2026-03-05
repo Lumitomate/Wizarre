@@ -62,3 +62,11 @@ func _on_ennemy_spawned() -> void:
 	ennemies_spawned += 1
 	if ennemies_spawned == ennemies_to_kill:
 		block_spawn.emit()
+
+
+func go_to_shop() -> void:
+	get_tree().change_scene_to_file("res://scenes/shop.tscn")
+
+
+func _on_terrain_1_portes_sortie_ouverture_1_shop_entered() -> void:
+	go_to_shop()

@@ -9,7 +9,7 @@ enum SorcererColor {
 	Yellow
 }
 
-enum AttackType {
+enum AttackFamily {
 	Red,
 	Green,
 	Blue
@@ -24,9 +24,7 @@ signal ammo_changed
 @export var controller_id: int = 0
 @export var lives: int = 3
 
-var fireball_scene = preload("res://scenes/attack_fireball.tscn")
-var lightray_scene = preload("res://scenes/attack_light_ray.tscn")
-var firecolumn_scene = preload("res://scenes/attack_fire_column.tscn")
+const attack_launcher_script = preload("res://scripts/spawner_attack.gd")
 
 var screen_size: Vector2
 var direction: Vector2 = Vector2.RIGHT
@@ -67,11 +65,11 @@ func _process(_delta: float) -> void:
 		
 	if can_fire:
 		if Input.is_joy_button_pressed(controller_id, JOY_BUTTON_B):
-			fire_attack(AttackType.Red)
+			fire_attack(AttackFamily.Red)
 		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_X):
-			fire_attack(AttackType.Green)
+			fire_attack(AttackFamily.Green)
 		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_Y):
-			fire_attack(AttackType.Blue)
+			fire_attack(AttackFamily.Blue)
 
 
 func _physics_process(delta: float) -> void:
@@ -95,34 +93,24 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func fire_attack(attack_type:AttackType) -> void:
-	if ammunitions[attack_type] > 0:
-		var attack_list = []
+func fire_attack(attack_family:AttackFamily) -> void:
+	var attack_launcher = attack_launcher_script.new()
+	
+	if ammunitions[attack_family] > 0:
 		
-		match attack_type:
-			AttackType.Red:
-				var previous_column: AttackFireColumn = null
-				for i in range((screen_size.y / SPRITE_SIZE) + 1):
-					var firecolumn: AttackFireColumn = firecolumn_scene.instantiate()
-					firecolumn.position = Vector2(position.x, i * SPRITE_SIZE)
-					if previous_column != null:
-						firecolumn.previous_pre_spawn_done.connect(previous_column._on_previous_pre_spawn_done)
-					attack_list.append(firecolumn)
-					previous_column = firecolumn
-				previous_column.is_last = true
-			AttackType.Green:
-				var fireball = fireball_scene.instantiate()
-				fireball.position = position + 60 * direction
-				fireball.direction = direction
-				attack_list.append(fireball)
-			AttackType.Blue:
-				for i in range(screen_size.x / SPRITE_SIZE):
-					var lightray = lightray_scene.instantiate()
-					lightray.position = Vector2(i * SPRITE_SIZE, position.y)
-					attack_list.append(lightray)
-		
-		ammunitions[attack_type] -= 1
-		ammo_changed.emit(attack_type, ammunitions[attack_type])
+		var attack_type: int
+		match attack_family:
+			AttackFamily.Red:
+				attack_type = attack_launcher.AttackType.FIREBALL
+			AttackFamily.Green:
+				attack_type = attack_launcher.AttackType.FIRECOLUMN
+			AttackFamily.Blue:
+				attack_type = attack_launcher.AttackType.LIGHTRAY
+
+		var attack_list = attack_launcher.spawn_attack(attack_type, position, direction, screen_size)
+
+		ammunitions[attack_family] -= 1
+		ammo_changed.emit(attack_family, ammunitions[attack_family])
 		$AttackCooldown.start()
 		can_fire = false
 		for attack in attack_list:

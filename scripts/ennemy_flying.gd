@@ -5,6 +5,7 @@ extends CharacterBody2D
 
 var target : Node2D = null
 var can_take_damage: bool = true
+var is_bouncing: bool = false
 
 
 func _ready() -> void:
@@ -19,15 +20,16 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 
 func _process(delta: float) -> void:
-	if velocity.x > 0:
-		$AnimatedSprite2D.flip_h = true
-	elif velocity.x < 0:
-		$AnimatedSprite2D.flip_h = false
+	if !is_bouncing:
+		if velocity.x > 0:
+			$AnimatedSprite2D.flip_h = true
+		elif velocity.x < 0:
+			$AnimatedSprite2D.flip_h = false
 
 
 func _physics_process(_delta: float) -> void:
-	if target!=null:
-		velocity=(target.position-position).normalized() * speed
+	if target!=null and !is_bouncing:
+		velocity = (target.position - position).normalized() * speed
 	
 		# Collisions
 	for index in range(get_slide_collision_count()):
@@ -38,8 +40,15 @@ func _physics_process(_delta: float) -> void:
 		elif collider.is_in_group("player_group"):
 			var player: Sorcerer = collider
 			player.hit(1)
-		
+			bounce_on(player)
+
 	move_and_slide()
+
+
+func bounce_on(collider: CollisionObject2D) -> void:
+	velocity = - (collider.position - position).normalized() * speed * 2
+	$BounceBackDuration.start()
+	is_bouncing = true
 
 
 func hit(damage: int):
@@ -57,3 +66,7 @@ func die():
 
 func _on_damage_cooldown_timeout() -> void:
 	can_take_damage = true
+
+
+func _on_bounce_back_duration_timeout() -> void:
+	is_bouncing = false

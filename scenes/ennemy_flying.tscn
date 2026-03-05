@@ -44,5 +44,9 @@ shape = SubResource("CircleShape2D_18tsl")
 
 [node name="DamageCooldown" type="Timer" parent="." unique_id=776927860]
 
+[node name="BounceBackDuration" type="Timer" parent="." unique_id=1450736260]
+wait_time = 0.2
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="DamageCooldown" to="." method="_on_damage_cooldown_timeout"]
+[connection signal="timeout" from="BounceBackDuration" to="." method="_on_bounce_back_duration_timeout"]

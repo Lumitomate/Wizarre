@@ -5,10 +5,21 @@
 [ext_resource type="PackedScene" uid="uid://dig4mpq1rxqfl" path="res://scenes/spawner_ennemy.tscn" id="4_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://bullkflr3xioa" path="res://scenes/spawner_gemme.tscn" id="5_ppgk2"]
 [ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Terrains/Terrain1_PortesEntree.png" id="6_klq6b"]
+[ext_resource type="Texture2D" uid="uid://dn4ficmf345mo" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture2.png" id="7_8gofh"]
 [ext_resource type="Texture2D" uid="uid://b5vfvxr5ve361" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture1.png" id="7_b121j"]
 [ext_resource type="PackedScene" uid="uid://co1gwjkps8hvc" path="res://scenes/torche.tscn" id="8_b121j"]
+[ext_resource type="Texture2D" uid="uid://dgi76df0lca0f" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture3.png" id="8_h6wmr"]
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Terrains/Terrain1_Fond.png" id="9_8c41q"]
 [ext_resource type="PackedScene" uid="uid://uar7blb4jike" path="res://scenes/progress_bar.tscn" id="9_olg7q"]
+[ext_resource type="Texture2D" uid="uid://c7e6igpqne3us" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture4.png" id="9_pqd0y"]
+[ext_resource type="Texture2D" uid="uid://b6il7t2f50i65" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture5.png" id="10_5k0ak"]
+[ext_resource type="Texture2D" uid="uid://wq5ldloxd5of" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture6.png" id="11_wu01b"]
+[ext_resource type="Texture2D" uid="uid://b5qupqt8tc5gt" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture7.png" id="12_3ies3"]
+[ext_resource type="Texture2D" uid="uid://d3xtex14662uw" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture8.png" id="13_xy2fk"]
+[ext_resource type="Texture2D" uid="uid://2o2bska8jua0" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture9.png" id="14_cmcjb"]
+[ext_resource type="Texture2D" uid="uid://d83ana8ymavh" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture10.png" id="15_556r4"]
+[ext_resource type="Texture2D" uid="uid://cjul4xtafelkh" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture11.png" id="16_7agi7"]
+[ext_resource type="Texture2D" uid="uid://q7etig6web6t" path="res://assets/sprites/Terrains/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture12.png" id="17_kih21"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oi3di"]
 texture = ExtResource("3_f2txt")
@@ -57,8 +68,52 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSet" id="TileSet_0b4ue"]
 tile_size = Vector2i(32, 32)
-physics_layer_0/collision_layer = 4
+physics_layer_0/collision_layer = 12
 sources/0 = SubResource("TileSetAtlasSource_oi3di")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w3o6u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_b121j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_8gofh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_h6wmr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_pqd0y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_5k0ak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_wu01b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_3ies3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_xy2fk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_cmcjb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_556r4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_7agi7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_kih21")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
 
 [node name="Level" type="Node2D" unique_id=68664965]
 texture_filter = 1
@@ -110,12 +165,12 @@ position = Vector2(907.14294, 768.57153)
 scale = Vector2(2, 2)
 texture = ExtResource("6_klq6b")
 
-[node name="Terrain1PortesSortieOuverture1" type="Sprite2D" parent="." unique_id=1018513868]
+[node name="Terrain1PortesSortieOuverture1" type="AnimatedSprite2D" parent="." unique_id=1246099316]
 z_index = -10
 texture_filter = 1
 position = Vector2(331.42868, 642.85724)
 scale = Vector2(2, 2)
-texture = ExtResource("7_b121j")
+sprite_frames = SubResource("SpriteFrames_w3o6u")
 
 [node name="Torche" parent="." unique_id=1194411659 instance=ExtResource("8_b121j")]
 z_index = 100
@@ -144,3 +199,12 @@ offset_left = 547.0
 offset_top = 46.0
 offset_right = 547.07996
 offset_bottom = 46.079998
+
+[connection signal="block_spawn" from="." to="EnnemySpawner" method="_on_block_spawn"]
+[connection signal="block_spawn" from="." to="EnnemySpawner2" method="_on_block_spawn"]
+[connection signal="block_spawn" from="." to="EnnemySpawner3" method="_on_block_spawn"]
+[connection signal="block_spawn" from="." to="EnnemySpawner4" method="_on_block_spawn"]
+[connection signal="ennemy_spawned" from="EnnemySpawner" to="." method="_on_ennemy_spawned"]
+[connection signal="ennemy_spawned" from="EnnemySpawner2" to="." method="_on_ennemy_spawned"]
+[connection signal="ennemy_spawned" from="EnnemySpawner3" to="." method="_on_ennemy_spawned"]
+[connection signal="ennemy_spawned" from="EnnemySpawner4" to="." method="_on_ennemy_spawned"]

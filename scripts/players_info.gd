@@ -49,8 +49,8 @@ func refresh_status() -> void:
 			lives_nb = LifeNb.THREE
 	$HudVie.frame = lives_nb
 	
-	var ammo_nb: GemmeNb = GemmeNb.FIVE_OR_MORE
 	for munition_type in range(ammunitions.size()):
+		var ammo_nb: GemmeNb = GemmeNb.FIVE_OR_MORE
 		match ammunitions[munition_type]:
 			0:
 				ammo_nb = GemmeNb.ZERO

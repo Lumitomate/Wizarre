@@ -1,11 +1,14 @@
 extends Node2D
 
+signal block_spawn
+
 @export var ennemies_to_kill: int = 25
 
 var known_controllers:Array[int] = []
 var sorcerer_scene: PackedScene = preload("res://scenes/sorcerer.tscn")
 var player_info_scene: PackedScene = preload("res://scenes/players_info.tscn")
 var ennemies_killed: int = 0
+var ennemies_spawned: int = 0
 
 
 func _ready() -> void:
@@ -52,3 +55,10 @@ func add_player(controller_id):
 func _on_ennemy_killed() -> void:
 	ennemies_killed +=1
 	$ProgressBar.set_percent(float(ennemies_killed) / float(ennemies_to_kill))
+	if ennemies_killed == ennemies_to_kill:
+		$Terrain1PortesSortieOuverture1.play()
+
+func _on_ennemy_spawned() -> void:
+	ennemies_spawned += 1
+	if ennemies_spawned == ennemies_to_kill:
+		block_spawn.emit()

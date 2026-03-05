@@ -18,9 +18,9 @@ enum AttackFamily {
 signal ammo_changed
 signal life_changed
 
-@export var speed: int = 500
-@export var jump_impulse: int = 1500
-@export var fall_acceleration: int = 4000
+@export var speed: int = 400
+@export var jump_impulse: int = 1000
+@export var fall_acceleration: int = 3000
 @export var sorcerer_color: SorcererColor = SorcererColor.Blue
 @export var controller_id: int = 0
 
@@ -111,11 +111,11 @@ func fire_attack(attack_family:AttackFamily) -> void:
 			AttackFamily.Red:
 				attack_type = attack_launcher.AttackType.FIRECOLUMN
 			AttackFamily.Blue:
-				attack_type = attack_launcher.AttackType.FIREBALL
+				attack_type = attack_launcher.AttackType.ICEBALL
 			AttackFamily.Yellow:
 				attack_type = attack_launcher.AttackType.LIGHTRAY
 
-		var attack_list = attack_launcher.spawn_attack(attack_type, level_scale * position, direction, screen_size)
+		var attack_list = attack_launcher.spawn_attack(attack_type, position, direction, screen_size, level_scale)
 
 		ammunitions[attack_family] -= 1
 		ammo_changed.emit(attack_family, ammunitions[attack_family])

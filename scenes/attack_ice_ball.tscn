@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://cp2c718aho65r"]
+
+[ext_resource type="Texture2D" uid="uid://d3f0edeqo0pon" path="res://assets/sprites/Attaques/Glace/Atk_G_1.png" id="1_064mj"]
+[ext_resource type="Script" uid="uid://rlaalag8iwit" path="res://scripts/attack_ice_ball.gd" id="1_e1dbi"]
+[ext_resource type="Texture2D" uid="uid://bqrg3nrhuliv8" path="res://assets/sprites/Attaques/Glace/Atk_G_2.png" id="2_e1dbi"]
+[ext_resource type="Texture2D" uid="uid://8pjyt2kxglr2" path="res://assets/sprites/Attaques/Glace/Atk_G_3.png" id="3_tj4ar"]
+[ext_resource type="Texture2D" uid="uid://bk7bbfec6x3b4" path="res://assets/sprites/Attaques/Glace/Atk_G_4.png" id="4_p4tk1"]
+[ext_resource type="Texture2D" uid="uid://bbbqgtjnsce2s" path="res://assets/sprites/Attaques/Glace/Atk_G_5.png" id="5_ixp0c"]
+[ext_resource type="Texture2D" uid="uid://dny0nu3n6nybl" path="res://assets/sprites/Attaques/Glace/Atk_G_6.png" id="6_i3bhi"]
+[ext_resource type="Texture2D" uid="uid://bwpt4ilya10ga" path="res://assets/sprites/Attaques/Glace/Atk_G_7.png" id="7_7r3ll"]
+[ext_resource type="Texture2D" uid="uid://b1c6c6nfmfoo3" path="res://assets/sprites/Attaques/Glace/Atk_G_8.png" id="8_m3jlr"]
+[ext_resource type="Texture2D" uid="uid://cwhvjtbbo1vwc" path="res://assets/sprites/Attaques/Glace/Atk_G_9.png" id="9_1f550"]
+[ext_resource type="Texture2D" uid="uid://i8mn2psv7sjv" path="res://assets/sprites/Attaques/Glace/Atk_G_10.png" id="10_spokq"]
+[ext_resource type="Texture2D" uid="uid://cfwtaii42naae" path="res://assets/sprites/Attaques/Glace/Atk_G_11.png" id="11_728s1"]
+[ext_resource type="Texture2D" uid="uid://ccqm6bxphwbyq" path="res://assets/sprites/Attaques/Glace/Atk_G_12.png" id="12_sfim5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e1dbi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_064mj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_e1dbi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_tj4ar")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_p4tk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ixp0c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_i3bhi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_7r3ll")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_m3jlr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_1f550")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_spokq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_728s1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_sfim5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tj4ar"]
+radius = 14.035668
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p4tk1"]
+radius = 17.029387
+
+[sub_resource type="Gradient" id="Gradient_e1dbi"]
+colors = PackedColorArray(0, 0.7254902, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tj4ar"]
+gradient = SubResource("Gradient_e1dbi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p4tk1"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+direction = Vector3(1, -1, 0)
+spread = 19.5
+initial_velocity_min = 62.5
+initial_velocity_max = 109.369995
+gravity = Vector3(0, 98, 0)
+scale_max = 3.0
+color_ramp = SubResource("GradientTexture1D_tj4ar")
+
+[node name="AttackIceBall" type="RigidBody2D" unique_id=1343644979]
+collision_layer = 0
+collision_mask = 8
+inertia = 2.0
+script = ExtResource("1_e1dbi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1243901228]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_e1dbi")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=576484939]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1683868692]
+shape = SubResource("CircleShape2D_tj4ar")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1893122857]
+shape = SubResource("CircleShape2D_p4tk1")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1248742042]
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_p4tk1")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

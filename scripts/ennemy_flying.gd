@@ -3,7 +3,6 @@ class_name EnnemyFlying extends CharacterBody2D
 
 signal ennemy_killed
 
-
 @export var speed = 200
 @export var lives = 3
 

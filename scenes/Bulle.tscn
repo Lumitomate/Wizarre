@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://dd8ufu1klh2j8"]
+
+[ext_resource type="Script" uid="uid://c58u8vadkis7c" path="res://scripts/bulle.gd" id="1_1av0j"]
+[ext_resource type="Texture2D" uid="uid://ci4ksrxtd1ovq" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreBase.png" id="2_oct7p"]
+[ext_resource type="Texture2D" uid="uid://dyjo7chhbyq1q" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé1.png" id="3_necrt"]
+[ext_resource type="Texture2D" uid="uid://6rpiahc8fgoj" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé2.png" id="4_r6mb1"]
+[ext_resource type="Texture2D" uid="uid://ch5iotc66uxan" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé3.png" id="5_01bmi"]
+[ext_resource type="Texture2D" uid="uid://beokmydpouhdr" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé4.png" id="6_y5l4j"]
+[ext_resource type="Texture2D" uid="uid://d1m7yxucd2vps" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé5.png" id="7_x3786"]
+[ext_resource type="Texture2D" uid="uid://rqlu5tkfmr7t" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé6.png" id="8_sk05f"]
+[ext_resource type="Texture2D" uid="uid://do2whdngpwv3s" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé7.png" id="9_terc6"]
+[ext_resource type="Texture2D" uid="uid://d2i3bs7l6v8l4" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé8.png" id="10_701gc"]
+[ext_resource type="Texture2D" uid="uid://ck0nhlg42ei0s" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé9.png" id="11_cxeub"]
+[ext_resource type="Texture2D" uid="uid://cru32wxiv4mei" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé10.png" id="12_ht5gp"]
+[ext_resource type="Texture2D" uid="uid://77ajpq4hj870" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé11.png" id="13_y8ywr"]
+[ext_resource type="Texture2D" uid="uid://dw0uup17ankao" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé12.png" id="14_rehtg"]
+[ext_resource type="Texture2D" uid="uid://bdyo1ttbpied2" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé13.png" id="15_2xpvs"]
+[ext_resource type="Texture2D" uid="uid://u4w73l3nt626" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé14.png" id="16_qf7ai"]
+[ext_resource type="Texture2D" uid="uid://ccfgyulou77um" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé15.png" id="17_yplcm"]
+[ext_resource type="Texture2D" uid="uid://by6iihxgjv4ul" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé16.png" id="18_gjmvw"]
+[ext_resource type="Texture2D" uid="uid://dhc3naivp2b1b" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé17.png" id="19_rypev"]
+[ext_resource type="Texture2D" uid="uid://c0onvqsvtxc5o" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé18.png" id="20_3wogs"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lkde3"]
+radius = 25.0
+height = 62.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_okjpd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_oct7p")
+}],
+"loop": false,
+"name": &"Idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_necrt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_r6mb1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_01bmi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_y5l4j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_x3786")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_sk05f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_terc6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_701gc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_cxeub")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ht5gp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_y8ywr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_rehtg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_2xpvs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_qf7ai")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_yplcm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_gjmvw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_rypev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_3wogs")
+}],
+"loop": false,
+"name": &"Ouverture",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ske5l"]
+radius = 34.0
+height = 75.0
+
+[node name="Bulle" type="StaticBody2D" unique_id=347004238]
+scale = Vector2(2, 2)
+script = ExtResource("1_1av0j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=634403761]
+shape = SubResource("CapsuleShape2D_lkde3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2072449572]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_okjpd")
+animation = &"Ouverture"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=954088632]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=244888181]
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_ske5l")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

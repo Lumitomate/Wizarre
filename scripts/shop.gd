@@ -43,3 +43,9 @@ func goto_level():
 
 func _on_shop_door_shop_entered() -> void:
 	goto_level()
+
+
+func _on_bulle_sorcerer_contact_bubble() -> void:
+	$Bulle.can_open = false
+	$Bulle2.can_open = false
+	$Bulle3.can_open = false

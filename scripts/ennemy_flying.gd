@@ -11,7 +11,7 @@ var can_take_damage: bool = true
 var is_bouncing: bool = false
 var level_scale: Vector2
 
-var damage_label_scene = preload("res://scenes/damage_label.tscn")
+var damage_label_scene = preload("res://scenes/hud_damage_label.tscn")
 
 
 func _ready() -> void:

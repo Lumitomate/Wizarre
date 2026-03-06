@@ -12,7 +12,7 @@ signal life_changed
 @export var controller_id: int = 0
 
 const attack_launcher_script = preload("res://scripts/spawner_attack.gd")
-var damage_label_scene = preload("res://scenes/damage_label.tscn")
+var damage_label_scene = preload("res://scenes/hud_damage_label.tscn")
 
 var lives: int = 3
 var screen_size: Vector2

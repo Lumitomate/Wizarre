@@ -7,12 +7,13 @@ signal block_spawn
 var known_controllers:Array[int] = []
 var known_players: Array[Sorcerer] = []
 var sorcerer_scene: PackedScene = preload("res://scenes/sorcerer.tscn")
-var player_info_scene: PackedScene = preload("res://scenes/players_info.tscn")
+var player_info_scene: PackedScene = preload("res://scenes/hud_players_info.tscn")
 var ennemies_killed: int = 0
 var ennemies_spawned: int = 0
 var level_start_time: int
 
 func _ready() -> void:
+	ennemies_to_kill += 3 * GlobalInfo.run_info["level_number"]
 	level_start_time = Time.get_ticks_msec()
 	for controller_id in Input.get_connected_joypads():
 		if not controller_id in known_controllers:
@@ -72,6 +73,7 @@ func _on_ennemy_spawned() -> void:
 
 func go_to_shop() -> void:
 	GlobalInfo.run_info["run_duration"] = Time.get_ticks_msec() - level_start_time
+	GlobalInfo.run_info["level_number"] += 1
 	for player in range(known_players.size()):
 		GlobalInfo.run_info["players_info"][player] = known_players[player].export_data()
 	Global.goto_scene("res://scenes/shop.tscn")

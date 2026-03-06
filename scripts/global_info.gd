@@ -1,6 +1,7 @@
 extends Node
 
 var run_info: Dictionary = {
+	"level_number" : 0,
 	"run_duration" : 0, # en millisecondes
 	"players_info": {
 		"default" : {

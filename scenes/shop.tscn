@@ -2,12 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Terrains/TileMap_Terrain1.png" id="1_lx5au"]
 [ext_resource type="Script" uid="uid://cq52ldvgscuwm" path="res://scripts/shop.gd" id="1_xfvoa"]
-[ext_resource type="PackedScene" uid="uid://i8dy2676jbft" path="res://scenes/objet_medaille.tscn" id="3_032fp"]
-[ext_resource type="PackedScene" uid="uid://3q52vx8luxjx" path="res://scenes/objet_miroir.tscn" id="4_2fc2m"]
-[ext_resource type="PackedScene" uid="uid://bh24tl02j8jw4" path="res://scenes/objet_moufle.tscn" id="5_2fc2m"]
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Terrains/Terrain1_Fond.png" id="6_8r1wq"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/porte_magasin_temps.tscn" id="7_ajxib"]
 [ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/shop_door.tscn" id="8_y6sft"]
+[ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_objet.tscn" id="9_m4ofw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]
 texture = ExtResource("1_lx5au")
@@ -63,6 +61,14 @@ sources/0 = SubResource("TileSetAtlasSource_xfvoa")
 scale = Vector2(0.7, 0.7)
 script = ExtResource("1_xfvoa")
 
+[node name="Terrain1Fond" type="Sprite2D" parent="." unique_id=1021994143]
+z_index = -4000
+z_as_relative = false
+texture_filter = 1
+position = Vector2(907.8571, 577.14276)
+scale = Vector2(2.0816798, 2.1996753)
+texture = ExtResource("6_8r1wq")
+
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=885241608]
 z_index = 50
 texture_filter = 1
@@ -72,25 +78,6 @@ tile_map_data = PackedByteArray("AAD//wAAAAABAAEAAAD//wEAAAABAAEAAAD//wIAAAABAAE
 tile_set = SubResource("TileSet_1l46r")
 rendering_quadrant_size = 32
 physics_quadrant_size = 32
-
-[node name="ObjetMedaille" parent="." unique_id=2070854314 instance=ExtResource("3_032fp")]
-position = Vector2(1687.143, 585.7143)
-item_attack_tier = 2
-
-[node name="ObjetMiroir" parent="." unique_id=240781334 instance=ExtResource("4_2fc2m")]
-position = Vector2(1692.8572, 308.57144)
-item_attack_tier = 1
-
-[node name="ObjetMiroir2" parent="." unique_id=452424240 instance=ExtResource("5_2fc2m")]
-position = Vector2(1677.1427, 885.71423)
-
-[node name="Terrain1Fond" type="Sprite2D" parent="." unique_id=1021994143]
-z_index = -4000
-z_as_relative = false
-texture_filter = 1
-position = Vector2(907.8572, 577.1428)
-scale = Vector2(2.08168, 2.1996753)
-texture = ExtResource("6_8r1wq")
 
 [node name="PorteMagasinTemps" parent="." unique_id=1860909474 instance=ExtResource("7_ajxib")]
 position = Vector2(1481.4287, 320)
@@ -103,5 +90,14 @@ position = Vector2(1482.8572, 832.8572)
 
 [node name="ShopDoor" parent="." unique_id=1894555552 instance=ExtResource("8_y6sft")]
 position = Vector2(107.14287, 387.14288)
+
+[node name="SpawnerObjet" parent="." unique_id=1685397250 instance=ExtResource("9_m4ofw")]
+position = Vector2(1669.9999, 347.14282)
+
+[node name="SpawnerObjet2" parent="." unique_id=1994582462 instance=ExtResource("9_m4ofw")]
+position = Vector2(1671.4285, 598.5714)
+
+[node name="SpawnerObjet3" parent="." unique_id=1424358415 instance=ExtResource("9_m4ofw")]
+position = Vector2(1692.857, 911.4285)
 
 [connection signal="shop_entered" from="ShopDoor" to="." method="_on_shop_door_shop_entered"]

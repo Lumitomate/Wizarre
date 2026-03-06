@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://3q52vx8luxjx" path="res://scenes/objet_miroir.tscn" id="4_2fc2m"]
 [ext_resource type="PackedScene" uid="uid://bh24tl02j8jw4" path="res://scenes/objet_moufle.tscn" id="5_2fc2m"]
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Terrains/Terrain1_Fond.png" id="6_8r1wq"]
-[ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/porte_magasin_temps.tscn" id="7_ajxib"]
+[ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/porte_magasin_epreuve.tscn" id="7_ajxib"]
 [ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/shop_door.tscn" id="8_y6sft"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]
@@ -94,9 +94,11 @@ texture = ExtResource("6_8r1wq")
 
 [node name="PorteMagasinTemps" parent="." unique_id=1860909474 instance=ExtResource("7_ajxib")]
 position = Vector2(1481.4287, 320)
+door_type = 2
 
 [node name="PorteMagasinTemps2" parent="." unique_id=1233127783 instance=ExtResource("7_ajxib")]
 position = Vector2(1481.4285, 575.71436)
+door_type = 1
 
 [node name="PorteMagasinTemps3" parent="." unique_id=1237407686 instance=ExtResource("7_ajxib")]
 position = Vector2(1482.8572, 832.8572)

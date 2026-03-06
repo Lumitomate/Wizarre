@@ -108,7 +108,7 @@ func _physics_process(delta: float) -> void:
 func set_attack(attack_family: Enum.AttackFamily, attack_type: Enum.AttackType, attack_tier: Enum.AttackTier) -> void:
 	competences[attack_family]["attack_type"] = attack_type
 	competences[attack_family]["attack_tier"] = attack_tier
-
+	print("Mon attaque est maintenant " + str(attack_type) + " et de tier " + str(attack_tier))
 
 func fire_attack(attack_family: Enum.AttackFamily) -> void:
 	var attack_launcher = attack_launcher_script.new()

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://3q52vx8luxjx"]
 
-[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_miroir.gd" id="1_ebl7y"]
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_ebl7y"]
 [ext_resource type="Texture2D" uid="uid://dfehuyqs5ta5u" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent1.png" id="2_5wgwx"]
 [ext_resource type="Texture2D" uid="uid://rv5waeddqw8x" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent2.png" id="3_datgt"]
 [ext_resource type="Texture2D" uid="uid://dsxqf1dcn7ndu" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent3.png" id="4_lw3u8"]
@@ -54,7 +54,7 @@ animations = [{
 "texture": ExtResource("9_y6q8j")
 }],
 "loop": true,
-"name": &"Miroir_Argent",
+"name": &"Argent",
 "speed": 5.0
 }, {
 "frames": [{
@@ -83,7 +83,7 @@ animations = [{
 "texture": ExtResource("17_mddee")
 }],
 "loop": true,
-"name": &"Miroir_Bronze",
+"name": &"Bronze",
 "speed": 5.0
 }, {
 "frames": [{
@@ -112,21 +112,25 @@ animations = [{
 "texture": ExtResource("25_12edd")
 }],
 "loop": true,
-"name": &"Miroir_Or",
+"name": &"Or",
 "speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ermxx"]
 radius = 15.0
 
-[node name="ObjetMedaille" type="Area2D" unique_id=2070854314]
+[node name="ObjetMiroir" type="Area2D" unique_id=2070854314]
+scale = Vector2(2, 2)
 script = ExtResource("1_ebl7y")
-miroir_color = null
+item_attack_family = 2
+item_attack_type = 1
 
-[node name="AnimatedMiroir" type="AnimatedSprite2D" parent="." unique_id=518273926]
+[node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=518273926]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_2kvoa")
-animation = &"Miroir_Bronze"
+animation = &"Or"
 
 [node name="Area2D" type="CollisionShape2D" parent="." unique_id=1861019466]
 shape = SubResource("CircleShape2D_ermxx")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

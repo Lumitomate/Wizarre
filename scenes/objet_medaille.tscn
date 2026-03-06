@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://i8dy2676jbft"]
+
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_vsuko"]
+[ext_resource type="Texture2D" uid="uid://bws6dvwv4s50k" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Argent/Objet_Médaille_Argent1.png" id="2_vsuko"]
+[ext_resource type="Texture2D" uid="uid://dhdblihncxea8" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Argent/Objet_Médaille_Argent2.png" id="3_75xc0"]
+[ext_resource type="Texture2D" uid="uid://dmdi5d30qm3ff" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Argent/Objet_Médaille_Argent3.png" id="4_yhehl"]
+[ext_resource type="Texture2D" uid="uid://bgyn7qjqhvdvx" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Argent/Objet_Médaille_Argent4.png" id="5_hn3sr"]
+[ext_resource type="Texture2D" uid="uid://cdcowkog7jgdv" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Argent/Objet_Médaille_Argent5.png" id="6_lnmlh"]
+[ext_resource type="Texture2D" uid="uid://lbtlnd1nhqtk" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Argent/Objet_Médaille_Argent6.png" id="7_5c7s8"]
+[ext_resource type="Texture2D" uid="uid://cb3u43lfch22v" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Argent/Objet_Médaille_Argent7.png" id="8_pk2it"]
+[ext_resource type="Texture2D" uid="uid://b8mafpaukcxf0" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Argent/Objet_Médaille_Argent8.png" id="9_qqbgg"]
+[ext_resource type="Texture2D" uid="uid://i5gpxwlhln8g" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Bronze/Objet_Médaille_Bronze1.png" id="10_k0dto"]
+[ext_resource type="Texture2D" uid="uid://blnfhj4wj35pt" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Bronze/Objet_Médaille_Bronze2.png" id="11_uh4rc"]
+[ext_resource type="Texture2D" uid="uid://ba5nyo2wte8ns" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Bronze/Objet_Médaille_Bronze3.png" id="12_gjs3o"]
+[ext_resource type="Texture2D" uid="uid://bw2twac4a05bs" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Bronze/Objet_Médaille_Bronze4.png" id="13_vryi0"]
+[ext_resource type="Texture2D" uid="uid://drlln1a23838y" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Bronze/Objet_Médaille_Bronze5.png" id="14_13hgd"]
+[ext_resource type="Texture2D" uid="uid://d25r7cv7dmeyg" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Bronze/Objet_Médaille_Bronze6.png" id="15_suv1a"]
+[ext_resource type="Texture2D" uid="uid://1jrc8ovpqj2b" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Bronze/Objet_Médaille_Bronze7.png" id="16_aehen"]
+[ext_resource type="Texture2D" uid="uid://c2k1oml5nkrfy" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Bronze/Objet_Médaille_Bronze8.png" id="17_wppo1"]
+[ext_resource type="Texture2D" uid="uid://b1t0d0t7urp4d" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Or/Objet_Médaille_Or1.png" id="18_tnsow"]
+[ext_resource type="Texture2D" uid="uid://bxxoprycwiqyv" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Or/Objet_Médaille_Or2.png" id="19_idc5i"]
+[ext_resource type="Texture2D" uid="uid://b46t8cchl5hvj" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Or/Objet_Médaille_Or3.png" id="20_76wqp"]
+[ext_resource type="Texture2D" uid="uid://cgh22okqy81lc" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Or/Objet_Médaille_Or4.png" id="21_y61pf"]
+[ext_resource type="Texture2D" uid="uid://ct8my4k36b0bg" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Or/Objet_Médaille_Or5.png" id="22_astj7"]
+[ext_resource type="Texture2D" uid="uid://rnk8wmrktawo" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Or/Objet_Médaille_Or6.png" id="23_2ylxr"]
+[ext_resource type="Texture2D" uid="uid://crnikruxityyu" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Or/Objet_Médaille_Or7.png" id="24_3l5ow"]
+[ext_resource type="Texture2D" uid="uid://dpvk6fma7nehr" path="res://assets/sprites/Magasin/Objet/Médaille/Objet_Medaille_Or/Objet_Médaille_Or8.png" id="25_0crsf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2kvoa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vsuko")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_75xc0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_yhehl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hn3sr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_lnmlh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_5c7s8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_pk2it")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_qqbgg")
+}],
+"loop": true,
+"name": &"Argent",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_k0dto")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_uh4rc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_gjs3o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_vryi0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_13hgd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_suv1a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_aehen")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_wppo1")
+}],
+"loop": true,
+"name": &"Bronze",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_tnsow")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_idc5i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_76wqp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_y61pf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_astj7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_2ylxr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_3l5ow")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_0crsf")
+}],
+"loop": true,
+"name": &"Or",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ermxx"]
+radius = 15.0
+
+[node name="ObjetMedaille" type="Area2D" unique_id=2070854314]
+scale = Vector2(2, 2)
+script = ExtResource("1_vsuko")
+item_attack_type = 2
+
+[node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=518273926]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_2kvoa")
+animation = &"Bronze"
+
+[node name="Area2D" type="CollisionShape2D" parent="." unique_id=1861019466]
+shape = SubResource("CircleShape2D_ermxx")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

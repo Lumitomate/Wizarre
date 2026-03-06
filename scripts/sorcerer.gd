@@ -23,23 +23,7 @@ var can_fire: bool = true
 var can_take_damage: bool = true
 var level_scale: Vector2
 
-var  competences = {
-	Enum.AttackFamily.Red:
-		{
-			"attack_type" : Enum.AttackType.FIRECOLUMN,
-			"attack_tier" : Enum.AttackTier.I
-		},
-	Enum.AttackFamily.Blue:
-		{
-			"attack_type" : Enum.AttackType.ICEBALL,
-			"attack_tier" : Enum.AttackTier.I
-		},
-	Enum.AttackFamily.Yellow:
-		{
-			"attack_type" : Enum.AttackType.LIGHTRAY,
-			"attack_tier" : Enum.AttackTier.I
-		},
-}
+var attacks
 
 func _ready() -> void:
 	print("pop")
@@ -106,8 +90,8 @@ func _physics_process(delta: float) -> void:
 
 
 func set_attack(attack_family: Enum.AttackFamily, attack_type: Enum.AttackType, attack_tier: Enum.AttackTier) -> void:
-	competences[attack_family]["attack_type"] = attack_type
-	competences[attack_family]["attack_tier"] = attack_tier
+	attacks[attack_family]["attack_type"] = attack_type
+	attacks[attack_family]["attack_tier"] = attack_tier
 	print("Mon attaque est maintenant " + str(attack_type) + " et de tier " + str(attack_tier))
 
 func fire_attack(attack_family: Enum.AttackFamily) -> void:
@@ -115,8 +99,8 @@ func fire_attack(attack_family: Enum.AttackFamily) -> void:
 	
 	if ammunitions[attack_family] > 0:
 		
-		var attack_type: Enum.AttackType = competences[attack_family]["attack_type"]
-		var attack_tier: Enum.AttackTier = competences[attack_family]["attack_tier"]
+		var attack_type: Enum.AttackType = attacks[attack_family]["attack_type"]
+		var attack_tier: Enum.AttackTier = attacks[attack_family]["attack_tier"]
 
 		var attack_list = attack_launcher.spawn_attack(attack_type, attack_tier, position, direction, screen_size, level_scale)
 
@@ -151,6 +135,18 @@ func hit(damage: int):
 func die():
 	queue_free()
 
+
+func export_data() -> Dictionary :
+	return {
+		"lives": lives,
+		"ammunitions": ammunitions,
+		"attacks": attacks
+	}
+
+func load_data(data_to_load: Dictionary) -> void:
+	lives = data_to_load["lives"]
+	ammunitions = data_to_load["ammunitions"]
+	attacks = data_to_load["attacks"]
 
 func _on_attack_cooldown_timeout() -> void:
 	can_fire = true

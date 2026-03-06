@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bh24tl02j8jw4" path="res://scenes/objet_moufle.tscn" id="5_2fc2m"]
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Terrains/Terrain1_Fond.png" id="6_8r1wq"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/porte_magasin_temps.tscn" id="7_ajxib"]
+[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/shop_door.tscn" id="8_y6sft"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]
 texture = ExtResource("1_lx5au")
@@ -99,3 +100,8 @@ position = Vector2(1481.4285, 575.71436)
 
 [node name="PorteMagasinTemps3" parent="." unique_id=1237407686 instance=ExtResource("7_ajxib")]
 position = Vector2(1482.8572, 832.8572)
+
+[node name="ShopDoor" parent="." unique_id=1894555552 instance=ExtResource("8_y6sft")]
+position = Vector2(107.14287, 387.14288)
+
+[connection signal="shop_entered" from="ShopDoor" to="." method="_on_shop_door_shop_entered"]

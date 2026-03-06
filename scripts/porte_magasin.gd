@@ -5,6 +5,7 @@ extends StaticBody2D
 var can_open : bool = false
 
 func _ready() -> void:
+	check_door_opening_condition()
 	$Timer.start()
 
 func open_door() -> void :
@@ -15,14 +16,23 @@ func _process(_delta: float) -> void:
 	if $AnimatedSprite2D.frame == 10:
 		$CollisionShape2D.disabled = true
 		
-func check_door_opening_condition(run_info: Dictionary) -> void:
+func check_door_opening_condition() -> void:
+	
+	var run_info = GlobalInfo.run_info
 	
 	match door_type:
 		Enum.DoorType.TIME:
-			can_open = true
+			if run_info["run_duration"] < 20000:
+				can_open = true
 		Enum.DoorType.FRIENDSHIP:
 			can_open = true
+			for k in GlobalInfo.run_info["players_info"].keys():
+				if k != "default" and GlobalInfo.run_info["players_info"][k]["lives"] == 0:
+					can_open = false
 		Enum.DoorType.NO_DAMAGE:
+			for k in GlobalInfo.run_info["players_info"].keys():
+				if k != "default" and GlobalInfo.run_info["players_info"][k]["lives"] != 3:
+					can_open = false
 			can_open = true
 	
 

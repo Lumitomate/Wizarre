@@ -17,11 +17,16 @@ enum GemmeNb {
 	ZERO
 }
 
-var ammunitions: Array[int] = [0, 0, 0]
+var ammunitions: Array = [0, 0, 0]
 var lives: = 0
 
 func _ready() -> void:
 	refresh_status()
+
+
+func load_data(data_to_load: Dictionary) -> void:
+	lives = data_to_load["lives"]
+	ammunitions = data_to_load["ammunitions"]
 
 
 func refresh_status() -> void:

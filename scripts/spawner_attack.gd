@@ -12,7 +12,7 @@ func spawn_attack(attack_type: Enum.AttackType, attack_tier: Enum.AttackTier,  p
 	
 	var spawn_list: Array[Node]
 	
-	attack_tier += 1
+	var int_attack_tier: int = int(attack_tier) + 1
 	
 	match attack_type:
 		Enum.AttackType.FIREBALL:
@@ -20,14 +20,14 @@ func spawn_attack(attack_type: Enum.AttackType, attack_tier: Enum.AttackTier,  p
 			var spread = PI / 4
 			for i in range(attack_tier):
 				var fireball: AttackFireBall = fireball_scene.instantiate()
-				fireball.transform = fireball.transform.rotated(player_direction.angle() + (i * spread) - (attack_tier - 1) * spread / 2 )
+				fireball.transform = fireball.transform.rotated(player_direction.angle() + (i * spread) - (int_attack_tier - 1) * spread / 2 )
 				fireball.position = player_position + 60 * player_direction.normalized()
 				fireball.direction = player_direction.normalized()
 				spawn_list.append(fireball)
 			
 		Enum.AttackType.LIGHTRAY:
 			player_position *= level_scale
-			var ray_nb = attack_tier
+			var ray_nb = int_attack_tier
 			for n in range(ray_nb):
 				for i in range(-(screen_size.length() / SPRITE_SIZE), (screen_size.length() / SPRITE_SIZE) + 1):
 					var attack_position = (i + 1) * SPRITE_SIZE * player_direction.normalized().rotated(n * PI / ray_nb) + player_position
@@ -45,7 +45,7 @@ func spawn_attack(attack_type: Enum.AttackType, attack_tier: Enum.AttackTier,  p
 				var attack_position = -(i + 1) * SPRITE_SIZE * player_direction.normalized() + player_position
 				if attack_position.x > -SPRITE_SIZE and attack_position.x < screen_size.x + SPRITE_SIZE and attack_position.y > -SPRITE_SIZE and attack_position.y < screen_size.y + SPRITE_SIZE:
 					var firecolumn: AttackFireColumn = firecolumn_scene.instantiate()
-					firecolumn.transform = firecolumn.transform.scaled(Vector2(float(attack_tier) * 1/3, 1)).rotated(player_direction.angle() + PI/2)
+					firecolumn.transform = firecolumn.transform.scaled(Vector2(float(int_attack_tier) * 1/3, 1)).rotated(player_direction.angle() + PI/2)
 					firecolumn.position = attack_position
 					if previous_column != null:
 						firecolumn.previous_pre_spawn_done.connect(previous_column._on_previous_pre_spawn_done)
@@ -58,7 +58,7 @@ func spawn_attack(attack_type: Enum.AttackType, attack_tier: Enum.AttackTier,  p
 			ice_ball.transform = ice_ball.transform.rotated(player_direction.angle())
 			ice_ball.scale(2 * level_scale)
 			ice_ball.position = player_position + 60 * player_direction.normalized()
-			ice_ball.linear_velocity = 300 * attack_tier * player_direction.normalized()
+			ice_ball.linear_velocity = 300 * int_attack_tier * player_direction.normalized()
 			#ice_ball.direction = player_direction.normalized()
 			spawn_list.append(ice_ball)
 

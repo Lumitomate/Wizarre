@@ -26,3 +26,9 @@ enum AttackFamily {
 	Yellow,
 	Green
 }
+
+enum DoorType {
+	TIME,
+	FRIENDSHIP,
+	NO_DAMAGE
+}

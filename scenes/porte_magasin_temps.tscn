@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://boimaa7xbqo45"]
+
+[ext_resource type="Script" uid="uid://d2sb78hlat3lc" path="res://scripts/porte_magasin.gd" id="1_4hmvv"]
+[ext_resource type="Texture2D" uid="uid://c046owqd1e45l" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps1.png" id="2_koy5b"]
+[ext_resource type="Texture2D" uid="uid://dib8oa2qe8352" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps2.png" id="3_03xde"]
+[ext_resource type="Texture2D" uid="uid://cnxji17s0nwsy" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps3.png" id="4_di1w5"]
+[ext_resource type="Texture2D" uid="uid://qacrstj8pc45" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps4.png" id="5_7ebma"]
+[ext_resource type="Texture2D" uid="uid://dqrx751a6hdpp" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps5.png" id="6_e1283"]
+[ext_resource type="Texture2D" uid="uid://7e3sxt301a4p" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps6.png" id="7_5wvat"]
+[ext_resource type="Texture2D" uid="uid://dha7jk7b0ei84" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps7.png" id="8_n2667"]
+[ext_resource type="Texture2D" uid="uid://dessabch3felj" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps8.png" id="9_x6oxp"]
+[ext_resource type="Texture2D" uid="uid://da51y6e0qbb3" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps9.png" id="10_8iius"]
+[ext_resource type="Texture2D" uid="uid://cqgmfb6ywnhea" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps10.png" id="11_2vtwj"]
+[ext_resource type="Texture2D" uid="uid://dlehp7mqvdayd" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps11.png" id="12_of6ce"]
+[ext_resource type="Texture2D" uid="uid://bobr7oin3hq7e" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps12.png" id="13_sjd0p"]
+[ext_resource type="Texture2D" uid="uid://bkg60cwe5r4er" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps13.png" id="14_pnxbs"]
+[ext_resource type="Texture2D" uid="uid://dbxktdpqn8jx8" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps14.png" id="15_yieh5"]
+[ext_resource type="Texture2D" uid="uid://mrge3gm5a8hu" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps15.png" id="16_jynqc"]
+[ext_resource type="Texture2D" uid="uid://ceshnr4pqdgit" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps16.png" id="17_11lp3"]
+[ext_resource type="Texture2D" uid="uid://b1o4pl5qa3xkt" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps17.png" id="18_ck43e"]
+[ext_resource type="Texture2D" uid="uid://dk1sttmsn4341" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps18.png" id="19_6r7qf"]
+[ext_resource type="Texture2D" uid="uid://c2u5tyvhkbegy" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps19.png" id="20_nf7ce"]
+[ext_resource type="Texture2D" uid="uid://djvi7jok1o4i0" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps20.png" id="21_hvlfm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lrvys"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_koy5b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_03xde")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_di1w5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7ebma")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_e1283")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_5wvat")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_n2667")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_x6oxp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_8iius")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_2vtwj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_of6ce")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_sjd0p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_pnxbs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_yieh5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_jynqc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_11lp3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ck43e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_6r7qf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_nf7ce")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_hvlfm")
+}],
+"loop": false,
+"name": &"Ouverture",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lms48"]
+size = Vector2(32, 64)
+
+[node name="PorteMagasinTemps" type="StaticBody2D" unique_id=1860909474]
+scale = Vector2(2, 2)
+script = ExtResource("1_4hmvv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=322794752]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_lrvys")
+animation = &"Ouverture"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=515886497]
+shape = SubResource("RectangleShape2D_lms48")
+
+[node name="Timer" type="Timer" parent="." unique_id=443181888]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

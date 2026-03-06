@@ -66,8 +66,9 @@ func _on_ennemy_spawned() -> void:
 
 
 func go_to_shop() -> void:
+	#call_deferred("get_tree().change_scene_to_file()", "res://scenes/shop.tscn")
 	get_tree().change_scene_to_file("res://scenes/shop.tscn")
 
 
 func _on_terrain_1_portes_sortie_ouverture_1_shop_entered() -> void:
-	go_to_shop()
+	call_deferred("go_to_shop")

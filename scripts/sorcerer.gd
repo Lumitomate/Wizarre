@@ -24,17 +24,17 @@ var can_take_damage: bool = true
 var level_scale: Vector2
 
 var  competences = {
-	"attack_red":
+	Enum.AttackFamily.Red:
 		{
 			"attack_type" : Enum.AttackType.FIRECOLUMN,
 			"attack_tier" : Enum.AttackTier.I
 		},
-	"attack_blue":
+	Enum.AttackFamily.Blue:
 		{
 			"attack_type" : Enum.AttackType.ICEBALL,
 			"attack_tier" : Enum.AttackTier.I
 		},
-	"attack_yellow":
+	Enum.AttackFamily.Yellow:
 		{
 			"attack_type" : Enum.AttackType.LIGHTRAY,
 			"attack_tier" : Enum.AttackTier.I
@@ -105,23 +105,18 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
+func set_attack(attack_family: Enum.AttackFamily, attack_type: Enum.AttackType, attack_tier: Enum.AttackTier) -> void:
+	competences[attack_family]["attack_type"] = attack_type
+	competences[attack_family]["attack_tier"] = attack_tier
+
+
 func fire_attack(attack_family: Enum.AttackFamily) -> void:
 	var attack_launcher = attack_launcher_script.new()
 	
 	if ammunitions[attack_family] > 0:
 		
-		var attack_type: int
-		var attack_tier: int
-		match attack_family:
-			Enum.AttackFamily.Red:
-				attack_type = competences["attack_red"]["attack_type"]
-				attack_tier = competences["attack_red"]["attack_tier"]
-			Enum.AttackFamily.Blue:
-				attack_type = competences["attack_blue"]["attack_type"]
-				attack_tier = competences["attack_blue"]["attack_tier"]
-			Enum.AttackFamily.Yellow:
-				attack_type = competences["attack_yellow"]["attack_type"]
-				attack_tier = competences["attack_yellow"]["attack_tier"]
+		var attack_type: Enum.AttackType = competences[attack_family]["attack_type"]
+		var attack_tier: Enum.AttackTier = competences[attack_family]["attack_tier"]
 
 		var attack_list = attack_launcher.spawn_attack(attack_type, attack_tier, position, direction, screen_size, level_scale)
 

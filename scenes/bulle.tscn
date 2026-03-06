@@ -110,6 +110,7 @@ shape = SubResource("CapsuleShape2D_lkde3")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_okjpd")
 animation = &"Ouverture"
+flip_h = true
 
 [node name="Area2D" type="Area2D" parent="." unique_id=954088632]
 

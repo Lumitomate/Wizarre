@@ -9,7 +9,7 @@ signal life_changed
 @export var jump_impulse: int = 1000
 @export var fall_acceleration: int = 3000
 @export var sorcerer_color: Enum.SorcererColor
-@export var controller_id: int = 0
+var controller_id: int = 0
 
 const attack_launcher_script = preload("res://scripts/spawner_attack.gd")
 var damage_label_scene = preload("res://scenes/hud_damage_label.tscn")
@@ -26,11 +26,12 @@ var level_scale: Vector2
 var attacks
 
 func _ready() -> void:
-	print("pop")
 	screen_size = get_viewport_rect().size
 	level_scale = get_parent().transform.get_scale()
-	position = screen_size / 2
+	position = (1.4 * screen_size / 2) + Vector2(controller_id * 64, 128)
 	position += Vector2(0, SPRITE_SIZE * controller_id)
+	load_data()
+	lives = 3
 
 	match sorcerer_color :
 		Enum.SorcererColor.Blue:
@@ -133,17 +134,22 @@ func hit(damage: int):
 
 
 func die():
+	export_data()
 	queue_free()
 
 
-func export_data() -> Dictionary :
-	return {
+func export_data() -> void :
+	GlobalInfo.run_info["players_info"][controller_id] = {
 		"lives": lives,
 		"ammunitions": ammunitions,
 		"attacks": attacks
 	}
 
-func load_data(data_to_load: Dictionary) -> void:
+func load_data() -> void:
+	var data_to_load = GlobalInfo.run_info["players_info"]["default"].duplicate(true)
+	if controller_id in GlobalInfo.run_info["players_info"].keys():
+		data_to_load = GlobalInfo.run_info["players_info"][controller_id]
+		
 	lives = data_to_load["lives"]
 	ammunitions = data_to_load["ammunitions"]
 	attacks = data_to_load["attacks"]
@@ -154,3 +160,6 @@ func _on_attack_cooldown_timeout() -> void:
 
 func _on_damage_cooldown_timeout() -> void:
 	can_take_damage = true
+
+func _on_save_data() -> void:
+	export_data()

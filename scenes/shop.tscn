@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://cq52ldvgscuwm" path="res://scripts/shop.gd" id="1_xfvoa"]
 [ext_resource type="PackedScene" uid="uid://i8dy2676jbft" path="res://scenes/objet_medaille.tscn" id="3_032fp"]
 [ext_resource type="PackedScene" uid="uid://3q52vx8luxjx" path="res://scenes/objet_miroir.tscn" id="4_2fc2m"]
+[ext_resource type="PackedScene" uid="uid://bh24tl02j8jw4" path="res://scenes/objet_moufle.tscn" id="5_2fc2m"]
+[ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Terrains/Terrain1_Fond.png" id="6_8r1wq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]
 texture = ExtResource("1_lx5au")
@@ -76,3 +78,12 @@ item_attack_tier = 2
 [node name="ObjetMiroir" parent="." unique_id=240781334 instance=ExtResource("4_2fc2m")]
 position = Vector2(1692.8572, 308.57144)
 item_attack_tier = 1
+
+[node name="ObjetMiroir2" parent="." unique_id=452424240 instance=ExtResource("5_2fc2m")]
+position = Vector2(1677.1427, 885.71423)
+
+[node name="Terrain1Fond" type="Sprite2D" parent="." unique_id=1021994143]
+texture_filter = 1
+position = Vector2(907.8572, 577.1428)
+scale = Vector2(2.08168, 2.1996753)
+texture = ExtResource("6_8r1wq")

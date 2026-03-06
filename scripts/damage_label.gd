@@ -7,7 +7,7 @@ func _ready() -> void:
 	text = "-" + str(amount)
 
 func _process(_delta: float) -> void:
-	var progress = ($Opacity.time_left / $Opacity.wait_time)
+	var progress = ($Opacity.time_left / $Opacity.wait_time) ** 2
 	label_settings.font_color = Color(1, 1, 1, progress)
 	position.y -= 1
 

@@ -1,17 +1,5 @@
 class_name PlayerInfo extends Control
 
-enum ColorId {
-	Red,
-	Green,
-	Blue,
-	Yellow
-}
-
-enum GemmeColor {
-	Red,
-	Blue,
-	Yellow
-}
 
 enum LifeNb {
 	ZERO,
@@ -64,14 +52,14 @@ func refresh_status() -> void:
 				ammo_nb = GemmeNb.FOUR
 		
 		match munition_type:
-			GemmeColor.Red:
+			Enum.AttackFamily.Red:
 				$HudGemneF.frame = ammo_nb
-			GemmeColor.Yellow:
+			Enum.AttackFamily.Yellow:
 				$HudGemneL.frame = ammo_nb
-			GemmeColor.Blue:
+			Enum.AttackFamily.Blue:
 				$HudGemneG.frame = ammo_nb
 
-func set_bg_color(color_id: ColorId):
+func set_bg_color(color_id: Enum.SorcererColor):
 		$SorcereColor.frame=color_id
 
 

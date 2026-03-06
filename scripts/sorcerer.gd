@@ -2,26 +2,13 @@ class_name Sorcerer extends CharacterBody2D
 
 const SPRITE_SIZE = 64
 
-enum SorcererColor {
-	Red,
-	Green,
-	Blue,
-	Yellow
-}
-
-enum AttackFamily {
-	Red,
-	Blue,
-	Yellow
-}
-
 signal ammo_changed
 signal life_changed
 
 @export var speed: int = 400
 @export var jump_impulse: int = 1000
 @export var fall_acceleration: int = 3000
-@export var sorcerer_color: SorcererColor = SorcererColor.Blue
+@export var sorcerer_color: Enum.SorcererColor
 @export var controller_id: int = 0
 
 const attack_launcher_script = preload("res://scripts/spawner_attack.gd")
@@ -36,6 +23,23 @@ var can_fire: bool = true
 var can_take_damage: bool = true
 var level_scale: Vector2
 
+var  competences = {
+	"attack_red":
+		{
+			"attack_type" : Enum.AttackType.FIRECOLUMN,
+			"attack_tier" : Enum.AttackTier.I
+		},
+	"attack_blue":
+		{
+			"attack_type" : Enum.AttackType.ICEBALL,
+			"attack_tier" : Enum.AttackTier.I
+		},
+	"attack_yellow":
+		{
+			"attack_type" : Enum.AttackType.LIGHTRAY,
+			"attack_tier" : Enum.AttackTier.I
+		},
+}
 
 func _ready() -> void:
 	print("pop")
@@ -45,13 +49,13 @@ func _ready() -> void:
 	position += Vector2(0, SPRITE_SIZE * controller_id)
 
 	match sorcerer_color :
-		SorcererColor.Blue:
+		Enum.SorcererColor.Blue:
 			animation_suffix = "blue"
-		SorcererColor.Red:
+		Enum.SorcererColor.Red:
 			animation_suffix = "red"
-		SorcererColor.Green:
+		Enum.SorcererColor.Green:
 			animation_suffix = "green"
-		SorcererColor.Yellow:
+		Enum.SorcererColor.Yellow:
 			animation_suffix = "yellow"
 	$AnimatedSprite2D.play("walk_" + animation_suffix)
 
@@ -73,11 +77,11 @@ func _process(_delta: float) -> void:
 		
 	if can_fire:
 		if Input.is_joy_button_pressed(controller_id, JOY_BUTTON_X):
-			fire_attack(AttackFamily.Red)
+			fire_attack(Enum.AttackFamily.Red)
 		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_Y):
-			fire_attack(AttackFamily.Blue)
+			fire_attack(Enum.AttackFamily.Blue)
 		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_B):
-			fire_attack(AttackFamily.Yellow)
+			fire_attack(Enum.AttackFamily.Yellow)
 
 
 func _physics_process(delta: float) -> void:
@@ -101,7 +105,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func fire_attack(attack_family:AttackFamily) -> void:
+func fire_attack(attack_family: Enum.AttackFamily) -> void:
 	var attack_launcher = attack_launcher_script.new()
 	
 	if ammunitions[attack_family] > 0:
@@ -109,15 +113,15 @@ func fire_attack(attack_family:AttackFamily) -> void:
 		var attack_type: int
 		var attack_tier: int
 		match attack_family:
-			AttackFamily.Red:
-				attack_type = attack_launcher.AttackType.FIRECOLUMN
-				attack_tier = attack_launcher.AttackTier.I
-			AttackFamily.Blue:
-				attack_type = attack_launcher.AttackType.ICEBALL
-				attack_tier = attack_launcher.AttackTier.I
-			AttackFamily.Yellow:
-				attack_type = attack_launcher.AttackType.LIGHTRAY
-				attack_tier = attack_launcher.AttackTier.I
+			Enum.AttackFamily.Red:
+				attack_type = competences["attack_red"]["attack_type"]
+				attack_tier = competences["attack_red"]["attack_tier"]
+			Enum.AttackFamily.Blue:
+				attack_type = competences["attack_blue"]["attack_type"]
+				attack_tier = competences["attack_blue"]["attack_tier"]
+			Enum.AttackFamily.Yellow:
+				attack_type = competences["attack_yellow"]["attack_type"]
+				attack_tier = competences["attack_yellow"]["attack_tier"]
 
 		var attack_list = attack_launcher.spawn_attack(attack_type, attack_tier, position, direction, screen_size, level_scale)
 

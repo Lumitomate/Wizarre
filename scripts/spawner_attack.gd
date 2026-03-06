@@ -1,18 +1,5 @@
 extends Node
 
-enum AttackType {
-	FIREBALL,
-	LIGHTRAY,
-	FIRECOLUMN,
-	ICEBALL
-}
-
-enum AttackTier {
-	I,
-	II,
-	III,
-}
-
 const SPRITE_SIZE = 64
 
 var fireball_scene = preload("res://scenes/attack_fireball.tscn")
@@ -21,14 +8,14 @@ var firecolumn_scene = preload("res://scenes/attack_fire_column.tscn")
 var ice_ball_scene = preload("res://scenes/attack_ice_ball.tscn")
 
 
-func spawn_attack(attack_type: AttackType, attack_tier: AttackTier,  player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2) -> Array[Node]:
+func spawn_attack(attack_type: Enum.AttackType, attack_tier: Enum.AttackTier,  player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2) -> Array[Node]:
 	
 	var spawn_list: Array[Node]
 	
 	attack_tier += 1
 	
 	match attack_type:
-		AttackType.FIREBALL:
+		Enum.AttackType.FIREBALL:
 			player_position *= level_scale
 			var spread = PI / 4
 			for i in range(attack_tier):
@@ -38,7 +25,7 @@ func spawn_attack(attack_type: AttackType, attack_tier: AttackTier,  player_posi
 				fireball.direction = player_direction.normalized()
 				spawn_list.append(fireball)
 			
-		AttackType.LIGHTRAY:
+		Enum.AttackType.LIGHTRAY:
 			player_position *= level_scale
 			var ray_nb = attack_tier
 			for n in range(ray_nb):
@@ -50,7 +37,7 @@ func spawn_attack(attack_type: AttackType, attack_tier: AttackTier,  player_posi
 						lightray.position = attack_position
 						spawn_list.append(lightray)
 				
-		AttackType.FIRECOLUMN:
+		Enum.AttackType.FIRECOLUMN:
 			player_position *= level_scale
 			var previous_column: AttackFireColumn = null
 			#player_direction = player_direction.rotated(PI / 2)
@@ -66,7 +53,7 @@ func spawn_attack(attack_type: AttackType, attack_tier: AttackTier,  player_posi
 					previous_column = firecolumn
 			previous_column.is_last = true
 		
-		AttackType.ICEBALL:
+		Enum.AttackType.ICEBALL:
 			var ice_ball: AttackIceBall = ice_ball_scene.instantiate()
 			ice_ball.transform = ice_ball.transform.rotated(player_direction.angle())
 			ice_ball.scale(2 * level_scale)

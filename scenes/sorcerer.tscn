@@ -223,6 +223,7 @@ animations = [{
 scale = Vector2(2, 2)
 collision_mask = 5
 script = ExtResource("1_oqr0g")
+jump_impulse = 1050
 sorcerer_color = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=92979516]

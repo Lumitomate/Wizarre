@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://3q52vx8luxjx"]
+
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_miroir.gd" id="1_ebl7y"]
+[ext_resource type="Texture2D" uid="uid://dfehuyqs5ta5u" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent1.png" id="2_5wgwx"]
+[ext_resource type="Texture2D" uid="uid://rv5waeddqw8x" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent2.png" id="3_datgt"]
+[ext_resource type="Texture2D" uid="uid://dsxqf1dcn7ndu" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent3.png" id="4_lw3u8"]
+[ext_resource type="Texture2D" uid="uid://x2tt1x7re5wr" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent4.png" id="5_dypgs"]
+[ext_resource type="Texture2D" uid="uid://drdkwwxg4ihpw" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent5.png" id="6_kctva"]
+[ext_resource type="Texture2D" uid="uid://c42xmfsu77xfo" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent6.png" id="7_knru2"]
+[ext_resource type="Texture2D" uid="uid://wfgh4uh2lo1t" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent7.png" id="8_o5e6b"]
+[ext_resource type="Texture2D" uid="uid://xbac4i6e34sf" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent8.png" id="9_y6q8j"]
+[ext_resource type="Texture2D" uid="uid://bh7us6j7mgjhj" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze1.png" id="10_ie3w8"]
+[ext_resource type="Texture2D" uid="uid://i1jkmwfsd3jk" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze2.png" id="11_hrtrj"]
+[ext_resource type="Texture2D" uid="uid://ovotk0cljm5" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze3.png" id="12_kwiqd"]
+[ext_resource type="Texture2D" uid="uid://bryy3pcxrpr15" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze4.png" id="13_5att4"]
+[ext_resource type="Texture2D" uid="uid://bu1c0h0td0dsm" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze5.png" id="14_acq5p"]
+[ext_resource type="Texture2D" uid="uid://ccp2ovc5axfn3" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze6.png" id="15_rkbu1"]
+[ext_resource type="Texture2D" uid="uid://b1u3k8tess5tb" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze7.png" id="16_us485"]
+[ext_resource type="Texture2D" uid="uid://snthea5edjym" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze8.png" id="17_mddee"]
+[ext_resource type="Texture2D" uid="uid://bbuqihw7ukfp4" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or1.png" id="18_qayt8"]
+[ext_resource type="Texture2D" uid="uid://b8vbtqbksv8gw" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or2.png" id="19_uxyrt"]
+[ext_resource type="Texture2D" uid="uid://lo45u5ojq48u" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or3.png" id="20_vk62w"]
+[ext_resource type="Texture2D" uid="uid://c2mbh418cqkc2" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or4.png" id="21_qvm26"]
+[ext_resource type="Texture2D" uid="uid://3rke70dtnm1y" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or5.png" id="22_mpc7t"]
+[ext_resource type="Texture2D" uid="uid://51yrs74m6lng" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or6.png" id="23_1k270"]
+[ext_resource type="Texture2D" uid="uid://bhxyhixl4kahx" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or7.png" id="24_cganm"]
+[ext_resource type="Texture2D" uid="uid://bsu64wmitdjy2" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or8.png" id="25_12edd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2kvoa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5wgwx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_datgt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_lw3u8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_dypgs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_kctva")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_knru2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_o5e6b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_y6q8j")
+}],
+"loop": true,
+"name": &"Miroir_Argent",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_ie3w8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_hrtrj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_kwiqd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_5att4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_acq5p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_rkbu1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_us485")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_mddee")
+}],
+"loop": true,
+"name": &"Miroir_Bronze",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_qayt8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_uxyrt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_vk62w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_qvm26")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_mpc7t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_1k270")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_cganm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_12edd")
+}],
+"loop": true,
+"name": &"Miroir_Or",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ermxx"]
+radius = 15.0
+
+[node name="ObjetMedaille" type="Area2D" unique_id=2070854314]
+script = ExtResource("1_ebl7y")
+miroir_color = null
+
+[node name="AnimatedMiroir" type="AnimatedSprite2D" parent="." unique_id=518273926]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_2kvoa")
+animation = &"Miroir_Bronze"
+
+[node name="Area2D" type="CollisionShape2D" parent="." unique_id=1861019466]
+shape = SubResource("CircleShape2D_ermxx")

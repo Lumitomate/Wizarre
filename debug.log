@@ -1,0 +1,55 @@
+
+Level:<Node2D#91570046425>
+Adding player: 0
+pop
+Adding player: 1
+pop
+{ "level_number": 0, "run_duration": 0, "players_info": { "default": { "lives": 3, "ammunitions": [3, 3, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } } } }
+Dégats reçus! Vies restantes (2)
+Je prends des dégats (2)
+{ "level_number": 1, "run_duration": 4967, "players_info": { "default": { "lives": 3, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 0: { "lives": 2, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 1: { "lives": 3, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } } } }
+Object spawned
+Object spawned
+Object spawned
+Adding player: 0
+pop
+Adding player: 1
+pop
+{ "level_number": 1, "run_duration": 4967, "players_info": { "default": { "lives": 3, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 0: { "lives": 2, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 1: { "lives": 3, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } } } }
+Object created
+Object created
+Object created
+Mon attaque est maintenant 1 et de tier 0
+{ "level_number": 1, "run_duration": 4967, "players_info": { "default": { "lives": 3, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 0: { "lives": 2, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 1: { "lives": 3, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } } } }
+Adding player: 0
+pop
+Adding player: 1
+pop
+{ "level_number": 1, "run_duration": 4967, "players_info": { "default": { "lives": 3, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 0: { "lives": 2, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 1: { "lives": 3, "ammunitions": [3, 1, 3], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } } } }
+Dégats reçus! Vies restantes (1)
+Je prends des dégats (1)
+Dégats reçus! Vies restantes (2)
+Je prends des dégats (2)
+{ "level_number": 2, "run_duration": 13569, "players_info": { "default": { "lives": 3, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 0: { "lives": 1, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 1: { "lives": 2, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } } } }
+Object spawned
+Object spawned
+Object spawned
+Adding player: 0
+pop
+Adding player: 1
+pop
+{ "level_number": 2, "run_duration": 13569, "players_info": { "default": { "lives": 3, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 0: { "lives": 1, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 1: { "lives": 2, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 0 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } } } }
+Object created
+Object created
+Object created
+Mon attaque est maintenant 2 et de tier 2
+{ "level_number": 2, "run_duration": 13569, "players_info": { "default": { "lives": 3, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 2 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 0: { "lives": 1, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 2 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 1: { "lives": 2, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 2 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } } } }
+Adding player: 0
+pop
+Adding player: 1
+pop
+{ "level_number": 2, "run_duration": 13569, "players_info": { "default": { "lives": 3, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 2 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 0: { "lives": 1, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 2 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } }, 1: { "lives": 2, "ammunitions": [2, 0, 2], "attacks": { 0: { "attack_type": 2, "attack_tier": 2 }, 1: { "attack_type": 3, "attack_tier": 0 }, 2: { "attack_type": 1, "attack_tier": 0 } } } } }
+Dégats reçus! Vies restantes (1)
+Je prends des dégats (1)
+Dégats reçus! Vies restantes (0)
+Je prends des dégats (0)

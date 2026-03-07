@@ -1,4 +1,4 @@
-extends Area2D
+class_name AttackObject extends Area2D
 
 @export var item_attack_family: Enum.AttackFamily
 @export var item_attack_type: Enum.AttackType
@@ -7,6 +7,7 @@ extends Area2D
 var animation_name: String
 
 func _ready() -> void:
+	print("Object created")
 	match item_attack_tier:
 		Enum.AttackTier.III:
 			animation_name = "Or"

@@ -25,6 +25,8 @@ var level_scale: Vector2
 
 var attacks
 
+var current_state: Enum.State = Enum.State.IDLE
+
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	level_scale = get_parent().transform.get_scale()
@@ -44,6 +46,24 @@ func _ready() -> void:
 			animation_suffix = "yellow"
 	$AnimatedSprite2D.play("walk_" + animation_suffix)
 
+func set_state(new_state: Enum.State) -> void:
+	if current_state == new_state:
+		return
+	
+	current_state = new_state
+	
+	match current_state:
+		Enum.State.IDLE:
+			$AnimatedSprite2D.play("idle_" + animation_suffix)
+			
+		Enum.State.RUN:
+			$AnimatedSprite2D.play("walk_" + animation_suffix)
+			
+		Enum.State.JUMP:
+			$AnimatedSprite2D.play("jump_" + animation_suffix)
+			
+		Enum.State.FALL:
+			$AnimatedSprite2D.play("fall_" + animation_suffix)
 
 func _process(_delta: float) -> void:
 	var new_direction = Vector2(Input.get_joy_axis(controller_id, JOY_AXIS_LEFT_X), Input.get_joy_axis(controller_id, JOY_AXIS_LEFT_Y))
@@ -53,13 +73,10 @@ func _process(_delta: float) -> void:
 		direction = Vector2(Vector2.RIGHT.dot(direction), 0.00001).normalized() * 0.1
 	if direction.x < -0.2:
 		$AnimatedSprite2D.flip_h = true
-		$AnimatedSprite2D.play("walk_" + animation_suffix)
 	elif direction.x > 0.2:
 		$AnimatedSprite2D.flip_h = false
-		$AnimatedSprite2D.play("walk_" + animation_suffix)
-	else:
-		$AnimatedSprite2D.stop()
-		
+
+
 	if can_fire:
 		if Input.is_joy_button_pressed(controller_id, JOY_BUTTON_X):
 			fire_attack(Enum.AttackFamily.Red)
@@ -70,24 +87,40 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	
-	# Mouvements
+
+	# Mouvements horizontaux
 	if Input.get_joy_axis(controller_id, JOY_AXIS_LEFT_X) < -0.2:
-		velocity.x = -1 * speed
+		velocity.x = -speed
 	elif Input.get_joy_axis(controller_id, JOY_AXIS_LEFT_X) > 0.2:
-		velocity.x = 1 * speed
+		velocity.x = speed
 	else:
 		velocity.x = 0
-	
-	# Sauts
-	if is_on_floor() and Input.is_joy_button_pressed(controller_id, JOY_BUTTON_A):
+
+
+	# Saut (déclenché une seule fois)
+	if is_on_floor() and Input.is_action_just_pressed("jump", controller_id):
 		velocity.y = -jump_impulse
-	
+		set_state(Enum.State.JUMP)
+
+
+	# Gravité
 	if not is_on_floor():
 		velocity.y += fall_acceleration * delta
-	
-	# Gesion de la physique
+
+
+	# Physique
 	move_and_slide()
+
+
+	# Mise à jour des états
+	if is_on_floor():
+		if abs(velocity.x) > 0:
+			set_state(Enum.State.RUN)
+		else:
+			set_state(Enum.State.IDLE)
+	else:
+		if velocity.y > 0:
+			set_state(Enum.State.FALL)
 
 
 func set_attack(attack_family: Enum.AttackFamily, attack_type: Enum.AttackType, attack_tier: Enum.AttackTier) -> void:

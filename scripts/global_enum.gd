@@ -27,6 +27,13 @@ enum AttackFamily {
 	Green
 }
 
+enum State {
+	IDLE, 
+	RUN, 
+	JUMP, 
+	FALL
+}
+
 enum DoorType {
 	TIME,
 	FRIENDSHIP,

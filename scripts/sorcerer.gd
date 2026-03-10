@@ -6,7 +6,11 @@ signal ammo_changed
 signal life_changed
 
 @export var speed: int = 400
-@export var jump_impulse: int = 1000
+var jump_pressed_time: float = 0.0
+var is_jumping: bool = false
+@export var max_jump_time: float = 0.3 # durée max que l'on peut "charger" le saut en secondes
+@export var jump_impulse_min: int = 600 # saut minimal
+@export var jump_impulse_max: int = 1300 # saut maximal
 @export var fall_acceleration: int = 3000
 @export var sorcerer_color: Enum.SorcererColor
 var controller_id: int = 0
@@ -97,16 +101,27 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 
 
-	# Saut (déclenché une seule fois)
+	# Saut + nuancier
 	if is_on_floor() and Input.is_action_just_pressed("jump", controller_id):
-		velocity.y = -jump_impulse
+		is_jumping = true
+		jump_pressed_time = 0.0
+		velocity.y = -jump_impulse_min
 		set_state(Enum.State.JUMP)
 
+	if not is_on_floor() and Input.is_action_pressed("jump", controller_id):
+		jump_pressed_time += delta
+		if jump_pressed_time < max_jump_time:
+			var boost = (jump_impulse_max-jump_impulse_min) * (delta / max_jump_time)
+			velocity.y -= boost
+		else:
+			is_jumping = false
+	
+	if Input.is_action_just_released("jump", controller_id):
+		is_jumping = false
 
 	# Gravité
 	if not is_on_floor():
 		velocity.y += fall_acceleration * delta
-
 
 	# Physique
 	move_and_slide()

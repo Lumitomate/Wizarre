@@ -59,25 +59,21 @@ animations = [{
 }]
 
 [sub_resource type="Gradient" id="Gradient_ecleu"]
-colors = PackedColorArray(0.92941177, 0.050980393, 0, 1, 1, 1, 0, 1)
+offsets = PackedFloat32Array(0.002617801, 0.9973822)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_bm2kv"]
 gradient = SubResource("Gradient_ecleu")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cjk3f"]
-lifetime_randomness = 0.1
 particle_flag_disable_z = true
-emission_shape_scale = Vector3(4, 4, 4)
-emission_shape = 3
-emission_box_extents = Vector3(1, 1, 1)
-angle_min = -197.59999
-angle_max = 256.90002
+emission_shape_offset = Vector3(1, 1, 1)
 direction = Vector3(0, -1, 0)
-spread = 8.096
-initial_velocity_max = 25.49
+spread = 10.0
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
 gravity = Vector3(0, 0, 0)
-scale_max = 2.0
-color = Color(1, 0.7529412, 0.14901961, 1)
+scale_max = 3.0
 color_ramp = SubResource("GradientTexture1D_bm2kv")
 
 [node name="Torche" type="AnimatedSprite2D" unique_id=1194411659]
@@ -86,8 +82,7 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_u10ce")
 script = ExtResource("13_ra5nj")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1808443540]
-position = Vector2(0, -5.5)
-amount = 20
-amount_ratio = 0.1767
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=564755501]
+texture_filter = 1
+lifetime = 2.0
 process_material = SubResource("ParticleProcessMaterial_cjk3f")

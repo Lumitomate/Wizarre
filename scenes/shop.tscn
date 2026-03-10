@@ -6,11 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Terrains/Terrain1_Fond.png" id="6_8r1wq"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/porte_magasin_epreuve.tscn" id="7_ajxib"]
 [ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/shop_door.tscn" id="8_y6sft"]
-<<<<<<< HEAD
-[ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Terrains/Terrain1_PortesEntree.png" id="10_heatd"]
-=======
 [ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_objet.tscn" id="9_m4ofw"]
->>>>>>> 413e5ccd9f2017f5c8164d008974d1b8ddc30d32
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]
 texture = ExtResource("1_lx5au")
@@ -110,13 +106,6 @@ position = Vector2(1482.8572, 832.8572)
 [node name="ShopDoor" parent="." unique_id=1894555552 instance=ExtResource("8_y6sft")]
 position = Vector2(107.14287, 387.14288)
 
-<<<<<<< HEAD
-[node name="Terrain1PortesEntree" type="Sprite2D" parent="." unique_id=1350877867]
-texture_filter = 1
-position = Vector2(495.7143, 387.14282)
-scale = Vector2(2, 2)
-texture = ExtResource("10_heatd")
-=======
 [node name="SpawnerObjet" parent="." unique_id=1685397250 instance=ExtResource("9_m4ofw")]
 position = Vector2(1687.1428, 904.28577)
 
@@ -125,7 +114,6 @@ position = Vector2(1687.143, 585.7143)
 
 [node name="SpawnerObjet3" parent="." unique_id=1405910007 instance=ExtResource("9_m4ofw")]
 position = Vector2(1687.1428, 325.7143)
->>>>>>> 413e5ccd9f2017f5c8164d008974d1b8ddc30d32
 
 [connection signal="sorcerer_contact_bubble" from="Bulle" to="." method="_on_bulle_sorcerer_contact_bubble"]
 [connection signal="sorcerer_contact_bubble" from="Bulle2" to="." method="_on_bulle_sorcerer_contact_bubble"]

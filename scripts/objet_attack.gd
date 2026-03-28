@@ -1,19 +1,19 @@
 class_name AttackObject extends Area2D
 
-@export var item_attack_family: Enum.AttackFamily
-@export var item_attack_type: Enum.AttackType
-@export var item_attack_tier: Enum.AttackTier
+@export var item_attack_family: GlobalEnum.AttackFamily
+@export var item_attack_type: GlobalEnum.AttackType
+@export var item_attack_tier: GlobalEnum.AttackTier
 
 var animation_name: String
 
 func _ready() -> void:
 	print("Object created")
 	match item_attack_tier:
-		Enum.AttackTier.III:
+		GlobalEnum.AttackTier.III:
 			animation_name = "Or"
-		Enum.AttackTier.II:
+		GlobalEnum.AttackTier.II:
 			animation_name = "Argent"
-		Enum.AttackTier.I:
+		GlobalEnum.AttackTier.I:
 			animation_name = "Bronze"
 			
 	$ObjetAttaqueAnimation.play(animation_name)

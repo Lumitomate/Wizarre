@@ -1,12 +1,25 @@
 extends Node
 
 var current_scene = null
+var number_of_players = null
+
+var scenes = {
+	GlobalEnum.Location.HOMEPAGE: "res://scenes/homepage.tscn",
+	GlobalEnum.Location.LEVEL: "res://scenes/level.tscn",
+	GlobalEnum.Location.SHOP: "res://scenes/shop.tscn"
+}
 
 func _ready() -> void:
 	var root = get_tree().root
 	current_scene = root.get_child(-1)
 	print(current_scene)
 
+func goto_location(location):
+
+	if location in scenes:
+		goto_scene(scenes[location])
+	else:
+		print("Unknown location")
 
 func goto_scene(path: String) -> void:
 	_deferred_goto_scene.call_deferred(path)

@@ -8,14 +8,14 @@ var firecolumn_scene = preload("res://scenes/attack_fire_column.tscn")
 var ice_ball_scene = preload("res://scenes/attack_ice_ball.tscn")
 
 
-func spawn_attack(attack_type: Enum.AttackType, attack_tier: Enum.AttackTier,  player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2) -> Array[Node]:
+func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier,  player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2) -> Array[Node]:
 	
 	var spawn_list: Array[Node]
 	
 	var int_attack_tier: int = int(attack_tier) + 1
 	
 	match attack_type:
-		Enum.AttackType.FIREBALL:
+		GlobalEnum.AttackType.FIREBALL:
 			player_position *= level_scale
 			var spread = PI / 4
 			for i in range(attack_tier):
@@ -25,7 +25,7 @@ func spawn_attack(attack_type: Enum.AttackType, attack_tier: Enum.AttackTier,  p
 				fireball.direction = player_direction.normalized()
 				spawn_list.append(fireball)
 			
-		Enum.AttackType.LIGHTRAY:
+		GlobalEnum.AttackType.LIGHTRAY:
 			player_position *= level_scale
 			var ray_nb = int_attack_tier
 			for n in range(ray_nb):
@@ -37,7 +37,7 @@ func spawn_attack(attack_type: Enum.AttackType, attack_tier: Enum.AttackTier,  p
 						lightray.position = attack_position
 						spawn_list.append(lightray)
 				
-		Enum.AttackType.FIRECOLUMN:
+		GlobalEnum.AttackType.FIRECOLUMN:
 			player_position *= level_scale
 			var previous_column: AttackFireColumn = null
 			#player_direction = player_direction.rotated(PI / 2)
@@ -53,7 +53,7 @@ func spawn_attack(attack_type: Enum.AttackType, attack_tier: Enum.AttackTier,  p
 					previous_column = firecolumn
 			previous_column.is_last = true
 		
-		Enum.AttackType.ICEBALL:
+		GlobalEnum.AttackType.ICEBALL:
 			var ice_ball: AttackIceBall = ice_ball_scene.instantiate()
 			ice_ball.transform = ice_ball.transform.rotated(player_direction.angle())
 			ice_ball.scale(2 * level_scale)

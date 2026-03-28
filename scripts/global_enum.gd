@@ -1,4 +1,4 @@
-class_name Enum
+class_name GlobalEnum
 
 enum AttackType {
 	FIREBALL,
@@ -31,11 +31,18 @@ enum State {
 	IDLE, 
 	RUN, 
 	JUMP, 
-	FALL
+	FALL,
+	ATTACK
 }
 
 enum DoorType {
 	TIME,
 	FRIENDSHIP,
 	NO_DAMAGE
+}
+
+enum Location {
+	HOMEPAGE,
+	LEVEL,
+	SHOP
 }

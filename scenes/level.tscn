@@ -1,13 +1,13 @@
 [gd_scene format=4 uid="uid://diof008bvy13y"]
 
 [ext_resource type="Script" uid="uid://5gcf6jt1wdlb" path="res://scripts/level.gd" id="1_0b4ue"]
-[ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Terrains/TileMap_Terrain1.png" id="3_f2txt"]
+[ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="3_f2txt"]
 [ext_resource type="PackedScene" uid="uid://dig4mpq1rxqfl" path="res://scenes/spawner_ennemy.tscn" id="4_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://bullkflr3xioa" path="res://scenes/spawner_gemme.tscn" id="5_ppgk2"]
-[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/shop_door.tscn" id="6_8c41q"]
-[ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Terrains/Terrain1_PortesEntree.png" id="6_klq6b"]
+[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/map1_porte_fin_niveau.tscn" id="6_8c41q"]
+[ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Map1/Terrain1_PortesEntree.png" id="6_klq6b"]
 [ext_resource type="PackedScene" uid="uid://co1gwjkps8hvc" path="res://scenes/torche.tscn" id="8_b121j"]
-[ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Terrains/Terrain1_Fond.png" id="9_8c41q"]
+[ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="9_8c41q"]
 [ext_resource type="PackedScene" uid="uid://uar7blb4jike" path="res://scenes/hud_progress_bar.tscn" id="9_olg7q"]
 [ext_resource type="AudioStream" uid="uid://x8r5wa8nng4e" path="res://assets/sound/theme.mp3" id="10_olg7q"]
 

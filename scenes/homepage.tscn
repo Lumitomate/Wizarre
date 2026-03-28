@@ -1,0 +1,307 @@
+[gd_scene format=4 uid="uid://bnoyirssfw3lm"]
+
+[ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="1_nb213"]
+[ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="1_qvpan"]
+[ext_resource type="Script" uid="uid://cik8f71jorwfq" path="res://scripts/home_page.gd" id="1_qxrf5"]
+[ext_resource type="Texture2D" uid="uid://i76igsnhtxht" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre1.png" id="2_nb213"]
+[ext_resource type="Texture2D" uid="uid://ddvcynx1fl3ms" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre2.png" id="3_3217k"]
+[ext_resource type="Texture2D" uid="uid://syptl68xj201" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre3.png" id="4_jier3"]
+[ext_resource type="Texture2D" uid="uid://dr6dus5prlm17" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre4.png" id="5_kqmwg"]
+[ext_resource type="Texture2D" uid="uid://dii68posl44h6" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre5.png" id="6_qxrf5"]
+[ext_resource type="Texture2D" uid="uid://ckfumqxc0be2d" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre6.png" id="7_xg2ep"]
+[ext_resource type="Texture2D" uid="uid://c4apii615jqac" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre7.png" id="8_ntcsm"]
+[ext_resource type="Texture2D" uid="uid://d3tepuhleqac1" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre8.png" id="9_otoe7"]
+[ext_resource type="Texture2D" uid="uid://5wllp7fmyoqk" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre9.png" id="10_y277a"]
+[ext_resource type="Texture2D" uid="uid://digrv4tlwvioh" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre10.png" id="11_nuy8f"]
+[ext_resource type="Texture2D" uid="uid://d0q200281tyva" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre11.png" id="12_81ww3"]
+[ext_resource type="Texture2D" uid="uid://bfkmrxl8g2ysi" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre12.png" id="13_gllej"]
+[ext_resource type="Texture2D" uid="uid://daf3pd85t1svf" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre13.png" id="14_yvt2c"]
+[ext_resource type="Texture2D" uid="uid://ceal6vtvubg0d" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre14.png" id="15_pkht8"]
+[ext_resource type="Texture2D" uid="uid://b46h85u5x3wrg" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre15.png" id="16_52jqe"]
+[ext_resource type="Texture2D" uid="uid://cj34tnxkjln5o" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre16.png" id="17_ba678"]
+[ext_resource type="Texture2D" uid="uid://bvd8n6wlr56f4" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre17.png" id="18_rry3p"]
+[ext_resource type="Texture2D" uid="uid://dmu2ju3d6e7ow" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre18.png" id="19_ap7ar"]
+[ext_resource type="Texture2D" uid="uid://8hkjpwniiif4" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre19.png" id="20_50o3h"]
+[ext_resource type="Texture2D" uid="uid://b6uw3oxsuyvvx" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre20.png" id="21_xl7br"]
+[ext_resource type="Texture2D" uid="uid://di47hurybvoo2" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre21.png" id="22_38uye"]
+[ext_resource type="Texture2D" uid="uid://dmentqhcgdejh" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre22.png" id="23_qtkwx"]
+[ext_resource type="Texture2D" uid="uid://cihr71a7esv5v" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre23.png" id="24_xasiv"]
+[ext_resource type="Texture2D" uid="uid://c2540hf146d8k" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre24.png" id="25_7xcc4"]
+[ext_resource type="Texture2D" uid="uid://dtmjlic0ld7b7" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre25.png" id="26_df7po"]
+[ext_resource type="Texture2D" uid="uid://biqpyj23tlnc2" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre26.png" id="27_i1113"]
+[ext_resource type="Texture2D" uid="uid://d1vg27ngay23r" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre27.png" id="28_62hh4"]
+[ext_resource type="Texture2D" uid="uid://c4c7e1gwegw4q" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre28.png" id="29_6njvk"]
+[ext_resource type="Texture2D" uid="uid://dp5qdrmx8gmlk" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre29.png" id="30_jf8fb"]
+[ext_resource type="Texture2D" uid="uid://xc0ki2vxmblp" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre30.png" id="31_thngw"]
+[ext_resource type="Texture2D" uid="uid://coic4ygdk0cxs" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre31.png" id="32_j0khe"]
+[ext_resource type="Texture2D" uid="uid://f3dtfx7qu16k" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre32.png" id="33_asg3h"]
+[ext_resource type="Texture2D" uid="uid://drxcdd0rp0oh" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre33.png" id="34_g0kxw"]
+[ext_resource type="Texture2D" uid="uid://dd5kdqrlhaumr" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre34.png" id="35_c8jf1"]
+[ext_resource type="Texture2D" uid="uid://cy48gr18bkvuq" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre35.png" id="36_d887d"]
+[ext_resource type="Texture2D" uid="uid://b8h1if6e0bxgo" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre36.png" id="37_bhrbg"]
+[ext_resource type="Texture2D" uid="uid://du5s0ecgegbhi" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre37.png" id="38_we8p4"]
+[ext_resource type="Texture2D" uid="uid://bwxr31psl4mj1" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre38.png" id="39_s4dde"]
+[ext_resource type="Texture2D" uid="uid://db35vtr68ejp2" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre39.png" id="40_5k474"]
+[ext_resource type="Texture2D" uid="uid://cr74yy35jv2aq" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre40.png" id="41_8a37s"]
+[ext_resource type="Texture2D" uid="uid://bfwuwex7ffaok" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre41.png" id="42_h2r84"]
+[ext_resource type="Texture2D" uid="uid://xlorby33822x" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre42.png" id="43_4il8u"]
+[ext_resource type="Texture2D" uid="uid://cdl3d8o8proij" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre43.png" id="44_2u1ht"]
+[ext_resource type="Texture2D" uid="uid://ci2isueruwd16" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre44.png" id="45_nfeep"]
+[ext_resource type="Texture2D" uid="uid://dqcbm8tqhxwwu" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre45.png" id="46_yvdqj"]
+[ext_resource type="Texture2D" uid="uid://bw0vywh44bfs4" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre46.png" id="47_ydpo6"]
+[ext_resource type="Texture2D" uid="uid://tbvybv0tayfd" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre47.png" id="48_rmru3"]
+[ext_resource type="Texture2D" uid="uid://daq04v8w7dl1s" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre48.png" id="49_cm0iw"]
+[ext_resource type="Texture2D" uid="uid://bugt2hfvqqabk" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre49.png" id="50_y7sqq"]
+[ext_resource type="Texture2D" uid="uid://bwooi4xu1o0hi" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre50.png" id="51_w8h12"]
+[ext_resource type="Texture2D" uid="uid://csf5xn7rgmegq" path="res://assets/sprites/Map1/Ascenseur/Asenceur_rails/Ascenseur_rails1.png" id="53_jier3"]
+[ext_resource type="PackedScene" uid="uid://82t6bfjcv16f" path="res://scenes/map1_ascenseur.tscn" id="54_kqmwg"]
+[ext_resource type="PackedScene" uid="uid://l6pao2r6q2xm" path="res://scenes/teleport_zone.tscn" id="56_xg2ep"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1v5cq"]
+texture = ExtResource("1_qvpan")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -8.990763, 16, -8.980848, 16, 16, -16, 16)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(16, -16, -16, -16, -16, -9.775223, 16, -9.879527)
+4:0/0/physics_layer_0/polygon_0/one_way = true
+
+[sub_resource type="TileSet" id="TileSet_nfr82"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 12
+sources/0 = SubResource("TileSetAtlasSource_1v5cq")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2fps2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_nb213")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3217k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jier3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_kqmwg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qxrf5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_xg2ep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ntcsm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_otoe7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_y277a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_nuy8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_81ww3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_gllej")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_yvt2c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_pkht8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_52jqe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_ba678")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_rry3p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_ap7ar")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_50o3h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_xl7br")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_38uye")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_qtkwx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_xasiv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_7xcc4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_df7po")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_i1113")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_62hh4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_6njvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_jf8fb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_thngw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_j0khe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_asg3h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_g0kxw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_c8jf1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_d887d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_bhrbg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_we8p4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_s4dde")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_5k474")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_8a37s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_h2r84")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_4il8u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_2u1ht")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_nfeep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_yvdqj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_ydpo6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_rmru3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_cm0iw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_y7sqq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_w8h12")
+}],
+"loop": true,
+"name": &"Reflet",
+"speed": 64.0
+}]
+
+[node name="HomePage" type="Node2D" unique_id=937118255]
+scale = Vector2(0.7, 0.7)
+script = ExtResource("1_qxrf5")
+
+[node name="Terrain1Fond" type="Sprite2D" parent="." unique_id=1379487767]
+position = Vector2(909.0648, 657.71497)
+scale = Vector2(2.0990257, 2.0990257)
+texture = ExtResource("1_nb213")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1229873067]
+texture_filter = 1
+position = Vector2(11, 2.4285715)
+scale = Vector2(2, 2)
+tile_map_data = PackedByteArray("AAD//wAAAAABAAEAAAD//wEAAAABAAEAAAD//wIAAAABAAEAAAD//wMAAAACAAEAAAD//wQAAAACAAEAAAD//wUAAAACAAEAAAD//wYAAAACAAEAAAD//wcAAAACAAEAAAD//wgAAAABAAEAAAD//wkAAAACAAEAAAD//woAAAACAAEAAAD//wsAAAACAAEAAAATAAAAAAABAAEAAAAAAAAAAAABAAEAAAABAAAAAAABAAIAAAACAAAAAAABAAIAAAADAAAAAAABAAIAAAAEAAAAAAABAAIAAAAFAAAAAAABAAIAAAAGAAAAAAABAAIAAAAHAAAAAAABAAIAAAAIAAAAAAABAAIAAAAJAAAAAAABAAIAAAAKAAAAAAABAAIAAAALAAAAAAABAAIAAAAMAAAAAAAEAAIAAAANAAAAAAAEAAIAAAAOAAAAAAAEAAIAAAAPAAAAAAAEAAIAAAAQAAAAAAABAAEAAAARAAAAAAABAAEAAAASAAAAAAABAAEAAAAAAA8AAAABAAAAAAABAA8AAAABAAAAAAACAA8AAAABAAAAAAADAA8AAAABAAAAAAAEAA8AAAABAAAAAAAFAA8AAAABAAAAAAAGAA8AAAABAAAAAAAHAA8AAAABAAAAAAAIAA8AAAABAAAAAAAJAA8AAAABAAAAAAAKAA8AAAABAAAAAAALAA8AAAABAAAAAAAMAA8AAAABAAAAAAANAA8AAAABAAAAAAAOAA8AAAABAAAAAAAPAA8AAAABAAAAAAAQAA8AAAABAAAAAAARAA8AAAABAAAAAAASAA8AAAABAAAAAAATAA8AAAABAAAAAAAUAA8AAAABAAAAAAAVAA8AAAABAAAAAAAUAAAAAAABAAEAAAAVAAAAAAABAAEAAAAWAAAAAAABAAEAAAAXAAAAAAABAAEAAAAYAAAAAAABAAEAAAAZAAAAAAABAAEAAAAaAAAAAAABAAIAAAAbAAAAAAABAAIAAAAcAA8AAAABAAEAAAAcAAAAAAABAAEAAAD//w8AAAABAAEAAAAAAAEAAAAEAAIAAAABAAEAAAAEAAIAAAACAAEAAAAEAAIAAAADAAEAAAAEAAIAAAAEAAEAAAAEAAIAAAAFAAEAAAAEAAIAAAAGAAEAAAAEAAIAAAAHAAEAAAAEAAIAAAAAAAIAAAAEAAIAAAABAAIAAAAEAAIAAAACAAIAAAAEAAIAAAADAAIAAAAEAAIAAAAEAAIAAAAEAAIAAAAFAAIAAAAEAAIAAAAGAAIAAAAEAAIAAAAHAAIAAAAEAAIAAAAIAAIAAAAEAAIAAAAJAAIAAAAEAAIAAAAKAAIAAAAEAAIAAAALAAIAAAAEAAIAAAALAAEAAAAEAAIAAAAMAAEAAAAEAAIAAAANAAEAAAAEAAIAAAAOAAEAAAAEAAIAAAAPAAEAAAAEAAIAAAAQAAEAAAAEAAIAAAARAAEAAAAEAAIAAAASAAIAAAAEAAIAAAATAAIAAAAEAAIAAAAUAAIAAAAEAAIAAAAVAAIAAAAEAAIAAAAWAAIAAAAEAAIAAAARAAIAAAAEAAIAAAAQAAIAAAAEAAIAAAAPAAIAAAAEAAIAAAAOAAIAAAAEAAIAAAANAAIAAAAEAAIAAAAMAAIAAAAEAAIAAAAIAAEAAAAEAAIAAAAJAAEAAAAEAAIAAAAKAAEAAAAEAAIAAAAUAAEAAAAEAAIAAAATAAEAAAAEAAIAAAASAAEAAAAEAAIAAAAVAAEAAAAEAAIAAAAWAAEAAAAEAAIAAAAXAAEAAAAEAAIAAAAYAAEAAAAEAAIAAAAZAAEAAAAEAAIAAAAaAAEAAAAEAAIAAAAbAAEAAAAEAAIAAAAcAAEAAAABAAEAAAAcAAIAAAABAAEAAAAbAAIAAAAEAAIAAAAaAAIAAAAEAAIAAAAZAAIAAAAEAAIAAAAYAAIAAAAEAAIAAAAXAAIAAAAEAAIAAAD//wwAAAACAAEAAAD//w0AAAACAAEAAAD//w4AAAACAAEAAAAcAAMAAAAAAAEAAAAcAAQAAAAAAAEAAAAcAAUAAAAAAAEAAAAcAAYAAAAAAAEAAAAcAAcAAAAAAAEAAAAcAAgAAAAAAAEAAAAcAAkAAAAAAAEAAAAcAAoAAAAAAAEAAAAcAAsAAAAAAAEAAAAcAAwAAAAAAAEAAAAcAA0AAAAAAAEAAAAcAA4AAAAAAAEAAAAFAAUAAAAEAAIAAAAGAAUAAAAEAAIAAAAHAAYAAAABAAIAAAAIAAYAAAABAAIAAAAJAAYAAAABAAIAAAAHAAUAAAAEAAIAAAAWAAUAAAAEAAIAAAAUAAUAAAAEAAIAAAAVAAUAAAAEAAIAAAAUAAYAAAABAAIAAAATAAYAAAABAAIAAAASAAYAAAABAAIAAAAYAAYAAAABAAIAAAADAAYAAAABAAIAAAAAAAMAAAAEAAIAAAAAAAQAAAAEAAIAAAABAAMAAAAEAAIAAAABAAQAAAAEAAIAAAACAAMAAAAEAAIAAAACAAQAAAAEAAIAAAADAAMAAAAEAAIAAAADAAQAAAAEAAIAAAAEAAMAAAAEAAIAAAAEAAQAAAAEAAIAAAAFAAMAAAAEAAIAAAAFAAQAAAAEAAIAAAAGAAMAAAAEAAIAAAAGAAQAAAAEAAIAAAAHAAMAAAAEAAIAAAAHAAQAAAAEAAIAAAAIAAMAAAAEAAIAAAAIAAQAAAAEAAIAAAAJAAMAAAAEAAIAAAAJAAQAAAAEAAIAAAAKAAMAAAAEAAIAAAAKAAQAAAAEAAIAAAALAAMAAAAEAAIAAAALAAQAAAAEAAIAAAAMAAMAAAAEAAIAAAAMAAQAAAAEAAIAAAANAAMAAAAEAAIAAAANAAQAAAAEAAIAAAAOAAMAAAAEAAIAAAAOAAQAAAAEAAIAAAAPAAMAAAAEAAIAAAAPAAQAAAAEAAIAAAAQAAMAAAAEAAIAAAAQAAQAAAAEAAIAAAARAAMAAAAEAAIAAAARAAQAAAAEAAIAAAASAAMAAAAEAAIAAAASAAQAAAAEAAIAAAATAAMAAAAEAAIAAAATAAQAAAAEAAIAAAAUAAMAAAAEAAIAAAAUAAQAAAAEAAIAAAAVAAMAAAAEAAIAAAAVAAQAAAAEAAIAAAAWAAMAAAAEAAIAAAAWAAQAAAAEAAIAAAAXAAMAAAAEAAIAAAAXAAQAAAAEAAIAAAAYAAMAAAAEAAIAAAAYAAQAAAAEAAIAAAAZAAMAAAAEAAIAAAAZAAQAAAAEAAIAAAAaAAMAAAAEAAIAAAAaAAQAAAAEAAIAAAAbAAMAAAAEAAIAAAAbAAQAAAAEAAIAAAAAAAUAAAAEAAIAAAABAAUAAAAEAAIAAAACAAUAAAAEAAIAAAADAAUAAAAEAAIAAAAEAAUAAAAEAAIAAAAIAAUAAAAEAAIAAAAJAAUAAAAEAAIAAAAKAAUAAAAEAAIAAAALAAUAAAAEAAIAAAAMAAUAAAAEAAIAAAANAAUAAAAEAAIAAAAOAAUAAAAEAAIAAAAPAAUAAAAEAAIAAAAQAAUAAAAEAAIAAAARAAUAAAAEAAIAAAASAAUAAAAEAAIAAAATAAUAAAAEAAIAAAAXAAUAAAAEAAIAAAAYAAUAAAAEAAIAAAAZAAUAAAAEAAIAAAAaAAUAAAAEAAIAAAAbAAUAAAAEAAIAAAAAAAYAAAABAAEAAAABAAYAAAABAAEAAAACAAYAAAABAAEAAAAEAAYAAAABAAIAAAAFAAYAAAABAAIAAAAGAAYAAAABAAIAAAAKAAYAAAABAAIAAAALAAYAAAABAAIAAAAMAAYAAAABAAIAAAANAAYAAAABAAIAAAAOAAYAAAABAAIAAAAPAAYAAAABAAIAAAAQAAYAAAABAAIAAAARAAYAAAABAAIAAAAVAAYAAAABAAIAAAAWAAYAAAABAAIAAAAXAAYAAAABAAIAAAAZAAYAAAABAAEAAAAaAAYAAAABAAEAAAAbAAYAAAABAAEAAAAUAAcAAAAAAAIAAAAVAAcAAAAEAAMAAAAVAAgAAAAAAAIAAAAWAAcAAAAEAAIAAAAWAAgAAAAEAAMAAAAWAAkAAAAAAAIAAAAGAAcAAAAEAAMAAAAGAAgAAAACAAIAAAAHAAcAAAACAAIAAAAFAAcAAAAEAAIAAAAFAAgAAAAEAAMAAAAFAAkAAAACAAIAAAAAAAcAAAABAAEAAAAAAAgAAAABAAEAAAABAAcAAAABAAEAAAABAAgAAAABAAEAAAACAAcAAAABAAEAAAACAAgAAAABAAEAAAADAAcAAAABAAEAAAADAAgAAAABAAEAAAAEAAcAAAABAAEAAAAEAAgAAAABAAEAAAAXAAcAAAABAAEAAAAXAAgAAAABAAEAAAAYAAcAAAABAAEAAAAYAAgAAAABAAEAAAAZAAcAAAABAAEAAAAZAAgAAAABAAEAAAAaAAcAAAABAAEAAAAaAAgAAAABAAEAAAAbAAcAAAABAAEAAAAbAAgAAAABAAEAAAAAAAkAAAABAAIAAAABAAkAAAABAAIAAAACAAkAAAABAAIAAAADAAkAAAABAAIAAAAEAAkAAAABAAIAAAAXAAkAAAABAAIAAAAYAAkAAAABAAIAAAAZAAkAAAABAAIAAAAaAAkAAAABAAIAAAAbAAkAAAABAAIAAAA=")
+tile_set = SubResource("TileSet_nfr82")
+rendering_quadrant_size = 32
+physics_quadrant_size = 32
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=450465824]
+anchor_mode = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1398430296]
+texture_filter = 1
+position = Vector2(907.41656, 223.71402)
+scale = Vector2(7.07, 7.07)
+sprite_frames = SubResource("SpriteFrames_2fps2")
+animation = &"Reflet"
+frame_progress = 0.87069654
+
+[node name="Map1_AscenseurRails1" type="Sprite2D" parent="." unique_id=861679468]
+texture_filter = 1
+position = Vector2(1611.428, 817.1426)
+scale = Vector2(1.9999999, 1.9999999)
+texture = ExtResource("53_jier3")
+
+[node name="Map1Ascenseur" parent="." unique_id=1386569569 instance=ExtResource("54_kqmwg")]
+
+[node name="TeleportZone" parent="." unique_id=1682075255 instance=ExtResource("56_xg2ep")]
+position = Vector2(1391.4286, 927.1428)
+destination = 1

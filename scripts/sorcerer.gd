@@ -12,7 +12,7 @@ var is_jumping: bool = false
 @export var jump_impulse_min: int = 600 # saut minimal
 @export var jump_impulse_max: int = 800 # saut maximal
 @export var fall_acceleration: int = 3000
-@export var sorcerer_color: Enum.SorcererColor
+@export var sorcerer_color: GlobalEnum.SorcererColor
 var controller_id: int = 0
 
 const attack_launcher_script = preload("res://scripts/spawner_attack.gd")
@@ -29,9 +29,10 @@ var level_scale: Vector2
 
 var attacks
 
-var current_state: Enum.State = Enum.State.IDLE
+var current_state: GlobalEnum.State = GlobalEnum.State.IDLE
 
 func _ready() -> void:
+	print(Input.get_connected_joypads())
 	screen_size = get_viewport_rect().size
 	level_scale = get_parent().transform.get_scale()
 	position = (1.4 * screen_size / 2) + Vector2(controller_id * 64, 128)
@@ -40,35 +41,37 @@ func _ready() -> void:
 	lives = 3
 
 	match sorcerer_color :
-		Enum.SorcererColor.Blue:
+		GlobalEnum.SorcererColor.Blue:
 			animation_suffix = "blue"
-		Enum.SorcererColor.Red:
+		GlobalEnum.SorcererColor.Red:
 			animation_suffix = "red"
-		Enum.SorcererColor.Green:
+		GlobalEnum.SorcererColor.Green:
 			animation_suffix = "green"
-		Enum.SorcererColor.Yellow:
+		GlobalEnum.SorcererColor.Yellow:
 			animation_suffix = "yellow"
 	$AnimatedSprite2D.play("walk_" + animation_suffix)
 
-func set_state(new_state: Enum.State) -> void:
+
+func set_state(new_state: GlobalEnum.State) -> void:
 	if current_state == new_state:
 		return
 	
 	current_state = new_state
 	
 	match current_state:
-		Enum.State.IDLE:
+		GlobalEnum.State.IDLE:
 			$AnimatedSprite2D.play("idle_" + animation_suffix)
 			
-		Enum.State.RUN:
+		GlobalEnum.State.RUN:
 			$AnimatedSprite2D.play("walk_" + animation_suffix)
 			
-		Enum.State.JUMP:
+		GlobalEnum.State.JUMP:
 			$AnimatedSprite2D.play("jump_" + animation_suffix)
 			
-		Enum.State.FALL:
+		GlobalEnum.State.FALL:
 			$AnimatedSprite2D.play("fall_" + animation_suffix)
-
+			
+		
 func _process(_delta: float) -> void:
 	var new_direction = Vector2(Input.get_joy_axis(controller_id, JOY_AXIS_LEFT_X), Input.get_joy_axis(controller_id, JOY_AXIS_LEFT_Y))
 	if new_direction.length() > 0.2:
@@ -83,11 +86,11 @@ func _process(_delta: float) -> void:
 
 	if can_fire:
 		if Input.is_joy_button_pressed(controller_id, JOY_BUTTON_X):
-			fire_attack(Enum.AttackFamily.Red)
+			fire_attack(GlobalEnum.AttackFamily.Red)
 		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_Y):
-			fire_attack(Enum.AttackFamily.Blue)
+			fire_attack(GlobalEnum.AttackFamily.Blue)
 		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_B):
-			fire_attack(Enum.AttackFamily.Yellow)
+			fire_attack(GlobalEnum.AttackFamily.Yellow)
 
 
 func _physics_process(delta: float) -> void:
@@ -106,7 +109,7 @@ func _physics_process(delta: float) -> void:
 		is_jumping = true
 		jump_pressed_time = 0.0
 		velocity.y = -jump_impulse_max
-		set_state(Enum.State.JUMP)
+		set_state(GlobalEnum.State.JUMP)
 
 	if is_jumping and Input.is_action_pressed("jump", controller_id):
 		jump_pressed_time += delta
@@ -134,26 +137,26 @@ func _physics_process(delta: float) -> void:
 	# Mise à jour des états
 	if is_on_floor():
 		if abs(velocity.x) > 0:
-			set_state(Enum.State.RUN)
+			set_state(GlobalEnum.State.RUN)
 		else:
-			set_state(Enum.State.IDLE)
+			set_state(GlobalEnum.State.IDLE)
 	else:
 		if velocity.y > 0:
-			set_state(Enum.State.FALL)
+			set_state(GlobalEnum.State.FALL)
 
 
-func set_attack(attack_family: Enum.AttackFamily, attack_type: Enum.AttackType, attack_tier: Enum.AttackTier) -> void:
+func set_attack(attack_family: GlobalEnum.AttackFamily, attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier) -> void:
 	attacks[attack_family]["attack_type"] = attack_type
 	attacks[attack_family]["attack_tier"] = attack_tier
 	print("Mon attaque est maintenant " + str(attack_type) + " et de tier " + str(attack_tier))
 
-func fire_attack(attack_family: Enum.AttackFamily) -> void:
+func fire_attack(attack_family: GlobalEnum.AttackFamily) -> void:
 	var attack_launcher = attack_launcher_script.new()
 	
 	if ammunitions[attack_family] > 0:
 		
-		var attack_type: Enum.AttackType = attacks[attack_family]["attack_type"]
-		var attack_tier: Enum.AttackTier = attacks[attack_family]["attack_tier"]
+		var attack_type: GlobalEnum.AttackType = attacks[attack_family]["attack_type"]
+		var attack_tier: GlobalEnum.AttackTier = attacks[attack_family]["attack_tier"]
 
 		var attack_list = attack_launcher.spawn_attack(attack_type, attack_tier, position, direction, screen_size, level_scale)
 

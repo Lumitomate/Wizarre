@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://l6pao2r6q2xm"]
+
+[ext_resource type="Script" uid="uid://cga71abqvhu4t" path="res://scripts/teleport_zone.gd" id="1_o1llo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5sxvr"]
+
+[node name="TeleportZone" type="Area2D" unique_id=1259734067]
+scale = Vector2(2, 2)
+script = ExtResource("1_o1llo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=25948202]
+shape = SubResource("RectangleShape2D_5sxvr")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1761075013]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(1, 0.34509805, 1, 0.23137255)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

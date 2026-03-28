@@ -8,20 +8,20 @@ var run_info: Dictionary = {
 			"lives": 3,
 			"ammunitions": [3, 3, 3],
 			"attacks": {
-				Enum.AttackFamily.Red:
+				GlobalEnum.AttackFamily.Red:
 					{
-						"attack_type" : Enum.AttackType.FIRECOLUMN,
-						"attack_tier" : Enum.AttackTier.I
+						"attack_type" : GlobalEnum.AttackType.FIRECOLUMN,
+						"attack_tier" : GlobalEnum.AttackTier.I
 					},
-				Enum.AttackFamily.Blue:
+				GlobalEnum.AttackFamily.Blue:
 					{
-						"attack_type" : Enum.AttackType.ICEBALL,
-						"attack_tier" : Enum.AttackTier.I
+						"attack_type" : GlobalEnum.AttackType.ICEBALL,
+						"attack_tier" : GlobalEnum.AttackTier.I
 					},
-				Enum.AttackFamily.Yellow:
+				GlobalEnum.AttackFamily.Yellow:
 					{
-						"attack_type" : Enum.AttackType.LIGHTRAY,
-						"attack_tier" : Enum.AttackTier.I
+						"attack_type" : GlobalEnum.AttackType.LIGHTRAY,
+						"attack_tier" : GlobalEnum.AttackTier.I
 					},
 			}
 		}

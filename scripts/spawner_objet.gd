@@ -6,24 +6,24 @@ var objet_moufle_scene: PackedScene 	= preload("res://scenes/objet_moufle.tscn")
 
 func _ready() -> void:
 	var attack_family
-	var attack_type = randi() % Enum.AttackType.size() as Enum.AttackType
-	var attack_tier = randi() % Enum.AttackTier.size() as Enum.AttackTier
+	var attack_type = randi() % GlobalEnum.AttackType.size() as GlobalEnum.AttackType
+	var attack_tier = randi() % GlobalEnum.AttackTier.size() as GlobalEnum.AttackTier
 	
 	var object_to_spawn_scene : PackedScene
 	
 	match attack_type:
-		Enum.AttackType.FIREBALL:
-			attack_family = Enum.AttackFamily.Red
-			attack_type = Enum.AttackType.FIRECOLUMN
+		GlobalEnum.AttackType.FIREBALL:
+			attack_family = GlobalEnum.AttackFamily.Red
+			attack_type = GlobalEnum.AttackType.FIRECOLUMN
 			object_to_spawn_scene = objet_medaille_scene
-		Enum.AttackType.LIGHTRAY:
-			attack_family = Enum.AttackFamily.Yellow
+		GlobalEnum.AttackType.LIGHTRAY:
+			attack_family = GlobalEnum.AttackFamily.Yellow
 			object_to_spawn_scene = objet_miroir_scene
-		Enum.AttackType.FIRECOLUMN:
-			attack_family = Enum.AttackFamily.Red
+		GlobalEnum.AttackType.FIRECOLUMN:
+			attack_family = GlobalEnum.AttackFamily.Red
 			object_to_spawn_scene = objet_medaille_scene
-		Enum.AttackType.ICEBALL:
-			attack_family = Enum.AttackFamily.Blue
+		GlobalEnum.AttackType.ICEBALL:
+			attack_family = GlobalEnum.AttackFamily.Blue
 			object_to_spawn_scene = objet_moufle_scene
 	
 	var object_to_spawn: AttackObject = object_to_spawn_scene.instantiate()

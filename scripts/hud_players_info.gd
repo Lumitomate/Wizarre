@@ -57,14 +57,14 @@ func refresh_status() -> void:
 				ammo_nb = GemmeNb.FOUR
 		
 		match munition_type:
-			Enum.AttackFamily.Red:
+			GlobalEnum.AttackFamily.Red:
 				$HudGemneF.frame = ammo_nb
-			Enum.AttackFamily.Yellow:
+			GlobalEnum.AttackFamily.Yellow:
 				$HudGemneL.frame = ammo_nb
-			Enum.AttackFamily.Blue:
+			GlobalEnum.AttackFamily.Blue:
 				$HudGemneG.frame = ammo_nb
 
-func set_bg_color(color_id: Enum.SorcererColor):
+func set_bg_color(color_id: GlobalEnum.SorcererColor):
 		$SorcereColor.frame=color_id
 
 

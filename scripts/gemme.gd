@@ -1,7 +1,7 @@
 class_name Gemme extends Area2D
 
 
-@export var gemme_color: Enum.AttackFamily
+@export var gemme_color: GlobalEnum.AttackFamily
 
 
 var animation_suffix: String
@@ -9,11 +9,11 @@ var animation_suffix: String
 
 func _ready() -> void:
 	match gemme_color:
-		Enum.AttackFamily.Blue:
+		GlobalEnum.AttackFamily.Blue:
 			animation_suffix = "blue"
-		Enum.AttackFamily.Red:
+		GlobalEnum.AttackFamily.Red:
 			animation_suffix = "red"
-		Enum.AttackFamily.Yellow:
+		GlobalEnum.AttackFamily.Yellow:
 			animation_suffix = "yellow"
 	$AnimatedSprite2D.play("shine_" + animation_suffix)
 

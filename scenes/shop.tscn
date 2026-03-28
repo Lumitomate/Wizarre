@@ -1,11 +1,11 @@
 [gd_scene format=4 uid="uid://c8asp7sfbs6ub"]
 
-[ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Terrains/TileMap_Terrain1.png" id="1_lx5au"]
+[ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="1_lx5au"]
 [ext_resource type="Script" uid="uid://cq52ldvgscuwm" path="res://scripts/shop.gd" id="1_xfvoa"]
 [ext_resource type="PackedScene" uid="uid://dd8ufu1klh2j8" path="res://scenes/bulle.tscn" id="4_m4ofw"]
-[ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Terrains/Terrain1_Fond.png" id="6_8r1wq"]
+[ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="6_8r1wq"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/porte_magasin_epreuve.tscn" id="7_ajxib"]
-[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/shop_door.tscn" id="8_y6sft"]
+[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/map1_porte_fin_niveau.tscn" id="8_y6sft"]
 [ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_objet.tscn" id="9_m4ofw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]

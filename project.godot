@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Wizarre"
-run/main_scene="uid://diof008bvy13y"
+run/main_scene="uid://bnoyirssfw3lm"
 config/features=PackedStringArray("4.6", "Mobile")
 boot_splash/bg_color=Color(0.18035066, 0.13539705, 0, 1)
 config/icon="res://icon.svg"
@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 Global="*uid://dab4ixykee2n6"
 GlobalInfo="*uid://oim1uv6r17t0"
+PlayerManager="*uid://cd8dcu4h4ccpt"
 
 [display]
 

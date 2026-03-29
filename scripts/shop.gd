@@ -7,19 +7,21 @@ var sorcerer_scene: PackedScene = preload("res://scenes/sorcerer.tscn")
 
 
 func _ready() -> void:
-	for controller_id in Input.get_connected_joypads():
-		if not controller_id in known_controllers:
-			add_player(controller_id)
+	# Spawn les joueurs via PlayerManager
+	PlayerManager.spawn_all_players(self)
+	#for controller_id in Input.get_connected_joypads():
+		#if not controller_id in known_controllers:
+			#add_player(controller_id)
 	$ShopDoor.play()
 	print(GlobalInfo.run_info)
 	#Input.connect("joy_connection_changed", _on_joy_connection_changed)
 
 
-func _on_joy_connection_changed(_device: int, _connected: bool) -> void:
-	Input.get_connected_joypads()
-	for controller_id in Input.get_connected_joypads():
-		if not controller_id in known_controllers:
-			add_player(controller_id)
+#func _on_joy_connection_changed(_device: int, _connected: bool) -> void:
+	#Input.get_connected_joypads()
+	#for controller_id in Input.get_connected_joypads():
+		#if not controller_id in known_controllers:
+			#add_player(controller_id)
 
 
 func add_player(controller_id):
@@ -41,7 +43,7 @@ func add_player(controller_id):
 func goto_level():
 	save_data.emit()
 	print(GlobalInfo.run_info)
-	Global.goto_scene("res://scenes/level.tscn")
+	Global.goto_scene(GlobalEnum.Location.LEVEL)
 
 func _on_shop_door_shop_entered() -> void:
 	goto_level()

@@ -18,7 +18,7 @@ func _ready() -> void:
 	level_start_time = Time.get_ticks_msec()
 
 	# Spawn les joueurs via PlayerManager
-	PlayerManager.spawn_all_players(self)
+	PlayerManager.spawn_all_players(self, {"lives": 3})
 
 	# Créer le HUD pour chaque joueur
 	for controller_id in PlayerManager.known_controllers:
@@ -82,7 +82,7 @@ func go_to_shop() -> void:
 	GlobalInfo.run_info["run_duration"] = Time.get_ticks_msec() - level_start_time
 	GlobalInfo.run_info["level_number"] += 1
 
-	Global.goto_scene("res://scenes/shop.tscn")
+	Global.goto_scene(GlobalEnum.Location.SHOP)
 
 	print(GlobalInfo.run_info)
 

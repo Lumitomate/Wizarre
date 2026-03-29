@@ -14,15 +14,16 @@ func _ready() -> void:
 	current_scene = root.get_child(-1)
 	print(current_scene)
 
-func goto_location(location):
+#func goto_location(location):
+#
+	#if location in scenes:
+		#goto_scene(scenes[location])
+	#else:
+		#print("Unknown location")
 
-	if location in scenes:
-		goto_scene(scenes[location])
-	else:
-		print("Unknown location")
-
-func goto_scene(path: String) -> void:
-	_deferred_goto_scene.call_deferred(path)
+func goto_scene(scene: GlobalEnum.Location) -> void:
+	PlayerManager.save_players_data()
+	_deferred_goto_scene.call_deferred(scenes[scene])
 
 func _deferred_goto_scene(path: String) -> void:
 	current_scene.free()

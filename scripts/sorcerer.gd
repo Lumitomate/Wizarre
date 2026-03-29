@@ -10,7 +10,7 @@ var jump_pressed_time: float = 0.0
 var is_jumping: bool = false
 @export var max_jump_time: float = 0.3 # durée max que l'on peut "charger" le saut en secondes
 @export var jump_impulse_min: int = 600 # saut minimal
-@export var jump_impulse_max: int = 800 # saut maximal
+@export var jump_impulse_max: int = 5000 # saut maximal
 @export var fall_acceleration: int = 3000
 @export var sorcerer_color: GlobalEnum.SorcererColor
 var controller_id: int = 0
@@ -28,6 +28,8 @@ var can_take_damage: bool = true
 var level_scale: Vector2
 
 var attacks
+
+var is_jump_long_press: bool = false
 
 var current_state: GlobalEnum.State = GlobalEnum.State.IDLE
 
@@ -91,7 +93,11 @@ func _process(_delta: float) -> void:
 			fire_attack(GlobalEnum.AttackFamily.Blue)
 		elif Input.is_joy_button_pressed(controller_id, JOY_BUTTON_B):
 			fire_attack(GlobalEnum.AttackFamily.Yellow)
+			
+	if !Input.is_joy_button_pressed(controller_id, JOY_BUTTON_A):
+		is_jump_long_press = false;
 
+	
 
 func _physics_process(delta: float) -> void:
 
@@ -103,32 +109,23 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = 0
 
-
 	# Saut + nuancier
-	if is_on_floor() and Input.is_action_just_pressed("jump", controller_id):
-		is_jumping = true
+	if is_on_floor() and Input.is_joy_button_pressed(controller_id, JOY_BUTTON_A) and !is_jump_long_press:
+		is_jump_long_press = true
 		jump_pressed_time = 0.0
-		velocity.y = -jump_impulse_max
+		velocity.y = -jump_impulse_min
 		set_state(GlobalEnum.State.JUMP)
 
-	if is_jumping and Input.is_action_pressed("jump", controller_id):
+	if Input.is_joy_button_pressed(controller_id, JOY_BUTTON_A) and is_jump_long_press:
 		jump_pressed_time += delta
-		if jump_pressed_time < max_jump_time:
-			var t = clamp(jump_pressed_time / max_jump_time, 0, 1)
-			var jump_boost = (jump_impulse_max - jump_impulse_min) * (1.0 - pow(1.0 - t, 2)) * delta
+		if jump_pressed_time <= max_jump_time:
+			var t = jump_pressed_time / max_jump_time
+			var jump_boost = (jump_impulse_max - jump_impulse_min) * (1 - t) * delta
 			velocity.y -= jump_boost
-		else:
-			is_jumping = false
-	
-	if Input.is_action_just_released("jump", controller_id):
-		is_jumping = false
 
 	# Gravité
 	if not is_on_floor():
-		if is_jumping:
-			velocity.y += fall_acceleration * 0.5 * delta
-		else:
-			velocity.y += fall_acceleration * delta
+		velocity.y += fall_acceleration * delta
 
 	# Physique
 	move_and_slide()

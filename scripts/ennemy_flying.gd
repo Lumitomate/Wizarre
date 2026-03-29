@@ -6,25 +6,45 @@ signal ennemy_killed
 @export var speed = 200
 @export var lives = 3
 
-var target : Node2D = null
+var target : Sorcerer = null
+var target_position: Vector2 = Vector2(0, 0)
 var can_take_damage: bool = true
 var is_bouncing: bool = false
 var level_scale: Vector2
+var screen_size: Vector2
 
 var damage_label_scene = preload("res://scenes/hud_damage_label.tscn")
 
 
 func _ready() -> void:
-	var screen_size = get_viewport_rect().size
 	level_scale = get_parent().transform.get_scale()
+	screen_size = get_viewport_rect().size
+	print(screen_size)
 	$AnimatedSprite2D.play("default")
-	velocity = position.direction_to(screen_size / 2).rotated( 0.1  *randf()).normalized() * speed
+	
+	$NavigationAgent2D.path_desired_distance = 20.0
+	$NavigationAgent2D.target_desired_distance = 20.0
+	$NavigationAgent2D.path_max_distance = 40.0
+	
+	ennemy_setup.call_deferred()
 
+func ennemy_setup():
+	# Wait for the first physics frame so the NavigationServer can sync.
+	await get_tree().physics_frame
+	set_navigation_target(Vector2(randi() % int(screen_size.x), randi() % int(screen_size.y)))
+
+func set_navigation_target(target_position: Vector2):
+	print("Setting target position to " + str(target_position))
+	$NavigationAgent2D.target_position = target_position
+	
+func set_random_navigation_target():
+		set_navigation_target(screen_size / 4 +  Vector2(randi() % int(screen_size.x / 2), randi() % int(screen_size.y / 2)))
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_group"):
 		if target == null or position.distance_to(target.position) > position.distance_to(body.position):
-			target=body
+			print("Target set!")
+			target = body
 
 
 func _process(_delta: float) -> void:
@@ -33,15 +53,21 @@ func _process(_delta: float) -> void:
 			$AnimatedSprite2D.flip_h = true
 		elif velocity.x < 0:
 			$AnimatedSprite2D.flip_h = false
+	
+	if target != null:
+		set_navigation_target(target.global_position)
 
 
 func _physics_process(delta: float) -> void:
-	if target!=null:
-		var velocity_trg = (target.position - position).normalized() * speed
-		if velocity.dot(velocity_trg) <= 0 or velocity.length() < velocity_trg.length():
-			velocity += 5 * velocity_trg * delta
-		else:
-			velocity = velocity_trg
+	if $NavigationAgent2D.is_navigation_finished():
+		set_random_navigation_target()
+		
+	var next_path_position: Vector2 = $NavigationAgent2D.get_next_path_position()
+	var velocity_trg = global_position.direction_to(next_path_position) * speed
+	if velocity.dot(velocity_trg) <= 0 or velocity.length() < velocity_trg.length():
+		velocity += 5 * velocity_trg * delta
+	else:
+		velocity = velocity_trg
 	
 		# Collisions
 	for index in range(get_slide_collision_count()):

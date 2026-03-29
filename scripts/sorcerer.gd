@@ -34,7 +34,7 @@ var is_jump_long_press: bool = false
 var current_state: GlobalEnum.State = GlobalEnum.State.IDLE
 
 func _ready() -> void:
-	print(Input.get_connected_joypads())
+	#print(Input.get_connected_joypads())
 	screen_size = get_viewport_rect().size
 	level_scale = get_parent().transform.get_scale()
 	position = (1.4 * screen_size / 2) + Vector2(controller_id * 64, 128)

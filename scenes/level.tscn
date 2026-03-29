@@ -61,6 +61,11 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 12
 sources/0 = SubResource("TileSetAtlasSource_8gofh")
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_olg7q"]
+vertices = PackedVector2Array(1510.7266, 347.6172, 1792.9219, 204.28906, 1794.2266, 437.28125, 1598.3516, 440.14844, 1498.3984, 392.5703, 1600.0938, 518.59375, 1791.4297, 705.6328, 1631.75, 687.1406, 1318.1406, 638, 1313.0078, 625.71094, 1791.4297, 951.4219, 1645.3281, 737.1406, 1631.75, 787.1406, 1043.7422, 912.8594, 1054.5391, 864.1094, 1335.4063, 787.1406, 1497.3203, 302.79688, 24.226563, 204.28906, 1287.5703, 304.46875, 1147.4531, 377.28906, 529.03906, 301.4297, 1043.6563, 817.1406, 1321.8125, 737.1406, 492.84375, 736.8906, 1082.2188, 722.8594, 1234.3125, 722.8594, 770.90625, 817.1406, 477.39063, 788.5703, 1126.6016, 512.3203, 1359.6797, 467.14063, 1082.2969, 625.71094, 978.4531, 660, 1070.5078, 673.3828, 732.03125, 722.8594, 743.71094, 672.64844, 835.9297, 660, 298.34375, 348.97656, 213.09375, 440.07813, 22.90625, 438.64063, 311.85938, 301.4297, 758.22656, 864.10156, 19.9375, 950, 184.03906, 788.5703, 1335.4063, 687.1406, 770.8281, 912.8594, 18.59375, 704.2031, 168.59375, 736.8906, 211.32813, 517.1797, 184.14063, 687.1406, 477.28906, 687.1406, 497.64063, 636.39844, 731.9531, 624.28906, 686.14844, 512.3203, 502.84375, 624.28906, 452.39063, 470, 579.7969, 722.8594, 683.09375, 422.45313, 670.4922, 378.1172, 1134.9766, 418.96875, 976.8906, 430, 837.4922, 430, 1148.1875, 467.14063, 669.5703, 470, 310.9375, 393.3125)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8, 9), PackedInt32Array(6, 10, 11, 7), PackedInt32Array(12, 11, 10), PackedInt32Array(12, 10, 13, 14, 15), PackedInt32Array(1, 0, 16), PackedInt32Array(17, 1, 16, 18), PackedInt32Array(17, 18, 19, 20), PackedInt32Array(15, 14, 21, 22), PackedInt32Array(23, 24, 25, 22, 21, 26, 27), PackedInt32Array(28, 29, 3, 5, 9, 30), PackedInt32Array(31, 28, 30), PackedInt32Array(31, 30, 32), PackedInt32Array(33, 34, 35, 31, 32, 24), PackedInt32Array(36, 37, 38, 17, 39), PackedInt32Array(27, 26, 40, 41, 42), PackedInt32Array(8, 7, 43), PackedInt32Array(25, 8, 43, 22), PackedInt32Array(13, 10, 41, 44), PackedInt32Array(40, 44, 41), PackedInt32Array(42, 41, 45, 46), PackedInt32Array(46, 45, 47, 48), PackedInt32Array(49, 48, 47, 50), PackedInt32Array(35, 34, 51), PackedInt32Array(52, 35, 51), PackedInt32Array(52, 51, 53, 47, 37, 54), PackedInt32Array(33, 24, 23), PackedInt32Array(55, 33, 23), PackedInt32Array(50, 55, 23, 49), PackedInt32Array(53, 50, 47), PackedInt32Array(56, 57, 19, 58, 59, 60), PackedInt32Array(29, 4, 3), PackedInt32Array(61, 29, 28), PackedInt32Array(61, 28, 59, 58), PackedInt32Array(56, 60, 52, 62), PackedInt32Array(54, 62, 52), PackedInt32Array(63, 54, 37), PackedInt32Array(36, 63, 37), PackedInt32Array(19, 57, 20), PackedInt32Array(17, 20, 39)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(14.285713, 194.2857, 12.857142, 448.5714, 202.85713, 449.99997, 201.42856, 512.8571, 8.571428, 699.99994, 9.999999, 959.99994, 1801.4285, 961.4285, 1801.4285, 701.4285, 1609.9999, 514.2857, 1608.5713, 449.99997, 1804.2856, 447.14282, 1802.857, 194.2857)])
+
 [node name="Level" type="Node2D" unique_id=68664965]
 texture_filter = 1
 scale = Vector2(0.7, 0.7)
@@ -144,6 +149,57 @@ offset_bottom = 46.079998
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=580644228]
 stream = ExtResource("10_olg7q")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=67500654]
+navigation_polygon = SubResource("NavigationPolygon_olg7q")
+
+[node name="Polygon2D" type="Polygon2D" parent="NavigationRegion2D" unique_id=1608431725]
+position = Vector2(-72.59117, -88.13219)
+scale = Vector2(1.1479295, 1.23077)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(329.99997, 319.99997, 319.99997, 352.85712, 329.99997, 385.71426, 457.14282, 449.99997, 651.4285, 449.99997, 661.4285, 417.14282, 651.4285, 384.2857, 524.2857, 319.99997)
+
+[node name="Polygon2D2" type="Polygon2D" parent="NavigationRegion2D" unique_id=50017340]
+position = Vector2(-167.53409, -76.1537)
+scale = Vector2(1.1266454, 1.197802)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(1291.4285, 321.42856, 1162.857, 384.2857, 1152.857, 415.71426, 1162.857, 449.99997, 1355.7142, 449.99997, 1482.857, 385.71426, 1492.857, 351.42856, 1482.857, 319.99997)
+
+[node name="Polygon2D3" type="Polygon2D" parent="NavigationRegion2D" unique_id=329021216]
+position = Vector2(-66.04755, -64.593)
+scale = Vector2(1.0728656, 1.1185194)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(842.8571, 448.5714, 711.4285, 517.1428, 842.8571, 641.4285, 971.4285, 641.4285, 1101.4285, 517.1428, 971.4285, 448.5714)
+
+[node name="Polygon2D4" type="Polygon2D" parent="NavigationRegion2D" unique_id=1760084124]
+position = Vector2(-79.939255, -325.87354)
+scale = Vector2(1.241717, 1.4444454)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(202.85713, 704.28564, 191.42856, 735.71423, 202.85713, 768.5714, 458.5714, 768.5714, 469.99997, 735.71423, 458.5714, 704.28564)
+
+[node name="Polygon2D7" type="Polygon2D" parent="NavigationRegion2D" unique_id=755352053]
+position = Vector2(300.17456, -322.7613)
+scale = Vector2(0.95781296, 1.3555548)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(205.7143, 702.8571, 292.17395, 767.1428, 454.28568, 767.1428, 465.0932, 734.2857, 454.28577, 702.8571)
+
+[node name="Polygon2D5" type="Polygon2D" parent="NavigationRegion2D" unique_id=1374633472]
+position = Vector2(1061.7385, -318.44348)
+scale = Vector2(1.2810538, 1.434778)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(200.00012, 702.85706, 190.00012, 735.71423, 200.00012, 768.57135, 458.57153, 768.57135, 468.57153, 735.71423, 458.57153, 702.85706)
+
+[node name="Polygon2D8" type="Polygon2D" parent="NavigationRegion2D" unique_id=1844401318]
+position = Vector2(515.01337, -162.00148)
+scale = Vector2(1.1886797, 1.4000021)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(201.42859, 701.4286, 191.42859, 732.85706, 201.42859, 765.71423, 458.5714, 765.71423, 467.14282, 732.85706, 458.5714, 701.4286)
+
+[node name="Polygon2D6" type="Polygon2D" parent="NavigationRegion2D" unique_id=1574124029]
+position = Vector2(870.8266, -340.3497)
+scale = Vector2(0.9915451, 1.3777784)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(205.71423, 704.2857, 194.90674, 735.7143, 205.71423, 768.5714, 367.82605, 768.5714, 456.0869, 704.2857)
 
 [connection signal="block_spawn" from="." to="EnnemySpawner" method="_on_block_spawn"]
 [connection signal="block_spawn" from="." to="EnnemySpawner2" method="_on_block_spawn"]

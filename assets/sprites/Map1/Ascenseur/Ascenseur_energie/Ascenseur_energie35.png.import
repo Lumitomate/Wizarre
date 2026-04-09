@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csf5xn7rgmegq"
-path="res://.godot/imported/Ascenseur_rails1.png-9755b31ae7f64ce706bff7debe8a2894.ctex"
+uid="uid://bn357euueaxdn"
+path="res://.godot/imported/Ascenseur_energie35.png-38b9bb5b8f0f45e7cfcf94b314082cb7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Map1/Ascenseur/Asenceur_rails/Ascenseur_rails1.png"
-dest_files=["res://.godot/imported/Ascenseur_rails1.png-9755b31ae7f64ce706bff7debe8a2894.ctex"]
+source_file="res://assets/sprites/Map1/Ascenseur/Ascenseur_energie/Ascenseur_energie35.png"
+dest_files=["res://.godot/imported/Ascenseur_energie35.png-38b9bb5b8f0f45e7cfcf94b314082cb7.ctex"]
 
 [params]
 

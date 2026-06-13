@@ -4,9 +4,6 @@ const NUMBER_OF_FRAME_ELEVATOR : int = 76
 var number_of_players_in_the_elevator: int = 0
 var animated_sprite_2D: AnimatedSprite2D
 
-#BUG : QUAND UN JOUEUR SORT DE L'ASCENSEUR CHARGÉ À 100%, IL REVIENT À 0% MALGRÉ QU'UN JOUEUR SOIT DEDANS.
-#BUG : DIVISION PAR 0 QUAND AUCUNE MANETTE EST CONNECTÉE (dans le get_frame_to_reach)
-
 func _ready() -> void:
 	animated_sprite_2D = $AnimatableBody2D/AnimatedSprite2D
 

@@ -6,6 +6,7 @@ var fireball_scene = preload("res://scenes/attack_fireball.tscn")
 var lightray_scene = preload("res://scenes/attack_light_ray.tscn")
 var firecolumn_scene = preload("res://scenes/attack_fire_column.tscn")
 var ice_ball_scene = preload("res://scenes/attack_ice_ball.tscn")
+var carnivorous_scene = preload("res://scenes/carnivorous_seed.tscn")
 
 
 func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier,  player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2) -> Array[Node]:
@@ -61,5 +62,13 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 			ice_ball.linear_velocity = 300 * int_attack_tier * player_direction.normalized()
 			#ice_ball.direction = player_direction.normalized()
 			spawn_list.append(ice_ball)
+			
+		GlobalEnum.AttackType.CARNIVOROUS:
+			var carnivorous: CarnivorousSeed = carnivorous_scene.instantiate()
+			carnivorous.transform = carnivorous.transform.rotated(player_direction.angle())
+			carnivorous.scale(2 * level_scale)
+			carnivorous.position = player_position + 60 * player_direction.normalized()
+			carnivorous.linear_velocity = 200 * player_direction.normalized()
+			spawn_list.append(carnivorous)
 
 	return spawn_list

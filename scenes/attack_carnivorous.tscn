@@ -1,0 +1,211 @@
+[gd_scene format=3 uid="uid://w1vbh2rei7p7"]
+
+[ext_resource type="Script" uid="uid://cbcvnk0ith7jo" path="res://scripts/attack_carnivorous.gd" id="1_0rvjg"]
+[ext_resource type="Texture2D" uid="uid://bfmn1ger832lv" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete1.png" id="2_1bd3n"]
+[ext_resource type="Texture2D" uid="uid://bwtm7oxgipjyu" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille2.png" id="3_1h7qc"]
+[ext_resource type="Texture2D" uid="uid://65pwh04gobaa" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete2.png" id="3_l1drr"]
+[ext_resource type="Texture2D" uid="uid://6rmh6qxxt0r5" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete3.png" id="4_k5y6v"]
+[ext_resource type="Texture2D" uid="uid://c6opvfehm4soq" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille3.png" id="4_mxyc4"]
+[ext_resource type="Texture2D" uid="uid://c4wvnbhgrblca" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille4.png" id="5_d1q6k"]
+[ext_resource type="Texture2D" uid="uid://ca1pxo1nql7r" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete4.png" id="5_rn4hr"]
+[ext_resource type="Texture2D" uid="uid://ba0jpe4e804ga" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille5.png" id="6_43kss"]
+[ext_resource type="Texture2D" uid="uid://coa5jp1ocl5aw" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete5.png" id="6_gup8u"]
+[ext_resource type="Texture2D" uid="uid://bxd5hkmtwx224" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete6.png" id="7_j5wrj"]
+[ext_resource type="Texture2D" uid="uid://b4wxod16yv7pc" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille6.png" id="7_rtw5j"]
+[ext_resource type="Texture2D" uid="uid://cgktao3yknwbh" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille7.png" id="8_p8pll"]
+[ext_resource type="Texture2D" uid="uid://bc8r4ehr8s68l" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete7.png" id="8_pvsa0"]
+[ext_resource type="Texture2D" uid="uid://bpmh7gj74js3y" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille8.png" id="9_fj4fg"]
+[ext_resource type="Texture2D" uid="uid://drk2o60csftfy" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete8.png" id="9_lnd0r"]
+[ext_resource type="Texture2D" uid="uid://1f1l7buuxst0" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille9.png" id="10_a4k0r"]
+[ext_resource type="Texture2D" uid="uid://fy56fcnfn4ml" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete9.png" id="10_x6pq2"]
+[ext_resource type="Texture2D" uid="uid://bpbmejdo6ntta" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete10.png" id="11_lel58"]
+[ext_resource type="Texture2D" uid="uid://c7bwf3qahr7x0" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille10.png" id="11_wjx1b"]
+[ext_resource type="Texture2D" uid="uid://ccv44x35xjjiu" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete11.png" id="12_1h7qc"]
+[ext_resource type="Texture2D" uid="uid://c7wbvt1a004rf" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille11.png" id="12_snqya"]
+[ext_resource type="Texture2D" uid="uid://dctj7vl0cv560" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille12.png" id="13_0wo2j"]
+[ext_resource type="Texture2D" uid="uid://bu8ikqjwxg1mj" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Bite/Atk_P_1_tete12.png" id="13_mxyc4"]
+[ext_resource type="Texture2D" uid="uid://c4vsg6w0fw35r" path="res://assets/sprites/Attaques/Plante/Carnivor/Atk_P_Leaf/Atk_P_1_feuille1.png" id="14_d1q6k"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tad8i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_d1q6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1h7qc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_mxyc4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_d1q6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_43kss")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_rtw5j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_p8pll")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_fj4fg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_a4k0r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_wjx1b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_snqya")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_0wo2j")
+}],
+"loop": true,
+"name": &"atk_p_base_idle",
+"speed": 24.0
+}]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0rvjg"]
+load_path = "res://.godot/imported/Atk_P_1_tete10.png-13c9ca1fddcf2a4252d3aeb811f3a175.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1bd3n"]
+load_path = "res://.godot/imported/Atk_P_1_tete11.png-37f402ab30660738a755cfad4bc05984.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l1drr"]
+load_path = "res://.godot/imported/Atk_P_1_tete12.png-541c7e4f925220a1ed80c64494038a60.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_k5y6v"]
+load_path = "res://.godot/imported/Atk_P_1_tete1.png-f336c6f3f96314207542ae88e1d8d3aa.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rn4hr"]
+load_path = "res://.godot/imported/Atk_P_1_tete2.png-7e162969b0a7359fa686e4c7d11ffa12.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gup8u"]
+load_path = "res://.godot/imported/Atk_P_1_tete3.png-67318a1c053cd75e4bc35715f058b998.ctex"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_43kss"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1bd3n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_l1drr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_k5y6v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rn4hr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gup8u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_j5wrj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_pvsa0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_lnd0r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_x6pq2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_lel58")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_1h7qc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_mxyc4")
+}],
+"loop": false,
+"name": &"atk_p_bite",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_0rvjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_1bd3n")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_l1drr")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_1bd3n")
+}],
+"loop": true,
+"name": &"atk_p_chew",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_k5y6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_rn4hr")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_gup8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_rn4hr")
+}],
+"loop": true,
+"name": &"atk_p_idle",
+"speed": 24.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rtw5j"]
+radius = 145.00345
+
+[node name="AttackCarnivorous" type="Node2D" unique_id=1894631865]
+z_index = 50
+script = ExtResource("1_0rvjg")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=1921775728]
+visibility_layer = 2
+points = PackedVector2Array(0, 0)
+width = 8.0
+default_color = Color(1.0107458e-06, 0.45577466, 0.025297523, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=408368557]
+texture_filter = 1
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_tad8i")
+animation = &"atk_p_base_idle"
+frame_progress = 0.54003656
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=907355516]
+texture_filter = 1
+position = Vector2(0, -115.00001)
+sprite_frames = SubResource("SpriteFrames_43kss")
+animation = &"atk_p_bite"
+
+[node name="Area2D" type="Area2D" parent="AnimatedSprite2D" unique_id=1994770496]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Area2D" unique_id=545456297]
+position = Vector2(0, 7.6293945e-06)
+shape = SubResource("CircleShape2D_rtw5j")
+
+[node name="Timer" type="Timer" parent="AnimatedSprite2D" unique_id=623496392]
+wait_time = 1.5
+one_shot = true
+
+[node name="Marker2D" type="Marker2D" parent="AnimatedSprite2D" unique_id=794440849]
+position = Vector2(0, 30)
+
+[connection signal="body_entered" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_body_exited"]

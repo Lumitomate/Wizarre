@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://fwu3iaafa1qo"]
+
+[ext_resource type="Texture2D" uid="uid://dbp5efdel2fey" path="res://assets/sprites/BouleDeFeu_V1.png" id="1_6kl2j"]
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_tgsj0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tgsj0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6kl2j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6kl2j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6kl2j")
+}],
+"loop": true,
+"name": &"Argent",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6kl2j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6kl2j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6kl2j")
+}],
+"loop": true,
+"name": &"Bronze",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6kl2j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6kl2j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6kl2j")
+}],
+"loop": true,
+"name": &"Or",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_thl5s"]
+
+[node name="ObjetGraines" type="Area2D" unique_id=1282256053]
+script = ExtResource("1_tgsj0")
+metadata/_custom_type_script = "uid://5meir351x02q"
+
+[node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=1385089945]
+sprite_frames = SubResource("SpriteFrames_tgsj0")
+animation = &"Or"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=278233665]
+shape = SubResource("CircleShape2D_thl5s")

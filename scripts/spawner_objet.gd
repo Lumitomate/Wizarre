@@ -3,6 +3,8 @@ extends Node2D
 var objet_medaille_scene: PackedScene 	= preload("res://scenes/objet_medaille.tscn")
 var objet_miroir_scene: PackedScene 	= preload("res://scenes/objet_miroir.tscn")
 var objet_moufle_scene: PackedScene 	= preload("res://scenes/objet_moufle.tscn")
+var objet_graines_scene: PackedScene 	= preload("res://scenes/objet_graines.tscn")
+
 
 func _ready() -> void:
 	var attack_family
@@ -25,6 +27,9 @@ func _ready() -> void:
 		GlobalEnum.AttackType.ICEBALL:
 			attack_family = GlobalEnum.AttackFamily.Blue
 			object_to_spawn_scene = objet_moufle_scene
+		GlobalEnum.AttackType.CARNIVOROUS:
+			attack_family = GlobalEnum.AttackFamily.Red
+			object_to_spawn_scene = objet_graines_scene
 	
 	var object_to_spawn: AttackObject = object_to_spawn_scene.instantiate()
 	

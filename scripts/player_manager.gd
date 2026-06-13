@@ -7,6 +7,7 @@ var players = {}
 
 var sorcerer_scene: PackedScene = preload("res://scenes/sorcerer.tscn")
 
+
 func _ready():
 
 	# joueurs déjà connectés
@@ -18,12 +19,10 @@ func _ready():
 	Input.connect("joy_connection_changed", _on_joy_connection_changed)
 
 
-
 func _on_joy_connection_changed(device: int, connected: bool):
 
 	if connected and not device in known_controllers:
 		_add_controller(device)
-
 
 
 func _add_controller(controller_id):
@@ -34,7 +33,6 @@ func _add_controller(controller_id):
 	players[controller_id] = null
 
 	player_added.emit(controller_id)
-
 
 
 func spawn_player(parent: Node, controller_id: int, player_config: Dictionary = {}):
@@ -59,7 +57,6 @@ func spawn_player(parent: Node, controller_id: int, player_config: Dictionary = 
 	players[controller_id] = player
 
 
-
 func spawn_all_players(parent: Node, player_config: Dictionary = {}):
 
 	for controller_id in known_controllers:
@@ -69,7 +66,8 @@ func spawn_all_players(parent: Node, player_config: Dictionary = {}):
 func save_players_data():
 	
 	for controller_id in known_controllers:
-		players[controller_id].export_data()
+		if players[controller_id] != null:
+			players[controller_id].export_data()
 	
 #func load_players_data():
 	#

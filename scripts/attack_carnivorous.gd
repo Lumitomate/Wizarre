@@ -22,7 +22,7 @@ func _ready():
 	detection_zone.body_exited.connect(_on_enemy_exited)
 	eat_timer.timeout.connect(_on_eat_finished)
 	head.play("atk_p_idle")
-	$Sprite2D.play
+	$Sprite2D.play()
 	
 
 func _process(delta):

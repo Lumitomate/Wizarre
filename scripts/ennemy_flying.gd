@@ -34,7 +34,6 @@ func ennemy_setup():
 	set_navigation_target(Vector2(randi() % int(screen_size.x), randi() % int(screen_size.y)))
 
 func set_navigation_target(target_position: Vector2):
-	print("Setting target position to " + str(target_position))
 	$NavigationAgent2D.target_position = target_position
 	
 func set_random_navigation_target():

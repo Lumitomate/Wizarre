@@ -39,4 +39,3 @@ func _ready() -> void:
 	object_to_spawn.position = position
 	
 	get_parent().add_child.call_deferred(object_to_spawn)
-	print("Object spawned")

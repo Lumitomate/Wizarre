@@ -58,5 +58,7 @@ metadata/_custom_type_script = "uid://5meir351x02q"
 sprite_frames = SubResource("SpriteFrames_tgsj0")
 animation = &"Or"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=278233665]
+[node name="Area2D" type="CollisionShape2D" parent="." unique_id=278233665]
 shape = SubResource("CircleShape2D_thl5s")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

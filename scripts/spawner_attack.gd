@@ -2,11 +2,11 @@ extends Node
 
 const SPRITE_SIZE = 64
 
-var fireball_scene = preload("res://scenes/attack_fireball.tscn")
-var lightray_scene = preload("res://scenes/attack_light_ray.tscn")
-var firecolumn_scene = preload("res://scenes/attack_fire_column.tscn")
-var ice_ball_scene = preload("res://scenes/attack_ice_ball.tscn")
-var carnivorous_scene = preload("res://scenes/carnivorous_seed.tscn")
+var fireball_scene = preload("res://scenes/atk_fireball.tscn")
+var lightray_scene = preload("res://scenes/atk_light_ray.tscn")
+var firecolumn_scene = preload("res://scenes/atk_fire_column.tscn")
+var ice_ball_scene = preload("res://scenes/atk_ice_ball.tscn")
+var carnivorous_scene = preload("res://scenes/atk_carnivorous_seed.tscn")
 
 
 func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier,  player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2) -> Array[Node]:
@@ -69,6 +69,7 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 			carnivorous.scale(2 * level_scale)
 			carnivorous.position = player_position + 60 * player_direction.normalized()
 			carnivorous.linear_velocity = 200 * player_direction.normalized()
+			carnivorous.attack_tier = int_attack_tier
 			spawn_list.append(carnivorous)
 
 	return spawn_list

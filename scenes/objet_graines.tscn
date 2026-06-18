@@ -1,19 +1,45 @@
 [gd_scene format=3 uid="uid://fwu3iaafa1qo"]
 
-[ext_resource type="Texture2D" uid="uid://dbp5efdel2fey" path="res://assets/sprites/BouleDeFeu_V1.png" id="1_6kl2j"]
 [ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_tgsj0"]
+[ext_resource type="Texture2D" uid="uid://c3iasog2mnw8t" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Argent/Graines_Argent1.png" id="2_iklo8"]
+[ext_resource type="Texture2D" uid="uid://bv2edu8hgloep" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Argent/Graines_Argent2.png" id="3_cyy6r"]
+[ext_resource type="Texture2D" uid="uid://cv8rjtitbn2ax" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Argent/Graines_Argent3.png" id="4_lkygx"]
+[ext_resource type="Texture2D" uid="uid://b5phf24y0mpmn" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Argent/Graines_Argent4.png" id="5_c4phy"]
+[ext_resource type="Texture2D" uid="uid://bbmnhicdq3pqs" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Argent/Graines_Argent5.png" id="6_xt386"]
+[ext_resource type="Texture2D" uid="uid://bgtkkdu3ssd26" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Argent/Graines_Argent6.png" id="7_f1g5i"]
+[ext_resource type="Texture2D" uid="uid://23anawjqt5t4" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Bronze/Graines_Bronze1.png" id="8_lr4id"]
+[ext_resource type="Texture2D" uid="uid://dalmaubjikx04" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Bronze/Graines_Bronze2.png" id="9_0j7lv"]
+[ext_resource type="Texture2D" uid="uid://d3l8crpo3jph3" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Bronze/Graines_Bronze3.png" id="10_qe8v1"]
+[ext_resource type="Texture2D" uid="uid://cpinam3hkdhuv" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Bronze/Graines_Bronze4.png" id="11_w5kxv"]
+[ext_resource type="Texture2D" uid="uid://dtcljrg6qncd8" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Bronze/Graines_Bronze5.png" id="12_gvfbj"]
+[ext_resource type="Texture2D" uid="uid://batb2k3ogvxsu" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Bronze/Graines_Bronze6.png" id="13_7h3h5"]
+[ext_resource type="Texture2D" uid="uid://b2ri8we6btp27" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Or/Graines_Or1.png" id="14_joieb"]
+[ext_resource type="Texture2D" uid="uid://c0oqj25wogms8" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Or/Graines_Or2.png" id="15_p0n1p"]
+[ext_resource type="Texture2D" uid="uid://cxbvnv2dl7iif" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Or/Graines_Or3.png" id="16_vemw6"]
+[ext_resource type="Texture2D" uid="uid://favvq4e443xx" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Or/Graines_Or4.png" id="17_xg60m"]
+[ext_resource type="Texture2D" uid="uid://c5qpv6hwonpj7" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Or/Graines_Or5.png" id="18_7q4fl"]
+[ext_resource type="Texture2D" uid="uid://c27nkcyidc5r7" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Or/Graines_Or6.png" id="19_w2gid"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tgsj0"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_6kl2j")
+"texture": ExtResource("2_iklo8")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_6kl2j")
+"texture": ExtResource("3_cyy6r")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_6kl2j")
+"texture": ExtResource("4_lkygx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_c4phy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_xt386")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_f1g5i")
 }],
 "loop": true,
 "name": &"Argent",
@@ -21,13 +47,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_6kl2j")
+"texture": ExtResource("8_lr4id")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_6kl2j")
+"texture": ExtResource("9_0j7lv")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_6kl2j")
+"texture": ExtResource("10_qe8v1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_w5kxv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_gvfbj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_7h3h5")
 }],
 "loop": true,
 "name": &"Bronze",
@@ -35,13 +70,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_6kl2j")
+"texture": ExtResource("14_joieb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_6kl2j")
+"texture": ExtResource("15_p0n1p")
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_6kl2j")
+"texture": ExtResource("16_vemw6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_xg60m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_7q4fl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_w2gid")
 }],
 "loop": true,
 "name": &"Or",
@@ -55,6 +99,7 @@ script = ExtResource("1_tgsj0")
 metadata/_custom_type_script = "uid://5meir351x02q"
 
 [node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=1385089945]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_tgsj0")
 animation = &"Or"
 

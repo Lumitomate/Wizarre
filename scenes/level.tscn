@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="9_8c41q"]
 [ext_resource type="PackedScene" uid="uid://uar7blb4jike" path="res://scenes/hud_progress_bar.tscn" id="9_olg7q"]
 [ext_resource type="AudioStream" uid="uid://x8r5wa8nng4e" path="res://assets/sound/theme.mp3" id="10_olg7q"]
-[ext_resource type="PackedScene" uid="uid://w1vbh2rei7p7" path="res://scenes/attack_carnivorous.tscn" id="11_t1rx8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8gofh"]
 texture = ExtResource("3_f2txt")
@@ -111,13 +110,14 @@ position = Vector2(1528.5715, 642.8571)
 position = Vector2(614.2857, 600)
 
 [node name="Terrain1PortesEntree" type="Sprite2D" parent="." unique_id=87839468]
-z_index = -10
+z_index = -50
 texture_filter = 1
 position = Vector2(907.14294, 768.57153)
 scale = Vector2(2, 2)
 texture = ExtResource("6_klq6b")
 
 [node name="Terrain1PortesSortieOuverture1" parent="." unique_id=1894555552 instance=ExtResource("6_8c41q")]
+z_index = -50
 position = Vector2(331.42868, 642.85724)
 
 [node name="Torche" parent="." unique_id=1194411659 instance=ExtResource("8_b121j")]
@@ -152,6 +152,7 @@ offset_bottom = 46.079998
 stream = ExtResource("10_olg7q")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=67500654]
+visible = false
 navigation_polygon = SubResource("NavigationPolygon_olg7q")
 
 [node name="Polygon2D" type="Polygon2D" parent="NavigationRegion2D" unique_id=1608431725]
@@ -201,9 +202,6 @@ position = Vector2(870.8266, -340.3497)
 scale = Vector2(0.9915451, 1.3777784)
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(205.71423, 704.2857, 194.90674, 735.7143, 205.71423, 768.5714, 367.82605, 768.5714, 456.0869, 704.2857)
-
-[node name="AttackPlantCarnivor" parent="." unique_id=1894631865 instance=ExtResource("11_t1rx8")]
-position = Vector2(907.1428, 448.5714)
 
 [connection signal="block_spawn" from="." to="EnnemySpawner" method="_on_block_spawn"]
 [connection signal="block_spawn" from="." to="EnnemySpawner2" method="_on_block_spawn"]

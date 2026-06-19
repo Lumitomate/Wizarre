@@ -181,9 +181,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("13_dp263")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_red_fire",
-"speed": 5.0
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -661,9 +661,12 @@ sorcerer_color = 3
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=92979516]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_6urby")
-animation = &"attack_red_fire"
+animation = &"walk_yellow"
+frame = 10
+frame_progress = 0.00567166
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1715000558]
+visible = false
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_oqr0g")
 metadata/_edit_group_ = true

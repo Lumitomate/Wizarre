@@ -1,65 +1,108 @@
 [gd_scene format=3 uid="uid://bxwef34mmsuye"]
 
 [ext_resource type="Script" uid="uid://dv32u1jo7805i" path="res://scripts/gemme.gd" id="1_t3frf"]
-[ext_resource type="Texture2D" uid="uid://57mql3nc0xwq" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu1.png" id="1_xq1s0"]
-[ext_resource type="Texture2D" uid="uid://bpnpsqv0ugmeq" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_Glace1.png" id="2_1eoqf"]
-[ext_resource type="Texture2D" uid="uid://dbrmawj3wc7tl" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_Feu2.png" id="2_t3frf"]
-[ext_resource type="Texture2D" uid="uid://bvryw55sh6bd4" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_Glace2.png" id="3_msjm0"]
-[ext_resource type="Texture2D" uid="uid://wa1pylbpkhwg" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_Plante1.png" id="4_dg5nj"]
-[ext_resource type="Texture2D" uid="uid://dvmmval8ljttg" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_Plante2.png" id="5_2c2j5"]
-[ext_resource type="Texture2D" uid="uid://x35ewtq35s2i" path="res://assets/sprites/Gemnes/Gemne_Lumiere/Gemne_Lumiere1.png" id="8_dg5nj"]
-[ext_resource type="Texture2D" uid="uid://brhj44oxlbbgy" path="res://assets/sprites/Gemnes/Gemne_Lumiere/Gemne_Lumiere2.png" id="9_2c2j5"]
+[ext_resource type="Texture2D" uid="uid://cdweo285gefwt" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_glace_v2.png" id="2_fjfy6"]
+[ext_resource type="Texture2D" uid="uid://6wcuqnlxv5vn" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_glace_v3.png" id="3_1m60i"]
+[ext_resource type="Texture2D" uid="uid://d3qmt50viss26" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_glace_v4.png" id="4_r6p5i"]
+[ext_resource type="Texture2D" uid="uid://cn448e0x0a8m5" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_glace_v5.png" id="5_27ppr"]
+[ext_resource type="Texture2D" uid="uid://c7idn1oacy5cu" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_plante_v2.png" id="6_c3703"]
+[ext_resource type="Texture2D" uid="uid://dpb88u130xpkv" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_plante_v3.png" id="7_thxsc"]
+[ext_resource type="Texture2D" uid="uid://c51b8n8aqxsfu" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_plante_v4.png" id="8_nhy6n"]
+[ext_resource type="Texture2D" uid="uid://t4l653h2cvwr" path="res://assets/sprites/Gemnes/Gemne_Plante/Gemne_plante_v5.png" id="9_3c2gf"]
+[ext_resource type="Texture2D" uid="uid://cp3dg6q8rsqs8" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_feu_v2.png" id="10_vs3oe"]
+[ext_resource type="Texture2D" uid="uid://dfoawdhdu27d6" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_feu_v3.png" id="11_65bfj"]
+[ext_resource type="Texture2D" uid="uid://btqb8nev6gfss" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_feu_v4.png" id="12_j2hcf"]
+[ext_resource type="Texture2D" uid="uid://jek3li4e2m1v" path="res://assets/sprites/Gemnes/Gemne_Feu/Gemne_feu_v5.png" id="13_txrjt"]
+[ext_resource type="Texture2D" uid="uid://lgimsgxxp4uv" path="res://assets/sprites/Gemnes/Gemne_Lumiere/Gemne_lumiere_v2.png" id="14_7ybfg"]
+[ext_resource type="Texture2D" uid="uid://c7h63a68spf2w" path="res://assets/sprites/Gemnes/Gemne_Lumiere/Gemne_lumiere_v3.png" id="15_n7gxm"]
+[ext_resource type="Texture2D" uid="uid://b8p0nfe2pjxkp" path="res://assets/sprites/Gemnes/Gemne_Lumiere/Gemne_lumiere_v4.png" id="16_tvl6f"]
+[ext_resource type="Texture2D" uid="uid://60ww1r83o03l" path="res://assets/sprites/Gemnes/Gemne_Lumiere/Gemne_lumiere_v5.png" id="17_cp7vm"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_xnphv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_1eoqf")
+"texture": ExtResource("2_fjfy6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_msjm0")
+"texture": ExtResource("3_1m60i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_r6p5i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_27ppr")
 }],
 "loop": true,
 "name": &"shine_blue",
-"speed": 6.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_dg5nj")
+"texture": ExtResource("6_c3703")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_2c2j5")
+"texture": ExtResource("7_thxsc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_nhy6n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_3c2gf")
 }],
 "loop": true,
 "name": &"shine_green",
-"speed": 6.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_xq1s0")
+"texture": ExtResource("10_vs3oe")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_t3frf")
+"texture": ExtResource("11_65bfj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_j2hcf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_txrjt")
 }],
 "loop": true,
 "name": &"shine_red",
-"speed": 6.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_dg5nj")
+"texture": ExtResource("14_7ybfg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_2c2j5")
+"texture": ExtResource("15_n7gxm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_tvl6f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_cp7vm")
 }],
 "loop": true,
 "name": &"shine_yellow",
-"speed": 5.0
+"speed": 12.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2gl1y"]
 radius = 8.0
 height = 26.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fjfy6"]
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 13.0
+orbit_velocity_min = 0.5000001
+orbit_velocity_max = 0.5000001
+gravity = Vector3(20, 0, 0)
+scale_max = 2.0
+turbulence_noise_strength = 2.43
 
 [node name="Gemme" type="Area2D" unique_id=491087806 groups=["gemme_group"]]
 scale = Vector2(2, 2)
@@ -69,10 +112,17 @@ script = ExtResource("1_t3frf")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=863865798]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_xnphv")
-animation = &"shine_yellow"
+animation = &"shine_blue"
+frame_progress = 0.9714223
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=535685155]
+visible = false
 position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_2gl1y")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1269867881]
+position = Vector2(0, 9)
+lifetime = 6.0
+process_material = SubResource("ParticleProcessMaterial_fjfy6")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -301,7 +301,7 @@ scale = Vector2(1.9999999, 1.9999999)
 texture = ExtResource("53_jier3")
 
 [node name="TeleportZone" parent="." unique_id=1682075255 instance=ExtResource("56_xg2ep")]
-position = Vector2(1764.2855, 922.8571)
+position = Vector2(1642.8569, 1295.7142)
 scale = Vector2(60, 2)
 destination = 1
 

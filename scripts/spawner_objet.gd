@@ -1,9 +1,10 @@
 extends Node2D
 
-var objet_medaille_scene: PackedScene 	= preload("res://scenes/objet_medaille.tscn")
-var objet_miroir_scene: PackedScene 	= preload("res://scenes/objet_miroir.tscn")
-var objet_moufle_scene: PackedScene 	= preload("res://scenes/objet_moufle.tscn")
-var objet_graines_scene: PackedScene 	= preload("res://scenes/objet_graines.tscn")
+var objet_medaille_scene: PackedScene 	= preload("res://scenes/obj_f1_medaille.tscn")
+var objet_miroir_scene: PackedScene 	= preload("res://scenes/obj_l1_miroir.tscn")
+var objet_moufle_scene: PackedScene 	= preload("res://scenes/obj_g1_moufle.tscn")
+var objet_graines_scene: PackedScene 	= preload("res://scenes/obj_p1_graines.tscn")
+var objet_bocal_scene: PackedScene 	= preload("res://scenes/obj_p2_bocal.tscn")
 
 
 func _ready() -> void:
@@ -30,6 +31,9 @@ func _ready() -> void:
 		GlobalEnum.AttackType.CARNIVOROUS:
 			attack_family = GlobalEnum.AttackFamily.Red
 			object_to_spawn_scene = objet_graines_scene
+		GlobalEnum.AttackType.PLANTBALL:
+			attack_family = GlobalEnum.AttackFamily.Red
+			object_to_spawn_scene = objet_bocal_scene
 	
 	var object_to_spawn: AttackObject = object_to_spawn_scene.instantiate()
 	

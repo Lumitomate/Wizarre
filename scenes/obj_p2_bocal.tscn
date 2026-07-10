@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://bux4q20as6p88"]
+
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_5iheg"]
+[ext_resource type="Texture2D" uid="uid://bdoj8vtd1spqk" path="res://assets/sprites/Magasin/Objet/Bocal/argent/obj_p2_bocal_argent1.png" id="1_ega44"]
+[ext_resource type="Texture2D" uid="uid://b06on0sp7c4xq" path="res://assets/sprites/Magasin/Objet/Bocal/argent/obj_p2_bocal_argent2.png" id="2_5iheg"]
+[ext_resource type="Texture2D" uid="uid://c33s673bxglyc" path="res://assets/sprites/Magasin/Objet/Bocal/argent/obj_p2_bocal_argent3.png" id="3_rtjvg"]
+[ext_resource type="Texture2D" uid="uid://df3caw7ryqcmv" path="res://assets/sprites/Magasin/Objet/Bocal/argent/obj_p2_bocal_argent4.png" id="4_4n685"]
+[ext_resource type="Texture2D" uid="uid://8vdpvpqsdcc3" path="res://assets/sprites/Magasin/Objet/Bocal/argent/obj_p2_bocal_argent5.png" id="5_iakmt"]
+[ext_resource type="Texture2D" uid="uid://bfxesikcno1ec" path="res://assets/sprites/Magasin/Objet/Bocal/argent/obj_p2_bocal_argent6.png" id="6_5i84w"]
+[ext_resource type="Texture2D" uid="uid://bwiaka7or0bk2" path="res://assets/sprites/Magasin/Objet/Bocal/bronze/obj_p2_bocal_bronze1.png" id="7_y1ati"]
+[ext_resource type="Texture2D" uid="uid://dhdh0guj6hos0" path="res://assets/sprites/Magasin/Objet/Bocal/bronze/obj_p2_bocal_bronze2.png" id="8_wxv14"]
+[ext_resource type="Texture2D" uid="uid://biv11xggqf5gr" path="res://assets/sprites/Magasin/Objet/Bocal/bronze/obj_p2_bocal_bronze3.png" id="9_uecdx"]
+[ext_resource type="Texture2D" uid="uid://ceod2wugwr4oi" path="res://assets/sprites/Magasin/Objet/Bocal/bronze/obj_p2_bocal_bronze4.png" id="10_pms81"]
+[ext_resource type="Texture2D" uid="uid://maf7oshgu3xo" path="res://assets/sprites/Magasin/Objet/Bocal/bronze/obj_p2_bocal_bronze5.png" id="11_r0ps7"]
+[ext_resource type="Texture2D" uid="uid://cmmwada0ch7n6" path="res://assets/sprites/Magasin/Objet/Bocal/bronze/obj_p2_bocal_bronze6.png" id="12_qytdt"]
+[ext_resource type="Texture2D" uid="uid://5xcjwsash7d" path="res://assets/sprites/Magasin/Objet/Bocal/or/obj_p2_bocal_or1.png" id="13_3ht28"]
+[ext_resource type="Texture2D" uid="uid://djmn3sms2nhgn" path="res://assets/sprites/Magasin/Objet/Bocal/or/obj_p2_bocal_or2.png" id="14_r7snp"]
+[ext_resource type="Texture2D" uid="uid://cey0qgs8mm6ej" path="res://assets/sprites/Magasin/Objet/Bocal/or/obj_p2_bocal_or3.png" id="15_6u0c0"]
+[ext_resource type="Texture2D" uid="uid://byg6p6vtho7cl" path="res://assets/sprites/Magasin/Objet/Bocal/or/obj_p2_bocal_or4.png" id="16_gta4i"]
+[ext_resource type="Texture2D" uid="uid://rue2ura7e28e" path="res://assets/sprites/Magasin/Objet/Bocal/or/obj_p2_bocal_or5.png" id="17_cd6tk"]
+[ext_resource type="Texture2D" uid="uid://bm6agxebdfdsk" path="res://assets/sprites/Magasin/Objet/Bocal/or/obj_p2_bocal_or6.png" id="18_f83a0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kcm7k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ega44")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_5iheg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rtjvg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4n685")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_iakmt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_5i84w")
+}],
+"loop": true,
+"name": &"Argent",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_y1ati")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wxv14")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_uecdx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_pms81")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_r0ps7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_qytdt")
+}],
+"loop": true,
+"name": &"Bronze",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_3ht28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_r7snp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_6u0c0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_gta4i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_cd6tk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_f83a0")
+}],
+"loop": true,
+"name": &"Or",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jmx4s"]
+radius = 15.0
+
+[node name="ObjBocal" type="Area2D" unique_id=1231062677]
+script = ExtResource("1_5iheg")
+
+[node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=1437117453]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_kcm7k")
+animation = &"Bronze"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1292081260]
+shape = SubResource("CircleShape2D_jmx4s")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

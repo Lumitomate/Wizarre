@@ -2,11 +2,12 @@ extends Node
 
 const SPRITE_SIZE = 64
 
-var fireball_scene = preload("res://scenes/atk_fireball.tscn")
-var lightray_scene = preload("res://scenes/atk_light_ray.tscn")
-var firecolumn_scene = preload("res://scenes/atk_fire_column.tscn")
-var ice_ball_scene = preload("res://scenes/atk_ice_ball.tscn")
-var carnivorous_scene = preload("res://scenes/atk_carnivorous_seed.tscn")
+var fireball_scene = preload("res://scenes/atk_f0_fireball.tscn")
+var lightray_scene = preload("res://scenes/atk_l1_light_ray.tscn")
+var firecolumn_scene = preload("res://scenes/atk_f1_fire_column.tscn")
+var ice_ball_scene = preload("res://scenes/atk_g1_ice_ball.tscn")
+var carnivorous_scene = preload("res://scenes/atk_p1_carnivorous_seed.tscn")
+var plantball_scene = preload("res://scenes/atk_p2_explo.tscn")
 
 
 func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier,  player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2) -> Array[Node]:
@@ -64,12 +65,21 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 			spawn_list.append(ice_ball)
 			
 		GlobalEnum.AttackType.CARNIVOROUS:
-			var carnivorous: CarnivorousSeed = carnivorous_scene.instantiate()
+			var carnivorous: AttackCarnivorousSeed = carnivorous_scene.instantiate()
 			carnivorous.transform = carnivorous.transform.rotated(player_direction.angle())
 			carnivorous.scale(2 * level_scale)
 			carnivorous.position = player_position + 60 * player_direction.normalized()
 			carnivorous.linear_velocity = 200 * player_direction.normalized()
 			carnivorous.attack_tier = int_attack_tier
 			spawn_list.append(carnivorous)
+
+		GlobalEnum.AttackType.PLANTBALL:
+			var plant_ball: AttackPlantBall = plantball_scene.instantiate()
+			plant_ball.transform = plant_ball.transform.rotated(player_direction.angle())
+			plant_ball.scale(level_scale)
+			plant_ball.position = player_position + 60 * player_direction.normalized()
+			plant_ball.linear_velocity = 300 * player_direction.normalized()
+			plant_ball.setup_tier(int_attack_tier)
+			spawn_list.append(plant_ball)
 
 	return spawn_list

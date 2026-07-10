@@ -7,7 +7,6 @@ class_name AttackObject extends Area2D
 var animation_name: String
 
 func _ready() -> void:
-	print("Object created")
 	match item_attack_tier:
 		GlobalEnum.AttackTier.III:
 			animation_name = "Or"

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://df70ai6r8jc1k"]
+
+[ext_resource type="Script" uid="uid://nk17i745lbw2" path="res://scripts/pressure_plate.gd" id="1_xtofl"]
+[ext_resource type="Texture2D" uid="uid://dmfptegp7lyx4" path="res://assets/sprites/Magasin/MagasinMains/Terrain1_Bouton.png" id="2_r34r6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gubfq"]
+size = Vector2(32, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xtofl"]
+size = Vector2(32, 5)
+
+[node name="PressurePlate" type="Node2D" unique_id=856177130]
+script = ExtResource("1_xtofl")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=790300676]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1587656017]
+shape = SubResource("RectangleShape2D_gubfq")
+
+[node name="Terrain1Bouton" type="Sprite2D" parent="StaticBody2D" unique_id=1472480965]
+texture_filter = 1
+texture = ExtResource("2_r34r6")
+
+[node name="TriggerArea" type="Area2D" parent="." unique_id=2111893058]
+
+[node name="TriggerCollision" type="CollisionShape2D" parent="TriggerArea" unique_id=123543441]
+position = Vector2(0, -10.5)
+shape = SubResource("RectangleShape2D_xtofl")

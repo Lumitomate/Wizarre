@@ -24,6 +24,7 @@ var time: float = 0.0
 var is_eating: bool = false
 var is_retracting: bool = false
 var bite_triggered: bool = false
+var plant_parent: Node = null  # assigné par setup()
 
 func setup(origin: Node2D, rest_pos: Vector2, t_offset: float):
 	stem_origin = origin
@@ -31,7 +32,9 @@ func setup(origin: Node2D, rest_pos: Vector2, t_offset: float):
 	time_offset = t_offset
 	head.position = head_rest_position
 
+
 func _ready():
+	plant_parent = get_parent()
 	detection_zone.body_entered.connect(_on_area_2d_body_entered)
 	detection_zone.body_exited.connect(_on_area_2d_body_exited)
 	head.play("atk_p1_idle")
@@ -122,6 +125,9 @@ func _update_stem():
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is EnnemyFlying and target_enemy == null and not is_eating and not is_retracting:
+		if plant_parent and plant_parent.has_method("is_closest_head_for_enemy"):
+			if not plant_parent.is_closest_head_for_enemy(self, body):
+				return  # une autre tête est plus proche, on ignore
 		target_enemy = body
 		head.play("atk_p1_open")
 

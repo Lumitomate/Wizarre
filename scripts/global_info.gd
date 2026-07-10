@@ -10,7 +10,7 @@ var run_info: Dictionary = {
 			"attacks": {
 				GlobalEnum.AttackFamily.Red:
 					{
-						"attack_type" : GlobalEnum.AttackType.PLANTBALL,
+						"attack_type" : GlobalEnum.AttackType.CARNIVOROUS,
 						"attack_tier" : GlobalEnum.AttackTier.I
 					},
 				GlobalEnum.AttackFamily.Blue:

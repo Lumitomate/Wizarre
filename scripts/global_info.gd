@@ -11,7 +11,7 @@ var run_info: Dictionary = {
 				GlobalEnum.AttackFamily.Red:
 					{
 						"attack_type" : GlobalEnum.AttackType.CARNIVOROUS,
-						"attack_tier" : GlobalEnum.AttackTier.I
+						"attack_tier" : GlobalEnum.AttackTier.III
 					},
 				GlobalEnum.AttackFamily.Blue:
 					{

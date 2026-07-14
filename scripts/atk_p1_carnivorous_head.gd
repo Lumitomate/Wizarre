@@ -11,6 +11,7 @@ signal head_finished
 @export var idle_radius: float = 40.0
 @export var idle_speed: float = 0.8
 @export var chase_speed: float = 3.0
+@export var chase_speed_player: float = 2.5
 @export var stem_segments: int = 8
 @export var retract_speed: float = 4.0
 @export var bite_kill_frame: int = 4
@@ -18,20 +19,21 @@ signal head_finished
 var stem_origin: Node2D = null
 var head_rest_position: Vector2 = Vector2(0, -300)
 var time_offset: float = 0.0
+var attack_tier: int = 1
 
-var target_enemy: EnnemyFlying = null
+var target_enemy = null
 var time: float = 0.0
 var is_eating: bool = false
 var is_retracting: bool = false
 var bite_triggered: bool = false
-var plant_parent: Node = null  # assigné par setup()
+var plant_parent: Node = null
 
-func setup(origin: Node2D, rest_pos: Vector2, t_offset: float):
+func setup(origin: Node2D, rest_pos: Vector2, t_offset: float, tier: int = 1):
 	stem_origin = origin
 	head_rest_position = rest_pos
 	time_offset = t_offset
+	attack_tier = tier
 	head.position = head_rest_position
-
 
 func _ready():
 	plant_parent = get_parent()
@@ -69,7 +71,8 @@ func _chase_enemy(delta):
 	if distance < 20.0:
 		_start_eating()
 	else:
-		head.position += direction.normalized() * chase_speed * delta * 60
+		var speed = chase_speed_player if target_enemy.is_in_group("player_group") else chase_speed
+		head.position += direction.normalized() * speed * delta * 60
 		head.rotation = lerp_angle(head.rotation, direction.angle() + PI/2, delta * 5.0)
 
 func _start_eating():
@@ -81,7 +84,6 @@ func _start_eating():
 	head.frame_changed.connect(_on_bite_frame_changed)
 	await head.animation_finished
 	head.frame_changed.disconnect(_on_bite_frame_changed)
-
 	target_enemy = null
 	is_eating = false
 	is_retracting = true
@@ -92,7 +94,10 @@ func _on_bite_frame_changed():
 	if head.animation == "atk_p1_bite" and head.frame == bite_kill_frame:
 		bite_triggered = true
 		if target_enemy and is_instance_valid(target_enemy):
-			target_enemy.die()
+			if target_enemy is EnnemyFlying:
+				target_enemy.die()
+			elif target_enemy.is_in_group("player_group"):
+				target_enemy.hit(1)
 
 func _retract_head(delta):
 	var target_local = head.position + (to_local(stem_origin.global_position) - to_local(stem_anchor.global_position))
@@ -124,13 +129,18 @@ func _update_stem():
 		stem.add_point(point)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body is EnnemyFlying and target_enemy == null and not is_eating and not is_retracting:
-		if plant_parent and plant_parent.has_method("is_closest_head_for_enemy"):
-			if not plant_parent.is_closest_head_for_enemy(self, body):
-				return  # une autre tête est plus proche, on ignore
-		target_enemy = body
-		head.play("atk_p1_open")
+	if target_enemy == null and not is_eating and not is_retracting:
+		if body is EnnemyFlying:
+			if plant_parent and plant_parent.has_method("is_closest_head_for_enemy"):
+				if not plant_parent.is_closest_head_for_enemy(self, body):
+					return
+			target_enemy = body
+			head.play("atk_p1_open")
+		elif body.is_in_group("player_group") and attack_tier < 3:
+			target_enemy = body
+			head.play("atk_p1_open")
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body == target_enemy and not is_eating:
 		target_enemy = null
+		head.play("atk_p1_idle")

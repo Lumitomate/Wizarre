@@ -91,6 +91,8 @@ func _start_explosion() -> void:
 func _on_explosion_body_entered(body: Node2D) -> void:
 	if body.is_in_group("ennemy_group"):
 		body.hit(explosion_damage)
+	elif body.is_in_group("player_group"):
+		body.hit(1)
 
 #func _on_push_body_entered(body: Node2D) -> void:
 	#if is_exploding:

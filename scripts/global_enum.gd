@@ -6,7 +6,8 @@ enum AttackType {
 	FIRECOLUMN,
 	ICEBALL,
 	CARNIVOROUS,
-	PLANTBALL
+	PLANTBALL,
+	FIREWAVE
 }
 
 enum AttackTier {

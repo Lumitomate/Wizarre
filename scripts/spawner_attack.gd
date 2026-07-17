@@ -8,6 +8,7 @@ var firecolumn_scene = preload("res://scenes/atk_f1_fire_column.tscn")
 var ice_ball_scene = preload("res://scenes/atk_g1_ice_ball.tscn")
 var carnivorous_scene = preload("res://scenes/atk_p1_carnivorous_seed.tscn")
 var plantball_scene = preload("res://scenes/atk_p2_explo.tscn")
+var fire_wave_scene = preload("res://scenes/atk_f2_wave.tscn")
 
 
 func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier,  player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2) -> Array[Node]:
@@ -81,5 +82,14 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 			plant_ball.linear_velocity = 300 * player_direction.normalized()
 			plant_ball.setup_tier(int_attack_tier)
 			spawn_list.append(plant_ball)
+			
+		GlobalEnum.AttackType.FIREWAVE:
+			var fire_wave: AttackFireWave = fire_wave_scene.instantiate()
+			fire_wave.direction = player_direction.normalized()
+			fire_wave.position = player_position + 60 * player_direction.normalized()
+			fire_wave.tier_scale = float(int_attack_tier)
+			fire_wave.setup_tier(int_attack_tier)
+			fire_wave.rotation = player_direction.angle()
+			spawn_list.append(fire_wave)
 
 	return spawn_list

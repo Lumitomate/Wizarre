@@ -10,8 +10,8 @@ var run_info: Dictionary = {
 			"attacks": {
 				GlobalEnum.AttackFamily.Red:
 					{
-						"attack_type" : GlobalEnum.AttackType.CARNIVOROUS,
-						"attack_tier" : GlobalEnum.AttackTier.III
+						"attack_type" : GlobalEnum.AttackType.FIREWAVE,
+						"attack_tier" : GlobalEnum.AttackTier.I
 					},
 				GlobalEnum.AttackFamily.Blue:
 					{

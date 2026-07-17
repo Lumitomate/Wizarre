@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://c6w4vtj0ntfpc"]
+
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_0v2fh"]
+[ext_resource type="Texture2D" uid="uid://6b5yiviymwmd" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Argent/Objet_Couronne_Argent_1.png" id="2_gm4jp"]
+[ext_resource type="Texture2D" uid="uid://na4lm075ytll" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Argent/Objet_Couronne_Argent_2.png" id="3_sjc07"]
+[ext_resource type="Texture2D" uid="uid://chywq5h3q6b2i" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Argent/Objet_Couronne_Argent_3.png" id="4_v5776"]
+[ext_resource type="Texture2D" uid="uid://c8se5cllmpd1h" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Argent/Objet_Couronne_Argent_4.png" id="5_v3etm"]
+[ext_resource type="Texture2D" uid="uid://1wddv150vi6b" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Argent/Objet_Couronne_Argent_5.png" id="6_1ifdq"]
+[ext_resource type="Texture2D" uid="uid://b4skau36reilg" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Argent/Objet_Couronne_Argent_6.png" id="7_f1yxa"]
+[ext_resource type="Texture2D" uid="uid://dai5bod0lg5t2" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Argent/Objet_Couronne_Argent_7.png" id="8_pg8ag"]
+[ext_resource type="Texture2D" uid="uid://ssfb8kv2kjlh" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Argent/Objet_Couronne_Argent_8.png" id="9_1c88x"]
+[ext_resource type="Texture2D" uid="uid://eaoe62ob33r8" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Bronze/Objet_Couronne_Bronze_1.png" id="10_rnvn0"]
+[ext_resource type="Texture2D" uid="uid://b0op75kh0uej" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Bronze/Objet_Couronne_Bronze_2.png" id="11_kr3kd"]
+[ext_resource type="Texture2D" uid="uid://dk74t3labgp7" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Bronze/Objet_Couronne_Bronze_3.png" id="12_816fd"]
+[ext_resource type="Texture2D" uid="uid://dbppk316a3mtk" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Bronze/Objet_Couronne_Bronze_4.png" id="13_4xuvv"]
+[ext_resource type="Texture2D" uid="uid://6xmx7t8idnu8" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Bronze/Objet_Couronne_Bronze_5.png" id="14_o382e"]
+[ext_resource type="Texture2D" uid="uid://b2g08g2nr6bc2" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Bronze/Objet_Couronne_Bronze_6.png" id="15_2ungx"]
+[ext_resource type="Texture2D" uid="uid://demtu4lpu2gh" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Bronze/Objet_Couronne_Bronze_7.png" id="16_7y5r4"]
+[ext_resource type="Texture2D" uid="uid://cx4kc7gca6f2j" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Bronze/Objet_Couronne_Bronze_8.png" id="17_ye6wl"]
+[ext_resource type="Texture2D" uid="uid://cw4d533vlefyd" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Or/Objet_Couronne_Or_1.png" id="18_45xig"]
+[ext_resource type="Texture2D" uid="uid://cy6il21ixtuf1" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Or/Objet_Couronne_Or_2.png" id="19_4w8vj"]
+[ext_resource type="Texture2D" uid="uid://d3lio4vynr51u" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Or/Objet_Couronne_Or_3.png" id="20_qw2rs"]
+[ext_resource type="Texture2D" uid="uid://c1hnxlcymel55" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Or/Objet_Couronne_Or_4.png" id="21_o1i5s"]
+[ext_resource type="Texture2D" uid="uid://28a6f5k1qvms" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Or/Objet_Couronne_Or_5.png" id="22_gnhpd"]
+[ext_resource type="Texture2D" uid="uid://b4tgo0qmb46v6" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Or/Objet_Couronne_Or_6.png" id="23_vjutv"]
+[ext_resource type="Texture2D" uid="uid://hinl2pirv3wj" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Or/Objet_Couronne_Or_7.png" id="24_k2jm1"]
+[ext_resource type="Texture2D" uid="uid://bgrgramlyn2t" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Or/Objet_Couronne_Or_8.png" id="25_7rt2x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hi46c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gm4jp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_sjc07")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_v5776")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_v3etm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_1ifdq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_f1yxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_pg8ag")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_1c88x")
+}],
+"loop": true,
+"name": &"Argent",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_rnvn0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_kr3kd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_816fd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_4xuvv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_o382e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_2ungx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_7y5r4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_ye6wl")
+}],
+"loop": true,
+"name": &"Bronze",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_45xig")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_4w8vj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_qw2rs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_o1i5s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_gnhpd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_vjutv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_k2jm1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_7rt2x")
+}],
+"loop": true,
+"name": &"Or",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3olg7"]
+radius = 16.0
+
+[node name="Obj_f2_Couronne" type="Area2D" unique_id=429451792]
+script = ExtResource("1_0v2fh")
+item_attack_type = 6
+
+[node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=185374400]
+sprite_frames = SubResource("SpriteFrames_hi46c")
+animation = &"Or"
+
+[node name="Area2D" type="CollisionShape2D" parent="." unique_id=1670988115]
+shape = SubResource("CircleShape2D_3olg7")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

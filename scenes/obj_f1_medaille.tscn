@@ -119,7 +119,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ermxx"]
 radius = 15.0
 
-[node name="ObjetMedaille" type="Area2D" unique_id=2070854314]
+[node name="Obj_f1_medaille" type="Area2D" unique_id=2070854314]
 scale = Vector2(2, 2)
 script = ExtResource("1_vsuko")
 item_attack_type = 2

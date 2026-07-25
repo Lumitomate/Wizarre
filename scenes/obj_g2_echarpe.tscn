@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://cv2cth8ilg8bo"]
+
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_sbjek"]
+[ext_resource type="Texture2D" uid="uid://cwroa1w61yss6" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Argent/Objet_G_Echarpe_Argent_1.png" id="2_bu55n"]
+[ext_resource type="Texture2D" uid="uid://dj0jg6kyxodwe" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Argent/Objet_G_Echarpe_Argent_2.png" id="3_ikelx"]
+[ext_resource type="Texture2D" uid="uid://d4al2y72mcpfi" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Argent/Objet_G_Echarpe_Argent_3.png" id="4_5wjlw"]
+[ext_resource type="Texture2D" uid="uid://doksjeyn6qrfg" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Argent/Objet_G_Echarpe_Argent_4.png" id="5_ly78l"]
+[ext_resource type="Texture2D" uid="uid://0x4vl2wjerlt" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Argent/Objet_G_Echarpe_Argent_5.png" id="6_4i0sh"]
+[ext_resource type="Texture2D" uid="uid://bxoyyvp45aoet" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Argent/Objet_G_Echarpe_Argent_6.png" id="7_dd7wx"]
+[ext_resource type="Texture2D" uid="uid://2j6ggduawxey" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Argent/Objet_G_Echarpe_Argent_7.png" id="8_xt3xw"]
+[ext_resource type="Texture2D" uid="uid://m4pyuk8eqpfs" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Argent/Objet_G_Echarpe_Argent_8.png" id="9_w5pfy"]
+[ext_resource type="Texture2D" uid="uid://dxxu8gowgo6u0" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Bronze/Objet_G_Echarpe_Bronze_1.png" id="10_k8qj6"]
+[ext_resource type="Texture2D" uid="uid://w7d22y6oykfq" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Bronze/Objet_G_Echarpe_Bronze_2.png" id="11_2ilh5"]
+[ext_resource type="Texture2D" uid="uid://dm46sp56ysgxh" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Bronze/Objet_G_Echarpe_Bronze_3.png" id="12_mlean"]
+[ext_resource type="Texture2D" uid="uid://bgflr4xsct5f7" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Bronze/Objet_G_Echarpe_Bronze_4.png" id="13_43my2"]
+[ext_resource type="Texture2D" uid="uid://doq50ns2soov1" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Bronze/Objet_G_Echarpe_Bronze_5.png" id="14_2jnsw"]
+[ext_resource type="Texture2D" uid="uid://qyg4tw01wxdb" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Bronze/Objet_G_Echarpe_Bronze_6.png" id="15_ya4j3"]
+[ext_resource type="Texture2D" uid="uid://b6cdoq8en8m5i" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Bronze/Objet_G_Echarpe_Bronze_7.png" id="16_rima2"]
+[ext_resource type="Texture2D" uid="uid://dxmp1wq5ygfry" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Bronze/Objet_G_Echarpe_Bronze_8.png" id="17_4tsh7"]
+[ext_resource type="Texture2D" uid="uid://c3eeo626neeei" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Or/Objet_G_Echarpe_Or_1.png" id="18_hp6jv"]
+[ext_resource type="Texture2D" uid="uid://drjuxo1nu4rjm" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Or/Objet_G_Echarpe_Or_2.png" id="19_mso0r"]
+[ext_resource type="Texture2D" uid="uid://cq33fnjiyk0xf" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Or/Objet_G_Echarpe_Or_3.png" id="20_jb82w"]
+[ext_resource type="Texture2D" uid="uid://dcllh0mp66nb8" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Or/Objet_G_Echarpe_Or_4.png" id="21_4b7rn"]
+[ext_resource type="Texture2D" uid="uid://b3d7f8550hrdc" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Or/Objet_G_Echarpe_Or_5.png" id="22_q3h76"]
+[ext_resource type="Texture2D" uid="uid://cvraucuxvxq6q" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Or/Objet_G_Echarpe_Or_6.png" id="23_dcd3d"]
+[ext_resource type="Texture2D" uid="uid://dbiuyivmuca26" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Or/Objet_G_Echarpe_Or_7.png" id="24_so7j2"]
+[ext_resource type="Texture2D" uid="uid://cyvks0lstlnyg" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Or/Objet_G_Echarpe_Or_8.png" id="25_cm2pb"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ug8yn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_bu55n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ikelx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5wjlw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ly78l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_4i0sh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dd7wx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_xt3xw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_w5pfy")
+}],
+"loop": true,
+"name": &"Argent",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_k8qj6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_2ilh5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_mlean")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_43my2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_2jnsw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_ya4j3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_rima2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_4tsh7")
+}],
+"loop": true,
+"name": &"Bronze",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_hp6jv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_mso0r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_jb82w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_4b7rn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_q3h76")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_dcd3d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_so7j2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_cm2pb")
+}],
+"loop": true,
+"name": &"Or",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_goeom"]
+radius = 15.0
+
+[node name="Obj_g2_echarpe" type="Area2D" unique_id=1665522815]
+script = ExtResource("1_sbjek")
+item_attack_family = 1
+item_attack_type = 7
+
+[node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=1021971407]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_ug8yn")
+animation = &"Or"
+frame_progress = 0.48658365
+
+[node name="Area2D" type="CollisionShape2D" parent="." unique_id=1070615953]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_goeom")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

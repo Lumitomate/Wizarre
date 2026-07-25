@@ -9,6 +9,7 @@ var ice_ball_scene = preload("res://scenes/atk_g1_ice_ball.tscn")
 var carnivorous_scene = preload("res://scenes/atk_p1_carnivorous_seed.tscn")
 var plantball_scene = preload("res://scenes/atk_p2_explo.tscn")
 var fire_wave_scene = preload("res://scenes/atk_f2_wave.tscn")
+var ice_spike_scene = preload("res://scenes/atk_g2_ice_spike.tscn")
 
 
 func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier,  player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2) -> Array[Node]:
@@ -91,5 +92,19 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 			fire_wave.setup_tier(int_attack_tier)
 			fire_wave.rotation = player_direction.angle()
 			spawn_list.append(fire_wave)
+
+		GlobalEnum.AttackType.ICESPIKE:
+			var spike_count = 4 + (int_attack_tier - 1) * 2
+			var angle_step = TAU / spike_count
+			var start_angle = player_direction.angle() + PI / 4  # décalage de 45°
+			for i in range(spike_count):
+				var ice_spike: AttackIceSpike = ice_spike_scene.instantiate()
+				var spike_angle = start_angle + (i * angle_step)
+				ice_spike.rotation = spike_angle
+				ice_spike.direction = Vector2.RIGHT.rotated(spike_angle)
+				ice_spike.position = player_position + 60 * Vector2.RIGHT.rotated(spike_angle)
+				ice_spike.scale(level_scale)
+				ice_spike.setup_tier(int_attack_tier)
+				spawn_list.append(ice_spike)
 
 	return spawn_list

@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://ccyrwind1tj4c"]
+
+[ext_resource type="Script" uid="uid://xyecarj2pr3q" path="res://scripts/atk_g_2_ice_spike.gd" id="1_ttb8d"]
+[ext_resource type="Texture2D" uid="uid://dtxmbohyyxk1k" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_1.png" id="2_muesi"]
+[ext_resource type="Texture2D" uid="uid://bmnpmbiqnofsb" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_2.png" id="3_hlp2d"]
+[ext_resource type="Texture2D" uid="uid://dbf263r8kyahq" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_3.png" id="4_x8k0x"]
+[ext_resource type="Texture2D" uid="uid://dopxjco6x2xqh" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_4.png" id="5_ix20t"]
+[ext_resource type="Texture2D" uid="uid://ba1x4sw6771pw" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_5.png" id="6_xm5ig"]
+[ext_resource type="Texture2D" uid="uid://d0a4p2ksrljk2" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_6.png" id="7_s5kux"]
+[ext_resource type="Texture2D" uid="uid://5i7gyrr4mklf" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_7.png" id="8_ky08c"]
+[ext_resource type="Texture2D" uid="uid://dc6p5118k20vw" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_8.png" id="9_i4e7w"]
+[ext_resource type="Texture2D" uid="uid://48eersniyfei" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_9.png" id="10_cfy7w"]
+[ext_resource type="Texture2D" uid="uid://n5wc26urpixy" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_10.png" id="11_ifyfd"]
+[ext_resource type="Texture2D" uid="uid://dns4dbekrshgb" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_11.png" id="12_gms2j"]
+[ext_resource type="Texture2D" uid="uid://gjc28uad7mmy" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_12.png" id="13_ibexc"]
+[ext_resource type="Texture2D" uid="uid://cox803cyrxh2s" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_13.png" id="14_ihd6l"]
+[ext_resource type="Texture2D" uid="uid://b8snw7ga2v1lt" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_14.png" id="15_h34ae"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n4t0y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_muesi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hlp2d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_x8k0x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ix20t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_xm5ig")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_s5kux")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ky08c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_i4e7w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_cfy7w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ifyfd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_gms2j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_ibexc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ihd6l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_h34ae")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 24.0
+}]
+
+[node name="AtkG2IceSpike" type="Area2D" unique_id=1914693290]
+script = ExtResource("1_ttb8d")
+speed = 600
+spawn_immunity_time = 0.5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=961325762]
+texture_filter = 1
+rotation = 1.5707964
+sprite_frames = SubResource("SpriteFrames_n4t0y")
+animation = &"idle"
+frame_progress = 0.68118495
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=719782753]
+visible = false
+polygon = PackedVector2Array(0, -32, -6, -23, -12, 30, 12, 30, 6, -23)

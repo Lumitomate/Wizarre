@@ -124,6 +124,7 @@ script = ExtResource("1_0v2fh")
 item_attack_type = 6
 
 [node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=185374400]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_hi46c")
 animation = &"Or"
 

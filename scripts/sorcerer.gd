@@ -154,16 +154,14 @@ func fire_attack(attack_family: GlobalEnum.AttackFamily) -> void:
 		
 		var attack_type: GlobalEnum.AttackType = attacks[attack_family]["attack_type"]
 		var attack_tier: GlobalEnum.AttackTier = attacks[attack_family]["attack_tier"]
-
-		var attack_list = attack_launcher.spawn_attack(attack_type, attack_tier, position, direction, screen_size, level_scale)
-
+		var attack_list = attack_launcher.spawn_attack(attack_type, attack_tier, position, direction, screen_size, level_scale, self)
+		
 		ammunitions[attack_family] -= 1
 		ammo_changed.emit(attack_family, ammunitions[attack_family])
 		$AttackCooldown.start()
 		can_fire = false
 		for attack in attack_list:
 			self.get_parent().add_child(attack)
-
 
 func add_ammo(ammo_type: int, ammo_amount: int) -> void:
 	ammunitions[ammo_type] += ammo_amount

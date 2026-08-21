@@ -7,6 +7,7 @@ var objet_graines_scene: PackedScene 	= preload("res://scenes/obj_p1_graines.tsc
 var objet_bocal_scene: PackedScene 	= preload("res://scenes/obj_p2_bocal.tscn")
 var objet_couronne_scene: PackedScene 	= preload("res://scenes/obj_f2_couronne.tscn")
 var objet_echarpe_scene: PackedScene 	= preload("res://scenes/obj_g2_echarpe.tscn")
+var objet_fireball_scene: PackedScene 	= preload("res://scenes/atk_f0_fireball.tscn")
 
 
 func _ready() -> void:
@@ -42,6 +43,9 @@ func _ready() -> void:
 		GlobalEnum.AttackType.ICESPIKE:
 			attack_family = GlobalEnum.AttackFamily.Blue
 			object_to_spawn_scene = objet_echarpe_scene
+		GlobalEnum.AttackType.ICEBLADE:
+			attack_family = GlobalEnum.AttackFamily.Blue
+			object_to_spawn_scene = objet_fireball_scene
 	
 	var object_to_spawn: AttackObject = object_to_spawn_scene.instantiate()
 	

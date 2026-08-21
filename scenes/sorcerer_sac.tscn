@@ -1,0 +1,306 @@
+[gd_scene format=3 uid="uid://fq0kkjjmxkuf"]
+
+[ext_resource type="Texture2D" uid="uid://bbh8jhph5ygd4" path="res://assets/sprites/Sorciers/Sac/Sac_V1/Sac_V1.png" id="1_gq50q"]
+[ext_resource type="Texture2D" uid="uid://dxh5uiclr026m" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_1.png" id="2_ut40s"]
+[ext_resource type="Texture2D" uid="uid://cosarghmr5sej" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_2.png" id="3_nlafx"]
+[ext_resource type="Texture2D" uid="uid://dkdv3bgo3rf3v" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_3.png" id="4_7ls20"]
+[ext_resource type="Texture2D" uid="uid://bgvxm3ywhbiwd" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_4.png" id="5_gtgw4"]
+[ext_resource type="Texture2D" uid="uid://tp48xa2fs0ed" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_5.png" id="6_x781c"]
+[ext_resource type="Texture2D" uid="uid://cacr5opbcgd8k" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_6.png" id="7_llnyr"]
+[ext_resource type="Texture2D" uid="uid://d08c2o1ju8gok" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_7.png" id="8_jbok2"]
+[ext_resource type="Texture2D" uid="uid://wg3r5tblf2ap" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_8.png" id="9_k0n13"]
+[ext_resource type="Texture2D" uid="uid://dsacq6yhit2po" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_9.png" id="10_n7okw"]
+[ext_resource type="Texture2D" uid="uid://xr8c1l70p8m4" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_10.png" id="11_afrq4"]
+[ext_resource type="Texture2D" uid="uid://bdaup7ots2s0y" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_11.png" id="12_doqg2"]
+[ext_resource type="Texture2D" uid="uid://c4apybx0pliyo" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_12.png" id="13_4tjy4"]
+[ext_resource type="Texture2D" uid="uid://bq7f1fti8vlew" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_13.png" id="14_j8jds"]
+[ext_resource type="Texture2D" uid="uid://ckrn0w7qmko20" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_14.png" id="15_bhorh"]
+[ext_resource type="Texture2D" uid="uid://cg4qxpxkx0ytc" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_15.png" id="16_upa11"]
+[ext_resource type="Texture2D" uid="uid://dgc8yj7t8hw1v" path="res://assets/sprites/Sorciers/Sac/FourVide/FourVide_16.png" id="17_hmtgk"]
+[ext_resource type="Texture2D" uid="uid://c0xdts3axkutj" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_1.png" id="18_htwyx"]
+[ext_resource type="Texture2D" uid="uid://c72ovn62kc71n" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_2.png" id="19_mprlw"]
+[ext_resource type="Texture2D" uid="uid://nash12cc6bgn" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_3.png" id="20_bkd6w"]
+[ext_resource type="Texture2D" uid="uid://bl2jf4hayd61v" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_4.png" id="21_jmqra"]
+[ext_resource type="Texture2D" uid="uid://bmx0cl3wwavj4" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_5.png" id="22_3cu81"]
+[ext_resource type="Texture2D" uid="uid://dlp3f0j61hgay" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_6.png" id="23_0c3ro"]
+[ext_resource type="Texture2D" uid="uid://ch6re18knile7" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_7.png" id="24_87kqt"]
+[ext_resource type="Texture2D" uid="uid://c5tlhlwppxvki" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_8.png" id="25_cwnvd"]
+[ext_resource type="Texture2D" uid="uid://cclrmfbxoafww" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_9.png" id="26_nkp3r"]
+[ext_resource type="Texture2D" uid="uid://dqkkhbpywgnn8" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_10.png" id="27_agq3f"]
+[ext_resource type="Texture2D" uid="uid://dxqg4d5w6r0m6" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_11.png" id="28_oaqk5"]
+[ext_resource type="Texture2D" uid="uid://ct8ix1v5bcu7b" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_12.png" id="29_wxgxc"]
+[ext_resource type="Texture2D" uid="uid://3o0fuycdhtjf" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_13.png" id="30_6ddsx"]
+[ext_resource type="Texture2D" uid="uid://c1mqemjg557v3" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_14.png" id="31_6l2b4"]
+[ext_resource type="Texture2D" uid="uid://801irvdg4c5b" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_15.png" id="32_0d57o"]
+[ext_resource type="Texture2D" uid="uid://j8v154rh0r40" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_1/FourCharbon1_16.png" id="33_lfp37"]
+[ext_resource type="Texture2D" uid="uid://ct55x6qs0d5mm" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_2.png" id="34_bgx2s"]
+[ext_resource type="Texture2D" uid="uid://1pmmlxfa4mfk" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_3.png" id="35_301ct"]
+[ext_resource type="Texture2D" uid="uid://chm76s1wj4nnk" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_4.png" id="36_h1784"]
+[ext_resource type="Texture2D" uid="uid://ctts23wkj5nlq" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_5.png" id="37_hrxrv"]
+[ext_resource type="Texture2D" uid="uid://ccrw1axp1hwr8" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_6.png" id="38_lh86x"]
+[ext_resource type="Texture2D" uid="uid://cdxd24n2ymf73" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_7.png" id="39_2avn0"]
+[ext_resource type="Texture2D" uid="uid://cb87yqguhebp1" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_8.png" id="40_g44pp"]
+[ext_resource type="Texture2D" uid="uid://0y0r01cvwc3n" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_9.png" id="41_fw7pm"]
+[ext_resource type="Texture2D" uid="uid://hoolp1ece4ky" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_10.png" id="42_1iosm"]
+[ext_resource type="Texture2D" uid="uid://736cj56mqlef" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_11.png" id="43_rmipa"]
+[ext_resource type="Texture2D" uid="uid://dibk822eiblk6" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_12.png" id="44_adyeg"]
+[ext_resource type="Texture2D" uid="uid://k28nfoy34bw" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_13.png" id="45_e5tx7"]
+[ext_resource type="Texture2D" uid="uid://caqfoqrs3igw3" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_14.png" id="46_284pa"]
+[ext_resource type="Texture2D" uid="uid://ct88t5podice7" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_15.png" id="47_qo3mx"]
+[ext_resource type="Texture2D" uid="uid://dceduwtqvt3pk" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_16.png" id="48_ue16w"]
+[ext_resource type="Texture2D" uid="uid://cj3840fcf15y2" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_2/FourCharbon2_17.png" id="49_xj6nt"]
+[ext_resource type="Texture2D" uid="uid://yinj8mt2j2fa" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_3.png" id="50_w56h8"]
+[ext_resource type="Texture2D" uid="uid://criemnwij3oji" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_4.png" id="51_1hxe5"]
+[ext_resource type="Texture2D" uid="uid://tfcymksd8wup" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_5.png" id="52_u3aut"]
+[ext_resource type="Texture2D" uid="uid://cp2olp1nq0cj" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_6.png" id="53_fkqba"]
+[ext_resource type="Texture2D" uid="uid://cdh14ut1s4dni" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_7.png" id="54_ipbat"]
+[ext_resource type="Texture2D" uid="uid://c1ua7hl17yqc4" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_8.png" id="55_wj4h3"]
+[ext_resource type="Texture2D" uid="uid://dtykt82oj3lmc" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_9.png" id="56_xcw6l"]
+[ext_resource type="Texture2D" uid="uid://dequmodmkk5ku" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_10.png" id="57_3lvvr"]
+[ext_resource type="Texture2D" uid="uid://bg0koh7ls1ryp" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_11.png" id="58_4waca"]
+[ext_resource type="Texture2D" uid="uid://bs11qc51jhp3c" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_12.png" id="59_ugjsm"]
+[ext_resource type="Texture2D" uid="uid://cwq2lg8bcom1u" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_13.png" id="60_b4w2h"]
+[ext_resource type="Texture2D" uid="uid://cdmxolhldl1tv" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_14.png" id="61_eam4d"]
+[ext_resource type="Texture2D" uid="uid://c2xfh0qp6cfm5" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_15.png" id="62_oce7u"]
+[ext_resource type="Texture2D" uid="uid://dsphkvqd4vo01" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_16.png" id="63_hd56k"]
+[ext_resource type="Texture2D" uid="uid://dqql70p547q57" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_17.png" id="64_u8l7u"]
+[ext_resource type="Texture2D" uid="uid://1rvxnlqolitf" path="res://assets/sprites/Sorciers/Sac/FourCharbon/FourCharbon_3/FourCharbon3_18.png" id="65_dumjm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ekqaj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ut40s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_nlafx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_7ls20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_gtgw4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_x781c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_llnyr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jbok2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_k0n13")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_n7okw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_afrq4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_doqg2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_4tjy4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_j8jds")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_bhorh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_upa11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_hmtgk")
+}],
+"loop": true,
+"name": &"C_0_Ammo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_htwyx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_mprlw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_bkd6w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_jmqra")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_3cu81")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_0c3ro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_87kqt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_cwnvd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_nkp3r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_agq3f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_oaqk5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_wxgxc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_6ddsx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_6l2b4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_0d57o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_lfp37")
+}],
+"loop": true,
+"name": &"C_1_Ammo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("34_bgx2s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_301ct")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_h1784")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_hrxrv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_lh86x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_2avn0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_g44pp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_fw7pm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_1iosm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_rmipa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_adyeg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_e5tx7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_284pa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_qo3mx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_ue16w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_xj6nt")
+}],
+"loop": true,
+"name": &"C_2_Ammo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("50_w56h8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_1hxe5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_u3aut")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_fkqba")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_ipbat")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_wj4h3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_xcw6l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_3lvvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_4waca")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_ugjsm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_b4w2h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_eam4d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_oce7u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_hd56k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_u8l7u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_dumjm")
+}],
+"loop": true,
+"name": &"C_3_Ammo",
+"speed": 5.0
+}]
+
+[node name="SorcererSac" type="Area2D" unique_id=739553450]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=985971008]
+texture_filter = 1
+texture = ExtResource("1_gq50q")
+
+[node name="AnimSpriteCoal" type="AnimatedSprite2D" parent="." unique_id=679950150]
+texture_filter = 1
+position = Vector2(-9, -33)
+sprite_frames = SubResource("SpriteFrames_ekqaj")
+animation = &"C_3_Ammo"
+
+[node name="AnimSpriteTainted" type="AnimatedSprite2D" parent="." unique_id=1385773214]
+texture_filter = 1
+position = Vector2(7, -33)
+sprite_frames = SubResource("SpriteFrames_ekqaj")
+animation = &"C_1_Ammo"
+
+[node name="AnimSpritePure" type="AnimatedSprite2D" parent="." unique_id=1251495397]
+texture_filter = 1
+position = Vector2(-1, -36)
+sprite_frames = SubResource("SpriteFrames_ekqaj")
+animation = &"C_0_Ammo"

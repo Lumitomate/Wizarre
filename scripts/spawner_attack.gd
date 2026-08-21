@@ -10,9 +10,9 @@ var carnivorous_scene = preload("res://scenes/atk_p1_carnivorous_seed.tscn")
 var plantball_scene = preload("res://scenes/atk_p2_explo.tscn")
 var fire_wave_scene = preload("res://scenes/atk_f2_wave.tscn")
 var ice_spike_scene = preload("res://scenes/atk_g2_ice_spike.tscn")
+var ice_blade_scene = preload("res://scenes/atk_g3_blade.tscn")
 
-
-func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier,  player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2) -> Array[Node]:
+func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier, player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
 	
 	var spawn_list: Array[Node]
 	
@@ -107,4 +107,20 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 				ice_spike.setup_tier(int_attack_tier)
 				spawn_list.append(ice_spike)
 
+		GlobalEnum.AttackType.ICEBLADE:
+			var ice_blade_count = 2
+			var angle_step = TAU / ice_blade_count
+			var rot_dir = 1.0 if player_direction.x >= 0 else -1.0
+			var start_angle = -PI / 2.0  # démarre à la verticale (haut)
+			for i in range(ice_blade_count):
+				var ice_blade: AttackIceBlade = ice_blade_scene.instantiate()
+				var ice_blade_angle = start_angle + i * angle_step
+				ice_blade.setup(
+					caster,
+					ice_blade_angle,
+					rot_dir,
+					int_attack_tier,
+					level_scale
+				)
+				spawn_list.append(ice_blade)
 	return spawn_list

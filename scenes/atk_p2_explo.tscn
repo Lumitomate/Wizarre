@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c75xmklssr2cy"]
 
-[ext_resource type="Script" uid="uid://dis31lhn24j2d" path="res://scripts/atk_p_2_explo.gd" id="1_ql5kj"]
+[ext_resource type="Script" uid="uid://dis31lhn24j2d" path="res://scripts/atk_p2_explo.gd" id="1_ql5kj"]
 [ext_resource type="Texture2D" uid="uid://c46p84vad1drd" path="res://assets/sprites/Attaques/Plante/AtK_P2_PlantBall/Explosion/explosion0/Atk_P_2_explosion1_4.png" id="2_v2n56"]
 [ext_resource type="Texture2D" uid="uid://dhs2lpafrwk3u" path="res://assets/sprites/Attaques/Plante/AtK_P2_PlantBall/Explosion/explosion0/Atk_P_2_explosion1_5.png" id="3_yfgfs"]
 [ext_resource type="Texture2D" uid="uid://cxi0glos4e0tm" path="res://assets/sprites/Attaques/Plante/AtK_P2_PlantBall/Explosion/explosion0/Atk_P_2_explosion1_6.png" id="4_p8c6f"]

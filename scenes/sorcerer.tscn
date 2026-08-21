@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b7cwfl6277f1o" path="res://scripts/sorcerer.gd" id="1_oqr0g"]
 [ext_resource type="Texture2D" uid="uid://br6yqix1afw2p" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierB_Saut/SorcierBleu_Saut9.png" id="2_cdgyr"]
+[ext_resource type="PackedScene" uid="uid://fq0kkjjmxkuf" path="res://scenes/sorcerer_sac.tscn" id="2_vuix5"]
 [ext_resource type="Texture2D" uid="uid://bhc5fyvigw6h3" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_AtkF/SorcierRouge_AtkF1.png" id="2_ybrxd"]
 [ext_resource type="Texture2D" uid="uid://djrpbiv80cj0m" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierB_Saut/SorcierBleu_Saut10.png" id="3_vh0h1"]
 [ext_resource type="Texture2D" uid="uid://32kemjs726aa" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_AtkF/SorcierRouge_AtkF2.png" id="3_vuix5"]
@@ -657,6 +658,9 @@ scale = Vector2(2, 2)
 collision_mask = 5
 script = ExtResource("1_oqr0g")
 sorcerer_color = 3
+
+[node name="SorcererSac" parent="." unique_id=545034358 instance=ExtResource("2_vuix5")]
+position = Vector2(-0.5, 2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=92979516]
 texture_filter = 1

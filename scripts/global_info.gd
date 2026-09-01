@@ -16,7 +16,7 @@ var run_info: Dictionary = {
 				GlobalEnum.AttackFamily.Blue:
 					{
 						"attack_type" : GlobalEnum.AttackType.ICESPIKE,
-						"attack_tier" : GlobalEnum.AttackTier.I
+						"attack_tier" : GlobalEnum.AttackTier.III
 					},
 				GlobalEnum.AttackFamily.Yellow:
 					{

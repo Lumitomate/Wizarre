@@ -17,6 +17,7 @@ var damage_label_scene = preload("res://scenes/hud_damage_label.tscn")
 
 
 func _ready() -> void:
+	add_to_group("enemies")
 	level_scale = get_parent().transform.get_scale()
 	screen_size = get_viewport_rect().size
 	print(screen_size)

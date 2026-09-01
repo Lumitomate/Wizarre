@@ -24,7 +24,7 @@ radius = 14.035668
 [sub_resource type="CircleShape2D" id="CircleShape2D_18tsl"]
 radius = 139.60658
 
-[node name="FlyingEnemy" type="CharacterBody2D" unique_id=1939251830 groups=["ennemy_group"]]
+[node name="FlyingEnemy" type="CharacterBody2D" unique_id=1939251830 groups=["enemy_group"]]
 scale = Vector2(2, 2)
 collision_mask = 5
 script = ExtResource("1_jiy37")

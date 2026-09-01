@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://d3l81a3dpct4"]
+
+[ext_resource type="Script" uid="uid://dn21o3t4eklpc" path="res://scripts/atk_g3_blade.gd" id="1_2qxd2"]
+[ext_resource type="Texture2D" uid="uid://bf2vboq1s1o7p" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_1.png" id="2_uc72c"]
+[ext_resource type="Texture2D" uid="uid://b50e1eg3hsk2y" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_3.png" id="4_4cbg3"]
+[ext_resource type="Texture2D" uid="uid://bbf0tt2ss6iee" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_5.png" id="6_iuw6u"]
+[ext_resource type="Texture2D" uid="uid://df8bk1r2vpybx" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_7.png" id="8_bpppd"]
+[ext_resource type="Texture2D" uid="uid://dtivpqsampy0j" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_9.png" id="10_kj20w"]
+[ext_resource type="Texture2D" uid="uid://cjy17nn2h6f1f" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_11.png" id="12_rt008"]
+[ext_resource type="Texture2D" uid="uid://ct2o6gfierexs" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_13.png" id="14_rmtax"]
+[ext_resource type="Texture2D" uid="uid://ccrwtfu2dpub0" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_15.png" id="16_lnlxa"]
+[ext_resource type="Texture2D" uid="uid://bmd8freq5u2of" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_17.png" id="18_ihymj"]
+[ext_resource type="Texture2D" uid="uid://deyi5p3awyado" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_19.png" id="20_pk64v"]
+[ext_resource type="Texture2D" uid="uid://bx3ioq1ase4c7" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_21.png" id="22_lnnn0"]
+[ext_resource type="Texture2D" uid="uid://4301jr3mhpg6" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_23.png" id="24_7kr8c"]
+[ext_resource type="Texture2D" uid="uid://cjat4fcncvdx5" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_25.png" id="26_bara5"]
+[ext_resource type="Texture2D" uid="uid://cxvlpl60v7ryk" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_27.png" id="28_snbd7"]
+[ext_resource type="Texture2D" uid="uid://2vyl0f7noohq" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_29.png" id="30_36whk"]
+[ext_resource type="Texture2D" uid="uid://dwj2qu2skbbdk" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_31.png" id="32_81foy"]
+[ext_resource type="Texture2D" uid="uid://etguelnt55ax" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_33.png" id="34_g5yqb"]
+[ext_resource type="Texture2D" uid="uid://23kgdog6gkjn" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Growth/Atk_G3_lameGrowth_35.png" id="36_le1tq"]
+[ext_resource type="Texture2D" uid="uid://rukeos71ihsn" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Shot/Atk_G3_lameShot_1.png" id="37_2dn8x"]
+[ext_resource type="Texture2D" uid="uid://dvnyolimsi33a" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Shot/Atk_G3_lameShot_2.png" id="38_mnfvo"]
+[ext_resource type="Texture2D" uid="uid://df3equ3ug67d4" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Shot/Atk_G3_lameShot_3.png" id="39_104cr"]
+[ext_resource type="Texture2D" uid="uid://dgefd645ps0eu" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Shot/Atk_G3_lameShot_4.png" id="40_ksawk"]
+[ext_resource type="Texture2D" uid="uid://vkm573xjxpl8" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Shot/Atk_G3_lameShot_5.png" id="41_7gfuf"]
+[ext_resource type="Texture2D" uid="uid://fbyaf40hxeab" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Shot/Atk_G3_lameShot_6.png" id="42_de1rv"]
+[ext_resource type="Texture2D" uid="uid://b2terljh5j0yb" path="res://assets/sprites/Attaques/Glace/Atk_G3_Lame/Lame_Shot/Atk_G3_lameShot_7.png" id="43_q2d8w"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lk3t8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_uc72c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4cbg3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_iuw6u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_bpppd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_kj20w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_rt008")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_rmtax")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_lnlxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ihymj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_pk64v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_lnnn0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_7kr8c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_bara5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_snbd7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_36whk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_81foy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_g5yqb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_le1tq")
+}],
+"loop": false,
+"name": &"Growth",
+"speed": 120.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("37_2dn8x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_mnfvo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_104cr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_ksawk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_7gfuf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_de1rv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_q2d8w")
+}],
+"loop": true,
+"name": &"Shot",
+"speed": 12.0
+}]
+
+[node name="AtkG3Blade" type="Area2D" unique_id=1530982868]
+script = ExtResource("1_2qxd2")
+rotation_duration = 0.5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=698339994]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_lk3t8")
+animation = &"Growth"
+frame = 17
+frame_progress = 1.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1631703281]
+polygon = PackedVector2Array(6, -65, 14, 24, 14, 56, 0, 65, -14, 56, -14, 22, -5, -56)

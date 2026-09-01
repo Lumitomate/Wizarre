@@ -6,17 +6,17 @@ var run_info: Dictionary = {
 	"players_info": {
 		"default" : {
 			"lives": 3,
-			"ammunitions": [3, 3, 3],
+			"ammunitions": [5, 3, 3],
 			"attacks": {
 				GlobalEnum.AttackFamily.Red:
 					{
-						"attack_type" : GlobalEnum.AttackType.FIREWAVE,
+						"attack_type" : GlobalEnum.AttackType.ICEBLADE,
 						"attack_tier" : GlobalEnum.AttackTier.I
 					},
 				GlobalEnum.AttackFamily.Blue:
 					{
 						"attack_type" : GlobalEnum.AttackType.ICESPIKE,
-						"attack_tier" : GlobalEnum.AttackTier.II
+						"attack_tier" : GlobalEnum.AttackTier.III
 					},
 				GlobalEnum.AttackFamily.Yellow:
 					{

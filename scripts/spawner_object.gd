@@ -7,6 +7,7 @@ var seeds_object_scene: PackedScene 	= preload("res://scenes/obj_p1_seeds.tscn")
 var jar_object_scene: PackedScene 	= preload("res://scenes/obj_p2_jar.tscn")
 var crown_object_scene: PackedScene 	= preload("res://scenes/obj_f2_crown.tscn")
 var scarf_object_scene: PackedScene 	= preload("res://scenes/obj_g2_scarf.tscn")
+var fireball_attack_scene: PackedScene 	= preload("res://scenes/atk_f0_fireball.tscn")
 
 
 func _ready() -> void:
@@ -42,6 +43,9 @@ func _ready() -> void:
 		GlobalEnum.AttackType.ICESPIKE:
 			attack_family = GlobalEnum.AttackFamily.Blue
 			object_to_spawn_scene = scarf_object_scene
+		GlobalEnum.AttackType.ICEBLADE:
+			attack_family = GlobalEnum.AttackFamily.Blue
+			object_to_spawn_scene = fireball_attack_scene
 	
 	var object_to_spawn: AttackObject = object_to_spawn_scene.instantiate()
 	

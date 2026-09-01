@@ -170,7 +170,7 @@ gravity = Vector3(20, 0, 0)
 scale_max = 2.0
 turbulence_noise_strength = 2.43
 
-[node name="Gem" type="Area2D" unique_id=491087806 groups=["gemme_group"]]
+[node name="Gem" type="Area2D" unique_id=491087806 groups=["gem_group"]]
 scale = Vector2(2, 2)
 collision_layer = 4
 script = ExtResource("1_t3frf")

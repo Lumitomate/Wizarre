@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://b7cwfl6277f1o" path="res://scripts/sorcerer.gd" id="1_oqr0g"]
 [ext_resource type="Texture2D" uid="uid://br6yqix1afw2p" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierB_Saut/SorcierBleu_Saut9.png" id="2_cdgyr"]
+[ext_resource type="PackedScene" uid="uid://fq0kkjjmxkuf" path="res://scenes/sorcerer_sac.tscn" id="2_vuix5"]
 [ext_resource type="Texture2D" uid="uid://bhc5fyvigw6h3" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_AtkF/SorcierRouge_AtkF1.png" id="2_ybrxd"]
+[ext_resource type="Shader" uid="uid://bh8ngbd8ixtam" path="res://assets/shaders/dash_white.gdshader" id="3_jonpg"]
 [ext_resource type="Texture2D" uid="uid://djrpbiv80cj0m" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierB_Saut/SorcierBleu_Saut10.png" id="3_vh0h1"]
 [ext_resource type="Texture2D" uid="uid://32kemjs726aa" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_AtkF/SorcierRouge_AtkF2.png" id="3_vuix5"]
 [ext_resource type="Texture2D" uid="uid://difjorm6bvii5" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierB_Saut/SorcierBleu_Saut11.png" id="4_1igu3"]
@@ -141,6 +143,11 @@
 [ext_resource type="Texture2D" uid="uid://bpu7htjq8wjan" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJ_Marche/SorcierJaune_Marche10.png" id="127_x3bac"]
 [ext_resource type="Texture2D" uid="uid://dj2pkcqdcg317" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJ_Marche/SorcierJaune_Marche11.png" id="128_x3awj"]
 [ext_resource type="Texture2D" uid="uid://hpbjpm7rufa0" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJ_Marche/SorcierJaune_Marche12.png" id="129_2aj1f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_34bfb"]
+shader = ExtResource("3_jonpg")
+shader_parameter/white_amount = 0.0
+shader_parameter/dash_alpha = 0.25
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6urby"]
 animations = [{
@@ -658,8 +665,12 @@ collision_mask = 5
 script = ExtResource("1_oqr0g")
 sorcerer_color = 3
 
+[node name="SorcererSac" parent="." unique_id=545034358 instance=ExtResource("2_vuix5")]
+position = Vector2(-0.5, 2)
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=92979516]
 texture_filter = 1
+material = SubResource("ShaderMaterial_34bfb")
 sprite_frames = SubResource("SpriteFrames_6urby")
 animation = &"walk_yellow"
 frame = 10
@@ -676,5 +687,14 @@ wait_time = 0.4
 [node name="DamageCooldown" type="Timer" parent="." unique_id=1327057034]
 wait_time = 0.7
 
+[node name="DashDuration" type="Timer" parent="." unique_id=1655140733]
+wait_time = 0.1
+
+[node name="DashCooldown" type="Timer" parent="." unique_id=604006859]
+
+[node name="DashInvicibiliyAfter" type="Timer" parent="." unique_id=1551192393]
+wait_time = 0.5
+
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="DamageCooldown" to="." method="_on_damage_cooldown_timeout"]
+[connection signal="timeout" from="DashInvicibiliyAfter" to="." method="_on_dash_invicibiliy_after_timeout"]

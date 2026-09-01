@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ccyrwind1tj4c"]
 
-[ext_resource type="Script" uid="uid://xyecarj2pr3q" path="res://scripts/atk_g_2_ice_spike.gd" id="1_ttb8d"]
+[ext_resource type="Script" uid="uid://xyecarj2pr3q" path="res://scripts/atk_g2_ice_spike.gd" id="1_ttb8d"]
 [ext_resource type="Texture2D" uid="uid://dtxmbohyyxk1k" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_1.png" id="2_muesi"]
 [ext_resource type="Texture2D" uid="uid://bmnpmbiqnofsb" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_2.png" id="3_hlp2d"]
 [ext_resource type="Texture2D" uid="uid://dbf263r8kyahq" path="res://assets/sprites/Attaques/Glace/Atk_G2_Pique/Atk_G2_Pique_3.png" id="4_x8k0x"]

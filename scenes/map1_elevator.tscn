@@ -388,7 +388,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gnthk"]
 size = Vector2(154, 108)
 
-[node name="map1_ascenseur" type="Node2D" unique_id=1462650855]
+[node name="map1_elevator" type="Node2D" unique_id=1462650855]
 script = ExtResource("1_dsgr2")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=328022374]

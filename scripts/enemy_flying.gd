@@ -1,7 +1,7 @@
-class_name EnnemyFlying extends CharacterBody2D
+class_name EnemyFlying extends CharacterBody2D
 
 
-signal ennemy_killed
+signal enemy_killed
 
 @export var speed = 200
 @export var lives = 3
@@ -26,9 +26,9 @@ func _ready() -> void:
 	$NavigationAgent2D.target_desired_distance = 20.0
 	$NavigationAgent2D.path_max_distance = 40.0
 	
-	ennemy_setup.call_deferred()
+	enemy_setup.call_deferred()
 
-func ennemy_setup():
+func enemy_setup():
 	# Wait for the first physics frame so the NavigationServer can sync.
 	await get_tree().physics_frame
 	set_navigation_target(Vector2(randi() % int(screen_size.x), randi() % int(screen_size.y)))
@@ -102,7 +102,7 @@ func hit(damage: int):
 
 
 func die():
-	ennemy_killed.emit()
+	enemy_killed.emit()
 	queue_free()
 
 

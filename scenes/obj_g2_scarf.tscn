@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cv2cth8ilg8bo"]
 
-[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_sbjek"]
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_sbjek"]
 [ext_resource type="Texture2D" uid="uid://cwroa1w61yss6" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Argent/Objet_G_Echarpe_Argent_1.png" id="2_bu55n"]
 [ext_resource type="Texture2D" uid="uid://dj0jg6kyxodwe" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Argent/Objet_G_Echarpe_Argent_2.png" id="3_ikelx"]
 [ext_resource type="Texture2D" uid="uid://d4al2y72mcpfi" path="res://assets/sprites/Magasin/Objet/Echarpe/Obj_G2_Echarpe_Argent/Objet_G_Echarpe_Argent_3.png" id="4_5wjlw"]

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bh24tl02j8jw4"]
 
-[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_4ojfi"]
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_4ojfi"]
 [ext_resource type="Texture2D" uid="uid://cxyxgslcnkq84" path="res://assets/sprites/Magasin/Objet/Moufle/Objet_Moufle_Argent/Objet_Moufle_Argent1.png" id="2_4ndme"]
 [ext_resource type="Texture2D" uid="uid://r0b0s7gac0df" path="res://assets/sprites/Magasin/Objet/Moufle/Objet_Moufle_Argent/Objet_Moufle_Argent2.png" id="3_arr5r"]
 [ext_resource type="Texture2D" uid="uid://ry2ws5jj8vpv" path="res://assets/sprites/Magasin/Objet/Moufle/Objet_Moufle_Argent/Objet_Moufle_Argent3.png" id="4_v6fdu"]

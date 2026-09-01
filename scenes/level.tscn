@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://5gcf6jt1wdlb" path="res://scripts/level.gd" id="1_0b4ue"]
 [ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="3_f2txt"]
-[ext_resource type="PackedScene" uid="uid://dig4mpq1rxqfl" path="res://scenes/spawner_ennemy.tscn" id="4_mx8sn"]
-[ext_resource type="PackedScene" uid="uid://bullkflr3xioa" path="res://scenes/spawner_gemme.tscn" id="5_ppgk2"]
-[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/map1_porte_fin_niveau.tscn" id="6_8c41q"]
+[ext_resource type="PackedScene" uid="uid://dig4mpq1rxqfl" path="res://scenes/spawner_enemy.tscn" id="4_mx8sn"]
+[ext_resource type="PackedScene" uid="uid://bullkflr3xioa" path="res://scenes/spawner_gem.tscn" id="5_ppgk2"]
+[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/map1_level_exit_door.tscn" id="6_8c41q"]
 [ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Map1/Terrain1_PortesEntree.png" id="6_klq6b"]
-[ext_resource type="PackedScene" uid="uid://co1gwjkps8hvc" path="res://scenes/torche.tscn" id="8_b121j"]
+[ext_resource type="PackedScene" uid="uid://co1gwjkps8hvc" path="res://scenes/torch.tscn" id="8_b121j"]
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="9_8c41q"]
 [ext_resource type="PackedScene" uid="uid://uar7blb4jike" path="res://scenes/hud_progress_bar.tscn" id="9_olg7q"]
 [ext_resource type="AudioStream" uid="uid://x8r5wa8nng4e" path="res://assets/sound/theme.mp3" id="10_olg7q"]
@@ -70,7 +70,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(14.285713, 194.2857, 12
 texture_filter = 1
 scale = Vector2(0.7, 0.7)
 script = ExtResource("1_0b4ue")
-ennemies_to_kill = 1
+enemies_to_kill = 1
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1625668394]
 z_index = 50
@@ -211,8 +211,8 @@ polygon = PackedVector2Array(205.71423, 704.2857, 194.90674, 735.7143, 205.71423
 [connection signal="block_spawn" from="." to="SpawnerGemme2" method="_on_block_spawn"]
 [connection signal="block_spawn" from="." to="SpawnerGemme3" method="_on_block_spawn"]
 [connection signal="block_spawn" from="." to="SpawnerGemme4" method="_on_block_spawn"]
-[connection signal="ennemy_spawned" from="EnnemySpawner" to="." method="_on_ennemy_spawned"]
-[connection signal="ennemy_spawned" from="EnnemySpawner2" to="." method="_on_ennemy_spawned"]
-[connection signal="ennemy_spawned" from="EnnemySpawner3" to="." method="_on_ennemy_spawned"]
-[connection signal="ennemy_spawned" from="EnnemySpawner4" to="." method="_on_ennemy_spawned"]
+[connection signal="enemy_spawned" from="EnnemySpawner" to="." method="_on_enemy_spawned"]
+[connection signal="enemy_spawned" from="EnnemySpawner2" to="." method="_on_enemy_spawned"]
+[connection signal="enemy_spawned" from="EnnemySpawner3" to="." method="_on_enemy_spawned"]
+[connection signal="enemy_spawned" from="EnnemySpawner4" to="." method="_on_enemy_spawned"]
 [connection signal="shop_entered" from="Terrain1PortesSortieOuverture1" to="." method="_on_terrain_1_portes_sortie_ouverture_1_shop_entered"]

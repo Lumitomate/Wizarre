@@ -3,8 +3,8 @@ extends Node2D
 
 @export var can_spawn: bool = true
 
-var gemme_scene: PackedScene = preload("res://scenes/gemme.tscn")
-var can_spawn_gemme: bool = true
+var gem_scene: PackedScene = preload("res://scenes/gem.tscn")
+var can_spawn_gem: bool = true
 
 
 func _ready() -> void:
@@ -12,17 +12,17 @@ func _ready() -> void:
 
 
 func _on_spawn_cooldown_timeout() -> void:
-	var gemme = gemme_scene.instantiate()
-	gemme.position = position
-	gemme.gemme_color = randi() % 3
-	get_parent().add_child(gemme)
-	can_spawn_gemme = false
+	var gem = gem_scene.instantiate()
+	gem.position = position
+	gem.gem_color = randi() % 3
+	get_parent().add_child(gem)
+	can_spawn_gem = false
 	
 
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_group"):
-		can_spawn_gemme = true
+		can_spawn_gem = true
 		
 func _on_block_spawn() -> void:
 	can_spawn = false

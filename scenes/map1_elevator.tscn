@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ttoi6t78nsnc"]
 
 [ext_resource type="Texture2D" uid="uid://wcdjhklybaqh" path="res://assets/sprites/Map1/Ascenseur/Ascenseur_Monte/Ascenseur_monte1.png" id="1_7sghd"]
-[ext_resource type="Script" uid="uid://cvaato2yei4rj" path="res://scripts/map_1_ascenseur.gd" id="1_dsgr2"]
+[ext_resource type="Script" uid="uid://cvaato2yei4rj" path="res://scripts/map_1_elevator.gd" id="1_dsgr2"]
 [ext_resource type="Texture2D" uid="uid://clo0al60dw45l" path="res://assets/sprites/Map1/Ascenseur/Ascenseur_Monte/Ascenseur_monte2.png" id="2_on1wp"]
 [ext_resource type="Texture2D" uid="uid://cnjpbo3w145fk" path="res://assets/sprites/Map1/Ascenseur/Ascenseur_Monte/Ascenseur_monte3.png" id="3_gnthk"]
 [ext_resource type="Texture2D" uid="uid://32qvrc3f4wic" path="res://assets/sprites/Map1/Ascenseur/Ascenseur_Monte/Ascenseur_monte4.png" id="4_5krgc"]

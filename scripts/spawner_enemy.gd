@@ -1,11 +1,11 @@
 extends Area2D
 
-signal ennemy_spawned
+signal enemy_spawned
 
 @export var can_spawn: bool = true
 
 var players_in_range: Array[Sorcerer]
-var ennemy_scene: PackedScene = preload("res://scenes/ennemy_flying.tscn")
+var enemy_scene: PackedScene = preload("res://scenes/enemy_flying.tscn")
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("SpawnerApparition")
@@ -37,8 +37,8 @@ func _on_block_spawn() -> void:
 
 func spawn() -> void:
 	if can_spawn:
-		var ennemy: EnnemyFlying = ennemy_scene.instantiate()
-		ennemy.ennemy_killed.connect(get_parent()._on_ennemy_killed)
-		ennemy.position = position
-		ennemy_spawned.emit()
-		get_parent().add_child(ennemy)
+		var enemy: EnemyFlying = enemy_scene.instantiate()
+		enemy.enemy_killed.connect(get_parent()._on_enemy_killed)
+		enemy.position = position
+		enemy_spawned.emit()
+		get_parent().add_child(enemy)

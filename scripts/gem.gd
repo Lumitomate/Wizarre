@@ -1,14 +1,14 @@
-class_name Gemme extends Area2D
+class_name Gem extends Area2D
 
 
-@export var gemme_color: GlobalEnum.AttackFamily
+@export var gem_color: GlobalEnum.AttackFamily
 
 
 var animation_suffix: String
 
 
 func _ready() -> void:
-	match gemme_color:
+	match gem_color:
 		GlobalEnum.AttackFamily.Blue:
 			animation_suffix = "blue"
 		GlobalEnum.AttackFamily.Red:
@@ -21,5 +21,5 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_group"):
 		var sorcerer: Sorcerer = body
-		sorcerer.add_ammo(gemme_color, 1)
+		sorcerer.add_ammo(gem_color, 1)
 		queue_free()

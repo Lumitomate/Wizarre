@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bxwef34mmsuye"]
 
-[ext_resource type="Script" uid="uid://dv32u1jo7805i" path="res://scripts/gemme.gd" id="1_t3frf"]
+[ext_resource type="Script" uid="uid://dv32u1jo7805i" path="res://scripts/gem.gd" id="1_t3frf"]
 [ext_resource type="Texture2D" uid="uid://dd3k6asvcx6ma" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_G_V2/Gemne_G_1.png" id="2_7ybfg"]
 [ext_resource type="Texture2D" uid="uid://dm60kwmwxb457" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_G_V2/Gemne_G_2.png" id="3_n7gxm"]
 [ext_resource type="Texture2D" uid="uid://c35k1s3kup1lg" path="res://assets/sprites/Gemnes/Gemne_Glace/Gemne_G_V2/Gemne_G_3.png" id="4_tvl6f"]
@@ -170,7 +170,7 @@ gravity = Vector3(20, 0, 0)
 scale_max = 2.0
 turbulence_noise_strength = 2.43
 
-[node name="Gemme" type="Area2D" unique_id=491087806 groups=["gemme_group"]]
+[node name="Gem" type="Area2D" unique_id=491087806 groups=["gemme_group"]]
 scale = Vector2(2, 2)
 collision_layer = 4
 script = ExtResource("1_t3frf")

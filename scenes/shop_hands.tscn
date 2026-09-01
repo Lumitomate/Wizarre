@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://cq52ldvgscuwm" path="res://scripts/shop.gd" id="1_t3ujo"]
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="2_6373r"]
 [ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="3_13awe"]
-[ext_resource type="PackedScene" uid="uid://c8pggnlck36sn" path="res://scenes/shophands_decider.tscn" id="4_4b1de"]
-[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/map1_porte_fin_niveau.tscn" id="6_v8kdc"]
-[ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_objet.tscn" id="7_1m5dk"]
+[ext_resource type="PackedScene" uid="uid://c8pggnlck36sn" path="res://scenes/shop_hands_decider.tscn" id="4_4b1de"]
+[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/map1_level_exit_door.tscn" id="6_v8kdc"]
+[ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_object.tscn" id="7_1m5dk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]
 texture = ExtResource("3_13awe")

@@ -59,7 +59,7 @@ func _update_eye(delta: float) -> void:
 func _get_closest_entity() -> Node2D:
 	var closest: Node2D = null
 	var min_distance: float = INF
-	for enemy in get_tree().get_nodes_in_group("ennemy_group"):
+	for enemy in get_tree().get_nodes_in_group("enemy_group"):
 		if not is_instance_valid(enemy):
 			continue
 		var d = oeil.global_position.distance_to(enemy.global_position)

@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://d83ana8ymavh" path="res://assets/sprites/Map1/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture10.png" id="10_d1wsr"]
 [ext_resource type="Texture2D" uid="uid://cjul4xtafelkh" path="res://assets/sprites/Map1/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture11.png" id="11_13et2"]
 [ext_resource type="Texture2D" uid="uid://q7etig6web6t" path="res://assets/sprites/Map1/PorteSortieOuverture/Terrain1_PortesSortie_Ouverture12.png" id="12_lhi6k"]
-[ext_resource type="Script" uid="uid://dg4xayiuvwcxc" path="res://scripts/portes_sortie.gd" id="13_4hpfu"]
+[ext_resource type="Script" uid="uid://dg4xayiuvwcxc" path="res://scripts/exit_doors.gd" id="13_4hpfu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_w3o6u"]
 animations = [{

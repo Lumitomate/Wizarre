@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bullkflr3xioa"]
 
-[ext_resource type="Script" uid="uid://b60eoa5s4hqjh" path="res://scripts/spawner_gemme.gd" id="1_ad16d"]
+[ext_resource type="Script" uid="uid://b60eoa5s4hqjh" path="res://scripts/spawner_gem.gd" id="1_ad16d"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ad16d"]
 radius = 16.0

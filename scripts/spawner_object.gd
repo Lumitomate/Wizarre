@@ -1,12 +1,12 @@
 extends Node2D
 
-var objet_medaille_scene: PackedScene 	= preload("res://scenes/obj_f1_medaille.tscn")
-var objet_miroir_scene: PackedScene 	= preload("res://scenes/obj_l1_miroir.tscn")
-var objet_moufle_scene: PackedScene 	= preload("res://scenes/obj_g1_moufle.tscn")
-var objet_graines_scene: PackedScene 	= preload("res://scenes/obj_p1_graines.tscn")
-var objet_bocal_scene: PackedScene 	= preload("res://scenes/obj_p2_bocal.tscn")
-var objet_couronne_scene: PackedScene 	= preload("res://scenes/obj_f2_couronne.tscn")
-var objet_echarpe_scene: PackedScene 	= preload("res://scenes/obj_g2_echarpe.tscn")
+var medal_object_scene: PackedScene 	= preload("res://scenes/obj_f1_medal.tscn")
+var mirror_object_scene: PackedScene 	= preload("res://scenes/obj_l1_mirror.tscn")
+var mitten_object_scene: PackedScene 	= preload("res://scenes/obj_g1_mitten.tscn")
+var seeds_object_scene: PackedScene 	= preload("res://scenes/obj_p1_seeds.tscn")
+var jar_object_scene: PackedScene 	= preload("res://scenes/obj_p2_jar.tscn")
+var crown_object_scene: PackedScene 	= preload("res://scenes/obj_f2_crown.tscn")
+var scarf_object_scene: PackedScene 	= preload("res://scenes/obj_g2_scarf.tscn")
 
 
 func _ready() -> void:
@@ -20,28 +20,28 @@ func _ready() -> void:
 		GlobalEnum.AttackType.FIREBALL:
 			attack_family = GlobalEnum.AttackFamily.Red
 			attack_type = GlobalEnum.AttackType.FIRECOLUMN
-			object_to_spawn_scene = objet_medaille_scene
+			object_to_spawn_scene = medal_object_scene
 		GlobalEnum.AttackType.LIGHTRAY:
 			attack_family = GlobalEnum.AttackFamily.Yellow
-			object_to_spawn_scene = objet_miroir_scene
+			object_to_spawn_scene = mirror_object_scene
 		GlobalEnum.AttackType.FIRECOLUMN:
 			attack_family = GlobalEnum.AttackFamily.Red
-			object_to_spawn_scene = objet_medaille_scene
+			object_to_spawn_scene = medal_object_scene
 		GlobalEnum.AttackType.ICEBALL:
 			attack_family = GlobalEnum.AttackFamily.Blue
-			object_to_spawn_scene = objet_moufle_scene
+			object_to_spawn_scene = mitten_object_scene
 		GlobalEnum.AttackType.CARNIVOROUS:
 			attack_family = GlobalEnum.AttackFamily.Red
-			object_to_spawn_scene = objet_graines_scene
+			object_to_spawn_scene = seeds_object_scene
 		GlobalEnum.AttackType.PLANTBALL:
 			attack_family = GlobalEnum.AttackFamily.Red
-			object_to_spawn_scene = objet_bocal_scene
+			object_to_spawn_scene = jar_object_scene
 		GlobalEnum.AttackType.FIREWAVE:
 			attack_family = GlobalEnum.AttackFamily.Red
-			object_to_spawn_scene = objet_couronne_scene
+			object_to_spawn_scene = crown_object_scene
 		GlobalEnum.AttackType.ICESPIKE:
 			attack_family = GlobalEnum.AttackFamily.Blue
-			object_to_spawn_scene = objet_echarpe_scene
+			object_to_spawn_scene = scarf_object_scene
 	
 	var object_to_spawn: AttackObject = object_to_spawn_scene.instantiate()
 	

@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="1_lx5au"]
 [ext_resource type="Script" uid="uid://cq52ldvgscuwm" path="res://scripts/shop.gd" id="1_xfvoa"]
-[ext_resource type="PackedScene" uid="uid://dd8ufu1klh2j8" path="res://scenes/bulle.tscn" id="4_m4ofw"]
+[ext_resource type="PackedScene" uid="uid://dd8ufu1klh2j8" path="res://scenes/bubble.tscn" id="4_m4ofw"]
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="6_8r1wq"]
-[ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/porte_magasin_epreuve.tscn" id="7_ajxib"]
-[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/map1_porte_fin_niveau.tscn" id="8_y6sft"]
-[ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_objet.tscn" id="9_m4ofw"]
+[ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/shop_trial_door.tscn" id="7_ajxib"]
+[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/map1_level_exit_door.tscn" id="8_y6sft"]
+[ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_object.tscn" id="9_m4ofw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]
 texture = ExtResource("1_lx5au")
@@ -115,7 +115,7 @@ position = Vector2(1687.143, 585.7143)
 [node name="SpawnerObjet3" parent="." unique_id=1405910007 instance=ExtResource("9_m4ofw")]
 position = Vector2(1687.1428, 325.7143)
 
-[connection signal="sorcerer_contact_bubble" from="Bulle" to="." method="_on_bulle_sorcerer_contact_bubble"]
-[connection signal="sorcerer_contact_bubble" from="Bulle2" to="." method="_on_bulle_sorcerer_contact_bubble"]
-[connection signal="sorcerer_contact_bubble" from="Bulle3" to="." method="_on_bulle_sorcerer_contact_bubble"]
+[connection signal="sorcerer_contact_bubble" from="Bulle" to="." method="_on_bubble_sorcerer_contact_bubble"]
+[connection signal="sorcerer_contact_bubble" from="Bulle2" to="." method="_on_bubble_sorcerer_contact_bubble"]
+[connection signal="sorcerer_contact_bubble" from="Bulle3" to="." method="_on_bubble_sorcerer_contact_bubble"]
 [connection signal="shop_entered" from="ShopDoor" to="." method="_on_shop_door_shop_entered"]

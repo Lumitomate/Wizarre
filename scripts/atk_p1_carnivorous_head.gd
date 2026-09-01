@@ -94,7 +94,7 @@ func _on_bite_frame_changed():
 	if head.animation == "atk_p1_bite" and head.frame == bite_kill_frame:
 		bite_triggered = true
 		if target_enemy and is_instance_valid(target_enemy):
-			if target_enemy is EnnemyFlying:
+			if target_enemy is EnemyFlying:
 				target_enemy.die()
 			elif target_enemy.is_in_group("player_group"):
 				target_enemy.hit(1)
@@ -130,7 +130,7 @@ func _update_stem():
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if target_enemy == null and not is_eating and not is_retracting:
-		if body is EnnemyFlying:
+		if body is EnemyFlying:
 			if plant_parent and plant_parent.has_method("is_closest_head_for_enemy"):
 				if not plant_parent.is_closest_head_for_enemy(self, body):
 					return

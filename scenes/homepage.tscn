@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="1_nb213"]
 [ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="1_qvpan"]
-[ext_resource type="Script" uid="uid://cik8f71jorwfq" path="res://scripts/home_page.gd" id="1_qxrf5"]
+[ext_resource type="Script" uid="uid://cik8f71jorwfq" path="res://scripts/homepage.gd" id="1_qxrf5"]
 [ext_resource type="Texture2D" uid="uid://i76igsnhtxht" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre1.png" id="2_nb213"]
 [ext_resource type="Texture2D" uid="uid://ddvcynx1fl3ms" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre2.png" id="3_3217k"]
 [ext_resource type="Texture2D" uid="uid://syptl68xj201" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre3.png" id="4_jier3"]
@@ -55,7 +55,7 @@
 [ext_resource type="Texture2D" uid="uid://bwooi4xu1o0hi" path="res://assets/sprites/HUD/Homepage/Titre_Wizarre/Title_Wizarre50.png" id="51_w8h12"]
 [ext_resource type="Texture2D" uid="uid://csf5xn7rgmegq" path="res://assets/sprites/Map1/Ascenseur/Ascenceur_rails/Ascenseur_rails1.png" id="53_jier3"]
 [ext_resource type="PackedScene" uid="uid://l6pao2r6q2xm" path="res://scenes/teleport_zone.tscn" id="56_xg2ep"]
-[ext_resource type="PackedScene" uid="uid://ttoi6t78nsnc" path="res://scenes/map1_ascenseur.tscn" id="57_dahfi"]
+[ext_resource type="PackedScene" uid="uid://ttoi6t78nsnc" path="res://scenes/map1_elevator.tscn" id="57_dahfi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1v5cq"]
 texture = ExtResource("1_qvpan")

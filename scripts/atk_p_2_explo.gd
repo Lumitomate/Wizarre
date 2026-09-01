@@ -89,7 +89,7 @@ func _start_explosion() -> void:
 	sprite.play("explosion")
 
 func _on_explosion_body_entered(body: Node2D) -> void:
-	if body.is_in_group("ennemy_group"):
+	if body.is_in_group("enemy_group"):
 		body.hit(explosion_damage)
 	elif body.is_in_group("player_group"):
 		body.hit(1)
@@ -97,7 +97,7 @@ func _on_explosion_body_entered(body: Node2D) -> void:
 #func _on_push_body_entered(body: Node2D) -> void:
 	#if is_exploding:
 		#return
-	#if body.is_in_group("ennemy_group"):
+	#if body.is_in_group("enemy_group"):
 		#var direction = (body.global_position - global_position).normalized()
 		#if body is RigidBody2D:
 			#body.apply_central_impulse(direction * push_force)

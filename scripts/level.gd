@@ -3,10 +3,10 @@ extends Node2D
 signal block_spawn
 signal save_data
 
-@export var ennemies_to_kill: int = 25
+@export var enemies_to_kill: int = 25
 
-var ennemies_killed: int = 0
-var ennemies_spawned: int = 0
+var enemies_killed: int = 0
+var enemies_spawned: int = 0
 var level_start_time: int
 
 var player_info_scene: PackedScene = preload("res://scenes/hud_players_info.tscn")
@@ -14,13 +14,13 @@ var player_info_scene: PackedScene = preload("res://scenes/hud_players_info.tscn
 
 func _ready() -> void:
 
-	ennemies_to_kill += 3 * GlobalInfo.run_info["level_number"]
+	enemies_to_kill += 3 * GlobalInfo.run_info["level_number"]
 	level_start_time = Time.get_ticks_msec()
 
-	# Spawn les joueurs via PlayerManager
+	# Spawn players via PlayerManager
 	PlayerManager.spawn_all_players(self, {"lives": 3})
 
-	# Créer le HUD pour chaque joueur
+	# Create HUD for each player
 	for controller_id in PlayerManager.known_controllers:
 		add_player_hud(controller_id)
 
@@ -55,22 +55,22 @@ func add_player_hud(controller_id):
 
 
 
-func _on_ennemy_killed() -> void:
+func _on_enemy_killed() -> void:
 
-	ennemies_killed += 1
+	enemies_killed += 1
 
-	$ProgressBar.set_percent(float(ennemies_killed) / float(ennemies_to_kill))
+	$ProgressBar.set_percent(float(enemies_killed) / float(enemies_to_kill))
 
-	if ennemies_killed == ennemies_to_kill:
+	if enemies_killed == enemies_to_kill:
 		$Terrain1PortesSortieOuverture1.play()
 
 
 
-func _on_ennemy_spawned() -> void:
+func _on_enemy_spawned() -> void:
 
-	ennemies_spawned += 1
+	enemies_spawned += 1
 
-	if ennemies_spawned == ennemies_to_kill:
+	if enemies_spawned == enemies_to_kill:
 		block_spawn.emit()
 
 

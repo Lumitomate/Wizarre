@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c6w4vtj0ntfpc"]
 
-[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_0v2fh"]
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_0v2fh"]
 [ext_resource type="Texture2D" uid="uid://6b5yiviymwmd" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Argent/Objet_Couronne_Argent_1.png" id="2_gm4jp"]
 [ext_resource type="Texture2D" uid="uid://na4lm075ytll" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Argent/Objet_Couronne_Argent_2.png" id="3_sjc07"]
 [ext_resource type="Texture2D" uid="uid://chywq5h3q6b2i" path="res://assets/sprites/Magasin/Objet/Couronne/Objet_Couronne_Argent/Objet_Couronne_Argent_3.png" id="4_v5776"]

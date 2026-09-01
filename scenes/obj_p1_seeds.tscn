@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://fwu3iaafa1qo"]
 
-[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_kskdy"]
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_kskdy"]
 [ext_resource type="Texture2D" uid="uid://c3iasog2mnw8t" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Argent/Graines_Argent1.png" id="2_ojwvl"]
 [ext_resource type="Texture2D" uid="uid://bv2edu8hgloep" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Argent/Graines_Argent2.png" id="3_7eo8x"]
 [ext_resource type="Texture2D" uid="uid://cv8rjtitbn2ax" path="res://assets/sprites/Magasin/Objet/Graines/Objet_Graines_Argent/Graines_Argent3.png" id="4_cg1oo"]

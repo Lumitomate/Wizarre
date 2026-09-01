@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://boimaa7xbqo45"]
 
-[ext_resource type="Script" uid="uid://d2sb78hlat3lc" path="res://scripts/porte_magasin_epreuves.gd" id="1_4hmvv"]
+[ext_resource type="Script" uid="uid://d2sb78hlat3lc" path="res://scripts/shop_trial_door.gd" id="1_4hmvv"]
 [ext_resource type="Texture2D" uid="uid://drbffsl00kx81" path="res://assets/sprites/Magasin/Portes/PorteAmitie/PortesAmitie1.png" id="2_kkmtw"]
 [ext_resource type="Texture2D" uid="uid://c046owqd1e45l" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps1.png" id="2_koy5b"]
 [ext_resource type="Texture2D" uid="uid://dib8oa2qe8352" path="res://assets/sprites/Magasin/Portes/PorteTemps/PortesTemps2.png" id="3_03xde"]

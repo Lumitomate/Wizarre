@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Wizarre"
 run/main_scene="uid://bnoyirssfw3lm"
-config/features=PackedStringArray("4.6", "Mobile")
+config/features=PackedStringArray("4.7", "Mobile")
 boot_splash/bg_color=Color(0.18035066, 0.13539705, 0, 1)
 config/icon="res://icon.svg"
 

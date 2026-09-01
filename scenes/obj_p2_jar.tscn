@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bux4q20as6p88"]
 
-[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/objet_attack.gd" id="1_5iheg"]
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_5iheg"]
 [ext_resource type="Texture2D" uid="uid://bdoj8vtd1spqk" path="res://assets/sprites/Magasin/Objet/Bocal/argent/obj_p2_bocal_argent1.png" id="1_ega44"]
 [ext_resource type="Texture2D" uid="uid://b06on0sp7c4xq" path="res://assets/sprites/Magasin/Objet/Bocal/argent/obj_p2_bocal_argent2.png" id="2_5iheg"]
 [ext_resource type="Texture2D" uid="uid://c33s673bxglyc" path="res://assets/sprites/Magasin/Objet/Bocal/argent/obj_p2_bocal_argent3.png" id="3_rtjvg"]

@@ -5,7 +5,7 @@ func _ready() -> void:
 	$AnimatedSprite2D.play("default")
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player_group") or body.is_in_group("ennemy_group"):
+	if body.is_in_group("player_group") or body.is_in_group("enemy_group"):
 		body.hit(1)
 
 func scale(level_scale: Vector2) -> void:

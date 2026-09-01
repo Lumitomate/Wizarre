@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://coqi0df2pc3wq" path="res://assets/sprites/Map1/Torche_1/Torche10.png" id="10_qrd1i"]
 [ext_resource type="Texture2D" uid="uid://c7rr13byp07lh" path="res://assets/sprites/Map1/Torche_1/Torche11.png" id="11_7gx5c"]
 [ext_resource type="Texture2D" uid="uid://dvgn2mxdbtw8b" path="res://assets/sprites/Map1/Torche_1/Torche12.png" id="12_tm7fo"]
-[ext_resource type="Script" uid="uid://ckaonnsdo7bcn" path="res://scripts/torche.gd" id="13_ra5nj"]
+[ext_resource type="Script" uid="uid://ckaonnsdo7bcn" path="res://scripts/torch.gd" id="13_ra5nj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u10ce"]
 animations = [{

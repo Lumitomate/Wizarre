@@ -1,30 +1,30 @@
 [gd_scene format=3 uid="uid://3q52vx8luxjx"]
 
 [ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_ebl7y"]
-[ext_resource type="Texture2D" uid="uid://dfehuyqs5ta5u" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent1.png" id="2_5wgwx"]
-[ext_resource type="Texture2D" uid="uid://rv5waeddqw8x" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent2.png" id="3_datgt"]
-[ext_resource type="Texture2D" uid="uid://dsxqf1dcn7ndu" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent3.png" id="4_lw3u8"]
-[ext_resource type="Texture2D" uid="uid://x2tt1x7re5wr" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent4.png" id="5_dypgs"]
-[ext_resource type="Texture2D" uid="uid://drdkwwxg4ihpw" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent5.png" id="6_kctva"]
-[ext_resource type="Texture2D" uid="uid://c42xmfsu77xfo" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent6.png" id="7_knru2"]
-[ext_resource type="Texture2D" uid="uid://wfgh4uh2lo1t" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent7.png" id="8_o5e6b"]
-[ext_resource type="Texture2D" uid="uid://xbac4i6e34sf" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Argent/Objet_Miroir_Argent8.png" id="9_y6q8j"]
-[ext_resource type="Texture2D" uid="uid://bh7us6j7mgjhj" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze1.png" id="10_ie3w8"]
-[ext_resource type="Texture2D" uid="uid://i1jkmwfsd3jk" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze2.png" id="11_hrtrj"]
-[ext_resource type="Texture2D" uid="uid://ovotk0cljm5" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze3.png" id="12_kwiqd"]
-[ext_resource type="Texture2D" uid="uid://bryy3pcxrpr15" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze4.png" id="13_5att4"]
-[ext_resource type="Texture2D" uid="uid://bu1c0h0td0dsm" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze5.png" id="14_acq5p"]
-[ext_resource type="Texture2D" uid="uid://ccp2ovc5axfn3" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze6.png" id="15_rkbu1"]
-[ext_resource type="Texture2D" uid="uid://b1u3k8tess5tb" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze7.png" id="16_us485"]
-[ext_resource type="Texture2D" uid="uid://snthea5edjym" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Bronze/Objet_Miroir_Bronze8.png" id="17_mddee"]
-[ext_resource type="Texture2D" uid="uid://bbuqihw7ukfp4" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or1.png" id="18_qayt8"]
-[ext_resource type="Texture2D" uid="uid://b8vbtqbksv8gw" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or2.png" id="19_uxyrt"]
-[ext_resource type="Texture2D" uid="uid://lo45u5ojq48u" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or3.png" id="20_vk62w"]
-[ext_resource type="Texture2D" uid="uid://c2mbh418cqkc2" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or4.png" id="21_qvm26"]
-[ext_resource type="Texture2D" uid="uid://3rke70dtnm1y" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or5.png" id="22_mpc7t"]
-[ext_resource type="Texture2D" uid="uid://51yrs74m6lng" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or6.png" id="23_1k270"]
-[ext_resource type="Texture2D" uid="uid://bhxyhixl4kahx" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or7.png" id="24_cganm"]
-[ext_resource type="Texture2D" uid="uid://bsu64wmitdjy2" path="res://assets/sprites/Magasin/Objet/Miroire/Objet_Miroir_Or/Objet_Miroir_Or8.png" id="25_12edd"]
+[ext_resource type="Texture2D" uid="uid://cecuwdybilof8" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Argent/Item_Miroir_Argent_1.png" id="2_5wgwx"]
+[ext_resource type="Texture2D" uid="uid://csx7lmtrgdhxq" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Argent/Item_Miroir_Argent_2.png" id="3_datgt"]
+[ext_resource type="Texture2D" uid="uid://cah4mg0g5fbqf" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Argent/Item_Miroir_Argent_3.png" id="4_lw3u8"]
+[ext_resource type="Texture2D" uid="uid://wgio1qc44a4p" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Argent/Item_Miroir_Argent_4.png" id="5_dypgs"]
+[ext_resource type="Texture2D" uid="uid://d3l6ul5a2nhp" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Argent/Item_Miroir_Argent_5.png" id="6_kctva"]
+[ext_resource type="Texture2D" uid="uid://b0c5rjfywscyr" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Argent/Item_Miroir_Argent_6.png" id="7_knru2"]
+[ext_resource type="Texture2D" uid="uid://cjjfw711sxydo" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Argent/Item_Miroir_Argent_7.png" id="8_o5e6b"]
+[ext_resource type="Texture2D" uid="uid://ch1mbf4qvxjnh" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Argent/Item_Miroir_Argent_8.png" id="9_y6q8j"]
+[ext_resource type="Texture2D" uid="uid://baqyyfc37bu06" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Bronze/Item_Miroir_Bronze_1.png" id="10_ie3w8"]
+[ext_resource type="Texture2D" uid="uid://dru82l68nylo8" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Bronze/Item_Miroir_Bronze_2.png" id="11_hrtrj"]
+[ext_resource type="Texture2D" uid="uid://du46o7sbmh6hu" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Bronze/Item_Miroir_Bronze_3.png" id="12_kwiqd"]
+[ext_resource type="Texture2D" uid="uid://0awwbeeuljv3" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Bronze/Item_Miroir_Bronze_4.png" id="13_5att4"]
+[ext_resource type="Texture2D" uid="uid://dmkk2wlmqvoh7" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Bronze/Item_Miroir_Bronze_5.png" id="14_acq5p"]
+[ext_resource type="Texture2D" uid="uid://dxi2fuy1ihdtf" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Bronze/Item_Miroir_Bronze_6.png" id="15_rkbu1"]
+[ext_resource type="Texture2D" uid="uid://lwd8laqrqums" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Bronze/Item_Miroir_Bronze_7.png" id="16_us485"]
+[ext_resource type="Texture2D" uid="uid://chwhf6xrlghy1" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Bronze/Item_Miroir_Bronze_8.png" id="17_mddee"]
+[ext_resource type="Texture2D" uid="uid://c8foy7t6nxend" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Or/Item_Miroir_Or_1.png" id="18_qayt8"]
+[ext_resource type="Texture2D" uid="uid://o550vfr2qjjh" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Or/Item_Miroir_Or_2.png" id="19_uxyrt"]
+[ext_resource type="Texture2D" uid="uid://baog2ugduh0p5" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Or/Item_Miroir_Or_3.png" id="20_vk62w"]
+[ext_resource type="Texture2D" uid="uid://dbatu20oachep" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Or/Item_Miroir_Or_4.png" id="21_qvm26"]
+[ext_resource type="Texture2D" uid="uid://bgb5mkndsv2p6" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Or/Item_Miroir_Or_5.png" id="22_mpc7t"]
+[ext_resource type="Texture2D" uid="uid://dgc1qkuvjsvnf" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Or/Item_Miroir_Or_6.png" id="23_1k270"]
+[ext_resource type="Texture2D" uid="uid://cm6utwsbudwfd" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Or/Item_Miroir_Or_7.png" id="24_cganm"]
+[ext_resource type="Texture2D" uid="uid://tgtxavo25jt" path="res://assets/sprites/Attaques/Lumiere/AtkL1_LightRay/Item_AtkL1_Mirror/Item_Miroir_Or/Item_Miroir_Or_8.png" id="25_12edd"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2kvoa"]
 animations = [{
@@ -53,7 +53,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_y6q8j")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Argent",
 "speed": 12.0
 }, {
@@ -82,7 +82,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("17_mddee")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Bronze",
 "speed": 12.0
 }, {
@@ -111,7 +111,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("25_12edd")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Or",
 "speed": 12.0
 }]

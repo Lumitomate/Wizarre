@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://dcv3gfclmyq1b"]
+
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_beanie_script"]
+[ext_resource type="Texture2D" uid="uid://bkx0h1p4h5t8j" path="res://assets/sprites/Attaques/Glace/AtkG3_Lame/Item_AtkG3_Beanie/AtkG3_Beanie.png" id="2_beanie"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2kvoa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_beanie")
+}],
+"loop": 1,
+"name": &"Argent",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_beanie")
+}],
+"loop": 1,
+"name": &"Bronze",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_beanie")
+}],
+"loop": 1,
+"name": &"Or",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ermxx"]
+radius = 15.0
+
+[node name="ObjetBeanie" type="Area2D" unique_id=1234567890]
+texture_filter = 1
+scale = Vector2(2, 2)
+script = ExtResource("1_beanie_script")
+item_attack_family = 1
+item_attack_type = 8
+item_attack_tier = 1
+
+[node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=518273926]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_2kvoa")
+animation = &"Bronze"
+
+[node name="Area2D" type="CollisionShape2D" parent="." unique_id=1861019466]
+position = Vector2(2, -1)
+shape = SubResource("CircleShape2D_ermxx")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -20,5 +20,24 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_group"):
 		var sorcerer: Sorcerer = body
-		sorcerer.set_attack(item_attack_family, item_attack_type, item_attack_tier)
+		var tube_index: int = sorcerer.selected_tube
+		
+		# En boutique : le remplacement n'a lieu que si un tube est activé.
+		# Sinon l'objet reste en place, le joueur doit d'abord activer un tube.
+		if sorcerer.in_shop and tube_index == -1:
+			return
+		
+		# Hors boutique : ancien comportement famille → tube
+		if tube_index == -1:
+			match item_attack_family:
+				GlobalEnum.AttackFamily.Red:
+					tube_index = 0   # Fossil
+				GlobalEnum.AttackFamily.Yellow:
+					tube_index = 1   # Pure
+				GlobalEnum.AttackFamily.Blue:
+					tube_index = 2   # Tainted
+				_:
+					tube_index = 0
+		
+		sorcerer.set_attack(tube_index, item_attack_type, item_attack_tier)
 		queue_free()

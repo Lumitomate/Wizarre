@@ -26,7 +26,7 @@ func _ready() -> void:
 
 func load_data(data_to_load: Dictionary) -> void:
 	lives = data_to_load["lives"]
-	ammunitions = data_to_load["ammunitions"]
+	ammunitions = data_to_load["energy_counts"]
 
 
 func refresh_status() -> void:

@@ -1,15 +1,16 @@
 class_name GlobalEnum
 
 enum AttackType {
-	FIREBALL,
-	LIGHTRAY,
-	FIRECOLUMN,
-	ICEBALL,
-	CARNIVOROUS,
-	PLANTBALL,
-	FIREWAVE,
-	ICESPIKE,
-	ICEBLADE
+	F0,  # Fireball    (boule de feu)    - atk_f0_fireball
+	L1,  # LightRay    (rayon de lumière) - atk_l1_light_ray
+	F1,  # FireColumn  (colonne de feu)   - atk_f1_fire_column
+	G1,  # IceBall     (boule de glace)   - atk_g1_ice_ball
+	P1,  # Carnivorous (plante carnivore) - atk_p1_carnivorous
+	P2,  # PlantBall   (boule de plante)  - atk_p2_explo
+	F2,  # FireWave    (vague de feu)     - atk_f2_wave
+	G2,  # IceSpike    (pique de glace)   - atk_g2_ice_spike
+	G3,  # IceBlade    (lame de glace)    - atk_g3_blade
+	F3,  # FireMine    (mine de feu)      - atk_f3_mine
 }
 
 enum AttackTier {
@@ -23,6 +24,12 @@ enum SorcererColor {
 	Green,
 	Blue,
 	Yellow
+}
+
+enum EnergyType {
+	Fossil,
+	Pure,
+	Tainted
 }
 
 enum AttackFamily {

@@ -8,6 +8,8 @@ var jar_object_scene: PackedScene 	= preload("res://scenes/obj_p2_jar.tscn")
 var crown_object_scene: PackedScene 	= preload("res://scenes/obj_f2_crown.tscn")
 var scarf_object_scene: PackedScene 	= preload("res://scenes/obj_g2_scarf.tscn")
 var fireball_attack_scene: PackedScene 	= preload("res://scenes/atk_f0_fireball.tscn")
+var beanie_object_scene: PackedScene 	= preload("res://scenes/obj_g3_beanie.tscn")
+var belt_object_scene: PackedScene 	= preload("res://scenes/obj_f3_belt.tscn")
 
 
 func _ready() -> void:
@@ -18,34 +20,37 @@ func _ready() -> void:
 	var object_to_spawn_scene : PackedScene
 	
 	match attack_type:
-		GlobalEnum.AttackType.FIREBALL:
+		GlobalEnum.AttackType.F0:
 			attack_family = GlobalEnum.AttackFamily.Red
-			attack_type = GlobalEnum.AttackType.FIRECOLUMN
+			attack_type = GlobalEnum.AttackType.F1
 			object_to_spawn_scene = medal_object_scene
-		GlobalEnum.AttackType.LIGHTRAY:
+		GlobalEnum.AttackType.L1:
 			attack_family = GlobalEnum.AttackFamily.Yellow
 			object_to_spawn_scene = mirror_object_scene
-		GlobalEnum.AttackType.FIRECOLUMN:
+		GlobalEnum.AttackType.F1:
 			attack_family = GlobalEnum.AttackFamily.Red
 			object_to_spawn_scene = medal_object_scene
-		GlobalEnum.AttackType.ICEBALL:
+		GlobalEnum.AttackType.G1:
 			attack_family = GlobalEnum.AttackFamily.Blue
 			object_to_spawn_scene = mitten_object_scene
-		GlobalEnum.AttackType.CARNIVOROUS:
+		GlobalEnum.AttackType.P1:
 			attack_family = GlobalEnum.AttackFamily.Red
 			object_to_spawn_scene = seeds_object_scene
-		GlobalEnum.AttackType.PLANTBALL:
+		GlobalEnum.AttackType.P2:
 			attack_family = GlobalEnum.AttackFamily.Red
 			object_to_spawn_scene = jar_object_scene
-		GlobalEnum.AttackType.FIREWAVE:
+		GlobalEnum.AttackType.F2:
 			attack_family = GlobalEnum.AttackFamily.Red
 			object_to_spawn_scene = crown_object_scene
-		GlobalEnum.AttackType.ICESPIKE:
+		GlobalEnum.AttackType.G2:
 			attack_family = GlobalEnum.AttackFamily.Blue
 			object_to_spawn_scene = scarf_object_scene
-		GlobalEnum.AttackType.ICEBLADE:
+		GlobalEnum.AttackType.G3:
 			attack_family = GlobalEnum.AttackFamily.Blue
-			object_to_spawn_scene = fireball_attack_scene
+			object_to_spawn_scene = beanie_object_scene
+		GlobalEnum.AttackType.F3:
+			attack_family = GlobalEnum.AttackFamily.Red
+			object_to_spawn_scene = belt_object_scene
 	
 	var object_to_spawn: AttackObject = object_to_spawn_scene.instantiate()
 	

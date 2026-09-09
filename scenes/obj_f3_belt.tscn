@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cf3beltobj001"]
+
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_script"]
+
+[ext_resource type="Texture2D" uid="uid://dd5egj3podef6" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/Item_AtkF3_belt/Obj_AtkF3_Belt.png" id="2_tex"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_belt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_tex")
+}],
+"loop": true,
+"name": &"Bronze",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_tex")
+}],
+"loop": true,
+"name": &"Argent",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_tex")
+}],
+"loop": true,
+"name": &"Or",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ermxx"]
+radius = 15.0
+
+[node name="ObjetBelt" type="Area2D" unique_id=2070854320]
+scale = Vector2(2, 2)
+script = ExtResource("1_script")
+item_attack_family = 0
+item_attack_type = 9
+
+[node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=518273930]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_belt")
+animation = &"Or"
+
+[node name="Area2D" type="CollisionShape2D" parent="." unique_id=1861019470]
+position = Vector2(2, -1)
+shape = SubResource("CircleShape2D_ermxx")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

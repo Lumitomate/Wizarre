@@ -188,7 +188,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("13_dp263")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack_red_fire",
 "speed": 24.0
 }, {
@@ -205,7 +205,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_4on2n")
 }],
-"loop": false,
+"loop": 0,
 "name": &"fall_blue",
 "speed": 12.0
 }, {
@@ -222,7 +222,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_i44hn")
 }],
-"loop": false,
+"loop": 0,
 "name": &"fall_green",
 "speed": 12.0
 }, {
@@ -239,7 +239,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("13_i0oyr")
 }],
-"loop": false,
+"loop": 0,
 "name": &"fall_red",
 "speed": 12.0
 }, {
@@ -256,7 +256,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("17_34bfb")
 }],
-"loop": false,
+"loop": 0,
 "name": &"fall_yellow",
 "speed": 12.0
 }, {
@@ -285,7 +285,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("25_dp263")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_blue",
 "speed": 12.0
 }, {
@@ -314,7 +314,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("33_ghukj")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_green",
 "speed": 12.0
 }, {
@@ -343,7 +343,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("49_e2fka")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_red",
 "speed": 12.0
 }, {
@@ -372,7 +372,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("41_tnc18")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_yellow",
 "speed": 12.0
 }, {
@@ -401,7 +401,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("57_biufe")
 }],
-"loop": false,
+"loop": 0,
 "name": &"jump_blue",
 "speed": 24.0
 }, {
@@ -430,7 +430,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("65_7b3ln")
 }],
-"loop": false,
+"loop": 0,
 "name": &"jump_green",
 "speed": 24.0
 }, {
@@ -459,7 +459,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("73_42ura")
 }],
-"loop": false,
+"loop": 0,
 "name": &"jump_red",
 "speed": 24.0
 }, {
@@ -488,7 +488,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("81_1rkj1")
 }],
-"loop": false,
+"loop": 0,
 "name": &"jump_yellow",
 "speed": 24.0
 }, {
@@ -529,7 +529,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("93_x6w3t")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_blue",
 "speed": 24.0
 }, {
@@ -570,7 +570,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("105_6kpyt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_green",
 "speed": 24.0
 }, {
@@ -611,7 +611,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("117_bt82u")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_red",
 "speed": 24.0
 }, {
@@ -652,7 +652,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("129_2aj1f")
 }],
-"loop": true,
+"loop": 1,
 "name": &"walk_yellow",
 "speed": 24.0
 }]

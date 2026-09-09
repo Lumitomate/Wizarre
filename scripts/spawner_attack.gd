@@ -11,6 +11,7 @@ var plantball_scene = preload("res://scenes/atk_p2_explo.tscn")
 var fire_wave_scene = preload("res://scenes/atk_f2_wave.tscn")
 var ice_spike_scene = preload("res://scenes/atk_g2_ice_spike.tscn")
 var ice_blade_scene = preload("res://scenes/atk_g3_blade.tscn")
+var mine_scene = preload("res://scenes/atk_f3_mine.tscn")
 
 func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier, player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
 	
@@ -19,7 +20,7 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 	var int_attack_tier: int = int(attack_tier) + 1
 	
 	match attack_type:
-		GlobalEnum.AttackType.FIREBALL:
+		GlobalEnum.AttackType.F0:
 			player_position *= level_scale
 			var spread = PI / 4
 			for i in range(attack_tier):
@@ -29,7 +30,7 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 				fireball.direction = player_direction.normalized()
 				spawn_list.append(fireball)
 			
-		GlobalEnum.AttackType.LIGHTRAY:
+		GlobalEnum.AttackType.L1:
 			player_position *= level_scale
 			var ray_nb = int_attack_tier
 			for n in range(ray_nb):
@@ -41,7 +42,7 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 						lightray.position = attack_position
 						spawn_list.append(lightray)
 				
-		GlobalEnum.AttackType.FIRECOLUMN:
+		GlobalEnum.AttackType.F1:
 			player_position *= level_scale
 			var previous_column: AttackFireColumn = null
 			#player_direction = player_direction.rotated(PI / 2)
@@ -57,7 +58,7 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 					previous_column = firecolumn
 			previous_column.is_last = true
 		
-		GlobalEnum.AttackType.ICEBALL:
+		GlobalEnum.AttackType.G1:
 			var ice_ball: AttackIceBall = ice_ball_scene.instantiate()
 			ice_ball.transform = ice_ball.transform.rotated(player_direction.angle())
 			ice_ball.scale(2 * level_scale)
@@ -66,7 +67,7 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 			#ice_ball.direction = player_direction.normalized()
 			spawn_list.append(ice_ball)
 			
-		GlobalEnum.AttackType.CARNIVOROUS:
+		GlobalEnum.AttackType.P1:
 			var carnivorous: AttackCarnivorousSeed = carnivorous_scene.instantiate()
 			carnivorous.transform = carnivorous.transform.rotated(player_direction.angle())
 			carnivorous.scale(2 * level_scale)
@@ -75,7 +76,7 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 			carnivorous.attack_tier = int_attack_tier
 			spawn_list.append(carnivorous)
 
-		GlobalEnum.AttackType.PLANTBALL:
+		GlobalEnum.AttackType.P2:
 			var plant_ball: AttackPlantBall = plantball_scene.instantiate()
 			plant_ball.transform = plant_ball.transform.rotated(player_direction.angle())
 			plant_ball.scale(level_scale)
@@ -84,7 +85,7 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 			plant_ball.setup_tier(int_attack_tier)
 			spawn_list.append(plant_ball)
 			
-		GlobalEnum.AttackType.FIREWAVE:
+		GlobalEnum.AttackType.F2:
 			var fire_wave: AttackFireWave = fire_wave_scene.instantiate()
 			fire_wave.direction = player_direction.normalized()
 			fire_wave.position = player_position + 60 * player_direction.normalized()
@@ -93,7 +94,7 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 			fire_wave.rotation = player_direction.angle()
 			spawn_list.append(fire_wave)
 
-		GlobalEnum.AttackType.ICESPIKE:
+		GlobalEnum.AttackType.G2:
 			var spike_count = 4 + (int_attack_tier - 1) * 2
 			var angle_step = TAU / spike_count
 			var start_angle = player_direction.angle() + PI / 4  # décalage de 45°
@@ -107,7 +108,7 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 				ice_spike.setup_tier(int_attack_tier)
 				spawn_list.append(ice_spike)
 
-		GlobalEnum.AttackType.ICEBLADE:
+		GlobalEnum.AttackType.G3:
 			var ice_blade_count = 2
 			var angle_step = TAU / ice_blade_count
 			var rot_dir = 1.0 if player_direction.x >= 0 else -1.0
@@ -123,4 +124,13 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 					level_scale
 				)
 				spawn_list.append(ice_blade)
+
+		GlobalEnum.AttackType.F3:
+			# La mine est posée sur le sorcier, décalée de 28 px vers le haut
+			# (position locale au Level, comme le sorcier : pas de scale à appliquer)
+			var mine: AttackFireMine = mine_scene.instantiate()
+			mine.position = player_position + Vector2(0, -28)
+			mine.setup_tier(int_attack_tier)
+			mine.caster = caster
+			spawn_list.append(mine)
 	return spawn_list

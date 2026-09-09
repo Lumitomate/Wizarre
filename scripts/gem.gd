@@ -21,5 +21,11 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_group"):
 		var sorcerer: Sorcerer = body
-		sorcerer.add_ammo(gem_color, 1)
+		var tube_index = {
+			GlobalEnum.AttackFamily.Red: 0,
+			GlobalEnum.AttackFamily.Yellow: 1,
+			GlobalEnum.AttackFamily.Blue: 2
+		}.get(gem_color, -1)
+		if tube_index != -1:
+			sorcerer.add_energy(tube_index, 1)
 		queue_free()

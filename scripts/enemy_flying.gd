@@ -96,6 +96,16 @@ func hit(damage: int):
 	get_parent().add_child(damage_label)
 	if can_take_damage:
 		lives -= damage
+		# --- Dead Cells style hit feedback ---
+		# Flash rouge sur l'ennemi
+		$AnimatedSprite2D.modulate = Color(1.0, 0.1, 0.1, 1.0)  # rouge vif
+		# Knockback sur l'ennemi : repoussé par le sorcier
+		var sorcerer_pos = get_parent().get_node("Sorcerer").global_position if get_parent().has_node("Sorcerer") else position
+		var direction_away = (position - sorcerer_pos).normalized()
+		velocity = direction_away * 400.0 + Vector2.UP * 100.0
+		$BounceBackDuration.start()
+		is_bouncing = true
+		# --- Fin ---
 		if lives == 0:
 			die()
 		$DamageCooldown.start()

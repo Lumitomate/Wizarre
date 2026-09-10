@@ -12,14 +12,6 @@ var scenes = {
 func _ready() -> void:
 	var root = get_tree().root
 	current_scene = root.get_child(-1)
-	print(current_scene)
-
-#func goto_location(location):
-#
-	#if location in scenes:
-		#goto_scene(scenes[location])
-	#else:
-		#print("Unknown location")
 
 func goto_scene(scene: GlobalEnum.Location) -> void:
 	PlayerManager.save_players_data()

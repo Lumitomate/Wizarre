@@ -11,6 +11,7 @@ enum AttackType {
 	G2,  # IceSpike    (pique de glace)   - atk_g2_ice_spike
 	G3,  # IceBlade    (lame de glace)    - atk_g3_blade
 	F3,  # FireMine    (mine de feu)      - atk_f3_mine
+	L2,  # LightTarget (cible lumineuse)  - atk_l2_light_target
 }
 
 enum AttackTier {

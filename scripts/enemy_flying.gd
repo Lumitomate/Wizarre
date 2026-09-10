@@ -3,8 +3,8 @@ class_name EnemyFlying extends CharacterBody2D
 
 signal enemy_killed
 
-@export var speed = 200
-@export var lives = 3
+@export var speed: int = 200
+@export var lives: int = 3
 
 var target : Sorcerer = null
 var target_position: Vector2 = Vector2(0, 0)
@@ -20,7 +20,6 @@ func _ready() -> void:
 	add_to_group("enemy_group")
 	level_scale = get_parent().transform.get_scale()
 	screen_size = get_viewport_rect().size
-	print(screen_size)
 	$AnimatedSprite2D.play("default")
 	
 	$NavigationAgent2D.path_desired_distance = 20.0
@@ -43,7 +42,6 @@ func set_random_navigation_target():
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_group"):
 		if target == null or position.distance_to(target.position) > position.distance_to(body.position):
-			print("Target set!")
 			target = body
 
 
@@ -89,7 +87,7 @@ func bounce_on(collider: CollisionObject2D) -> void:
 	is_bouncing = true
 
 
-func hit(damage: int):
+func hit(damage: int) -> void:
 	var damage_label = damage_label_scene.instantiate()
 	damage_label.position = level_scale * (position - Vector2(0, 64))
 	damage_label.amount = damage
@@ -99,9 +97,9 @@ func hit(damage: int):
 		# --- Dead Cells style hit feedback ---
 		# Flash rouge sur l'ennemi
 		$AnimatedSprite2D.modulate = Color(1.0, 0.1, 0.1, 1.0)  # rouge vif
-		# Knockback sur l'ennemi : repoussé par le sorcier
-		var sorcerer_pos = get_parent().get_node("Sorcerer").global_position if get_parent().has_node("Sorcerer") else position
-		var direction_away = (position - sorcerer_pos).normalized()
+		# Knockback sur l'ennemi : repoussé par le sorcier qui l'a touché
+		# (recherche du joueur le plus proche : compatible multi-sorciers)
+		var direction_away := _direction_away_from_nearest_player()
 		velocity = direction_away * 400.0 + Vector2.UP * 100.0
 		$BounceBackDuration.start()
 		is_bouncing = true
@@ -123,3 +121,17 @@ func _on_damage_cooldown_timeout() -> void:
 
 func _on_bounce_back_duration_timeout() -> void:
 	is_bouncing = false
+
+
+# Direction opposée au joueur (sorcier) le plus proche, Vector2.ZERO si aucun
+func _direction_away_from_nearest_player() -> Vector2:
+	var away := Vector2.UP
+	var min_distance := INF
+	for player in get_tree().get_nodes_in_group("player_group"):
+		if not is_instance_valid(player):
+			continue
+		var d: float = position.distance_to(player.global_position)
+		if d < min_distance:
+			min_distance = d
+			away = (position - player.global_position).normalized()
+	return away

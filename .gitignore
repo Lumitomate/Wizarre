@@ -4,3 +4,7 @@
 
 # Build output
 build/
+
+# macOS / divers
+.DS_Store
+debug.log

@@ -22,7 +22,7 @@ var controller_id: int = 0
 @export var dash_invisible_alpha: float = 0.25 # transparence pendant le dash
 @export var dash_invincible: bool = true # optionnel : intouchable pendant le dash
 @export var dash_invincible_after_duration: float = 0.5 # temps d'invincibilité après le dash
-@export var dash_ignore_groups: Array[String] = ["enemy_group", "players"] # groupes à traverser pendant le dash — adapte les noms à tes groupes existants
+@export var dash_ignore_groups: Array[String] = ["enemy_group", "player_group"] # groupes à traverser pendant le dash
 @export var dash_unstuck_distance: float = 40.0 # distance en dessous de laquelle on considère 2 joueurs "superposés" en fin de dash
 @export var dash_unstuck_push: float = 24.0 # écart appliqué pour les séparer proprement
 @export var dash_trail_interval: float = 0.01 # secondes entre deux images rémanentes
@@ -35,8 +35,7 @@ var dash_direction: Vector2 = Vector2.RIGHT
 var dash_shader_material: ShaderMaterial
 var dash_trail_accumulator: float = 0.0
 
-const attack_launcher_script = preload("res://scripts/spawner_attack.gd")
-var damage_label_scene = preload("res://scenes/hud_damage_label.tscn")
+var damage_label_scene: PackedScene = preload("res://scenes/hud_damage_label.tscn")
 
 var lives: int = 3
 var screen_size: Vector2
@@ -77,11 +76,9 @@ var hit_knockback_velocity: Vector2 = Vector2.ZERO
 var hit_knockback_timer: float = 0.0
 var hit_flash_duration: float = 0.5  # durée totale du flash
 var hit_flash_interval: float = 0.05  # intervalle de clignotement
-var original_modulate: Color = Color.WHITE
 
 func _ready() -> void:
-	#print(Input.get_connected_joypads())
-	add_to_group("players")
+	add_to_group("player_group")
 	screen_size = get_viewport_rect().size
 	level_scale = get_parent().transform.get_scale()
 	position = (1.4 * screen_size / 2) + Vector2(controller_id * 64, 128)
@@ -210,17 +207,7 @@ func _physics_process(delta: float) -> void:
 
 	# --- Dead Cells style hit flash & blink ---
 	if is_hit_flash:
-		hit_flash_timer += delta
-		# Clignotement: alterne entre rouge et transparent
-		var blink = fmod(hit_flash_timer, hit_flash_interval * 2.0)
-		if blink < hit_flash_interval:
-			$AnimatedSprite2D.modulate = Color(2.0, 0.3, 0.3, 0.7)  # rouge
-		else:
-			$AnimatedSprite2D.modulate = Color(1.0, 1.0, 1.0, 0.4)  # transparent
-		if hit_flash_timer >= hit_flash_duration:
-			is_hit_flash = false
-			hit_flash_timer = 0.0
-			$AnimatedSprite2D.modulate = Color(1.0, 1.0, 1.0, 1.0)  # reset
+		_update_hit_flash(delta)
 
 	# Knockback basé sur la direction du dash
 	if hit_knockback_timer > 0:
@@ -246,7 +233,6 @@ func _physics_process(delta: float) -> void:
 	# Physique
 	move_and_slide()
 
-
 	# Mise à jour des états
 	if is_on_floor():
 		if abs(velocity.x) > 0:
@@ -257,20 +243,19 @@ func _physics_process(delta: float) -> void:
 		if velocity.y > 0:
 			set_state(GlobalEnum.State.FALL)
 
-	# --- Dead Cells style hit flash & blink ---
-	if is_hit_flash:
-		hit_flash_timer += delta
-		# Clignotement: alterne entre rouge et transparent
-		var blink = fmod(hit_flash_timer, hit_flash_interval * 2.0)
-		if blink < hit_flash_interval:
-			$AnimatedSprite2D.modulate = Color(2.0, 0.3, 0.3, 0.7)  # rouge clair
-		else:
-			$AnimatedSprite2D.modulate = Color(1.0, 1.0, 1.0, 0.4)  # transparent
-		if hit_flash_timer >= hit_flash_duration:
-			is_hit_flash = false
-			hit_flash_timer = 0.0
-			$AnimatedSprite2D.modulate = Color(1.0, 1.0, 1.0, 1.0)  # reset
-	# --- Fin du flash ---
+
+func _update_hit_flash(delta: float) -> void:
+	hit_flash_timer += delta
+	# Clignotement: alterne entre rouge et transparent
+	var blink := fmod(hit_flash_timer, hit_flash_interval * 2.0)
+	if blink < hit_flash_interval:
+		$AnimatedSprite2D.modulate = Color(2.0, 0.3, 0.3, 0.7)  # rouge
+	else:
+		$AnimatedSprite2D.modulate = Color(1.0, 1.0, 1.0, 0.4)  # transparent
+	if hit_flash_timer >= hit_flash_duration:
+		is_hit_flash = false
+		hit_flash_timer = 0.0
+		$AnimatedSprite2D.modulate = Color(1.0, 1.0, 1.0, 1.0)  # reset
 
 
 func spawn_dash_afterimage() -> void:
@@ -363,7 +348,7 @@ func end_dash() -> void:
 
 
 func unstick_from_other_players() -> void:
-	for body in get_tree().get_nodes_in_group("players"):
+	for body in get_tree().get_nodes_in_group("player_group"):
 		if body == self or not body is Node2D:
 			continue
 		var distance_to_body = position.distance_to(body.position)
@@ -381,10 +366,14 @@ func set_attack(tube_index: int, attack_type: int, attack_tier: int) -> void:
 		"attack_type": attack_type,
 		"attack_tier": attack_tier
 	}
-	print("Mon sort dans le tube %d est maintenant %d de tier %d" % [tube_index, attack_type, attack_tier])
+	# Le tier d'une attaque dépend du nombre d'attaques du même élément :
+	# on re-normalise pour que TOUTES les attaques de cet élément montent
+	# au bon tier (collecter un 2e feu passe aussi le 1er feu en tier II)
+	SpellRules.normalize_spell_tiers(spells)
+	var t: int = spells[tube_index]["attack_tier"]
 	# Notifie le sac pour mettre à jour l'icône du sort dans le tube
 	if has_node("SorcererSac"):
-		$SorcererSac.set_spell(tube_index, attack_type, attack_tier)
+		$SorcererSac.set_spell(tube_index, attack_type, t)
 
 func fire_attack(tube_index: int) -> void:
 	if tube_index < 0 or tube_index >= 3:
@@ -399,6 +388,14 @@ func fire_attack(tube_index: int) -> void:
 	var attack_type: int = spell["attack_type"]
 	var attack_tier: int = spell["attack_tier"]
 	
+	# Cible lumineuse L2 : le 2e appui déclenche l'explosion du curseur
+	if attack_type == GlobalEnum.AttackType.L2:
+		var light_target := _get_own_light_target()
+		if light_target != null:
+			light_target.start_explosion()
+			fire_wait_release[tube_index] = true
+			return
+
 	# Mine posée en idle par ce joueur : le 2e appui déclenche la chute
 	# et l'explosion au lieu de poser une nouvelle mine (sans consommer d'énergie)
 	if attack_type == GlobalEnum.AttackType.F3:
@@ -422,7 +419,7 @@ func fire_attack(tube_index: int) -> void:
 	if attack_type == GlobalEnum.AttackType.F3:
 		fire_wait_release[tube_index] = true
 	
-	var attack_list = attack_launcher_script.new().spawn_attack(attack_type, attack_tier, position, direction, screen_size, level_scale, self)
+	var attack_list := AttackSpawner.spawn_attack(attack_type, attack_tier, position, direction, screen_size, level_scale, self)
 	for attack in attack_list:
 		self.get_parent().add_child(attack)
 
@@ -463,19 +460,26 @@ func _get_own_mine() -> AttackFireMine:
 			return mine
 	return null
 
+# Cherche la cible lumineuse posée par CE joueur encore en phase TARGETING
+func _get_own_light_target() -> AttackLightTarget:
+	for node in get_tree().get_nodes_in_group("light_target_group"):
+		var target := node as AttackLightTarget
+		if target != null and target.caster == self and target.phase == AttackLightTarget.Phase.TARGETING:
+			return target
+	return null
+
 func add_energy(tube_index: int, amount: int) -> void:
 	energy_counts[tube_index] += amount
 	ammo_changed.emit(tube_index, energy_counts[tube_index])
 	
 
 
-func hit(damage: int):
+func hit(damage: int) -> void:
 	if can_take_damage:
 		lives -= damage
 		var damage_label = damage_label_scene.instantiate()
 		damage_label.position = level_scale * (position - Vector2(0, 64))
 		life_changed.emit(lives)
-		print("Je prends des dégats (" + str(lives) + ")")
 		if lives == 0:
 			die()
 		$DamageCooldown.start()
@@ -497,11 +501,10 @@ func hit(damage: int):
 		var kb_x = nearest_enemy.x * 1000.0
 		var kb_y = nearest_enemy.y * 1000.0 - 200.0
 		hit_knockback_velocity = Vector2(kb_x, kb_y)
-		original_modulate = $AnimatedSprite2D.modulate
 		# --- Fin ---
 
 
-func die():
+func die() -> void:
 	export_data()
 	queue_free()
 
@@ -521,6 +524,7 @@ func load_data() -> void:
 	lives = data_to_load["lives"]
 	energy_counts = data_to_load["energy_counts"]
 	spells = data_to_load["spells"]
+	SpellRules.normalize_spell_tiers(spells)
 	
 	# Le sac s'initialise avant le sorcier : on rafraîchit ses animations
 	# avec les valeurs réellement chargées

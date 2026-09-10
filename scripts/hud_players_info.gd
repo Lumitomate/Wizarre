@@ -74,5 +74,4 @@ func _on_ammo_changed(ammunition_type: int, ammunition_amount: int):
 	
 func _on_life_changed(amount: int) -> void:
 	lives = amount
-	print("Dégats reçus! Vies restantes (" + str(lives) + ")")
 	refresh_status()

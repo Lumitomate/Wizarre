@@ -1,5 +1,5 @@
 class_name AttackIceSpike
-extends Area2D
+extends AttackProjectile
 
 @export var speed: int = 1500
 @export var spawn_immunity_time: float = 0.15  # secondes avant que la hitbox s'active
@@ -23,7 +23,7 @@ func setup_tier(tier: int) -> void:
 func _ready() -> void:
 	$AnimatedSprite2D.play("idle")
 	body_entered.connect(_on_body_entered)
-	await get_tree().create_timer(0.15).timeout
+	await get_tree().create_timer(spawn_immunity_time).timeout
 	player_immunity = false
 
 func _physics_process(delta: float) -> void:
@@ -32,8 +32,7 @@ func _physics_process(delta: float) -> void:
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
 
-func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("enemy_group"):
-		body.hit(1)
-	elif body.is_in_group("player_group") and not player_immunity:
-		body.hit(1)
+func can_damage(body: Node2D) -> bool:
+	# Le joueur est immunisé juste après le spawn (la hitbox s'active après
+	# un court délai pour éviter de toucher le lanceur)
+	return not (player_immunity and body.is_in_group("player_group"))

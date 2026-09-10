@@ -39,5 +39,13 @@ func _on_body_entered(body: Node2D) -> void:
 				_:
 					tube_index = 0
 		
-		sorcerer.set_attack(tube_index, item_attack_type, item_attack_tier)
+		# Tier = nombre d'attaques du même élément que le joueur aura
+		# après l'échange (1 → tier I, 2 → tier II, 3 ou plus → tier III).
+		# On simule l'ajout de l'objet dans le tube pour que le comptage
+		# inclue le nouvel objet lui-même.
+		var projected_spells: Dictionary = sorcerer.spells.duplicate(true)
+		projected_spells[tube_index] = { "attack_type": item_attack_type, "attack_tier": 0 }
+		var tier: int = SpellRules.compute_tier(projected_spells, item_attack_type)
+		
+		sorcerer.set_attack(tube_index, item_attack_type, tier)
 		queue_free()

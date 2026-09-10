@@ -1,5 +1,4 @@
-class_name AttackFireMine
-extends Area2D
+class_name AttackFireMine extends AttackProjectile
 
 # Mine de Feu (tier 3) — 3 phases :
 # 1. IDLE     : posée au-dessus du sorcier, animation "idle" en boucle
@@ -46,8 +45,8 @@ const FRAME_HITBOX = {
 # S'applique au sprite ET à la hitbox (scale du nœud racine)
 const TIER_SCALE = {
 	1: 0.8,   # tier I  : petite explosion
-	2: 1.0,   # tier II : moyenne
-	3: 1.25   # tier III : grande explosion
+	2: 2.5,   # tier II : moyenne
+	3: 4.0   # tier III : grande explosion
 }
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -166,5 +165,4 @@ func _on_body_entered(body: Node2D) -> void:
 	# Ne touche jamais le lanceur, sinon il s'auto-détruirait en posant la mine
 	if body == caster:
 		return
-	if body.is_in_group("player_group") or body.is_in_group("enemy_group"):
-		body.hit(1)
+	super._on_body_entered(body)

@@ -5,6 +5,11 @@ signal save_data
 
 @export var enemies_to_kill: int = 25
 
+# Espacement du HUD des joueurs : largeur d'un panneau + moitié pour le
+# décalage visuel (layout 4 joueurs : 0, 269, 807, 1076 px)
+const HUD_PANEL_SPACING := 269
+const START_Y_POSITION := 25
+
 var enemies_killed: int = 0
 var enemies_spawned: int = 0
 var level_start_time: int
@@ -27,7 +32,6 @@ func _ready() -> void:
 	$ProgressBar.set_percent(0)
 	$AudioStreamPlayer.play()
 
-	print(GlobalInfo.run_info)
 
 
 
@@ -35,7 +39,10 @@ func add_player_hud(controller_id):
 
 	var player_info : PlayerInfo = player_info_scene.instantiate()
 
-	player_info.position = Vector2(8, 25) + Vector2(269 * (controller_id + controller_id / 2), 0)
+	# Décalage horizontal par joueur : id + id/2 (division entière)
+	@warning_ignore("integer_division")
+	var hud_offset: int = HUD_PANEL_SPACING * (controller_id + controller_id / 2)
+	player_info.position = Vector2(8, START_Y_POSITION) + Vector2(hud_offset, 0)
 
 	player_info.set_bg_color(controller_id % 4)
 
@@ -84,7 +91,6 @@ func go_to_shop() -> void:
 
 	Global.goto_scene(GlobalEnum.Location.SHOP)
 
-	print(GlobalInfo.run_info)
 
 
 

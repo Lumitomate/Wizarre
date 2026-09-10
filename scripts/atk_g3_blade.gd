@@ -1,5 +1,5 @@
 class_name AttackIceBlade
-extends Area2D
+extends AttackProjectile
 
 @export var rotation_duration: float = 1.0
 @export var orbit_radius: float = 80.0
@@ -106,8 +106,3 @@ func _physics_process(delta: float) -> void:
 	var offset = Vector2.RIGHT.rotated(current_angle) * orbit_radius
 	global_position = player.global_position + offset
 	rotation = current_angle + PI / 2.0
-
-func _on_body_entered(body: Node2D) -> void:
-	print("body entered: ", body.name, " has hit: ", body.has_method("hit"), " groups: ", body.get_groups())
-	if body.is_in_group("player_group") or body.is_in_group("enemy_group"):
-		body.hit(1)

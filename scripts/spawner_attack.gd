@@ -1,19 +1,20 @@
-extends Node
+class_name AttackSpawner
 
 const SPRITE_SIZE = 64
 
-var fireball_scene = preload("res://scenes/atk_f0_fireball.tscn")
-var lightray_scene = preload("res://scenes/atk_l1_light_ray.tscn")
-var firecolumn_scene = preload("res://scenes/atk_f1_fire_column.tscn")
-var ice_ball_scene = preload("res://scenes/atk_g1_ice_ball.tscn")
-var carnivorous_scene = preload("res://scenes/atk_p1_carnivorous_seed.tscn")
-var plantball_scene = preload("res://scenes/atk_p2_explo.tscn")
-var fire_wave_scene = preload("res://scenes/atk_f2_wave.tscn")
-var ice_spike_scene = preload("res://scenes/atk_g2_ice_spike.tscn")
-var ice_blade_scene = preload("res://scenes/atk_g3_blade.tscn")
-var mine_scene = preload("res://scenes/atk_f3_mine.tscn")
+static var fireball_scene: PackedScene = preload("res://scenes/atk_f0_fireball.tscn")
+static var lightray_scene: PackedScene = preload("res://scenes/atk_l1_light_ray.tscn")
+static var firecolumn_scene: PackedScene = preload("res://scenes/atk_f1_fire_column.tscn")
+static var ice_ball_scene: PackedScene = preload("res://scenes/atk_g1_ice_ball.tscn")
+static var carnivorous_scene: PackedScene = preload("res://scenes/atk_p1_carnivorous_seed.tscn")
+static var plantball_scene: PackedScene = preload("res://scenes/atk_p2_explo.tscn")
+static var fire_wave_scene: PackedScene = preload("res://scenes/atk_f2_wave.tscn")
+static var ice_spike_scene: PackedScene = preload("res://scenes/atk_g2_ice_spike.tscn")
+static var ice_blade_scene: PackedScene = preload("res://scenes/atk_g3_blade.tscn")
+static var mine_scene: PackedScene = preload("res://scenes/atk_f3_mine.tscn")
+static var lighttarget_scene: PackedScene = preload("res://scenes/atk_l2_light_target.tscn")
 
-func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier, player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
+static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier, player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
 	
 	var spawn_list: Array[Node]
 	
@@ -89,7 +90,7 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 			var fire_wave: AttackFireWave = fire_wave_scene.instantiate()
 			fire_wave.direction = player_direction.normalized()
 			fire_wave.position = player_position + 60 * player_direction.normalized()
-			fire_wave.tier_scale = float(int_attack_tier)
+			fire_wave.tier_scale = 1.0 + (int_attack_tier - 1) * 3.0
 			fire_wave.setup_tier(int_attack_tier)
 			fire_wave.rotation = player_direction.angle()
 			spawn_list.append(fire_wave)
@@ -133,4 +134,11 @@ func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.At
 			mine.setup_tier(int_attack_tier)
 			mine.caster = caster
 			spawn_list.append(mine)
+		GlobalEnum.AttackType.L2:
+			var light_target: AttackLightTarget = lighttarget_scene.instantiate()
+			light_target.position = player_position
+			light_target.tier_scale = 1.0 + (int_attack_tier - 1) * 0.5
+			light_target.scale = Vector2(light_target.tier_scale, light_target.tier_scale)
+			light_target.caster = caster
+			spawn_list.append(light_target)
 	return spawn_list

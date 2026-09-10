@@ -1,8 +1,6 @@
 class_name SorcererSac extends Area2D
 
-enum EnergyType { Fossil, Pure, Tainted }
-
-@export var tube_energies: Array[EnergyType] = [EnergyType.Fossil, EnergyType.Pure, EnergyType.Tainted]
+@export var tube_energies: Array[GlobalEnum.EnergyType] = [GlobalEnum.EnergyType.Fossil, GlobalEnum.EnergyType.Pure, GlobalEnum.EnergyType.Tainted]
 
 var tube_spells: Array[Dictionary] = [ {}, {}, {} ]  # Each tube: { attack_type, attack_tier }
 var selected_tube: int = -1  # -1 = no tube selected
@@ -66,10 +64,10 @@ func get_tube_node(index: int) -> AnimatedSprite2D:
 		2: return $AnimSpriteTainted # Tainted
 	return null
 
-func get_tube_anim_prefix(energy: EnergyType) -> String:
-	if energy == EnergyType.Fossil:
+func get_tube_anim_prefix(energy: GlobalEnum.EnergyType) -> String:
+	if energy == GlobalEnum.EnergyType.Fossil:
 		return "Pipe_Coal"
-	elif energy == EnergyType.Pure:
+	elif energy == GlobalEnum.EnergyType.Pure:
 		return "Pipe_Energy"
 	return "Pipe_Tainted"
 

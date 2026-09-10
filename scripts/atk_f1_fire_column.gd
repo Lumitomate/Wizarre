@@ -1,4 +1,4 @@
-class_name AttackFireColumn extends Area2D
+class_name AttackFireColumn extends AttackProjectile
 
 signal previous_pre_spawn_done
 
@@ -34,8 +34,3 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 			$CollisionShape2D.disabled = false
 		&"spawn":
 			$AnimatedSprite2D.play("idle")
-
-
-func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player_group") or body.is_in_group("enemy_group"):
-		body.hit(1)

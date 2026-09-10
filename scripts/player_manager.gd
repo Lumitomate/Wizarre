@@ -26,9 +26,6 @@ func _on_joy_connection_changed(device: int, connected: bool):
 
 
 func _add_controller(controller_id):
-
-	#print("Controller detected: ", controller_id)
-
 	known_controllers.append(controller_id)
 	players[controller_id] = null
 
@@ -38,9 +35,6 @@ func _add_controller(controller_id):
 func spawn_player(parent: Node, controller_id: int, player_config: Dictionary = {}):
 	
 	var player: Sorcerer = sorcerer_scene.instantiate()
-
-	#if players[controller_id] != null:
-		#player.load_data(players[controller_id])
 	player.controller_id = controller_id
 	player.sorcerer_color = (controller_id % 4) as GlobalEnum.SorcererColor
 	
@@ -64,12 +58,6 @@ func spawn_all_players(parent: Node, player_config: Dictionary = {}):
 
 
 func save_players_data():
-	
 	for controller_id in known_controllers:
 		if players[controller_id] != null:
 			players[controller_id].export_data()
-	
-#func load_players_data():
-	#
-	#for controller_id in known_controllers:
-		#players[controller_id].load_data()

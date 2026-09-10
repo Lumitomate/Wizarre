@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://boi6wj4tu8hns"]
+
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_l2comb"]
+
+[ext_resource type="Texture2D" uid="uid://dbp5efdel2fey" path="res://assets/sprites/BouleDeFeu_V1.png" id="1_3r33m"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_702tw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3r33m")
+}],
+"loop": 1,
+"name": &"Argent",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3r33m")
+}],
+"loop": 1,
+"name": &"Bronze",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3r33m")
+}],
+"loop": 1,
+"name": &"Or",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1rv7g"]
+radius = 15.0
+
+[node name="ObjAtkl2Comb" type="Area2D" unique_id=125393339]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=356972715]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_702tw")
+animation = &"Bronze"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356963871]
+shape = SubResource("CircleShape2D_1rv7g")

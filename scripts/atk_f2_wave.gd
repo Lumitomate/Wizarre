@@ -1,7 +1,7 @@
 class_name AttackFireWave
-extends Area2D
+extends AttackProjectile
 
-@export var speed: int = 1000
+@export var speed: int = 1500
 @export var tier_scale: float = 1.0
 
 var direction: Vector2 = Vector2.LEFT
@@ -67,7 +67,6 @@ func _update_hitbox(current_frame: int) -> void:
 		collision_shape.disabled = true
 		return
 	collision_shape.disabled = false
-	print("frame: ", current_frame, " height: ", height, " disabled: ", collision_shape.disabled)
 	var scale_y = height / MAX_HEIGHT
 	var scale_x = 0.0 if current_frame < 4 else 1.0
 	var new_points = PackedVector2Array()
@@ -92,7 +91,3 @@ func _get_height_for_frame(frame: int) -> float:
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
-
-func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player_group") or body.is_in_group("enemy_group"):
-		body.hit(1)

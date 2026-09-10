@@ -25,6 +25,9 @@ func _ready() -> void:
 	add_to_group("light_target_group")
 	collision.disabled = true
 	body_entered.connect(_on_body_entered)
+	# Fin de l'animation d'explosion → suppression totale de l'attaque
+	# (sprite + hitbox disparaissent avec le queue_free)
+	sprite_explosion.animation_finished.connect(_on_animation_finished)
 	_apply_tier_scale()
 	_set_frame(FRAME_IDLE, 0.0, false)
 	sprite_orientation.play("Atk_l2_Orientation")
@@ -38,23 +41,37 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_targeting(delta: float) -> void:
+	# La cible est pilotée par le stick de la manette de son lanceur.
+	# Si le lanceur a disparu (mort, changement de scène), la cible reste sur place
+	var controller := 0
+	if caster != null and is_instance_valid(caster) and "controller_id" in caster:
+		controller = caster.controller_id
 	var stick = Vector2(
-		Input.get_joy_axis(0, JOY_AXIS_LEFT_X),
-		Input.get_joy_axis(0, JOY_AXIS_LEFT_Y)
+		Input.get_joy_axis(controller, JOY_AXIS_LEFT_X),
+		Input.get_joy_axis(controller, JOY_AXIS_LEFT_Y)
 	)
 
 	if stick.length() < 0.2:
-		position = caster.global_position
+		# Stick neutre : la cible reste où elle est (elle ne revient pas
+		# au sorcier ni à sa position d'origine)
 		_set_frame(FRAME_IDLE, 0.0, false)
 		return
 
 	var dir := stick.normalized()
 	position += dir * speed * delta
 
-	# Clamp dans l'écran
-	var screen_size := get_viewport_rect().size
-	position.x = clamp(position.x, 0.0, screen_size.x)
-	position.y = clamp(position.y, 0.0, screen_size.y)
+	# Clamp dans la zone visible de l'écran. get_viewport_rect() est en pixels
+	# d'écran : on le convertit en coordonnées monde (canvas transform, qui
+	# tient compte du zoom/position de la Camera2D), puis en coordonnées
+	# locales du parent (le Level est scalé). Ainsi la cible peut aller
+	# partout où l'écran montre, et pas plus loin.
+	var canvas_inv := get_viewport().get_canvas_transform().affine_inverse()
+	var world_tl: Vector2 = canvas_inv * get_viewport_rect().position
+	var world_br: Vector2 = canvas_inv * get_viewport_rect().end
+	var local_tl: Vector2 = get_parent().to_local(world_tl)
+	var local_br: Vector2 = get_parent().to_local(world_br)
+	position.x = clamp(position.x, local_tl.x, local_br.x)
+	position.y = clamp(position.y, local_tl.y, local_br.y)
 
 	_set_frame_from_direction(dir)
 
@@ -113,8 +130,9 @@ func start_explosion() -> void:
 
 
 func _on_animation_finished() -> void:
-	if sprite_explosion.animation == &"Atk_l2_Explosion":
-		queue_free()
+	# L'explosion est terminée : queue_free détruit le nœud entier
+	# (SpriteOrientation, SpriteExplosion et CollisionPolygon2D disparaissent ensemble)
+	queue_free()
 
 
 func _apply_tier_scale() -> void:

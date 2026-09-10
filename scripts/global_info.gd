@@ -21,7 +21,7 @@ var run_info: Dictionary = {
 					"attack_tier" : 2
 				},
 				2: {  # Tube 3 → Tainted : L1 = LightRay tier I
-					"attack_type" : GlobalEnum.AttackType.L1,
+					"attack_type" : GlobalEnum.AttackType.L2,
 					"attack_tier" : 0
 				},
 			}

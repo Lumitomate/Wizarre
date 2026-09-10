@@ -1,26 +1,115 @@
 [gd_scene format=3 uid="uid://byo6gsgiya3pd"]
 
 [ext_resource type="Script" uid="uid://c4wxlq1w3kn0j" path="res://scripts/atk_l2_light_target.gd" id="1_mvk1h"]
+[ext_resource type="Texture2D" uid="uid://b3lal7dqi4w0b" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Orientation/AtkL2_Target_Orientation1.png" id="2_r7o4u"]
+[ext_resource type="Texture2D" uid="uid://bcppyrxd441qb" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Orientation/AtkL2_Target_Orientation2.png" id="3_mf26l"]
+[ext_resource type="Texture2D" uid="uid://dtry1pes28h60" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Orientation/AtkL2_Target_Orientation3.png" id="4_fpn0x"]
+[ext_resource type="Texture2D" uid="uid://b4r0e8xbcuc65" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target1.png" id="5_kyh16"]
+[ext_resource type="Texture2D" uid="uid://c1d42kpbve5il" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target2.png" id="6_u45tn"]
+[ext_resource type="Texture2D" uid="uid://ckbnpbiwxve50" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target3.png" id="7_wgnwi"]
+[ext_resource type="Texture2D" uid="uid://rggt0hkcfny7" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target4.png" id="8_vlq37"]
+[ext_resource type="Texture2D" uid="uid://dat820w8vi8t4" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target5.png" id="9_t8ann"]
+[ext_resource type="Texture2D" uid="uid://dmtyi6c5bqltu" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target6.png" id="10_vvn58"]
+[ext_resource type="Texture2D" uid="uid://dtl68it2k8mxx" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target7.png" id="11_h1vwb"]
+[ext_resource type="Texture2D" uid="uid://c85ynoberukik" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target8.png" id="12_141lu"]
+[ext_resource type="Texture2D" uid="uid://2psh76e68lp6" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target9.png" id="13_2m11b"]
+[ext_resource type="Texture2D" uid="uid://bxvujsx7j0qw4" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target10.png" id="14_c8tl6"]
+[ext_resource type="Texture2D" uid="uid://duvq2t42l7jwa" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target11.png" id="15_erf7y"]
+[ext_resource type="Texture2D" uid="uid://bgr1myk46vnua" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target12.png" id="16_l2h0p"]
+[ext_resource type="Texture2D" uid="uid://bb2b07cqylnmg" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target13.png" id="17_wyukk"]
+[ext_resource type="Texture2D" uid="uid://c7sntte6g0vjj" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target14.png" id="18_gbm4u"]
+[ext_resource type="Texture2D" uid="uid://cjf4mo44jkl0a" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target15.png" id="19_hschx"]
+[ext_resource type="Texture2D" uid="uid://br5evv2xuyyem" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/AtkL2_Target_Explosion/AtkL2_Target16.png" id="20_henrm"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_abc"]
-animations = [{"frames": [{"duration": 1.0, "texture": null}], "loop": true, "name": &"Atk_l2_Orientation", "speed": 24.0}]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_r7o4u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_mf26l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_fpn0x")
+}],
+"loop": 1,
+"name": &"Atk_l2_Orientation",
+"speed": 24.0
+}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_exp"]
-animations = [{"frames": [{"duration": 1.0, "texture": null}], "loop": false, "name": &"Atk_l2_Explosion", "speed": 24.0}]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_kyh16")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_u45tn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wgnwi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_vlq37")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_t8ann")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_vvn58")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_h1vwb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_141lu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_2m11b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_c8tl6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_erf7y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_l2h0p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_wyukk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_gbm4u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_hschx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_henrm")
+}],
+"loop": 0,
+"name": &"Atk_l2_Explosion",
+"speed": 24.0
+}]
 
-[node name="AtkL2LightTarget" type="Area2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_702tw"]
+radius = 30.016663
+
+[node name="AtkL2LightTarget" type="Area2D" unique_id=1473229023]
 script = ExtResource("1_mvk1h")
 
-[node name="SpriteOrientation" type="AnimatedSprite2D" parent="."]
-animation = &"Atk_l2_Orientation"
-frame = 0
+[node name="SpriteOrientation" type="AnimatedSprite2D" parent="." unique_id=687722122]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_abc")
+animation = &"Atk_l2_Orientation"
 
-[node name="SpriteExplosion" type="AnimatedSprite2D" parent="."]
-animation = &"Atk_l2_Explosion"
-frame = 0
+[node name="SpriteExplosion" type="AnimatedSprite2D" parent="." unique_id=1589099274]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_exp")
+animation = &"Atk_l2_Explosion"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="." unique_id=932763548]
+shape = SubResource("CircleShape2D_702tw")
 disabled = true
-polygon = PackedVector2Array(0, 0, 30, 0, 15, 15)

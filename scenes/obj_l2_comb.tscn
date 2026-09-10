@@ -35,8 +35,9 @@ animations = [{
 radius = 15.0
 
 [node name="ObjAtkl2Comb" type="Area2D" unique_id=125393339]
+script = ExtResource("1_l2comb")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=356972715]
+[node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=356972715]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_702tw")
 animation = &"Bronze"

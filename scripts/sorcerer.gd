@@ -12,6 +12,13 @@ var is_jumping: bool = false
 @export var jump_impulse_min: int = 600 # saut minimal
 @export var jump_impulse_max: int = 5000 # saut maximal
 @export var fall_acceleration: int = 3000
+
+# --- Wall slide / Wall jump ---
+@export var wall_slide_max_fall_speed: int = 150 # vitesse de chute max pendant une glissade contre un mur
+@export var wall_slide_max_duration: float = 0.5 # durée max de la glissade ralentie (ensuite on re-chute normalement)
+@export var wall_jump_impulse: int = 900 # impulsion verticale fixe du wall jump (plus haut que jump_impulse_min)
+@export var wall_jump_horizontal_impulse: int = 500 # impulsion horizontale de base, opposée au mur
+@export var wall_jump_stick_influence: float = 0.4 # à quel point le stick modifie la direction du wall jump
 @export var sorcerer_color: GlobalEnum.SorcererColor
 var controller_id: int = 0
 
@@ -67,6 +74,12 @@ var tube_buttons_prev := {
 var spells: Dictionary = {}
 
 var is_jump_long_press: bool = false
+
+# --- Wall slide / Wall jump ---
+var is_wall_sliding: bool = false # vrai pendant une glissade contre un mur
+var wall_slide_timer: float = 0.0 # temps de glissade accumulé pour la durée max
+var jump_button_prev: bool = false # état du bouton A à la frame précédente (front montant pour le wall jump)
+var last_wall_jump_side: int = 0 # côté du mur du dernier wall jump (-1 = mur à gauche, +1 = mur à droite) ; 0 = réarmé (sol touché)
 
 var current_state: GlobalEnum.State = GlobalEnum.State.IDLE
 
@@ -166,7 +179,7 @@ func _process(_delta: float) -> void:
 			else:
 				fire_attack(2)
 
-	if can_dash and not is_dashing:
+	if can_dash and not is_dashing and _get_own_light_target() == null:
 		if Input.is_joy_button_pressed(controller_id, JOY_BUTTON_LEFT_SHOULDER):
 			start_dash()
 			
@@ -188,6 +201,17 @@ func _physics_process(delta: float) -> void:
 		if dash_trail_accumulator >= dash_trail_interval:
 			dash_trail_accumulator = 0.0
 			spawn_dash_afterimage()
+		return
+
+	# Ciblage L2 en cours : le sorcier est immobile (c'est la cible qui est
+	# pilotée par le stick), mais la gravité continue s'il était en l'air.
+	# Le second appui sur le tube L2 (explosion) reste géré dans _process/fire_attack.
+	if _get_own_light_target() != null:
+		velocity.x = 0
+		if not is_on_floor():
+			velocity.y += fall_acceleration * delta
+		move_and_slide()
+		set_state(GlobalEnum.State.FALL if not is_on_floor() else GlobalEnum.State.IDLE)
 		return
 
 	# Mouvements horizontaux
@@ -226,15 +250,68 @@ func _physics_process(delta: float) -> void:
 			var jump_boost = (jump_impulse_max - jump_impulse_min) * (1 - t) * delta
 			velocity.y -= jump_boost
 
-	# Gravité
+	# Détection du mur (1A) : on cherche une collision quasi verticale
+	# (normale horizontale) pour connaître le côté du mur.
+	# is_on_wall() reflète le move_and_slide de la frame précédente.
+	var wall_side := 0
+	if not is_on_floor() and is_on_wall():
+		for i in get_slide_collision_count():
+			var normal := get_slide_collision(i).get_normal()
+			if abs(normal.x) > 0.7 and abs(normal.y) < 0.5:
+				# normale pointant vers la droite → mur à notre gauche, et inversement
+				wall_side = -1 if normal.x > 0 else 1
+				break
+
+	# Glissade (1A) : en l'air, collé au mur, stick poussé vers le mur.
+	# La glissade ralentie est limitée dans le temps : au-delà de
+	# wall_slide_max_duration on re-chute normalement (le wall jump reste possible).
+	var axis_x := Input.get_joy_axis(controller_id, JOY_AXIS_LEFT_X)
+	var touching_wall := wall_side != 0 and axis_x * wall_side > 0.2 and velocity.y > 0
+	if touching_wall:
+		wall_slide_timer += delta
+	else:
+		wall_slide_timer = 0.0 # on repose le compteur dès qu'on quitte le mur
+	is_wall_sliding = touching_wall and wall_slide_timer <= wall_slide_max_duration
+
+	# Gravité (réduite pendant la glissade : la chute est plafonnée)
 	if not is_on_floor():
-		velocity.y += fall_acceleration * delta
+		if is_wall_sliding:
+			velocity.y = min(velocity.y + fall_acceleration * delta, wall_slide_max_fall_speed)
+		else:
+			velocity.y += fall_acceleration * delta
+
+	# Wall jump (2B/3B/4) : A en l'air au contact d'un mur.
+	# Front montant uniquement : maintenir A ne déclenche pas le wall jump,
+	# il faut un nouvel appui (sinon un saut au sol suivi du maintien de A
+	# contre un mur redéclencherait un wall jump automatiquement).
+	var jump_button_pressed := Input.is_joy_button_pressed(controller_id, JOY_BUTTON_A)
+	var jump_button_just_pressed := jump_button_pressed and not jump_button_prev
+	jump_button_prev = jump_button_pressed
+	if not is_on_floor() and wall_side != 0 and jump_button_just_pressed:
+		# 2B : un seul wall jump par mur — l'autre mur ou le sol réarme
+		if last_wall_jump_side != wall_side:
+			last_wall_jump_side = wall_side
+
+			# 4 : impulsion diagonale opposée au mur, légèrement modulée par le stick.
+			# Pousser plus loin du mur écarte la trajectoire, pousser vers le mur la resserre,
+			# mais impossible de sauter DANS le mur.
+			var jump_h := float(-wall_side)
+			if abs(axis_x) > 0.2:
+				jump_h = clampf(jump_h + axis_x * wall_jump_stick_influence, -1.0, 1.0)
+
+			velocity.x = jump_h * wall_jump_horizontal_impulse
+			velocity.y = -wall_jump_impulse
+			# 3B : impulsion fixe, on bloque le nuancier (pas de boost en maintenant A)
+			is_jump_long_press = true
+			jump_pressed_time = max_jump_time
+			set_state(GlobalEnum.State.JUMP)
 
 	# Physique
 	move_and_slide()
 
 	# Mise à jour des états
 	if is_on_floor():
+		last_wall_jump_side = 0 # le sol réarme le wall jump (2B)
 		if abs(velocity.x) > 0:
 			set_state(GlobalEnum.State.RUN)
 		else:
@@ -387,6 +464,12 @@ func fire_attack(tube_index: int) -> void:
 	
 	var attack_type: int = spell["attack_type"]
 	var attack_tier: int = spell["attack_tier"]
+	
+	# Pendant un ciblage L2, le sorcier est figé et seul le second appui
+	# sur le tube L2 (déclenchement de l'explosion) est autorisé
+	var targeting := _get_own_light_target() != null
+	if targeting and attack_type != GlobalEnum.AttackType.L2:
+		return
 	
 	# Cible lumineuse L2 : le 2e appui déclenche l'explosion du curseur
 	if attack_type == GlobalEnum.AttackType.L2:

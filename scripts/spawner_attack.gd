@@ -137,7 +137,7 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 		GlobalEnum.AttackType.L2:
 			var light_target: AttackLightTarget = lighttarget_scene.instantiate()
 			light_target.position = player_position
-			light_target.tier_scale = 1.0 + (int_attack_tier - 1) * 0.5
+			light_target.tier_scale = 1.0 + (int_attack_tier - 1) * 3.0
 			light_target.scale = Vector2(light_target.tier_scale, light_target.tier_scale)
 			light_target.caster = caster
 			spawn_list.append(light_target)

@@ -627,9 +627,27 @@ func hit(damage: int) -> void:
 
 func die() -> void:
 	export_data()
-	# TEMPORAIRE : retour à l'écran d'accueil à la mort
-	Global.goto_scene(GlobalEnum.Location.HOMEPAGE)
+	# Le sorcier disparaît mais la partie continue tant qu'il reste au
+	# moins un joueur en vie : seul la mort de TOUS les joueurs ramène à
+	# l'écran d'accueil
 	queue_free()
+	if not _other_players_alive():
+		Global.goto_scene(GlobalEnum.Location.HOMEPAGE)
+
+
+# Y a-t-il encore au moins un joueur (autre que ce sorcier) en vie ?
+# Les joueurs morts ont été libérés (queue_free) : leur référence reste
+# dans PlayerManager.players mais est invalide, d'où le is_instance_valid.
+# La variable n'est volontairement PAS typée : assigner une instance
+# libérée à une variable typée plante avant même la vérification.
+func _other_players_alive() -> bool:
+	for id in PlayerManager.known_controllers:
+		if id == controller_id:
+			continue
+		var player = PlayerManager.players.get(id)
+		if player != null and is_instance_valid(player) and player.is_inside_tree():
+			return true
+	return false
 
 
 func export_data() -> void :

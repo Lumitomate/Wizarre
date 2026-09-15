@@ -6,12 +6,21 @@ signal save_data
 func _ready() -> void:
 	# Spawn les joueurs via PlayerManager
 	PlayerManager.spawn_all_players(self)
+	# Manette branchée en cours de partie : son joueur apparaît directemement
+	PlayerManager.player_added.connect(_on_player_added)
 	# Mode boutique activé pour tous les joueurs de cette scène
 	for controller_id in PlayerManager.known_controllers:
 		var player: Sorcerer = PlayerManager.players.get(controller_id)
 		if player != null:
 			player.in_shop = true
 	$ShopDoor.play()
+
+
+func _on_player_added(controller_id: int) -> void:
+	PlayerManager.spawn_player(self, controller_id)
+	var player: Sorcerer = PlayerManager.players.get(controller_id)
+	if player != null:
+		player.in_shop = true
 
 
 func goto_level():

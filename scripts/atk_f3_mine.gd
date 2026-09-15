@@ -13,8 +13,10 @@ enum Phase { IDLE, FALL, EXPLODE }
 @export var fall_speed: float = 600.0
 @export var tier_scale: float = 1.0
 
+
 var caster: Node2D = null
 var phase: Phase = Phase.IDLE
+var _ground_y := 0.0
 
 const IDLE_ANIM = "Idle"
 const FALL_ANIM = "Chute"
@@ -41,8 +43,9 @@ const FRAME_HITBOX = {
 	]
 }
 
-# Échelle de la mine selon le tier (ajustable)
-# S'applique au sprite ET à la hitbox (scale du nœud racine)
+# Échelle de l'explosion selon le tier (ajustable)
+# Appliqué au démarrage de l'explosion au nœud racine : met à l'échelle
+# le sprite d'explosion ET la hitbox, sans toucher à la mine idle/chute
 const TIER_SCALE = {
 	1: 0.8,   # tier I  : petite explosion
 	2: 2.5,   # tier II : moyenne
@@ -57,16 +60,31 @@ func _ready() -> void:
 	add_to_group("fire_mine_group")
 	collision_shape.disabled = true
 	body_entered.connect(_on_body_entered)
-	sprite.play(IDLE_ANIM)
+	# Si setup_tier a déjà lancé l'animation idle du tier (appel avant
+	# l'entrée dans l'arbre), on ne l'écrase pas avec l'anim par défaut
+	if not sprite.is_playing():
+		sprite.play(IDLE_ANIM)
 
 
 func setup_tier(tier: int) -> void:
 	tier_scale = TIER_SCALE.get(tier, 1.0)
-	# Met le nœud entier (sprite + hitbox) à l'échelle du tier
-	scale = Vector2(tier_scale, tier_scale)
+	# Le tier n'affecte NI la mine posée NI la chute : seul le scale est
+	# mémorisé ici et appliqué au moment de l'explosion (_start_explosion)
+	# setup_tier est appelée par le spawner AVANT l'entrée dans l'arbre :
+	# @onready n'a pas encore initialisé `sprite`, on le récupère à la main
+	if sprite == null:
+		sprite = get_node_or_null("AnimatedSprite2D")
+		if sprite == null:
+			push_error("AttackFireMine: noeud AnimatedSprite2D introuvable")
+			return
+	# Joue l'animation Idle du tier (définie dans la scène)
+	var anim_name := "Idle_%d" % tier
+	if sprite.sprite_frames != null and sprite.sprite_frames.has_animation(anim_name):
+		sprite.play(anim_name)
+	else:
+		sprite.play(IDLE_ANIM)
 
 
-# Appelée par le sorcerer au 2e appui : la mine se détache et tombe
 func explode() -> void:
 	if phase != Phase.IDLE:
 		return
@@ -91,14 +109,16 @@ func _physics_process(delta: float) -> void:
 	)
 	var hit := space.intersect_ray(query)
 	if hit:
-		# Pose le centre de la mine à demi-hauteur au-dessus du sol
-		global_position.y = hit.position.y - _half_height()
+		# Mémorise le sol et pose le centre de la mine à demi-hauteur au-dessus
+		_ground_y = hit.position.y
+		global_position.y = _ground_y - _half_height()
 		_start_explosion()
 	else:
 		global_position.y += dist
 
 
-# Demi-hauteur actuelle du sprite (en coordonnées globales, tier inclus)
+# Demi-hauteur actuelle du sprite (le sprite n'est jamais mis à l'échelle
+# pendant idle/chute : global_scale reste à 1)
 func _half_height() -> float:
 	var tex := sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
 	var height := tex.get_height() if tex != null else 32
@@ -107,6 +127,13 @@ func _half_height() -> float:
 
 func _start_explosion() -> void:
 	phase = Phase.EXPLODE
+	# Le scale du tier est appliqué uniquement ici : sprite d'explosion
+	# et hitbox grossissent, la mine posée/chute restait à taille normale
+	scale = Vector2(tier_scale, tier_scale)
+	# Recale la BASE du feu (bas du canvas) exactement sur le sol :
+	# le scale s'applique autour du centre du sprite, sans ce recalage la
+	# base flotterait (tier < 1) ou s'enfoncerait (tier > 1)
+	global_position.y = _ground_y - _half_height()
 	sprite.frame_changed.connect(_on_frame_changed)
 	sprite.animation_finished.connect(_on_animation_finished)
 	if sprite.sprite_frames != null and sprite.sprite_frames.has_animation(EXPLOSION_ANIM):
@@ -123,7 +150,7 @@ func _on_frame_changed() -> void:
 func _update_hitbox(current_frame: int) -> void:
 	collision_shape.disabled = false
 	# Points en coordonnées locales : le scale du nœud racine
-	# (fixé par setup_tier) les met automatiquement à l'échelle
+	# (fixé par _start_explosion) les met automatiquement à l'échelle
 	collision_shape.polygon = _get_points_for_frame(current_frame)
 
 

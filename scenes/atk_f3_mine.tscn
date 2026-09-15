@@ -46,6 +46,60 @@
 [ext_resource type="Texture2D" uid="uid://gt4l88k7v4oc" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Explosion/Atk_F3_Mine_Epxlosion28.png" id="44_tex"]
 [ext_resource type="Texture2D" uid="uid://ca0bf4mowwf73" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Explosion/Atk_F3_Mine_Epxlosion29.png" id="45_tex"]
 [ext_resource type="Texture2D" uid="uid://bxlk664idtnch" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Explosion/Atk_F3_Mine_Epxlosion30.png" id="46_tex"]
+[ext_resource type="Texture2D" uid="uid://gicatsvkgcjr" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_1.png" id="47_tex"]
+[ext_resource type="Texture2D" uid="uid://dmilouqbxd78y" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_2.png" id="48_tex"]
+[ext_resource type="Texture2D" uid="uid://bxj0i06mgskyi" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_3.png" id="49_tex"]
+[ext_resource type="Texture2D" uid="uid://yd8gfoqmf1gy" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_4.png" id="50_tex"]
+[ext_resource type="Texture2D" uid="uid://cjtpakl5swhw4" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_5.png" id="51_tex"]
+[ext_resource type="Texture2D" uid="uid://bau5fx3tjy77u" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_6.png" id="52_tex"]
+[ext_resource type="Texture2D" uid="uid://b4d4vjiwkygq5" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_7.png" id="53_tex"]
+[ext_resource type="Texture2D" uid="uid://dkojhubykrjhu" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_8.png" id="54_tex"]
+[ext_resource type="Texture2D" uid="uid://buy83ga4pi1gi" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_9.png" id="55_tex"]
+[ext_resource type="Texture2D" uid="uid://7g1uvb4gr5ma" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_10.png" id="56_tex"]
+[ext_resource type="Texture2D" uid="uid://sv05r6dwlxif" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_11.png" id="57_tex"]
+[ext_resource type="Texture2D" uid="uid://bnvyu6p8n3sqr" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_12.png" id="58_tex"]
+[ext_resource type="Texture2D" uid="uid://b2dbtjs5e3o3s" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_13.png" id="59_tex"]
+[ext_resource type="Texture2D" uid="uid://ba8syco1sdg7t" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_14.png" id="60_tex"]
+[ext_resource type="Texture2D" uid="uid://bxiivvtp5lyy7" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_15.png" id="61_tex"]
+[ext_resource type="Texture2D" uid="uid://cq4c4gf35i6j8" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_16.png" id="62_tex"]
+[ext_resource type="Texture2D" uid="uid://dkgumwjlxsw7b" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_17.png" id="63_tex"]
+[ext_resource type="Texture2D" uid="uid://basf5ldh2k46d" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_1/Atk_F3_MineIdle_18.png" id="64_tex"]
+[ext_resource type="Texture2D" uid="uid://il1jxc14f1o2" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_1.png" id="77_tex"]
+[ext_resource type="Texture2D" uid="uid://djxb686ypb4f5" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_2.png" id="78_tex"]
+[ext_resource type="Texture2D" uid="uid://clyo6vu43071d" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_3.png" id="79_tex"]
+[ext_resource type="Texture2D" uid="uid://cs2rmyiv34isd" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_4.png" id="80_tex"]
+[ext_resource type="Texture2D" uid="uid://dufpxffqm3tb0" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_5.png" id="81_tex"]
+[ext_resource type="Texture2D" uid="uid://b0hlho6dsxqcd" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_6.png" id="82_tex"]
+[ext_resource type="Texture2D" uid="uid://dde6nn3tj6khk" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_7.png" id="83_tex"]
+[ext_resource type="Texture2D" uid="uid://co3taeyxsavjc" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_8.png" id="84_tex"]
+[ext_resource type="Texture2D" uid="uid://d34tjie3plivc" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_9.png" id="85_tex"]
+[ext_resource type="Texture2D" uid="uid://b5c380twqcqgv" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_10.png" id="86_tex"]
+[ext_resource type="Texture2D" uid="uid://ctowk0oea7fq6" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_11.png" id="87_tex"]
+[ext_resource type="Texture2D" uid="uid://btni1la1pfnh6" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_12.png" id="88_tex"]
+[ext_resource type="Texture2D" uid="uid://coej02cq0ydlj" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_13.png" id="89_tex"]
+[ext_resource type="Texture2D" uid="uid://b3osy2wj7luml" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_14.png" id="90_tex"]
+[ext_resource type="Texture2D" uid="uid://cylkgaqulf2ew" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_15.png" id="91_tex"]
+[ext_resource type="Texture2D" uid="uid://dyjksxf183qx" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_16.png" id="92_tex"]
+[ext_resource type="Texture2D" uid="uid://csm3f1juuqol3" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_17.png" id="93_tex"]
+[ext_resource type="Texture2D" uid="uid://b4l5ms1hl4avk" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_2/Atk_F3_MineIdle_2_18.png" id="94_tex"]
+[ext_resource type="Texture2D" uid="uid://dprbqyjwnqgy2" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_1.png" id="107_tex"]
+[ext_resource type="Texture2D" uid="uid://ba2kaxf3lcdga" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_2.png" id="108_tex"]
+[ext_resource type="Texture2D" uid="uid://dmfmc2nvpwrri" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_3.png" id="109_tex"]
+[ext_resource type="Texture2D" uid="uid://n1xeb2cegq2t" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_4.png" id="110_tex"]
+[ext_resource type="Texture2D" uid="uid://ctv2svrf048sa" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_5.png" id="111_tex"]
+[ext_resource type="Texture2D" uid="uid://cer6xednoart5" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_6.png" id="112_tex"]
+[ext_resource type="Texture2D" uid="uid://mtikw0cirj6d" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_7.png" id="113_tex"]
+[ext_resource type="Texture2D" uid="uid://4xby3paake8x" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_8.png" id="114_tex"]
+[ext_resource type="Texture2D" uid="uid://sfd1ebuw0ws6" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_9.png" id="115_tex"]
+[ext_resource type="Texture2D" uid="uid://c7rwquliqb15e" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_10.png" id="116_tex"]
+[ext_resource type="Texture2D" uid="uid://dk54e3do6xpi7" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_11.png" id="117_tex"]
+[ext_resource type="Texture2D" uid="uid://c4oax0e3omnsv" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_12.png" id="118_tex"]
+[ext_resource type="Texture2D" uid="uid://486etyxvyeuk" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_13.png" id="119_tex"]
+[ext_resource type="Texture2D" uid="uid://u32evvs06w1y" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_14.png" id="120_tex"]
+[ext_resource type="Texture2D" uid="uid://bqk1rrsmidyld" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_15.png" id="121_tex"]
+[ext_resource type="Texture2D" uid="uid://bm0wu6pthgi8m" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_16.png" id="122_tex"]
+[ext_resource type="Texture2D" uid="uid://cs7k2fb0lusgp" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_17.png" id="123_tex"]
+[ext_resource type="Texture2D" uid="uid://bqtyv3hx3plqk" path="res://assets/sprites/Attaques/Feu/AtkF3_Mine/AtkF3_Mine_Idle/Atk_F3_MineIdle_3/Atk_F3_MineIdle_3_18.png" id="124_tex"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mine"]
 animations = [{
@@ -198,6 +252,183 @@ animations = [{
 "loop": 1,
 "name": &"Idle",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("47_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_tex")
+}],
+"loop": 1,
+"name": &"Idle_1",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("77_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("86_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("91_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_tex")
+}],
+"loop": 1,
+"name": &"Idle_2",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("107_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("114_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("115_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("116_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("117_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("118_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("119_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("120_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("121_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("122_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("123_tex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("124_tex")
+}],
+"loop": 1,
+"name": &"Idle_3",
+"speed": 24.0
 }]
 
 [node name="AtkF3Mine" type="Area2D" unique_id=1792054158]
@@ -207,7 +438,7 @@ script = ExtResource("1_script")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2078534375]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_mine")
-animation = &"Idle"
+animation = &"Idle_1"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=745591662]
 polygon = PackedVector2Array(3, 76, 0, 76, -3, 76, -2, 74, 0, 74, 2, 74)

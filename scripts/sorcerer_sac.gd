@@ -8,6 +8,8 @@ var spell_icons: Array[AnimatedSprite2D] = []  # Icônes positionnées dans la s
 var icon_base_y: Array[float] = []  # Position Y initiale des icônes (définie dans la scène)
 var grow_states: Array[int] = [0, 0, 0]  # 0=idle, 1=sorti (fin de Grow), -1=reverse en cours
 
+@export var tube_close_delay: float = 0.5 # délai avant qu'un tube échangé en boutique se referme
+
 # Montée de l'icône (px) synchronisée avec l'anim du tube
 const ICON_RISE := 15.0
 
@@ -186,6 +188,23 @@ func set_spell(tube_index: int, attack_type: int, attack_tier: int) -> void:
 	# Met à jour l'icône du sort affichée dans le tube
 	_update_spell_icon(tube_index)
 	spell_changed.emit(tube_index)
+	
+	# En boutique : après l'échange (objet attrapé), le tube se referme
+	# tout seul après un court délai, et se désélectionne (il faudra
+	# réactiver un tube pour échanger à nouveau)
+	var sorcerer = get_parent() as Sorcerer
+	if sorcerer != null and sorcerer.in_shop:
+		get_tree().create_timer(tube_close_delay).timeout.connect(
+			_close_tube_after_swap.bind(tube_index)
+		)
+
+func _close_tube_after_swap(tube_index: int) -> void:
+	# Le sorcier peut avoir quitté la boutique (ou être mort) pendant le délai
+	if not is_inside_tree():
+		return
+	if selected_tube == tube_index:
+		selected_tube = -1
+	play_reverse_anim(tube_index)
 
 func get_spell(tube_index: int) -> Dictionary:
 	if tube_index < 0 or tube_index >= 3:

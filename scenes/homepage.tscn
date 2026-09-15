@@ -260,7 +260,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("51_w8h12")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Reflet",
 "speed": 64.0
 }]
@@ -302,7 +302,7 @@ texture = ExtResource("53_jier3")
 
 [node name="TeleportZone" parent="." unique_id=1682075255 instance=ExtResource("56_xg2ep")]
 position = Vector2(1642.8569, 1295.7142)
-scale = Vector2(60, 2)
+scale = Vector2(70, 2.333)
 destination = 1
 
 [node name="map1_elevator" parent="." unique_id=1462650855 instance=ExtResource("57_dahfi")]

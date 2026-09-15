@@ -253,7 +253,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("62_6bu3f")
 }],
-"loop": false,
+"loop": 0,
 "name": &"atk_f2_grow",
 "speed": 60.0
 }, {
@@ -270,7 +270,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("60_n4h4i")
 }],
-"loop": true,
+"loop": 1,
 "name": &"atk_f2_t3_idle",
 "speed": 24.0
 }]
@@ -288,9 +288,11 @@ frame = 61
 frame_progress = 1.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=933252200]
+visible = false
 position = Vector2(-71, -3)
 rect = Rect2(-36, -223, 116, 451)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=745591661]
+visible = false
 position = Vector2(9.5, 0)
 polygon = PackedVector2Array(-116, -225, -116, 225, -45, 193, -10, 124, 0, 0, -10, -124, -45, -193)

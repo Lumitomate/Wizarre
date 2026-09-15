@@ -672,9 +672,9 @@ position = Vector2(-0.5, 2)
 texture_filter = 1
 material = SubResource("ShaderMaterial_34bfb")
 sprite_frames = SubResource("SpriteFrames_6urby")
-animation = &"walk_yellow"
-frame = 10
-frame_progress = 0.00567166
+animation = &"fall_yellow"
+frame = 3
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1715000558]
 position = Vector2(0, 1)

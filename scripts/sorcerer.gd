@@ -589,6 +589,8 @@ func hit(damage: int) -> void:
 
 func die() -> void:
 	export_data()
+	# TEMPORAIRE : retour à l'écran d'accueil à la mort
+	Global.goto_scene(GlobalEnum.Location.HOMEPAGE)
 	queue_free()
 
 

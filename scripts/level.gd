@@ -24,6 +24,8 @@ func _ready() -> void:
 
 	# Spawn players via PlayerManager
 	PlayerManager.spawn_all_players(self, {"lives": 3})
+	# Manette branchée en cours de partie : son joueur apparaît directemement
+	PlayerManager.player_added.connect(_on_player_added)
 
 	# Create HUD for each player
 	for controller_id in PlayerManager.known_controllers:
@@ -33,6 +35,11 @@ func _ready() -> void:
 	$AudioStreamPlayer.play()
 
 
+
+
+func _on_player_added(controller_id: int) -> void:
+	PlayerManager.spawn_player(self, controller_id, {"lives": 3})
+	add_player_hud(controller_id)
 
 
 func add_player_hud(controller_id):

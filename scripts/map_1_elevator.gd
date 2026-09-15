@@ -31,6 +31,10 @@ func get_frame_to_reach()-> int:
 	
 	var number_of_players_connected: int  = PlayerManager.known_controllers.size()
 	
+	# Aucune manette connectée : pas de joueurs, pas de division par zéro
+	if number_of_players_connected == 0:
+		return 0
+	
 	return number_of_players_in_the_elevator * NUMBER_OF_FRAME_ELEVATOR / number_of_players_connected
 
 

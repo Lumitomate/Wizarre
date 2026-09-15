@@ -26,6 +26,10 @@ const IDLE_ANIM = "Idle"
 const FALL_ANIM = "Chute"
 const EXPLOSION_ANIM = "Explosion"
 
+# Grossissement léger du sprite pendant la phase idle (la chute et
+# l'explosion reviennent à l'échelle 1 pour ne pas doubler le scale de tier)
+const IDLE_SCALE := 2
+
 # Couches physiques du sol (TileMap) pour le raycast de chute
 const GROUND_MASK := 4
 
@@ -68,6 +72,8 @@ func _ready() -> void:
 	# l'entrée dans l'arbre), on ne l'écrase pas avec l'anim par défaut
 	if not sprite.is_playing():
 		sprite.play(IDLE_ANIM)
+	# La mine idle est légèrement agrandie
+	sprite.scale = Vector2(IDLE_SCALE, IDLE_SCALE)
 
 
 func setup_tier(tier: int) -> void:
@@ -93,6 +99,8 @@ func explode() -> void:
 	if phase != Phase.IDLE:
 		return
 	phase = Phase.FALL
+	# La chute et l'explosion reprennent la taille d'origine du sprite
+	sprite.scale = Vector2.ONE
 	# Marque la mine comme "partie" : le sorcier ne la retrouvera plus
 	# et le verrou d'appui reste en place jusqu'au relâchement
 	if sprite.sprite_frames != null and sprite.sprite_frames.has_animation(FALL_ANIM):
@@ -154,7 +162,8 @@ func _ground_ray(dist: float) -> Dictionary:
 func _half_height() -> float:
 	var tex := sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
 	var height := tex.get_height() if tex != null else 32
-	return height * 0.5 * global_scale.y
+	# Le scale du SPRITE (agrandi en idle) s'ajoute au scale du nœud racine
+	return height * 0.5 * sprite.global_scale.y
 
 
 func _start_explosion() -> void:

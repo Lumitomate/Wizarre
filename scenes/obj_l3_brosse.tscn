@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://bqj3vr8tm5d2k"]
+
+[ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_l3brush"]
+[ext_resource type="Texture2D" uid="uid://j7pu13oxplwi" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/L3_Brosse/Obj_AtkL3_Brosse_1.png" id="2_1brush"]
+[ext_resource type="Texture2D" uid="uid://2o5qqer6jbdh" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/L3_Brosse/Obj_AtkL3_Brosse_2.png" id="3_2brush"]
+[ext_resource type="Texture2D" uid="uid://bq587anrh75w7" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/L3_Brosse/Obj_AtkL3_Brosse_3.png" id="4_3brush"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_702tw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_2brush")
+}],
+"loop": 1,
+"name": &"Argent",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1brush")
+}],
+"loop": 1,
+"name": &"Bronze",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_3brush")
+}],
+"loop": 1,
+"name": &"Or",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1rv7g"]
+radius = 15.0
+
+[node name="ObjAtkl3Brosse" type="Area2D" unique_id=125393340]
+script = ExtResource("1_l3brush")
+item_attack_family = 2
+item_attack_type = 11
+
+[node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=356972716]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_702tw")
+animation = &"Argent"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356963872]
+shape = SubResource("CircleShape2D_1rv7g")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

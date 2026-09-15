@@ -13,6 +13,7 @@ static var ice_spike_scene: PackedScene = preload("res://scenes/atk_g2_ice_spike
 static var ice_blade_scene: PackedScene = preload("res://scenes/atk_g3_blade.tscn")
 static var mine_scene: PackedScene = preload("res://scenes/atk_f3_mine.tscn")
 static var lighttarget_scene: PackedScene = preload("res://scenes/atk_l2_light_target.tscn")
+static var lightbow_scene: PackedScene = preload("res://scenes/atk_l3_light_bow.tscn")
 
 static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier, player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
 	
@@ -141,4 +142,12 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 			light_target.scale = Vector2(light_target.tier_scale, light_target.tier_scale)
 			light_target.caster = caster
 			spawn_list.append(light_target)
+		GlobalEnum.AttackType.L3:
+			# L'arc est planté sur le sorcier (comme la mine : coordonnées
+			# locales au Level, pas de scale à appliquer sur la position)
+			var light_bow: AttackLightBow = lightbow_scene.instantiate()
+			light_bow.position = player_position
+			light_bow.tier_scale = 1.0 + (int_attack_tier - 1) * 0.5
+			light_bow.caster = caster
+			spawn_list.append(light_bow)
 	return spawn_list

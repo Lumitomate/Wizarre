@@ -1,0 +1,163 @@
+[gd_scene format=3 uid="uid://bxkoe7wl01je"]
+
+[ext_resource type="Texture2D" uid="uid://chykad4hx18k7" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_1.png" id="1_er8r5"]
+[ext_resource type="Texture2D" uid="uid://iibx5v0643w6" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_2.png" id="2_poasw"]
+[ext_resource type="Texture2D" uid="uid://ky0tkdafa2tx" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_3.png" id="3_0scwx"]
+[ext_resource type="Texture2D" uid="uid://dycmgc5x07xya" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_4.png" id="4_xo0uf"]
+[ext_resource type="Texture2D" uid="uid://b3db4a73meju5" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_5.png" id="5_qkhas"]
+[ext_resource type="Texture2D" uid="uid://ccqgjsgq26iie" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_6.png" id="6_n2yfo"]
+[ext_resource type="Texture2D" uid="uid://dofdiovgog5fj" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_7.png" id="7_cneu7"]
+[ext_resource type="Texture2D" uid="uid://c1kpdnyjqbmqv" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_8.png" id="8_k5vi8"]
+[ext_resource type="Texture2D" uid="uid://b0l4bcnm30fiw" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_9.png" id="9_0ajvm"]
+[ext_resource type="Texture2D" uid="uid://ca8ff3fofhl3f" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_10.png" id="10_1tkic"]
+[ext_resource type="Texture2D" uid="uid://b8fwxpb24xhk8" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_11.png" id="11_uyttj"]
+[ext_resource type="Texture2D" uid="uid://0nmatj47ihnc" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_12.png" id="12_u8a34"]
+[ext_resource type="Texture2D" uid="uid://b7igmbe3imye3" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_13.png" id="13_vgl3l"]
+[ext_resource type="Texture2D" uid="uid://ifdaa6u457vg" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_14.png" id="14_e4lui"]
+[ext_resource type="Texture2D" uid="uid://h0qy0otvl8fg" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_15.png" id="15_g8tea"]
+[ext_resource type="Texture2D" uid="uid://ci3b03sav2vn0" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_16.png" id="16_1wgoq"]
+[ext_resource type="Texture2D" uid="uid://b583xgivw0e7u" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_17.png" id="17_yj3q1"]
+[ext_resource type="Texture2D" uid="uid://0cbfceahwh4m" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_18.png" id="18_d73e5"]
+[ext_resource type="Texture2D" uid="uid://busihksrtuvi5" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_19.png" id="19_pmx0o"]
+[ext_resource type="Texture2D" uid="uid://bb43vqggi2ngr" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_20.png" id="20_kwyla"]
+[ext_resource type="Texture2D" uid="uid://doc56apir0gqn" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_21.png" id="21_ktf1h"]
+[ext_resource type="Texture2D" uid="uid://b7x6fwks5rwm0" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_22.png" id="22_wsnmo"]
+[ext_resource type="Texture2D" uid="uid://5ufyc0svidn0" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_23.png" id="23_uef1v"]
+[ext_resource type="Texture2D" uid="uid://cgw0ga554m7rw" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Grow/AtkL3_LightBow_Grow_24.png" id="24_wpw5l"]
+[ext_resource type="Texture2D" uid="uid://cwcw2xmmk2uiy" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Bend/AtkL3_LightBow_Bend_1.png" id="25_3phgj"]
+[ext_resource type="Texture2D" uid="uid://cfruakylxtorp" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Bend/AtkL3_LightBow_Bend_2.png" id="26_ktt7l"]
+[ext_resource type="Texture2D" uid="uid://c2sj4nd3vyv2x" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Bend/AtkL3_LightBow_Bend_3.png" id="27_h2h4g"]
+[ext_resource type="Texture2D" uid="uid://duo580mwaiutb" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Bend/AtkL3_LightBow_Bend_4.png" id="28_efspd"]
+[ext_resource type="Texture2D" uid="uid://d1t0el6xoflbr" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Bend/AtkL3_LightBow_Bend_5.png" id="29_st087"]
+[ext_resource type="Texture2D" uid="uid://r6er1ua84njn" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Bend/AtkL3_LightBow_Bend_6.png" id="30_a2qll"]
+[ext_resource type="Texture2D" uid="uid://i8tyg5wvc5l4" path="res://assets/sprites/Attaques/Lumiere/AtkL3_LightBow/AtkL3_LightBow_Point/AtkL3_LightBow_Point1.png" id="31_8fyhc"]
+[ext_resource type="Script" uid="uid://bgboq1rflv4v1" path="res://scripts/atk_l3_light_bow.gd" id="32_script"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_702tw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_wpw5l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_uef1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_wsnmo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_ktf1h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_kwyla")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_pmx0o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_d73e5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_yj3q1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_1wgoq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_g8tea")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_e4lui")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_vgl3l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_u8a34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_uyttj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_1tkic")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_0ajvm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_k5vi8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_cneu7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_n2yfo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qkhas")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xo0uf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_0scwx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_poasw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_er8r5")
+}],
+"loop": 1,
+"name": &"AtkL3_LightBow_arrow",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1rv7g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("25_3phgj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_ktt7l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_h2h4g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_efspd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_st087")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_a2qll")
+}],
+"loop": 1,
+"name": &"AtkL3_LightBow_Bend",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_702tw"]
+size = Vector2(127, 10)
+
+[node name="AtkL3LightBow" type="Area2D" unique_id=1446769287]
+script = ExtResource("32_script")
+
+[node name="AnimatedSprite2D_Arrow" type="AnimatedSprite2D" parent="." unique_id=1818346967]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_702tw")
+animation = &"AtkL3_LightBow_arrow"
+
+[node name="AnimatedSprite2D_Bow" type="AnimatedSprite2D" parent="." unique_id=1975226482]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_1rv7g")
+animation = &"AtkL3_LightBow_Bend"
+
+[node name="Sprite2D_Point" type="Sprite2D" parent="." unique_id=2038143611]
+texture = ExtResource("31_8fyhc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=79776241]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_702tw")

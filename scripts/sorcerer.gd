@@ -381,6 +381,8 @@ func stop_dash_on_collision() -> void:
 
 
 func start_dash() -> void:
+	# Dasher pendant un ciblage d'arc L3 annule l'attaque (munition rendue)
+	_cancel_light_bow()
 	is_dashing = true
 	can_dash = false
 	dash_invincible = true
@@ -465,19 +467,34 @@ func fire_attack(tube_index: int) -> void:
 	var attack_type: int = spell["attack_type"]
 	var attack_tier: int = spell["attack_tier"]
 	
-	# Pendant un ciblage L2, le sorcier est figé et seul le second appui
-	# sur le tube L2 (déclenchement de l'explosion) est autorisé
-	var targeting := _get_own_light_target() != null
-	if targeting and attack_type != GlobalEnum.AttackType.L2:
+	# Pendant un ciblage (L2 ou L3), le sorcier ne peut pas lancer une autre
+	# attaque : seul le second appui sur le tube du ciblage en cours est
+	# autorisé (le L3 reste libre de ses mouvements, lui)
+	var own_light_target := _get_own_light_target()
+	var own_light_bow := _get_own_light_bow()
+	if own_light_bow != null and attack_type != GlobalEnum.AttackType.L3:
+		return
+	if own_light_target != null and attack_type != GlobalEnum.AttackType.L2:
 		return
 	
 	# Cible lumineuse L2 : le 2e appui déclenche l'explosion du curseur
 	if attack_type == GlobalEnum.AttackType.L2:
-		var light_target := _get_own_light_target()
+		var light_target := own_light_target
 		if light_target != null:
 			light_target.start_explosion()
 			fire_wait_release[tube_index] = true
 			return
+
+	# Arc lumineux L3 : le 2e appui tire la flèche
+	if attack_type == GlobalEnum.AttackType.L3 and own_light_bow != null:
+		if not own_light_bow.try_shoot():
+			# Tir annulé (sorcier trop proche de l'arc) : l'arc disparaît
+			# et la munition du tube est rendue
+			add_energy(tube_index, 1)
+		# Verrou de relâchement : éviter un nouveau tir tant que le bouton
+		# est maintenu
+		fire_wait_release[tube_index] = true
+		return
 
 	# Mine posée en idle par ce joueur : le 2e appui déclenche la chute
 	# et l'explosion au lieu de poser une nouvelle mine (sans consommer d'énergie)
@@ -550,6 +567,27 @@ func _get_own_light_target() -> AttackLightTarget:
 		if target != null and target.caster == self and target.phase == AttackLightTarget.Phase.TARGETING:
 			return target
 	return null
+
+# Cherche l'arc lumineux planté par CE joueur encore en phase TARGETING
+func _get_own_light_bow() -> AttackLightBow:
+	for node in get_tree().get_nodes_in_group("light_bow_group"):
+		var bow := node as AttackLightBow
+		if bow != null and bow.caster == self and bow.phase == AttackLightBow.Phase.TARGETING:
+			return bow
+	return null
+
+# Annule l'arc lumineux planté par CE joueur et rend la munition du tube
+# qui le porte (le ciblage a déjà coûté 1 munition au 1er appui)
+func _cancel_light_bow() -> void:
+	var bow := _get_own_light_bow()
+	if bow == null:
+		return
+	for i in range(3):
+		var spell: Dictionary = spells[i]
+		if not spell.is_empty() and spell["attack_type"] == GlobalEnum.AttackType.L3:
+			add_energy(i, 1)
+			break
+	bow.cancel()
 
 func add_energy(tube_index: int, amount: int) -> void:
 	energy_counts[tube_index] += amount

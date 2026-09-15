@@ -13,16 +13,18 @@ var crown_object_scene: PackedScene 	= preload("res://scenes/obj_f2_crown.tscn")
 var scarf_object_scene: PackedScene 	= preload("res://scenes/obj_g2_scarf.tscn")
 var beanie_object_scene: PackedScene 	= preload("res://scenes/obj_g3_beanie.tscn")
 var belt_object_scene: PackedScene 	= preload("res://scenes/obj_f3_belt.tscn")
+var brush_object_scene: PackedScene 	= preload("res://scenes/obj_l3_brosse.tscn")
 
 # Type final de l'objet proposé par ce spawner (-1 = pas encore choisi)
 var chosen_object_type: int = -1
 
-# Les 9 types d'objets distincts proposables dans le magasin.
+# Les types d'objets distincts proposables dans le magasin.
 # (F0 Fireball n'a pas d'objet dédié : il est redirigé vers F1)
 const PROPOSABLE_TYPES := [
 	GlobalEnum.AttackType.F1, GlobalEnum.AttackType.F2, GlobalEnum.AttackType.F3,
 	GlobalEnum.AttackType.G1, GlobalEnum.AttackType.G2, GlobalEnum.AttackType.G3,
-	GlobalEnum.AttackType.L1, GlobalEnum.AttackType.L2, GlobalEnum.AttackType.P1, GlobalEnum.AttackType.P2,
+	GlobalEnum.AttackType.L1, GlobalEnum.AttackType.L2, GlobalEnum.AttackType.L3,
+	GlobalEnum.AttackType.P1, GlobalEnum.AttackType.P2,
 ]
 
 func _ready() -> void:
@@ -68,11 +70,14 @@ func _ready() -> void:
 		GlobalEnum.AttackType.L2:
 			attack_family = GlobalEnum.AttackFamily.Yellow
 			object_to_spawn_scene = preload("res://scenes/obj_l2_comb.tscn")
+		GlobalEnum.AttackType.L3:
+			attack_family = GlobalEnum.AttackFamily.Yellow
+			object_to_spawn_scene = brush_object_scene
 	
 	var object_to_spawn: AttackObject = object_to_spawn_scene.instantiate()
 	
 	object_to_spawn.item_attack_family = attack_family
-	object_to_spawn.item_attack_type = final_type
+	object_to_spawn.item_attack_type = final_type as GlobalEnum.AttackType
 	object_to_spawn.item_attack_tier = attack_tier
 	object_to_spawn.position = position
 	

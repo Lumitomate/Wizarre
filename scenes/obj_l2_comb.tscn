@@ -1,14 +1,15 @@
 [gd_scene format=3 uid="uid://boi6wj4tu8hns"]
 
 [ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_l2comb"]
-
-[ext_resource type="Texture2D" uid="uid://dbp5efdel2fey" path="res://assets/sprites/BouleDeFeu_V1.png" id="1_3r33m"]
+[ext_resource type="Texture2D" uid="uid://d2bxnje5yqnqc" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Obj_AtkL2_Peigne2.png" id="2_85dyg"]
+[ext_resource type="Texture2D" uid="uid://dxx1883bb545w" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Obj_AtkL2_Peigne1.png" id="3_nnylk"]
+[ext_resource type="Texture2D" uid="uid://cd2bdv5jnyp8u" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Obj_AtkL2_Peigne3.png" id="4_ch2ld"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_702tw"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_3r33m")
+"texture": ExtResource("2_85dyg")
 }],
 "loop": 1,
 "name": &"Argent",
@@ -16,7 +17,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_3r33m")
+"texture": ExtResource("3_nnylk")
 }],
 "loop": 1,
 "name": &"Bronze",
@@ -24,7 +25,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_3r33m")
+"texture": ExtResource("4_ch2ld")
 }],
 "loop": 1,
 "name": &"Or",
@@ -36,11 +37,15 @@ radius = 15.0
 
 [node name="ObjAtkl2Comb" type="Area2D" unique_id=125393339]
 script = ExtResource("1_l2comb")
+item_attack_family = 2
+item_attack_type = 10
 
 [node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=356972715]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_702tw")
-animation = &"Bronze"
+animation = &"Or"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356963871]
 shape = SubResource("CircleShape2D_1rv7g")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

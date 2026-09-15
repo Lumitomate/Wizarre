@@ -1,7 +1,7 @@
 class_name AttackFireWave
 extends AttackProjectile
 
-@export var speed: int = 1500
+@export var speed: int = 1000
 @export var tier_scale: float = 1.0
 
 var direction: Vector2 = Vector2.LEFT

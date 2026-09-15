@@ -1,7 +1,9 @@
 class_name AttackFireMine extends AttackProjectile
 
 # Mine de Feu (tier 3) — 3 phases :
-# 1. IDLE     : posée au-dessus du sorcier, animation "idle" en boucle
+# 1. IDLE     : posée au-dessus du sorcier, animation "idle" en boucle.
+#               Posée en l'air, elle descend doucement (lévitation)
+#               jusqu'au sol, puis s'y pose en attendant le 2e appui.
 # 2. FALL     : au 2e appui, animation "chute" et descente jusqu'au sol
 # 3. EXPLODE  : une fois le sol touché, animation "Explosion"
 #
@@ -11,12 +13,14 @@ class_name AttackFireMine extends AttackProjectile
 enum Phase { IDLE, FALL, EXPLODE }
 
 @export var fall_speed: float = 600.0
+@export var levitate_speed: float = 20.0  # vitesse de descente en l'air (phase idle)
 @export var tier_scale: float = 1.0
 
 
 var caster: Node2D = null
 var phase: Phase = Phase.IDLE
 var _ground_y := 0.0
+var _levitate_landed := false  # vrai une fois la mine posée au sol
 
 const IDLE_ANIM = "Idle"
 const FALL_ANIM = "Chute"
@@ -98,16 +102,32 @@ func explode() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if phase != Phase.FALL:
+	match phase:
+		Phase.IDLE:
+			_update_idle(delta)
+		Phase.FALL:
+			_update_fall(delta)
+		Phase.EXPLODE:
+			pass
+
+
+# Phase IDLE en l'air : descente lente vers le sol (lévitation). Une fois
+# posée, la mine reste en attente du 2e appui (qui déclenche la chute)
+func _update_idle(delta: float) -> void:
+	if _levitate_landed:
 		return
+	var hit := _ground_ray(levitate_speed * delta)
+	if hit:
+		# Pose la mine : base du sprite exactement sur le sol
+		global_position.y = hit.position.y - _half_height()
+		_levitate_landed = true
+	else:
+		global_position.y += levitate_speed * delta
+
+
+func _update_fall(delta: float) -> void:
 	var dist := fall_speed * delta
-	var space := get_world_2d().direct_space_state
-	var query := PhysicsRayQueryParameters2D.create(
-		global_position,
-		global_position + Vector2(0, dist + _half_height()),
-		GROUND_MASK
-	)
-	var hit := space.intersect_ray(query)
+	var hit := _ground_ray(dist)
 	if hit:
 		# Mémorise le sol et pose le centre de la mine à demi-hauteur au-dessus
 		_ground_y = hit.position.y
@@ -115,6 +135,18 @@ func _physics_process(delta: float) -> void:
 		_start_explosion()
 	else:
 		global_position.y += dist
+
+
+# Raycast vers le bas depuis la mine : renvoie le point de sol touché
+# dans la distance donnée (dictionnaire vide sinon)
+func _ground_ray(dist: float) -> Dictionary:
+	var space := get_world_2d().direct_space_state
+	var query := PhysicsRayQueryParameters2D.create(
+		global_position,
+		global_position + Vector2(0, dist + _half_height()),
+		GROUND_MASK
+	)
+	return space.intersect_ray(query)
 
 
 # Demi-hauteur actuelle du sprite (le sprite n'est jamais mis à l'échelle

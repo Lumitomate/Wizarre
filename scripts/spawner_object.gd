@@ -4,16 +4,17 @@ extends Node2D
 # spawners d'une même pièce se coordonnent pour ne jamais proposer
 # deux fois le même objet (voir _pick_unique_type).
 
-var medal_object_scene: PackedScene 	= preload("res://scenes/obj_f1_medal.tscn")
-var mirror_object_scene: PackedScene 	= preload("res://scenes/obj_l1_mirror.tscn")
-var mitten_object_scene: PackedScene 	= preload("res://scenes/obj_g1_mitten.tscn")
-var seeds_object_scene: PackedScene 	= preload("res://scenes/obj_p1_seeds.tscn")
-var jar_object_scene: PackedScene 	= preload("res://scenes/obj_p2_jar.tscn")
-var crown_object_scene: PackedScene 	= preload("res://scenes/obj_f2_crown.tscn")
-var scarf_object_scene: PackedScene 	= preload("res://scenes/obj_g2_scarf.tscn")
-var beanie_object_scene: PackedScene 	= preload("res://scenes/obj_g3_beanie.tscn")
-var belt_object_scene: PackedScene 	= preload("res://scenes/obj_f3_belt.tscn")
-var brush_object_scene: PackedScene 	= preload("res://scenes/obj_l3_brosse.tscn")
+var medal_object_scene: PackedScene 	= preload("res://scenes/objets/obj_f1_medal.tscn")
+var mirror_object_scene: PackedScene 	= preload("res://scenes/objets/obj_l1_mirror.tscn")
+var mitten_object_scene: PackedScene 	= preload("res://scenes/objets/obj_g1_mitten.tscn")
+var seeds_object_scene: PackedScene 	= preload("res://scenes/objets/obj_p1_seeds.tscn")
+var jar_object_scene: PackedScene 	= preload("res://scenes/objets/obj_p2_jar.tscn")
+var crown_object_scene: PackedScene 	= preload("res://scenes/objets/obj_f2_crown.tscn")
+var scarf_object_scene: PackedScene 	= preload("res://scenes/objets/obj_g2_scarf.tscn")
+var beanie_object_scene: PackedScene 	= preload("res://scenes/objets/obj_g3_beanie.tscn")
+var belt_object_scene: PackedScene 	= preload("res://scenes/objets/obj_f3_belt.tscn")
+var brush_object_scene: PackedScene 	= preload("res://scenes/objets/obj_l3_brosse.tscn")
+var comb_object_scene: PackedScene 	= preload("res://scenes/objets/obj_l3_brosse.tscn")
 
 # Type final de l'objet proposé par ce spawner (-1 = pas encore choisi)
 var chosen_object_type: int = -1
@@ -69,7 +70,7 @@ func _ready() -> void:
 			object_to_spawn_scene = belt_object_scene
 		GlobalEnum.AttackType.L2:
 			attack_family = GlobalEnum.AttackFamily.Yellow
-			object_to_spawn_scene = preload("res://scenes/obj_l2_comb.tscn")
+			object_to_spawn_scene = comb_object_scene
 		GlobalEnum.AttackType.L3:
 			attack_family = GlobalEnum.AttackFamily.Yellow
 			object_to_spawn_scene = brush_object_scene

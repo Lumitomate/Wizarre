@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bkndi1biawfd6"]
+
+[ext_resource type="Script" uid="uid://bcgarityltg4j" path="res://scripts/ammo.gd" id="1_ammo"]
+[ext_resource type="Texture2D" uid="uid://cwe723t7ko28t" path="res://assets/sprites/Munitions/Ammo/Ammo_Tainted.png" id="4_tainted"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ammo"]
+friction = 0.8
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
+radius = 14.0
+
+[node name="Ammo" type="RigidBody2D" unique_id=625880162 groups=["ammo_group"]]
+texture_filter = 1
+collision_layer = 2
+collision_mask = 12
+physics_material_override = SubResource("PhysicsMaterial_ammo")
+continuous_cd = 2
+script = ExtResource("1_ammo")
+ammo_type = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=801277673]
+texture = ExtResource("4_tainted")
+
+[node name="CoalPolygon" type="CollisionPolygon2D" parent="." unique_id=1626952918]
+polygon = PackedVector2Array(-9, -2, 5.5, -8, 8.5, -3, 0.5, 8.5)
+disabled = true
+
+[node name="PurePolygon" type="CollisionPolygon2D" parent="." unique_id=1129422663]
+polygon = PackedVector2Array(8, -8, 8, 8, -8, 8, -8, -8)
+disabled = true
+
+[node name="TaintedPolygon" type="CollisionPolygon2D" parent="." unique_id=1801103498]
+polygon = PackedVector2Array(-4, -8, 2.5, -8, 3.5, 8.5, -3, 8.5)
+
+[node name="PickupArea" type="Area2D" parent="." unique_id=398256093]
+collision_layer = 0
+
+[node name="PickupShape" type="CollisionShape2D" parent="PickupArea" unique_id=197243590]
+shape = SubResource("CircleShape2D_pickup")
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]

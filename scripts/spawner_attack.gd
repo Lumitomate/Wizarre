@@ -2,18 +2,18 @@ class_name AttackSpawner
 
 const SPRITE_SIZE = 64
 
-static var fireball_scene: PackedScene = preload("res://scenes/atk_f0_fireball.tscn")
-static var lightray_scene: PackedScene = preload("res://scenes/atk_l1_light_ray.tscn")
-static var firecolumn_scene: PackedScene = preload("res://scenes/atk_f1_fire_column.tscn")
-static var ice_ball_scene: PackedScene = preload("res://scenes/atk_g1_ice_ball.tscn")
-static var carnivorous_scene: PackedScene = preload("res://scenes/atk_p1_carnivorous_seed.tscn")
-static var plantball_scene: PackedScene = preload("res://scenes/atk_p2_explo.tscn")
-static var fire_wave_scene: PackedScene = preload("res://scenes/atk_f2_wave.tscn")
-static var ice_spike_scene: PackedScene = preload("res://scenes/atk_g2_ice_spike.tscn")
-static var ice_blade_scene: PackedScene = preload("res://scenes/atk_g3_blade.tscn")
-static var mine_scene: PackedScene = preload("res://scenes/atk_f3_mine.tscn")
-static var lighttarget_scene: PackedScene = preload("res://scenes/atk_l2_light_target.tscn")
-static var lightbow_scene: PackedScene = preload("res://scenes/atk_l3_light_bow.tscn")
+static var fireball_scene: PackedScene = preload("res://scenes/atk/atk_f0_fireball.tscn")
+static var lightray_scene: PackedScene = preload("res://scenes/atk/atk_l1_light_ray.tscn")
+static var firecolumn_scene: PackedScene = preload("res://scenes/atk/atk_f1_fire_column.tscn")
+static var ice_ball_scene: PackedScene = preload("res://scenes/atk/atk_g1_ice_ball.tscn")
+static var carnivorous_scene: PackedScene = preload("res://scenes/atk/atk_p1_carnivorous_seed.tscn")
+static var plantball_scene: PackedScene = preload("res://scenes/atk/atk_p2_explo.tscn")
+static var fire_wave_scene: PackedScene = preload("res://scenes/atk/atk_f2_wave.tscn")
+static var ice_spike_scene: PackedScene = preload("res://scenes/atk/atk_g2_ice_spike.tscn")
+static var ice_blade_scene: PackedScene = preload("res://scenes/atk/atk_g3_blade.tscn")
+static var mine_scene: PackedScene = preload("res://scenes/atk/atk_f3_mine.tscn")
+static var lighttarget_scene: PackedScene = preload("res://scenes/atk/atk_l2_light_target.tscn")
+static var lightbow_scene: PackedScene = preload("res://scenes/atk/atk_l3_light_bow.tscn")
 
 static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier, player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
 	

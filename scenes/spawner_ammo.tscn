@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/spawner_ammo.gd" id="1_ammo"]
+
+[sub_resource type="Gradient" id="Gradient_smoke"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.78, 0.78, 0.78, 0.9, 0.6, 0.6, 0.6, 0.5, 0.5, 0.5, 0.5, 0)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_smoke"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector3(0, -1, 0)
+spread = 35.0
+initial_velocity_min = 15.0
+initial_velocity_max = 45.0
+gravity = Vector3(0, -25, 0)
+scale_min = 0.6
+scale_max = 1.6
+color_ramp = SubResource("Gradient_smoke")
+
+[node name="SpawnerAmmo" type="Node2D"]
+script = ExtResource("1_ammo")
+
+[node name="Smoke" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 14
+lifetime = 0.7
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource("ParticleProcessMaterial_smoke")

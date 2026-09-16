@@ -14,7 +14,7 @@ var enemies_killed: int = 0
 var enemies_spawned: int = 0
 var level_start_time: int
 
-var player_info_scene: PackedScene = preload("res://scenes/hud_players_info.tscn")
+var player_info_scene: PackedScene = preload("res://scenes/hud/hud_players_info.tscn")
 
 
 func _ready() -> void:

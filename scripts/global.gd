@@ -4,9 +4,9 @@ var current_scene = null
 var number_of_players = null
 
 var scenes = {
-	GlobalEnum.Location.HOMEPAGE: "res://scenes/homepage.tscn",
-	GlobalEnum.Location.LEVEL: "res://scenes/level.tscn",
-	GlobalEnum.Location.SHOP: "res://scenes/shop.tscn"
+	GlobalEnum.Location.HOMEPAGE: "res://scenes/niveaux/terrain1/homepage.tscn",
+	GlobalEnum.Location.LEVEL: "res://scenes/niveaux/terrain1/level.tscn",
+	GlobalEnum.Location.SHOP: "res://scenes/niveaux/magasin/shop.tscn"
 }
 
 func _ready() -> void:

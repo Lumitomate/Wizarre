@@ -5,7 +5,7 @@ signal player_added(controller_id)
 var known_controllers: Array[int] = []
 var players = {}
 
-var sorcerer_scene: PackedScene = preload("res://scenes/sorcerer.tscn")
+var sorcerer_scene: PackedScene = preload("res://scenes/entities/players/sorcerer.tscn")
 
 
 func _ready():

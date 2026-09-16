@@ -230,7 +230,8 @@ func _on_animation_finished() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	# Ne touche jamais le lanceur, sinon il s'auto-détruirait en posant la mine
-	if body == caster:
-		return
+	# La mine blesse TOUS les joueurs, lanceur compris. La hitbox n'est
+	# active que pendant l'explosion (elle reste désactivée pendant les
+	# phases IDLE et FALL), donc poser la mine ne blesse personne en soi :
+	# seul le souffle de l'explosion fait des dégâts.
 	super._on_body_entered(body)

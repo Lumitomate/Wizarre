@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ammo_spawn_director.gd" id="1"]
+
+[node name="AmmoSpawnDirector" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Cycle" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="timeout" from="Cycle" to="." method="_on_cycle_timeout"]

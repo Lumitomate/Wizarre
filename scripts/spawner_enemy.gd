@@ -5,7 +5,7 @@ signal enemy_spawned
 @export var can_spawn: bool = true
 
 var players_in_range: Array[Sorcerer]
-var enemy_scene: PackedScene = preload("res://scenes/enemy_flying.tscn")
+var enemy_scene: PackedScene = preload("res://scenes/entities/ennemies/enemy_flying.tscn")
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("SpawnerApparition")

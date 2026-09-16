@@ -1,7 +1,7 @@
 class_name AttackCarnivorousSeed
 extends RigidBody2D
 
-@export var head_scene: PackedScene = preload("res://scenes/atk_p1_carnivorous_head.tscn")
+@export var head_scene: PackedScene = preload("res://scenes/atk/atk_p1_carnivorous_head.tscn")
 @export var grow_animation: String = "Grow"
 @export var idle_animation: String = "Idle"
 @export var idle_tier3_animation: String = "idle_tier3"

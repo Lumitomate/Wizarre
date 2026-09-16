@@ -42,7 +42,7 @@ var dash_direction: Vector2 = Vector2.RIGHT
 var dash_shader_material: ShaderMaterial
 var dash_trail_accumulator: float = 0.0
 
-var damage_label_scene: PackedScene = preload("res://scenes/hud_damage_label.tscn")
+var damage_label_scene: PackedScene = preload("res://scenes/hud/hud_damage_label.tscn")
 
 var lives: int = 3
 var screen_size: Vector2

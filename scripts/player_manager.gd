@@ -43,6 +43,8 @@ func spawn_player(parent: Node, controller_id: int, player_config: Dictionary = 
 	for k in player_config.keys():
 		if k == "can_fire":
 			player.can_fire = player_config[k]
+		elif k == "tubes_selectable":
+			player.tubes_selectable = player_config[k]
 		elif k == "lives":
 			player.lives = player_config[k]
 

@@ -12,6 +12,15 @@ class_name AttackFireMine extends AttackProjectile
 
 enum Phase { IDLE, FALL, EXPLODE }
 
+# Distance (px monde) entre le centre du nœud et la mine VISIBLE pendant
+# l'idle (contenu collé en bas du canvas 64×152, ×2 par le scale idle) :
+# le spawner s'en sert pour faire apparaître la mine au-dessus du sorcier
+const IDLE_CONTENT_DROP := 100.0
+
+# Hauteur (px) entre le bas visible de la mine posée en idle et le sol :
+# la mine flotte légèrement au lieu de toucher le sol
+const IDLE_HOVER := 8.0
+
 @export var fall_speed: float = 600.0
 @export var levitate_speed: float = 20.0  # vitesse de descente en l'air (phase idle)
 @export var tier_scale: float = 1.0
@@ -101,6 +110,11 @@ func explode() -> void:
 	phase = Phase.FALL
 	# La chute et l'explosion reprennent la taille d'origine du sprite
 	sprite.scale = Vector2.ONE
+	# La mine posée rétrécit avec le changement d'échelle (idle ×2 → chute
+	# ×1) : recale son bas visible sur le sol mémorisé pendant l'idle,
+	# sinon elle flotterait puis retomberait visuellement au déclenchement
+	if _levitate_landed:
+		global_position.y = _ground_y - _mine_base_offset()
 	# Marque la mine comme "partie" : le sorcier ne la retrouvera plus
 	# et le verrou d'appui reste en place jusqu'au relâchement
 	if sprite.sprite_frames != null and sprite.sprite_frames.has_animation(FALL_ANIM):
@@ -124,37 +138,70 @@ func _physics_process(delta: float) -> void:
 func _update_idle(delta: float) -> void:
 	if _levitate_landed:
 		return
-	var hit := _ground_ray(levitate_speed * delta)
+	var hit := _ground_ray(levitate_speed * delta + IDLE_HOVER)
 	if hit:
-		# Pose la mine : base du sprite exactement sur le sol
-		global_position.y = hit.position.y - _half_height()
+		# Pose la mine : bas VISIBLE du sprite à IDLE_HOVER au-dessus du sol
+		_ground_y = hit.position.y
+		global_position.y = hit.position.y - _mine_base_offset() - IDLE_HOVER
 		_levitate_landed = true
 	else:
 		global_position.y += levitate_speed * delta
 
 
 func _update_fall(delta: float) -> void:
+	# Mine déjà posée au moment du déclenchement : le sol est déjà connu
+	# (_ground_y mémorisé pendant l'idle), explosion immédiate. Un raycast
+	# partirait de la base exactement collée à la surface : à distance 0 il
+	# ne détecte rien et la mine traverserait la plateforme sur laquelle
+	# elle est posée.
+	if _levitate_landed:
+		_start_explosion()
+		return
 	var dist := fall_speed * delta
 	var hit := _ground_ray(dist)
 	if hit:
-		# Mémorise le sol et pose le centre de la mine à demi-hauteur au-dessus
+		# Mémorise le sol et pose le bas VISIBLE de la mine dessus
 		_ground_y = hit.position.y
-		global_position.y = _ground_y - _half_height()
+		global_position.y = _ground_y - _mine_base_offset()
 		_start_explosion()
 	else:
 		global_position.y += dist
 
 
-# Raycast vers le bas depuis la mine : renvoie le point de sol touché
-# dans la distance donnée (dictionnaire vide sinon)
+# Raycast vers le bas depuis la BASE VISIBLE de la mine (et non depuis le
+# centre du canvas, qui peut se trouver au-dessus d'un bloc bas) : la mine
+# ne peut ainsi détecter que le sol sous elle, jamais le dessous d'un bloc
+# au-dessus duquel son canvas dépasse. Renvoie le point de sol touché dans
+# la distance donnée (dictionnaire vide sinon).
 func _ground_ray(dist: float) -> Dictionary:
+	var from := global_position + Vector2(0, _mine_base_offset())
 	var space := get_world_2d().direct_space_state
 	var query := PhysicsRayQueryParameters2D.create(
-		global_position,
-		global_position + Vector2(0, dist + _half_height()),
+		from,
+		from + Vector2(0, dist + 2.0),
 		GROUND_MASK
 	)
 	return space.intersect_ray(query)
+
+
+# Distance (px monde) entre le centre du nœud et le bas VISIBLE de la
+# frame courante. Les canvases des sprites (64×152) sont bien plus grands
+# que la mine visible (~15×18 px en bas du canvas) : se baser sur le canvas
+# plaçait le centre jusqu'à 152 px au-dessus de la mine — donc parfois
+# AU-DESSUS d'un bloc bas — et les raycasts de chute touchaient alors le
+# dessus du bloc au lieu du sol (d'où les explosions au-dessus des blocs).
+var _base_offset_cache := {}
+
+func _mine_base_offset() -> float:
+	var tex := sprite.sprite_frames.get_frame_texture(sprite.animation, sprite.frame)
+	if tex == null:
+		return 0.0
+	var id := tex.get_instance_id()
+	if not _base_offset_cache.has(id):
+		var used := tex.get_image().get_used_rect()
+		_base_offset_cache[id] = \
+				(float(used.position.y + used.size.y) - tex.get_height() * 0.5)
+	return _base_offset_cache[id] * sprite.global_scale.y
 
 
 # Demi-hauteur actuelle du sprite (le sprite n'est jamais mis à l'échelle

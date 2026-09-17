@@ -8,6 +8,11 @@ class_name SpawnerAmmo extends Node2D
 # L'axe Y étant vers le bas dans Godot : 0° = vers la droite,
 # -90° = vers le haut, 90° = vers le bas.
 #
+# La direction de tir évite toujours le milieu : autour de launch_angle_degrees
+# se trouve une zone morte (middle_gap_degrees) et le tir part dans l'un des
+# 2 cônes symétriques de part et d'autre (côté gauche ou droite choisi au
+# hasard à chaque munition).
+#
 # Repère visuel (éditeur uniquement) : une flèche orange montre la
 # direction et la force de projection (longueur proportionnelle), avec
 # le cône de dispersion en transparence et la valeur de la force.
@@ -31,7 +36,13 @@ enum AmmoChoice {
 	set(value):
 		launch_force = value
 		_update_editor_preview()
-## Variation aléatoire (en degrés) ajoutée à l'angle de projection
+## Largeur (en degrés) de la zone morte au milieu, centrée sur
+## launch_angle_degrees : aucune munition n'est tirée dans cette zone
+@export_range(0.0, 180.0) var middle_gap_degrees: float = 40.0:
+	set(value):
+		middle_gap_degrees = value
+		_update_editor_preview()
+## Étendue (en degrés) de chaque cône de tir, à partir du bord de la zone morte
 @export_range(0.0, 180.0) var launch_spread_degrees: float = 10.0:
 	set(value):
 		launch_spread_degrees = value
@@ -63,36 +74,40 @@ func _draw() -> void:
 	if not Engine.is_editor_hint():
 		return
 	var angle := deg_to_rad(launch_angle_degrees)
-	var dir := Vector2(cos(angle), sin(angle))
 	var length := launch_force * FORCE_TO_PIXELS
-	var tip := dir * length
 
 	# Point d'origine du spawner
 	draw_circle(Vector2.ZERO, 4.0, ARROW_COLOR)
 
-	# Cône de dispersion (transparence) si la dispersion est active
-	if launch_spread_degrees > 0.0:
-		var faint := Color(ARROW_COLOR.r, ARROW_COLOR.g, ARROW_COLOR.b, 0.3)
-		var spread := deg_to_rad(launch_spread_degrees)
-		for a in [angle - spread, angle + spread]:
+	var gap_half := deg_to_rad(middle_gap_degrees * 0.5)
+	var spread := deg_to_rad(launch_spread_degrees)
+	var faint := Color(ARROW_COLOR.r, ARROW_COLOR.g, ARROW_COLOR.b, 0.3)
+
+	# Les 2 cônes symétriques (gauche et droite de la zone morte) :
+	# un trait pour chaque bord, une flèche au centre de chaque cône
+	for side: float in [-1.0, 1.0]:
+		for edge: float in [gap_half, gap_half + spread]:
+			var a := angle + side * edge
 			var d := Vector2(cos(a), sin(a))
 			draw_line(Vector2.ZERO, d * length, faint, 1.0)
 
-	# Flèche principale
-	draw_line(Vector2.ZERO, tip, ARROW_COLOR, 2.0)
-	var head := dir * 10.0
-	draw_line(tip, tip - head.rotated(deg_to_rad(30)), ARROW_COLOR, 2.0)
-	draw_line(tip, tip - head.rotated(-deg_to_rad(30)), ARROW_COLOR, 2.0)
+		var mid_a := angle + side * (gap_half + spread * 0.5)
+		var dir := Vector2(cos(mid_a), sin(mid_a))
+		var tip := dir * length
+		draw_line(Vector2.ZERO, tip, ARROW_COLOR, 2.0)
+		var head := dir * 10.0
+		draw_line(tip, tip - head.rotated(deg_to_rad(30)), ARROW_COLOR, 2.0)
+		draw_line(tip, tip - head.rotated(-deg_to_rad(30)), ARROW_COLOR, 2.0)
 
-	# Graduations tous les 100 de force
-	var perp := Vector2(-dir.y, dir.x) * 4.0
-	for t in range(1, int(launch_force / 100.0) + 1):
-		var p := dir * (100.0 * t * FORCE_TO_PIXELS)
-		draw_line(p - perp, p + perp, ARROW_COLOR, 1.0)
+		# Graduations tous les 100 de force
+		var perp := Vector2(-dir.y, dir.x) * 4.0
+		for t in range(1, int(launch_force / 100.0) + 1):
+			var p := dir * (100.0 * t * FORCE_TO_PIXELS)
+			draw_line(p - perp, p + perp, ARROW_COLOR, 1.0)
 
-	# Valeur de la force au bout de la flèche
-	draw_string(ThemeDB.fallback_font, tip + Vector2(8, -4), str(int(launch_force)),
-			HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ARROW_COLOR)
+		# Valeur de la force au bout de la flèche
+		draw_string(ThemeDB.fallback_font, tip + Vector2(8, -4), str(int(launch_force)),
+				HORIZONTAL_ALIGNMENT_LEFT, -1, 10, ARROW_COLOR)
 
 
 # Fait apparaître et projeter une munition immédiatement.
@@ -104,7 +119,12 @@ func spawn_now() -> void:
 	ammo.position = position
 	get_parent().add_child(ammo)
 
-	var angle := deg_to_rad(launch_angle_degrees + randf_range(-launch_spread_degrees, launch_spread_degrees))
+	# Tir dans l'un des 2 cônes symétriques (jamais dans la zone morte du
+	# milieu) : côté gauche ou droite tiré au hasard, puis position dans
+	# le cône, à partir du bord de la zone morte
+	var side := -1.0 if randi() % 2 == 0 else 1.0
+	var offset := deg_to_rad(middle_gap_degrees * 0.5 + randf() * launch_spread_degrees)
+	var angle := deg_to_rad(launch_angle_degrees) + side * offset
 	ammo.launch(Vector2(cos(angle), sin(angle)), launch_force)
 
 	# Gerbe de fumée à chaque projection (one_shot : restart() relance

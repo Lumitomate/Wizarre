@@ -128,10 +128,14 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 				spawn_list.append(ice_blade)
 
 		GlobalEnum.AttackType.F3:
-			# La mine est posée sur le sorcier, décalée de 28 px vers le haut
-			# (position locale au Level, comme le sorcier : pas de scale à appliquer)
+			# La mine est posée au-dessus du sorcier. Le canvas du sprite
+			# (64×152) affiche la mine VISIBLE ~92-100 px SOUS le centre du
+			# nœud (contenu en bas du canvas, scale idle ×2) : on décale donc
+			# le nœud d'autant, sinon la mine visible apparaîtrait au niveau
+			# des pieds, voire dans le sol (et son centre au-dessus des blocs,
+			# ce qui faisait exploser la mine sur leur dessus)
 			var mine: AttackFireMine = mine_scene.instantiate()
-			mine.position = player_position + Vector2(0, -28)
+			mine.position = player_position + Vector2(0, -12 - AttackFireMine.IDLE_CONTENT_DROP)
 			mine.setup_tier(int_attack_tier)
 			mine.caster = caster
 			spawn_list.append(mine)

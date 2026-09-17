@@ -50,6 +50,9 @@ var direction: Vector2 = Vector2.RIGHT
 var energy_counts: Array = [3, 3, 3]  # Fossil, Pure, Tainted
 var animation_suffix: String
 var in_shop: bool = false
+# Tuyaux soulevables hors boutique (écran home) : X/Y/B font sortir les
+# tuyaux comme en boutique, sans pouvoir tirer
+var tubes_selectable: bool = false
 var selected_tube: int = -1
 var can_fire: bool = true
 var can_take_damage: bool = true
@@ -178,6 +181,15 @@ func _process(_delta: float) -> void:
 				select_tube(2)
 			else:
 				fire_attack(2)
+	elif tubes_selectable and not is_dashing:
+		# Écran home (et autres écrans sans tir) : les tuyaux se soulèvent
+		# comme en boutique, sans déclencher d'attaque
+		if jx:
+			select_tube(0)
+		elif jy:
+			select_tube(1)
+		elif jb:
+			select_tube(2)
 
 	if can_dash and not is_dashing and _get_own_light_target() == null:
 		if Input.is_joy_button_pressed(controller_id, JOY_BUTTON_LEFT_SHOULDER):

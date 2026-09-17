@@ -34,12 +34,23 @@ func _ready() -> void:
 	_apply_type()
 
 
-# Applique le sprite et le polygone de collision du type courant
+# Applique le sprite, le polygone de collision et les réglages du shader
+# de cerne du type courant
 func _apply_type() -> void:
 	$Sprite2D.texture = TEXTURES[ammo_type]
 	$CoalPolygon.disabled = ammo_type != GlobalEnum.EnergyType.Fossil
 	$PurePolygon.disabled = ammo_type != GlobalEnum.EnergyType.Pure
 	$TaintedPolygon.disabled = ammo_type != GlobalEnum.EnergyType.Tainted
+
+	# Cerne du shader (resource_local_to_scene : le matériau est dupliqué
+	# par instance, donc modifier les paramètres ici n'affecte que cette
+	# ammo). L'ammo Pure a en plus une cerne intérieure noire de 1 px :
+	# cerne noire sur le bord du sprite, cerne blanche extérieure de 2 px.
+	var mat := $Sprite2D.material as ShaderMaterial
+	if mat:
+		var is_pure := ammo_type == GlobalEnum.EnergyType.Pure
+		mat.set_shader_parameter("inner_width", 1.0 if is_pure else 0.0)
+		mat.set_shader_parameter("outer_width", 2.0 if is_pure else 3.0)
 
 
 # Impulsion initiale donnée par le spawner après l'ajout dans l'arbre

@@ -1,7 +1,6 @@
 extends Node
 
 var current_scene = null
-var number_of_players = null
 
 var scenes = {
 	GlobalEnum.Location.HOMEPAGE: "res://scenes/niveaux/terrain1/homepage.tscn",

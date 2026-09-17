@@ -55,6 +55,8 @@ var lives: int = 3
 var screen_size: Vector2
 var direction: Vector2 = Vector2.RIGHT
 var energy_counts: Array = [3, 3, 3]  # Fossil, Pure, Tainted
+# Maximum de munitions par tube (0 à 4 : le HUD ne couvre que cet intervalle)
+const MAX_ENERGY := 4
 var animation_suffix: String
 var in_shop: bool = false
 # Tuyaux soulevables hors boutique (écran home) : X/Y/B font sortir les
@@ -210,12 +212,12 @@ func _process(_delta: float) -> void:
 		elif jb:
 			select_tube(2)
 
-	if can_dash and not is_dashing and _get_own_light_target() == null:
+	if can_dash and not is_dashing:
 		if Input.is_joy_button_pressed(input_device, JOY_BUTTON_LEFT_SHOULDER):
 			start_dash()
 			
 	if !Input.is_joy_button_pressed(input_device, JOY_BUTTON_A):
-		is_jump_long_press = false;
+		is_jump_long_press = false
 
 	
 
@@ -416,8 +418,10 @@ func stop_dash_on_collision() -> void:
 
 
 func start_dash() -> void:
-	# Dasher pendant un ciblage d'arc L3 annule l'attaque (munition rendue)
+	# Dasher pendant un ciblage (arc L3 ou cible L2) annule l'attaque
+	# (munition rendue)
 	_cancel_light_bow()
+	_cancel_light_target()
 	is_dashing = true
 	can_dash = false
 	dash_invincible = true
@@ -624,8 +628,21 @@ func _cancel_light_bow() -> void:
 			break
 	bow.cancel()
 
+# Annule la cible lumineuse (L2) de CE joueur et rend la munition du tube
+# qui la porte (le ciblage a déjà coûté 1 munition au 1er appui)
+func _cancel_light_target() -> void:
+	var target := _get_own_light_target()
+	if target == null:
+		return
+	for i in range(3):
+		var spell: Dictionary = spells[i]
+		if not spell.is_empty() and spell["attack_type"] == GlobalEnum.AttackType.L2:
+			add_energy(i, 1)
+			break
+	target.cancel()
+
 func add_energy(tube_index: int, amount: int) -> void:
-	energy_counts[tube_index] += amount
+	energy_counts[tube_index] = min(energy_counts[tube_index] + amount, MAX_ENERGY)
 	ammo_changed.emit(tube_index, energy_counts[tube_index])
 	
 
@@ -643,6 +660,14 @@ func hit(damage: int) -> void:
 		# --- Dead Cells style damage feedback ---
 		is_hit_flash = true
 		hit_flash_timer = 0.0  # délai avant le premier flash
+		# Flash rouge identique à celui du monstre (enemy_flying.gd) :
+		# montée au rouge vif en 0,05 s puis retour à la normale en 0,15 s.
+		# Passe par self_modulate pour ne pas interférer avec le modulate
+		# utilisé par le clignotement
+		$AnimatedSprite2D.self_modulate = Color.WHITE
+		var red_flash := create_tween()
+		red_flash.tween_property($AnimatedSprite2D, "self_modulate", Color(1.0, 0.1, 0.1, 1.0), 0.05)
+		red_flash.tween_property($AnimatedSprite2D, "self_modulate", Color.WHITE, 0.15)
 		hit_knockback_timer = 0.3  # durée du knockback (secondes)
 		# Knockback basé sur la direction de l'ennemi (repoussé par lui)
 		# On cherche l'ennemi le plus proche pour définir la direction du knockback
@@ -689,7 +714,7 @@ func _other_players_alive() -> bool:
 	return false
 
 
-func export_data() -> void :
+func export_data() -> void:
 	GlobalInfo.run_info["players_info"][controller_id] = {
 		"lives": lives,
 		"energy_counts": energy_counts,

@@ -3,23 +3,26 @@ class_name AttackLightBow extends AttackProjectile
 # Arc Lumineux (L3) — 2 phases :
 # 1. TARGETING : l'arc est planté à l'endroit du sorcier (1er appui).
 #    Le sorcier s'éloigne pour charger : la distance arc ↔ sorcier règle
-#    la frame de la flèche (elle grossit), celle de l'arc (il se bande),
-#    la largeur de la hitbox et la vitesse du futur tir. Une ligne
-#    pointillée relie l'arc au sorcier. La flèche de visée grossit avec
-#    la charge (jusqu'à l'échelle du tier, ex. ×2 au tier 3) mais est
-#    bridée par la place disponible : elle ne dépasse jamais ni l'arc
-#    ni le sorcier.
-# 2. SHOT : au 2e appui, la flèche part du sorcier vers l'arc le long de
-#    l'axe figé au moment du tir, puis continue au-delà de l'arc. L'arc
-#    débande. Trop près (≤ 60 px) : le tir est annulé, l'arc disparaît
-#    et la munition est rendue (géré par sorcerer.gd).
+#    la frame de la flèche, celle de l'arc (il se bande), la largeur de
+#    la hitbox et la vitesse du futur tir. Une ligne pointillée relie
+#    l'arc au sorcier.
+# 2. SHOT : au 2e appui, les flèches partent DU SORCIER (sa position
+#    actuelle) vers un point de l'arc dépendant du tier — le centre
+#    (tier I), les 2 extrémités (tier II), les 2 extrémités + le centre
+#    (tier III) — puis continuent en ligne droite au-delà de l'arc.
+#    L'arc débande. Trop près (≤ 60 px) : le tir est annulé, l'arc
+#    disparaît et la munition est rendue (géré par sorcerer.gd).
 # Un dash du sorcier annule aussi l'attaque (munition rendue).
+#
+# Le tier ne change PAS la taille : il détermine le nombre de flèches
+# et leurs trajectoires en éventail à travers les points de l'arc.
 
 enum Phase { TARGETING, SHOT, DONE }
 
-@export var tier_scale: float = 1.0
+# Nombre de flèches de l'éventail : le tier est reçu en base 1 depuis
+# spawner_attack (1/2/3 flèches pour tier I/II/III)
+@export var attack_tier: int = 1
 
-var caster: Node2D = null
 var phase: Phase = Phase.TARGETING
 
 const ARROW_ANIM := &"AtkL3_LightBow_arrow"
@@ -34,14 +37,22 @@ const DASH_SPACING := 24.0  # espacement des pointillés
 
 const ARROW_GAP := 60.0       # espace entre le sorcier et la queue de la flèche
 const ARROW_HALF_WIDTH := 64.0  # demi-largeur du sprite de la flèche
-const ARROW_LENGTH := 128.0   # longueur totale du sprite de la flèche
 
 # Marges de sortie d'écran (en px locaux) avant suppression du projectile
 const SCREEN_MARGIN := 256.0
 
+# Grâce du lanceur : les flèches partent de lui, il est insensible à ses
+# propres flèches pendant ce délai, puis vulnérable (comme la firewave)
+const CASTER_GRACE_TIME := 0.4
+
 var _shoot_speed := MIN_SPEED
 var _full_width := 0.0  # largeur de la hitbox à pleine charge
 var _dash_points: Array[Sprite2D] = []
+# Grâce restante au lanceur après le tir (0 = vulnérable à ses flèches)
+var _caster_grace := 0.0
+# Flèches tirées : {"sprite": AnimatedSprite2D, "shape": CollisionShape2D,
+# "dir": Vector2} — sprite/shape nullés quand la flèche sort de l'écran
+var _flying_arrows: Array[Dictionary] = []
 
 @onready var arrow: AnimatedSprite2D = $AnimatedSprite2D_Arrow
 @onready var bow: AnimatedSprite2D = $AnimatedSprite2D_Bow
@@ -57,7 +68,6 @@ func _ready() -> void:
 	_full_width = (collision.shape as RectangleShape2D).size.x
 	collision.disabled = true
 	body_entered.connect(_on_body_entered)
-	_apply_tier_scale()
 	bow.animation = BOW_ANIM
 	# La corde de l'arc doit faire face au sorcier (la flèche vole du
 	# côté de la corde) : le sprite de base courbe à l'opposé, on le
@@ -70,9 +80,6 @@ func _ready() -> void:
 	bow.frame = 0
 	arrow.animation = ARROW_ANIM
 	arrow.stop()
-	# La flèche de visée compense le scale du tier (sinon elle serait
-	# décalée et agrandie : impossible à garder entre l'arc et le sorcier)
-	arrow.scale = Vector2(1.0 / tier_scale, 1.0 / tier_scale)
 	# La flèche pointe du sorcier vers l'arc (le sprite de base pointe
 	# vers la droite) : on la retourne horizontalement
 	arrow.flip_h = true
@@ -81,8 +88,11 @@ func _ready() -> void:
 
 
 func can_damage(body: Node2D) -> bool:
-	# La flèche ne peut pas toucher son lanceur
-	return body != caster
+	# Les flèches partent du lanceur : il est insensible pendant la grâce,
+	# puis peut se prendre ses propres flèches (comme la firewave)
+	if body == caster and _caster_grace > 0.0:
+		return false
+	return true
 
 
 func _physics_process(_delta: float) -> void:
@@ -114,17 +124,11 @@ func _update_targeting() -> void:
 	var t := _charge_ratio(dist)
 
 	# Flèche posée à quelques pixels du sorcier, pointée vers l'arc :
-	# invisible à 60 px ou moins, dernière frame à 350 px ou plus
+	# invisible à 60 px ou moins, dernière frame à 350 px ou plus. La
+	# charge se lit sur les frames (flèche + arc), pas sur la taille.
 	arrow.visible = dist > MIN_DIST
 	arrow.frame = roundi(t * LAST_FRAME)
-
-	# Échelle de la flèche : elle grossit avec la charge (×1 → échelle du
-	# tier), bridée par la place disponible entre l'arc et son point de
-	# repos (60 px du sorcier) pour ne jamais dépasser l'un ni l'autre
-	var arrow_scale: float = lerpf(1.0, tier_scale, t)
-	arrow_scale = minf(maxf(arrow_scale, 1.0), maxf((dist - ARROW_GAP) / ARROW_LENGTH, 1.0))
-	arrow.scale = Vector2(arrow_scale / tier_scale, arrow_scale / tier_scale)
-	arrow.position = Vector2((dist - ARROW_GAP - ARROW_HALF_WIDTH * arrow_scale) / tier_scale, 0.0)
+	arrow.position = Vector2(dist - ARROW_GAP - ARROW_HALF_WIDTH, 0.0)
 
 	# L'arc se bande avec la distance (dernier frame à 140 px ou plus)
 	bow.frame = roundi(t * _last_bow_frame())
@@ -145,10 +149,7 @@ func _last_bow_frame() -> int:
 
 
 func _update_dash(distance: float) -> void:
-	# Points strictement entre l'arc et le sorcier, espacés de DASH_SPACING
-	# px VISUELS : l'espacement local compense le scale du tier, sinon les
-	# pointillés défilent et passent derrière le sorcier
-	var spacing := DASH_SPACING / tier_scale
+	# Points strictement entre l'arc et le sorcier, espacés de DASH_SPACING px
 	var needed := maxi(int((distance - DASH_SPACING) / DASH_SPACING), 0)
 	while _dash_points.size() < needed:
 		var p := Sprite2D.new()
@@ -159,7 +160,7 @@ func _update_dash(distance: float) -> void:
 	for i in _dash_points.size():
 		if i < needed:
 			_dash_points[i].visible = true
-			_dash_points[i].position = Vector2((i + 1) * spacing, 0)
+			_dash_points[i].position = Vector2((i + 1) * DASH_SPACING, 0)
 		else:
 			_dash_points[i].visible = false
 
@@ -195,43 +196,117 @@ func try_shoot() -> bool:
 	var t := _charge_ratio(dist)
 	_shoot_speed = lerpf(MIN_SPEED, MAX_SPEED, t)
 
-	# L'axe (rotation du nœud) est déjà figé : la flèche part d'où elle
-	# repose (à quelques pixels du sorcier) vers l'arc, puis continue
-	# au-delà de l'arc. Elle reprend l'échelle du tier : la flèche tirée
-	# est plus grosse aux tiers supérieurs (comme sa hitbox).
-	arrow.scale = Vector2.ONE
-	arrow.visible = true
-	arrow.frame = roundi(t * LAST_FRAME)
-	# La queue de la flèche reste calée où était la flèche de visée
-	arrow.position = Vector2((dist - ARROW_GAP) / tier_scale - ARROW_HALF_WIDTH, 0.0)
-	collision.position = arrow.position
-	(collision.shape as RectangleShape2D).size.x = maxf(_full_width * t, 2.0)
-	# La hitbox ne s'active qu'une fois la flèche tirée
-	collision.disabled = false
+	# Trajectoires définies par 2 points : le SORCIER (position actuelle
+	# au moment du tir) et un point de l'arc dépendant du tier :
+	#   tier I   → le centre de l'arc
+	#   tier II  → les 2 extrémités de l'arc
+	#   tier III → les 2 extrémités + le centre
+	# Tout est calculé en coordonnées Level (le référentiel commun du
+	# sorcier et de l'arc) : les extrémités de l'arc sont à ±demi-hauteur
+	# de son sprite, tourné de son axe figé au moment du ciblage.
+	var tip_half := _bow_tip_half_height()
+	var aim_points: Array[Vector2] = []
+	match attack_tier:
+		2:
+			aim_points = [position + Vector2(0, -tip_half).rotated(rotation), \
+					position + Vector2(0, tip_half).rotated(rotation)]
+		3:
+			aim_points = [position + Vector2(0, -tip_half).rotated(rotation), \
+					position, \
+					position + Vector2(0, tip_half).rotated(rotation)]
+		_:
+			aim_points = [position]
+
+	# La flèche de visée sert de modèle : cachée, chaque flèche tirée en
+	# est une copie partant du sorcier vers son point de passage sur l'arc
+	# (direction = droite sorcier → point de l'arc), avec sa propre hitbox.
+	# Les sprites sont des enfants du nœud (dont l'axe X pointe vers le
+	# sorcier) : directions et positions passent du référentiel Level au
+	# référentiel local par une rotation de -rotation.
+	arrow.visible = false
+	collision.disabled = true
+
+	for aim_point in aim_points:
+		var dir := (aim_point - caster.position).normalized()
+		var dir_local := dir.rotated(-rotation)
+		var start_local := (caster.position - position).rotated(-rotation)
+
+		var sprite: AnimatedSprite2D = arrow.duplicate()
+		sprite.scale = Vector2.ONE
+		sprite.visible = true
+		# flip_h : le sprite pointe visuellement vers son -X local, la
+		# rotation est donc décalée d'un demi-tour par rapport à dir
+		sprite.rotation = dir_local.angle() + PI
+		sprite.position = start_local
+		add_child(sprite)
+
+		# Une hitbox par flèche, alignée sur son angle de vol (rectangle :
+		# insensible au demi-tour)
+		var shape_node := CollisionShape2D.new()
+		var rect: RectangleShape2D = collision.shape.duplicate()
+		rect.size.x = maxf(_full_width * t, 2.0)
+		shape_node.shape = rect
+		shape_node.rotation = dir_local.angle()
+		shape_node.position = start_local
+		add_child(shape_node)
+
+		_flying_arrows.append({
+			"sprite": sprite,
+			"shape": shape_node,
+			"dir": dir_local,
+		})
 
 	_clear_dash()
+	# Grâce du lanceur au moment du tir
+	_caster_grace = CASTER_GRACE_TIME
 	# L'arc débande : lecture inversée jusqu'au repos, puis il disparaît
 	bow.speed_scale = 2.0
 	bow.play_backwards(BOW_ANIM)
 	return true
 
 
+# Demi-hauteur de l'arc = position de ses extrémités : lue sur la frame
+# courante (l'arc se bande, ses extrémités bougent avec la charge)
+func _bow_tip_half_height() -> float:
+	var tex := bow.sprite_frames.get_frame_texture(BOW_ANIM, bow.frame)
+	if tex == null:
+		return 32.0
+	return tex.get_height() * 0.5 * bow.scale.y
+
+
 func _update_shot(delta: float) -> void:
-	# La flèche vole vers l'arc (axe X local inversé) puis au-delà
-	arrow.position.x -= _shoot_speed * delta
-	collision.position = arrow.position
+	# Décompte de la grâce du lanceur (0 = à nouveau vulnérable)
+	if _caster_grace > 0.0:
+		_caster_grace -= delta
+
 	# Fin du "débandage" de l'arc (frame 0 = arc au repos) : il disparaît.
 	# Ni animation_finished ni is_playing() ne sont fiables en lecture
 	# inversée, on teste donc directement la frame
 	if bow.visible and bow.frame == 0:
 		bow.visible = false
-	_free_if_off_screen()
 
+	# Chaque flèche vole le long de son propre angle de l'éventail
+	var remaining := 0
+	for a in _flying_arrows:
+		var sprite: AnimatedSprite2D = a["sprite"]
+		if sprite == null:
+			continue  # déjà sortie de l'écran
+		sprite.position += a["dir"] * _shoot_speed * delta
+		var shape: CollisionShape2D = a["shape"]
+		shape.position = sprite.position
 
-func _free_if_off_screen() -> void:
-	var canvas := get_viewport().get_canvas_transform()
-	var screen_pos := canvas * arrow.global_position
-	if not get_viewport_rect().grow(SCREEN_MARGIN).has_point(screen_pos):
+		var canvas := get_viewport().get_canvas_transform()
+		var screen_pos := canvas * sprite.global_position
+		if not get_viewport_rect().grow(SCREEN_MARGIN).has_point(screen_pos):
+			sprite.queue_free()
+			shape.queue_free()
+			a["sprite"] = null
+			a["shape"] = null
+		else:
+			remaining += 1
+
+	# Toutes les flèches sont sorties de l'écran : le nœud se libère
+	if remaining == 0:
 		queue_free()
 
 
@@ -239,7 +314,3 @@ func _caster_distance() -> float:
 	if caster == null or not is_instance_valid(caster):
 		return 0.0
 	return (caster.position - position).length()
-
-
-func _apply_tier_scale() -> void:
-	scale = Vector2(tier_scale, tier_scale)

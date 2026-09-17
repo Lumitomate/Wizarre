@@ -10,7 +10,7 @@ var tier_scale: float = 1.0
 var player_immunity: bool = true
 
 
-func scale(level_scale: Vector2) -> void:
+func apply_level_scale(level_scale: Vector2) -> void:
 	_level_scale = level_scale
 	$AnimatedSprite2D.scale = level_scale
 	$CollisionPolygon2D.scale = level_scale

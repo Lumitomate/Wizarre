@@ -22,6 +22,8 @@ var time_offset: float = 0.0
 var attack_tier: int = 1
 
 var target_enemy = null
+# Sorcier qui a planté la plante (pour la représaille des ennemis tués)
+var caster: Node2D = null
 var time: float = 0.0
 var is_eating: bool = false
 var is_retracting: bool = false
@@ -95,7 +97,7 @@ func _on_bite_frame_changed():
 		bite_triggered = true
 		if target_enemy and is_instance_valid(target_enemy):
 			if target_enemy is EnemyFlying:
-				target_enemy.die()
+				target_enemy.die(caster)
 			elif target_enemy.is_in_group("player_group"):
 				target_enemy.hit(1)
 

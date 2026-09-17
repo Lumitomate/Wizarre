@@ -1,6 +1,8 @@
 class_name AttackPlantBall
 extends RigidBody2D
 
+var caster: Node2D = null
+
 @onready var sprite = $AnimatedSprite2D
 #@onready var push_area = $PushArea
 #@onready var push_shape = $PushArea/CollisionShape2D
@@ -24,7 +26,7 @@ var explosion_delay_counter: int = 0
 var explosion_max_scale: float = 1.0
 var _level_scale: Vector2 = Vector2.ONE
 
-func scale(level_scale: Vector2) -> void:
+func apply_level_scale(level_scale: Vector2) -> void:
 	_level_scale = level_scale
 	$AnimatedSprite2D.scale = level_scale
 	#$PushArea/CollisionShape2D.scale = level_scale
@@ -90,7 +92,7 @@ func _start_explosion() -> void:
 
 func _on_explosion_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy_group"):
-		body.hit(explosion_damage)
+		body.hit(explosion_damage, caster)
 	elif body.is_in_group("player_group"):
 		body.hit(1)
 

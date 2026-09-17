@@ -10,7 +10,7 @@ friction = 0.8
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_outline"]
 resource_local_to_scene = true
 shader = ExtResource("5_outline")
-shader_parameter/outer_width = 3.0
+shader_parameter/outer_width = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
 radius = 14.0

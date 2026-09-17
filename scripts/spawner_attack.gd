@@ -40,6 +40,7 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 					var attack_position = (i + 1) * SPRITE_SIZE * player_direction.normalized().rotated(n * PI / ray_nb) + player_position
 					if attack_position.x > -SPRITE_SIZE and attack_position.x < screen_size.x + SPRITE_SIZE and attack_position.y > -SPRITE_SIZE and attack_position.y < screen_size.y + SPRITE_SIZE:
 						var lightray:AttackLightRay = lightray_scene.instantiate()
+						lightray.caster = caster
 						lightray.transform = lightray.transform.rotated(player_direction.angle() + n * PI / ray_nb)
 						lightray.position = attack_position
 						spawn_list.append(lightray)
@@ -63,16 +64,15 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 		GlobalEnum.AttackType.G1:
 			var ice_ball: AttackIceBall = ice_ball_scene.instantiate()
 			ice_ball.transform = ice_ball.transform.rotated(player_direction.angle())
-			ice_ball.scale(2 * level_scale)
+			ice_ball.apply_level_scale(2 * level_scale)
 			ice_ball.position = player_position + 60 * player_direction.normalized()
 			ice_ball.linear_velocity = 300 * int_attack_tier * player_direction.normalized()
-			#ice_ball.direction = player_direction.normalized()
 			spawn_list.append(ice_ball)
 			
 		GlobalEnum.AttackType.P1:
 			var carnivorous: AttackCarnivorousSeed = carnivorous_scene.instantiate()
 			carnivorous.transform = carnivorous.transform.rotated(player_direction.angle())
-			carnivorous.scale(2 * level_scale)
+			carnivorous.apply_level_scale(2 * level_scale)
 			carnivorous.position = player_position + 60 * player_direction.normalized()
 			carnivorous.linear_velocity = 200 * player_direction.normalized()
 			carnivorous.attack_tier = int_attack_tier
@@ -81,7 +81,7 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 		GlobalEnum.AttackType.P2:
 			var plant_ball: AttackPlantBall = plantball_scene.instantiate()
 			plant_ball.transform = plant_ball.transform.rotated(player_direction.angle())
-			plant_ball.scale(level_scale)
+			plant_ball.apply_level_scale(level_scale)
 			plant_ball.position = player_position + 60 * player_direction.normalized()
 			plant_ball.linear_velocity = 300 * player_direction.normalized()
 			plant_ball.setup_tier(int_attack_tier)
@@ -106,7 +106,7 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 				ice_spike.rotation = spike_angle
 				ice_spike.direction = Vector2.RIGHT.rotated(spike_angle)
 				ice_spike.position = player_position + 60 * Vector2.RIGHT.rotated(spike_angle)
-				ice_spike.scale(level_scale)
+				ice_spike.apply_level_scale(level_scale)
 				ice_spike.setup_tier(int_attack_tier)
 				spawn_list.append(ice_spike)
 
@@ -151,7 +151,8 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 			# locales au Level, pas de scale à appliquer sur la position)
 			var light_bow: AttackLightBow = lightbow_scene.instantiate()
 			light_bow.position = player_position
-			light_bow.tier_scale = 1.0 + (int_attack_tier - 1) * 0.5
+			# Le tier détermine le nombre de flèches de l'éventail (0/1/2 → 1/2/3)
+			light_bow.attack_tier = int_attack_tier
 			light_bow.caster = caster
 			spawn_list.append(light_bow)
 	return spawn_list

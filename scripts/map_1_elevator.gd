@@ -7,10 +7,6 @@ var animated_sprite_2D: AnimatedSprite2D
 func _ready() -> void:
 	animated_sprite_2D = $AnimatableBody2D/AnimatedSprite2D
 
-func _process(_delta: float) -> void:
-	pass
-
-
 # 2 - Avoir le nombre de joueurs dans l'ascenseur
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_group"):
@@ -29,7 +25,9 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 # 3 - avoir la frame à atteindre
 func get_frame_to_reach()-> int:
 	
-	var number_of_players_connected: int  = PlayerManager.known_controllers.size()
+	# Joueurs de la partie (une manette branchée en cours de partie et
+	# ignorée ne doit pas changer la vitesse de l'ascenseur)
+	var number_of_players_connected: int = PlayerManager.active_player_ids().size()
 	
 	# Aucune manette connectée : pas de joueurs, pas de division par zéro
 	if number_of_players_connected == 0:

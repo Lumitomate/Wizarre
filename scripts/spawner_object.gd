@@ -42,37 +42,37 @@ func _ready() -> void:
 	
 	match final_type:
 		GlobalEnum.AttackType.F1:
-			attack_family = GlobalEnum.AttackFamily.Red
+			attack_family = GlobalEnum.AttackFamily.Fossil
 			object_to_spawn_scene = medal_object_scene
 		GlobalEnum.AttackType.L1:
-			attack_family = GlobalEnum.AttackFamily.Yellow
+			attack_family = GlobalEnum.AttackFamily.Pure
 			object_to_spawn_scene = mirror_object_scene
 		GlobalEnum.AttackType.G1:
-			attack_family = GlobalEnum.AttackFamily.Blue
+			attack_family = GlobalEnum.AttackFamily.Tainted
 			object_to_spawn_scene = mitten_object_scene
 		GlobalEnum.AttackType.P1:
-			attack_family = GlobalEnum.AttackFamily.Red
+			attack_family = GlobalEnum.AttackFamily.Fossil
 			object_to_spawn_scene = seeds_object_scene
 		GlobalEnum.AttackType.P2:
-			attack_family = GlobalEnum.AttackFamily.Red
+			attack_family = GlobalEnum.AttackFamily.Fossil
 			object_to_spawn_scene = jar_object_scene
 		GlobalEnum.AttackType.F2:
-			attack_family = GlobalEnum.AttackFamily.Red
+			attack_family = GlobalEnum.AttackFamily.Fossil
 			object_to_spawn_scene = crown_object_scene
 		GlobalEnum.AttackType.G2:
-			attack_family = GlobalEnum.AttackFamily.Blue
+			attack_family = GlobalEnum.AttackFamily.Tainted
 			object_to_spawn_scene = scarf_object_scene
 		GlobalEnum.AttackType.G3:
-			attack_family = GlobalEnum.AttackFamily.Blue
+			attack_family = GlobalEnum.AttackFamily.Tainted
 			object_to_spawn_scene = beanie_object_scene
 		GlobalEnum.AttackType.F3:
-			attack_family = GlobalEnum.AttackFamily.Red
+			attack_family = GlobalEnum.AttackFamily.Fossil
 			object_to_spawn_scene = belt_object_scene
 		GlobalEnum.AttackType.L2:
-			attack_family = GlobalEnum.AttackFamily.Yellow
+			attack_family = GlobalEnum.AttackFamily.Pure
 			object_to_spawn_scene = comb_object_scene
 		GlobalEnum.AttackType.L3:
-			attack_family = GlobalEnum.AttackFamily.Yellow
+			attack_family = GlobalEnum.AttackFamily.Pure
 			object_to_spawn_scene = brush_object_scene
 	
 	var object_to_spawn: AttackObject = object_to_spawn_scene.instantiate()

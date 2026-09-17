@@ -9,7 +9,7 @@ enum Phase {
 }
 
 var phase: Phase = Phase.TARGETING
-var caster: Node2D = null
+
 
 const FRAME_IDLE = 0
 const FRAME_CARDINAL = 1
@@ -129,6 +129,14 @@ func start_explosion() -> void:
 	collision.disabled = true
 	sprite_orientation.visible = false
 	sprite_explosion.play("Atk_l2_Explosion")
+
+
+# Annule le ciblage (appelé quand le sorcier dash, comme pour l'arc L3) :
+# la cible disparaît sans exploser.
+func cancel() -> void:
+	if phase != Phase.TARGETING:
+		return
+	queue_free()
 
 
 func _on_animation_finished() -> void:

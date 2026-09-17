@@ -30,11 +30,11 @@ func _on_body_entered(body: Node2D) -> void:
 		# Hors boutique : ancien comportement famille → tube
 		if tube_index == -1:
 			match item_attack_family:
-				GlobalEnum.AttackFamily.Red:
+				GlobalEnum.AttackFamily.Fossil:
 					tube_index = 0   # Fossil
-				GlobalEnum.AttackFamily.Yellow:
+				GlobalEnum.AttackFamily.Pure:
 					tube_index = 1   # Pure
-				GlobalEnum.AttackFamily.Blue:
+				GlobalEnum.AttackFamily.Tainted:
 					tube_index = 2   # Tainted
 				_:
 					tube_index = 0

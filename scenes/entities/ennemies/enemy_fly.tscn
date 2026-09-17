@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://c57lcboljqunb"]
+
+[ext_resource type="Script" uid="uid://3x7uc33i4fb1" path="res://scripts/enemy_fly.gd" id="1_fly"]
+[ext_resource type="Texture2D" uid="uid://bdv77spnuobnc" path="res://assets/sprites/Monstres/Monstre_Mouche/Monstre_Mouche_1.png" id="2_fly1"]
+[ext_resource type="Texture2D" uid="uid://oqnyubjms5cm" path="res://assets/sprites/Monstres/Monstre_Mouche/Monstre_Mouche_2.png" id="3_fly2"]
+[ext_resource type="Texture2D" uid="uid://bidi8dhfhw8sr" path="res://assets/sprites/Monstres/Monstre_Mouche/Monstre_Mouche_3.png" id="4_fly3"]
+[ext_resource type="Texture2D" uid="uid://dsrqag4700c8r" path="res://assets/sprites/Monstres/Monstre_Mouche/Monstre_Mouche_4.png" id="5_fly4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fly"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_fly1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_fly2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_fly3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fly4")
+}],
+"loop": 2,
+"name": &"default",
+"speed": 18.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fly_hit"]
+radius = 9.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fly_detect"]
+radius = 139.60658
+
+[node name="EnemyFly" type="CharacterBody2D" unique_id=1489090178 groups=["enemy_group"]]
+scale = Vector2(2, 2)
+collision_mask = 5
+script = ExtResource("1_fly")
+speed = 100
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1148535127]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_fly")
+frame_progress = 0.92111194
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1231161553]
+position = Vector2(0.5, -1)
+shape = SubResource("CircleShape2D_fly_hit")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1887770284]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=227935053]
+shape = SubResource("CircleShape2D_fly_detect")
+
+[node name="DamageCooldown" type="Timer" parent="." unique_id=1120847474]
+
+[node name="BounceBackDuration" type="Timer" parent="." unique_id=1707643214]
+wait_time = 0.5
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=278366599]
+simplify_path = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="DamageCooldown" to="." method="_on_damage_cooldown_timeout"]
+[connection signal="timeout" from="BounceBackDuration" to="." method="_on_bounce_back_duration_timeout"]

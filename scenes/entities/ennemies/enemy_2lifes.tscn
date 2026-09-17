@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c80382x0ks0om"]
+
+[ext_resource type="PackedScene" uid="uid://djvw6uji3ywqf" path="res://scenes/entities/ennemies/enemy_flying.tscn" id="1_flying"]
+
+[node name="Ennemy2Lifes" unique_id=868468569 instance=ExtResource("1_flying")]
+lives = 2
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=262320199]
+animation = &"2vies_2"
+frame_progress = 0.0

@@ -34,10 +34,14 @@ enum EnergyType {
 	Tainted
 }
 
+# Familles d'attaque des objets de boutique. Noms historiques de couleurs
+# (red/blue/yellow) renommés vers les énergies correspondantes ; les
+# ordinaux sont conservés (les scènes d'objets stockent des ints).
+# Attention : l'ordre diffère de EnergyType. Green n'a pas de tube dédié.
 enum AttackFamily {
-	Red,
-	Blue,
-	Yellow,
+	Fossil,
+	Tainted,
+	Pure,
 	Green
 }
 

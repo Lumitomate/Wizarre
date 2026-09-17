@@ -5,24 +5,21 @@
 [ext_resource type="Texture2D" uid="uid://dy0ntiq0rsfnx" path="res://assets/sprites/HUD/HUD_Vie/HUD2.png" id="3_b3nex"]
 [ext_resource type="Texture2D" uid="uid://dehjusowfnr0n" path="res://assets/sprites/HUD/HUD_Vie/HUD3.png" id="4_j6iyc"]
 [ext_resource type="Texture2D" uid="uid://b645khx6o4sq4" path="res://assets/sprites/HUD/HUD_Vie/HUD4.png" id="5_66dwk"]
-[ext_resource type="Texture2D" uid="uid://c1hja8b1dm3x5" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F1.png" id="6_00fc2"]
-[ext_resource type="Texture2D" uid="uid://ckquxqx53uskj" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F2.png" id="7_kca0o"]
-[ext_resource type="Texture2D" uid="uid://bxpy0hg8pbxma" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F3.png" id="8_5d6nw"]
-[ext_resource type="Texture2D" uid="uid://c6ideklyy74b4" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F4.png" id="9_kgxd7"]
-[ext_resource type="Texture2D" uid="uid://glyaoctiq3rm" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F5.png" id="10_l2hgu"]
-[ext_resource type="Texture2D" uid="uid://b6h0c1wbo7kjr" path="res://assets/sprites/HUD/HUD_Gemne_F/HUD_Gemnes_F6.png" id="11_mxla8"]
-[ext_resource type="Texture2D" uid="uid://bagrsnju38cve" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G1.png" id="12_umabx"]
-[ext_resource type="Texture2D" uid="uid://16yvwx6xipsp" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G2.png" id="13_n0qsi"]
-[ext_resource type="Texture2D" uid="uid://dvyqnf2o3svhq" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G3.png" id="14_a6tsk"]
-[ext_resource type="Texture2D" uid="uid://b0rf7tjyrlstl" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G4.png" id="15_78uoy"]
-[ext_resource type="Texture2D" uid="uid://wyrr2betk6nx" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G5.png" id="16_cyygo"]
-[ext_resource type="Texture2D" uid="uid://b12sgj6r4v27y" path="res://assets/sprites/HUD/HUD_Gemne_G/HUD_Gemnes_G6.png" id="17_okm7f"]
-[ext_resource type="Texture2D" uid="uid://wjxaitdmlvtg" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L1.png" id="18_538yq"]
-[ext_resource type="Texture2D" uid="uid://iajnw1y6gnbw" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L2.png" id="19_hmiu3"]
-[ext_resource type="Texture2D" uid="uid://c77ma44aggiko" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L3.png" id="20_gl62j"]
-[ext_resource type="Texture2D" uid="uid://dmigmo53d870d" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L4.png" id="21_8uo1w"]
-[ext_resource type="Texture2D" uid="uid://d3v07r2ujc5pv" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L5.png" id="22_pgsuc"]
-[ext_resource type="Texture2D" uid="uid://dmisep5hf2178" path="res://assets/sprites/HUD/HUD_Gemne_L/HUD_Gemnes_L6.png" id="23_g10hg"]
+[ext_resource type="Texture2D" uid="uid://7t47crpsuan3" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Charbon_/HUD_Ammo_Charbon_1.png" id="6_mmyff"]
+[ext_resource type="Texture2D" uid="uid://rxweyohvdktu" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Charbon_/HUD_Ammo_Charbon_2.png" id="7_bnq26"]
+[ext_resource type="Texture2D" uid="uid://wuyu64bgxlsy" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Charbon_/HUD_Ammo_Charbon_3.png" id="8_lh7b3"]
+[ext_resource type="Texture2D" uid="uid://duei4oyyl4y0j" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Charbon_/HUD_Ammo_Charbon_4.png" id="9_oqpua"]
+[ext_resource type="Texture2D" uid="uid://553k62xoxyt5" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Charbon_/HUD_Ammo_Charbon_5.png" id="10_d42gd"]
+[ext_resource type="Texture2D" uid="uid://b1i4igtjr3vj8" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Pure/HUD_Ammo_Pure_1.png" id="11_2iqiw"]
+[ext_resource type="Texture2D" uid="uid://de2ry4en13dey" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Pure/HUD_Ammo_Pure_2.png" id="12_taxvr"]
+[ext_resource type="Texture2D" uid="uid://de0di0xp1eka2" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Pure/HUD_Ammo_Pure_3.png" id="13_rfsfd"]
+[ext_resource type="Texture2D" uid="uid://dyqa16xj0cy0g" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Pure/HUD_Ammo_Pure_4.png" id="14_j78d7"]
+[ext_resource type="Texture2D" uid="uid://bc0v6pno44g5o" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Pure/HUD_Ammo_Pure_5.png" id="15_m3eni"]
+[ext_resource type="Texture2D" uid="uid://ccfh1w0aepsll" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Tainted/HUD_Ammo_Tainted_1.png" id="16_mae2h"]
+[ext_resource type="Texture2D" uid="uid://c3y6a78f4l6ch" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Tainted/HUD_Ammo_Tainted_2.png" id="17_ensrl"]
+[ext_resource type="Texture2D" uid="uid://djxhl5vrfp6q5" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Tainted/HUD_Ammo_Tainted_3.png" id="18_kv7ra"]
+[ext_resource type="Texture2D" uid="uid://c2m4tbxky6uhd" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Tainted/HUD_Ammo_Tainted_4.png" id="19_spr3n"]
+[ext_resource type="Texture2D" uid="uid://jpfthovu53du" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Tainted/HUD_Ammo_Tainted_5.png" id="20_fxh66"]
 [ext_resource type="Texture2D" uid="uid://dab4mf2bpqc4t" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_Idle/SorcierRouge_Idle1.png" id="24_kjyfp"]
 [ext_resource type="Texture2D" uid="uid://bcj2b0gkxmvli" path="res://assets/sprites/Sorciers/SorcierVert/SorcierV_Idle/SorcierVert_Idle1.png" id="25_66dwk"]
 [ext_resource type="Texture2D" uid="uid://hkhgv36loe7t" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierB_Idle/SorcierBleu_Idle1.png" id="26_00fc2"]
@@ -43,7 +40,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_66dwk")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -52,24 +49,21 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_00fc2")
+"texture": ExtResource("10_d42gd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_kca0o")
+"texture": ExtResource("9_oqpua")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_5d6nw")
+"texture": ExtResource("8_lh7b3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_kgxd7")
+"texture": ExtResource("7_bnq26")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_l2hgu")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_mxla8")
+"texture": ExtResource("6_mmyff")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 5.0
 }]
@@ -78,24 +72,21 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("12_umabx")
+"texture": ExtResource("15_m3eni")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_n0qsi")
+"texture": ExtResource("14_j78d7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_a6tsk")
+"texture": ExtResource("13_rfsfd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_78uoy")
+"texture": ExtResource("12_taxvr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("16_cyygo")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_okm7f")
+"texture": ExtResource("11_2iqiw")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 5.0
 }]
@@ -104,24 +95,21 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("18_538yq")
+"texture": ExtResource("20_fxh66")
 }, {
 "duration": 1.0,
-"texture": ExtResource("19_hmiu3")
+"texture": ExtResource("19_spr3n")
 }, {
 "duration": 1.0,
-"texture": ExtResource("20_gl62j")
+"texture": ExtResource("18_kv7ra")
 }, {
 "duration": 1.0,
-"texture": ExtResource("21_8uo1w")
+"texture": ExtResource("17_ensrl")
 }, {
 "duration": 1.0,
-"texture": ExtResource("22_pgsuc")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_g10hg")
+"texture": ExtResource("16_mae2h")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 5.0
 }]
@@ -141,7 +129,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("27_kca0o")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
@@ -166,27 +154,30 @@ script = ExtResource("1_7gnvh")
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1224019641]
 layout_mode = 0
 offset_right = 128.0
-offset_bottom = 64.0
+offset_bottom = 65.0
 color = Color(0, 0, 0, 1)
 
 [node name="HudVie" type="AnimatedSprite2D" parent="." unique_id=483132872]
 texture_filter = 1
 position = Vector2(64, 16)
 sprite_frames = SubResource("SpriteFrames_krlww")
+frame_progress = 0.2654401
 
-[node name="HudGemneF" type="AnimatedSprite2D" parent="." unique_id=1959046259]
+[node name="HudFosil" type="AnimatedSprite2D" parent="." unique_id=1959046259]
 texture_filter = 1
-position = Vector2(20, 48)
+position = Vector2(61.428562, 47.857143)
 sprite_frames = SubResource("SpriteFrames_sc1xs")
 
-[node name="HudGemneG" type="AnimatedSprite2D" parent="." unique_id=1989531344]
+[node name="HudPure" type="AnimatedSprite2D" parent="." unique_id=1989531344]
 texture_filter = 1
 position = Vector2(64, 48)
 sprite_frames = SubResource("SpriteFrames_ifto1")
+frame = 3
+frame_progress = 1.0
 
-[node name="HudGemneL" type="AnimatedSprite2D" parent="." unique_id=1325858854]
+[node name="HudTainted" type="AnimatedSprite2D" parent="." unique_id=1325858854]
 texture_filter = 1
-position = Vector2(108, 48)
+position = Vector2(66.571434, 48)
 sprite_frames = SubResource("SpriteFrames_ofu1f")
 
 [node name="SorcereColor" type="AnimatedSprite2D" parent="." unique_id=1271559708]

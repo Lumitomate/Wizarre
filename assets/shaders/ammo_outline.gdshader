@@ -6,7 +6,7 @@ shader_type canvas_item;
 // - cerne INTÉRIEURE (inner_*) : dessinée sur le bord du sprite lui-même.
 
 uniform vec4 outer_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
-uniform float outer_width : hint_range(0.0, 4.0) = 3.0;
+uniform float outer_width : hint_range(0.0, 12.0) = 8.0;
 uniform vec4 inner_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
 uniform float inner_width : hint_range(0.0, 4.0) = 0.0;
 
@@ -51,8 +51,11 @@ void fragment() {
 	float pulse = 0.5 + 0.5 * sin(TIME * pulse_speed);
 	float amount = mix(intensity_min, intensity_max, pulse);
 
-	// Cerne extérieure : pixels transparents proches du sprite
-	float outer_mask = (1.0 - step(0.01, tex.a)) * step(dist_to_sprite, outer_width + 0.5);
+	// Cerne extérieure : pixels transparents proches du sprite, avec un
+	// dégradé d'opacité du bord intérieur de la cerne (opaque, collé au
+	// sprite) vers son bord extérieur (transparent)
+	float outer_falloff = 1.0 - clamp(dist_to_sprite / (outer_width + 0.5), 0.0, 1.0);
+	float outer_mask = (1.0 - step(0.01, tex.a)) * outer_falloff;
 	// Cerne intérieure : pixels du sprite proches d'un bord (transparence)
 	float inner_mask = step(0.01, tex.a) * step(dist_to_gap, inner_width + 0.5);
 

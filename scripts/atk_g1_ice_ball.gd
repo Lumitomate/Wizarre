@@ -1,14 +1,18 @@
 class_name AttackIceBall extends RigidBody2D
 
+var caster: Node2D = null
+
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("default")
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player_group") or body.is_in_group("enemy_group"):
+	if body.is_in_group("enemy_group"):
+		body.hit(1, caster)
+	elif body.is_in_group("player_group"):
 		body.hit(1)
 
-func scale(level_scale: Vector2) -> void:
+func apply_level_scale(level_scale: Vector2) -> void:
 	$AnimatedSprite2D.scale = level_scale
 	$CollisionShape2D.scale = level_scale
 

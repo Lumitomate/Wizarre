@@ -13,15 +13,15 @@ var run_info: Dictionary = {
 			"spells": {
 				# Each tube contains one spell; the tube determines the energy type needed
 				0: {  # Tube 1 → Fossil : G1 = IceBall tier I
-					"attack_type" : GlobalEnum.AttackType.F3,
+					"attack_type" : GlobalEnum.AttackType.L1,
 					"attack_tier" : 0
 				},
 				1: {  # Tube 2 → Pure : G3 = IceBlade tier III
-					"attack_type" : GlobalEnum.AttackType.L1,
+					"attack_type" : GlobalEnum.AttackType.P2,
 					"attack_tier" : 2
 				},
 				2: {  # Tube 3 → Tainted : L1 = LightRay tier I
-					"attack_type" : GlobalEnum.AttackType.G1,
+					"attack_type" : GlobalEnum.AttackType.P1,
 					"attack_tier" : 0
 				},
 			}

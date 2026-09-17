@@ -93,7 +93,10 @@ func _physics_process(delta: float) -> void:
 			if body not in hit_bodies:
 				if body.is_in_group("player_group") or body.is_in_group("enemy_group"):
 					hit_bodies.append(body)
-					body.hit(1)
+					if body.is_in_group("enemy_group"):
+						body.hit(1, player)
+					else:
+						body.hit(1)
 
 	if is_rotating:
 		rotation_timer += delta

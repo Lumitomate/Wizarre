@@ -17,6 +17,8 @@ extends RigidBody2D
 @export var shrink_speed: float = 8.0
 
 var attack_tier: int = 1
+# Sorcier qui a planté la graine (transmis aux têtes pour la représaille)
+var caster: Node2D = null
 var heads_remaining: int = 0
 var is_planted: bool = false
 var is_shrinking: bool = false
@@ -24,7 +26,7 @@ var heads: Array[CarnivorousHead] = []
 var base_plante_initial_position: Vector2 = Vector2.ZERO
 var base_plante_initial_scale: Vector2 = Vector2.ONE
 
-func scale(level_scale: Vector2) -> void:
+func apply_level_scale(level_scale: Vector2) -> void:
 	$Sprite2D.scale = level_scale
 	$CollisionShape2D.scale = level_scale
 
@@ -116,6 +118,7 @@ func _setup_tier(tier: int):
 	for i in range(head_count):
 		var head_instance: CarnivorousHead = head_scene.instantiate()
 		add_child(head_instance)
+		head_instance.caster = caster
 		var time_offset = i * 0.7
 		head_instance.setup(stem_origin, rest_positions[i], time_offset, tier)
 		head_instance.head_finished.connect(_on_head_finished)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0hepm0i1tyol"
-path="res://.godot/imported/TileMap_BriquesViolettes.png-d82a367115ea68268f41beb48b11581f.ctex"
+uid="uid://da42kd8tgcotc"
+path="res://.godot/imported/Monste_2vies_1_4.png-e13b25cda3f1042d5f866a05541f7f52.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/TileMap_BriquesViolettes.png"
-dest_files=["res://.godot/imported/TileMap_BriquesViolettes.png-d82a367115ea68268f41beb48b11581f.ctex"]
+source_file="res://assets/sprites/Monstres/Monstre_2vies/Monste_2vies_1_4.png"
+dest_files=["res://.godot/imported/Monste_2vies_1_4.png-e13b25cda3f1042d5f866a05541f7f52.ctex"]
 
 [params]
 

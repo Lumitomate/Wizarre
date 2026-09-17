@@ -26,7 +26,6 @@ const IDLE_HOVER := 8.0
 @export var tier_scale: float = 1.0
 
 
-var caster: Node2D = null
 var phase: Phase = Phase.IDLE
 var _ground_y := 0.0
 var _levitate_landed := false  # vrai une fois la mine posée au sol

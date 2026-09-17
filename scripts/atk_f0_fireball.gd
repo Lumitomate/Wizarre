@@ -1,13 +1,11 @@
 class_name AttackFireBall extends AttackProjectile
 
-@export var speed: int = 2000;
+@export var speed: int = 2000
 
 var direction: Vector2 = Vector2.LEFT
-var color_mod: Color = Color(1, 1, 1)
 
 
 func _enter_tree() -> void:
-	modulate = color_mod
 	if direction == Vector2.LEFT:
 		$Sprite2D.flip_h = true
 

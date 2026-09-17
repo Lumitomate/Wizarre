@@ -7,6 +7,10 @@ class_name AttackProjectile extends Area2D
 
 @export var damage: int = 1
 
+# Sorcier lanceur de l'attaque (renseigné par spawner_attack) : transmis
+# aux ennemis touchés pour la représaille
+var caster: Node2D = null
+
 
 # Hook surchargeable : le corps peut-il être touché par ce projectile ?
 func can_damage(_body: Node2D) -> bool:
@@ -14,6 +18,9 @@ func can_damage(_body: Node2D) -> bool:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("player_group") or body.is_in_group("enemy_group"):
+	if body.is_in_group("player_group"):
 		if can_damage(body):
 			body.hit(damage)
+	elif body.is_in_group("enemy_group"):
+		if can_damage(body):
+			body.hit(damage, caster)

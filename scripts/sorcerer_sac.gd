@@ -143,7 +143,7 @@ func play_reverse_anim(tube_index: int) -> void:
 		# Le tube n'était pas sorti : retour direct à l'idle
 		_update_tube_anim(tube_index)
 
-func _on_ammo_changed(tube_index: int, _ammunition_amount: int) -> void:
+func _on_ammo_changed(tube_index: int, _ammo_amount: int) -> void:
 	_update_tube_anim(tube_index)
 
 func refresh_all() -> void:

@@ -14,6 +14,14 @@ func _ready() -> void:
 	current_scene = root.get_child(-1)
 
 func goto_scene(scene: GlobalEnum.Location) -> void:
+	if scene == GlobalEnum.Location.HOMEPAGE:
+		# Retour sur Home : la partie précédente est terminée. Toutes les
+		# manettes connectées pourront créer des joueurs à la prochaine partie
+		PlayerManager.end_game()
+		PauseManager.force_resume()
+	elif not PlayerManager.game_active:
+		# Départ de Home : le nombre de joueurs est figé à ce moment
+		PlayerManager.start_game()
 	PlayerManager.save_players_data()
 	_deferred_goto_scene.call_deferred(scenes[scene])
 

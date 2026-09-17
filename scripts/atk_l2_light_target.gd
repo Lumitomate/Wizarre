@@ -44,8 +44,10 @@ func _update_targeting(delta: float) -> void:
 	# La cible est pilotée par le stick de la manette de son lanceur.
 	# Si le lanceur a disparu (mort, changement de scène), la cible reste sur place
 	var controller := 0
-	if caster != null and is_instance_valid(caster) and "controller_id" in caster:
-		controller = caster.controller_id
+	if caster != null and is_instance_valid(caster) and "input_device" in caster:
+		# Manette physique actuelle du lanceur (peut être une manette de
+			# remplacement si l'originale a été déconnectée)
+		controller = caster.input_device
 	var stick = Vector2(
 		Input.get_joy_axis(controller, JOY_AXIS_LEFT_X),
 		Input.get_joy_axis(controller, JOY_AXIS_LEFT_Y)

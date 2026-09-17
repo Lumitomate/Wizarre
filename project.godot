@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 Global="*uid://dab4ixykee2n6"
 GlobalInfo="*uid://oim1uv6r17t0"
 PlayerManager="*uid://cd8dcu4h4ccpt"
+PauseManager="*res://scripts/pause_manager.gd"
 
 [display]
 

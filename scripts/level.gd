@@ -22,24 +22,18 @@ func _ready() -> void:
 	enemies_to_kill += 3 * GlobalInfo.run_info["level_number"]
 	level_start_time = Time.get_ticks_msec()
 
-	# Spawn players via PlayerManager
+	# Spawn players via PlayerManager (joueurs figés au démarrage de la
+	# partie : les manettes branchées en cours de partie ne créent aucun
+		# joueur, elles ne peuvent que reprendre une place déconnectée)
 	PlayerManager.spawn_all_players(self, {"lives": 3})
-	# Manette branchée en cours de partie : son joueur apparaît directemement
-	PlayerManager.player_added.connect(_on_player_added)
 
 	# Create HUD for each player
-	for controller_id in PlayerManager.known_controllers:
+	for controller_id in PlayerManager.active_player_ids():
 		add_player_hud(controller_id)
 
 	$ProgressBar.set_percent(0)
 	$AudioStreamPlayer.play()
 
-
-
-
-func _on_player_added(controller_id: int) -> void:
-	PlayerManager.spawn_player(self, controller_id, {"lives": 3})
-	add_player_hud(controller_id)
 
 
 func add_player_hud(controller_id):

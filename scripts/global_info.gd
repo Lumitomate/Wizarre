@@ -28,3 +28,17 @@ var run_info: Dictionary = {
 		}
 	}
 }
+
+
+# Game over (retour à l'écran home après mort de tous les joueurs) : les
+# sorts de la run perdue ne doivent pas se retrouver sur la run suivante
+# (load_data relit players_info à chaque spawn). On remet les sorts de
+# chaque joueur sur la configuration de départ ("default").
+func reset_players_spells() -> void:
+	var default_spells: Dictionary = run_info["players_info"]["default"]["spells"].duplicate(true)
+	for controller_id in run_info["players_info"].keys():
+		# Les joueurs sont indexés par des ints ; "default" est la seule
+		# clé String (et un int == String plante en GDScript)
+		if not (controller_id is int):
+			continue
+		run_info["players_info"][controller_id]["spells"] = default_spells.duplicate(true)

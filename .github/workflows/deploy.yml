@@ -24,24 +24,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Get Godot 4.3
+      - name: Get Godot 4.7.2
         run: |
-          wget -q https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip -O /tmp/godot.zip
+          wget -q https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip -O /tmp/godot.zip
           unzip -q /tmp/godot.zip -d /tmp/
-          chmod +x /tmp/Godot_v4.3-stable_linux.x86_64
-          echo "GODOT=/tmp/Godot_v4.3-stable_linux.x86_64" >> $GITHUB_ENV
+          chmod +x /tmp/Godot_v4.7.2-stable_linux.x86_64
+          echo "GODOT=/tmp/Godot_v4.7.2-stable_linux.x86_64" >> $GITHUB_ENV
 
       - name: Get Export Templates
         run: |
-          wget -q https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz -O /tmp/templates.tpz
-          mkdir -p ~/.local/share/godot/export_templates/4.3.stable/
+          wget -q https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz -O /tmp/templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/4.7.2.stable/
           unzip -q /tmp/templates.tpz -d /tmp/templates/
           if [ -d "/tmp/templates/templates" ]; then
             mv /tmp/templates/templates/* ~/.local/share/godot/export_templates/4.3.stable/
           else
-            mv /tmp/templates/* ~/.local/share/godot/export_templates/4.3.stable/
+            mv /tmp/templates/* ~/.local/share/godot/export_templates/4.7.2.stable/
           fi
           echo "Templates installed"
+
+      - name: Import assets (génère .godot/imported pour l'export)
+        run: $GODOT --headless --import
+        shell: bash
 
       - name: Export Web Build
         run: |
@@ -51,6 +55,10 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        # Active Pages automatiquement au premier déploiement (source :
+        # GitHub Actions), inutile de le faire à la main dans les Settings
+        with:
+          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -33,15 +33,14 @@ jobs:
 
       - name: Get Export Templates
         run: |
-          wget -q https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz -O /tmp/templates.tpz
+          # curl --retry : le fichier fait ~1 Go, on se relance en cas de
+          # coupure réseau pendant le téléchargement
+          curl -sL --retry 5 --retry-delay 5 --retry-all-errors \
+            https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_export_templates.tpz -o /tmp/templates.tpz
+          test -s /tmp/templates.tpz && test $(stat -c%s /tmp/templates.tpz) -gt 100000000
           mkdir -p ~/.local/share/godot/export_templates/4.7.2.stable/
           unzip -q /tmp/templates.tpz -d /tmp/templates/
-          if [ -d "/tmp/templates/templates" ]; then
-            mv /tmp/templates/templates/* ~/.local/share/godot/export_templates/4.3.stable/
-          else
-            mv /tmp/templates/* ~/.local/share/godot/export_templates/4.7.2.stable/
-          fi
-          echo "Templates installed"
+          mv /tmp/templates/templates/* ~/.local/share/godot/export_templates/4.7.2.stable/
 
       - name: Import assets (génère .godot/imported pour l'export)
         run: $GODOT --headless --import

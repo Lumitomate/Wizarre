@@ -57,7 +57,6 @@ var direction: Vector2 = Vector2.RIGHT
 var energy_counts: Array = [3, 3, 3]  # Fossil, Pure, Tainted
 # Maximum de munitions par tube (0 à 4 : le HUD ne couvre que cet intervalle)
 const MAX_ENERGY := 4
-var animation_suffix: String
 var in_shop: bool = false
 # Tuyaux soulevables hors boutique (écran home) : X/Y/B font sortir les
 # tuyaux comme en boutique, sans pouvoir tirer
@@ -94,6 +93,9 @@ var jump_button_prev: bool = false # état du bouton A à la frame précédente 
 var last_wall_jump_side: int = 0 # côté du mur du dernier wall jump (-1 = mur à gauche, +1 = mur à droite) ; 0 = réarmé (sol touché)
 
 var current_state: GlobalEnum.State = GlobalEnum.State.IDLE
+# Vrai tant que l'animation d'attaque cosmétique est en cours (elle est
+# alors coupée par un changement d'état, ou relancée par un nouveau tir)
+var is_playing_attack: bool = false
 
 var is_hit_flash: bool = false
 var hit_flash_timer: float = 0.0
@@ -113,16 +115,10 @@ func _ready() -> void:
 	load_data()
 	lives = 3
 
-	match sorcerer_color :
-		GlobalEnum.SorcererColor.Blue:
-			animation_suffix = "blue"
-		GlobalEnum.SorcererColor.Red:
-			animation_suffix = "red"
-		GlobalEnum.SorcererColor.Green:
-			animation_suffix = "green"
-		GlobalEnum.SorcererColor.Yellow:
-			animation_suffix = "yellow"
-	$AnimatedSprite2D.play("walk_" + animation_suffix)
+	$AnimatedSprite2D.play("walk")
+
+	if not $AnimatedSprite2D.animation_finished.is_connected(_on_attack_animation_finished):
+		$AnimatedSprite2D.animation_finished.connect(_on_attack_animation_finished)
 
 	$DashDuration.wait_time = dash_duration
 	$DashDuration.one_shot = true
@@ -133,8 +129,12 @@ func _ready() -> void:
 	if not $DashCooldown.timeout.is_connected(_on_dash_cooldown_timeout):
 		$DashCooldown.timeout.connect(_on_dash_cooldown_timeout)
 
+	# Matériau créé à chaud (et non réutilisé depuis le .tscn) : les
+	# sous-ressources d'une scène sont partagées entre toutes les instances,
+	# or chaque joueur a besoin de ses propres couleurs de shader
 	dash_shader_material = ShaderMaterial.new()
-	dash_shader_material.shader = preload("res://assets/shaders/dash_white.gdshader")
+	dash_shader_material.shader = preload("res://assets/shaders/wizard_color.gdshader")
+	WizardPalette.apply_to_material(dash_shader_material, sorcerer_color)
 	$AnimatedSprite2D.material = dash_shader_material
 
 
@@ -143,19 +143,39 @@ func set_state(new_state: GlobalEnum.State) -> void:
 		return
 	
 	current_state = new_state
-	
-	match current_state:
+	is_playing_attack = false
+	_play_state_animation(new_state)
+
+
+func _play_state_animation(state: GlobalEnum.State) -> void:
+	match state:
 		GlobalEnum.State.IDLE:
-			$AnimatedSprite2D.play("idle_" + animation_suffix)
+			$AnimatedSprite2D.play("idle")
 			
 		GlobalEnum.State.RUN:
-			$AnimatedSprite2D.play("walk_" + animation_suffix)
+			$AnimatedSprite2D.play("walk")
 			
 		GlobalEnum.State.JUMP:
-			$AnimatedSprite2D.play("jump_" + animation_suffix)
+			$AnimatedSprite2D.play("jump")
 			
 		GlobalEnum.State.FALL:
-			$AnimatedSprite2D.play("fall_" + animation_suffix)
+			$AnimatedSprite2D.play("fall")
+
+
+func _play_attack_animation() -> void:
+	var sprite := $AnimatedSprite2D
+	is_playing_attack = true
+	# stop() pour rejouer depuis la frame 0 si une attaque est déjà en cours
+	sprite.stop()
+	sprite.play("attack_fire")
+
+
+func _on_attack_animation_finished() -> void:
+	if not is_playing_attack:
+		return
+	is_playing_attack = false
+	# Retour automatique à l'animation de l'état courant
+	_play_state_animation(current_state)
 			
 		
 func _process(_delta: float) -> void:
@@ -384,8 +404,9 @@ func spawn_dash_afterimage() -> void:
 	afterimage.flip_h = $AnimatedSprite2D.flip_h
 	afterimage.z_index = z_index + 10 # au-dessus de tout pour être visible
 
-	var afterimage_material = ShaderMaterial.new()
-	afterimage_material.shader = dash_shader_material.shader
+	# Dupliqué pour hériter aussi des couleurs du shader (sinon les
+	# traînées de dash apparaîtraient avec la palette rouge de base)
+	var afterimage_material: ShaderMaterial = dash_shader_material.duplicate()
 	afterimage_material.set_shader_parameter("white_amount", 1.0)
 	afterimage.material = afterimage_material
 	afterimage.modulate.a = dash_trail_start_alpha
@@ -552,6 +573,7 @@ func fire_attack(tube_index: int) -> void:
 	ammo_changed.emit(tube_index, energy_counts[tube_index])
 	$AttackCooldown.start()
 	can_fire = false
+	_play_attack_animation()
 	
 	# Après la pose d'une mine : attendre le relâchement du bouton avant
 	# le prochain tir (le 2e appui servira à déclencher l'explosion)

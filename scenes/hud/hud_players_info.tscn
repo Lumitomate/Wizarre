@@ -20,10 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://djxhl5vrfp6q5" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Tainted/HUD_Ammo_Tainted_3.png" id="18_kv7ra"]
 [ext_resource type="Texture2D" uid="uid://c2m4tbxky6uhd" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Tainted/HUD_Ammo_Tainted_4.png" id="19_spr3n"]
 [ext_resource type="Texture2D" uid="uid://jpfthovu53du" path="res://assets/sprites/HUD/HUD_Ammo_V2/HUD_Ammo_Tainted/HUD_Ammo_Tainted_5.png" id="20_fxh66"]
-[ext_resource type="Texture2D" uid="uid://dab4mf2bpqc4t" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_Idle/SorcierRouge_Idle1.png" id="24_kjyfp"]
-[ext_resource type="Texture2D" uid="uid://bcj2b0gkxmvli" path="res://assets/sprites/Sorciers/SorcierVert/SorcierV_Idle/SorcierVert_Idle1.png" id="25_66dwk"]
-[ext_resource type="Texture2D" uid="uid://hkhgv36loe7t" path="res://assets/sprites/Sorciers/SorcierBleu/SorcierB_Idle/SorcierBleu_Idle1.png" id="26_00fc2"]
-[ext_resource type="Texture2D" uid="uid://cn01d20vswxff" path="res://assets/sprites/Sorciers/SorcierJaune/SorcierJ_Idle/SorcierJaune_Idle1.png" id="27_kca0o"]
+[ext_resource type="Texture2D" uid="uid://cgwtk1fw1apry" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_Idle/Sorcier_Idle1.png" id="24_kjyfp"]
+[ext_resource type="Shader" uid="uid://dylx6il08tpoj" path="res://assets/shaders/wizard_color.gdshader" id="28_bluc"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_krlww"]
 animations = [{
@@ -114,20 +112,14 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hudcol"]
+shader = ExtResource("28_bluc")
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_5d6nw"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("24_kjyfp")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_66dwk")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_00fc2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27_kca0o")
 }],
 "loop": 1,
 "name": &"default",
@@ -182,6 +174,7 @@ sprite_frames = SubResource("SpriteFrames_ofu1f")
 
 [node name="SorcereColor" type="AnimatedSprite2D" parent="." unique_id=1271559708]
 texture_filter = 1
+material = SubResource("ShaderMaterial_hudcol")
 position = Vector2(17, 16)
 scale = Vector2(0.96875, 0.9375)
 sprite_frames = SubResource("SpriteFrames_5d6nw")

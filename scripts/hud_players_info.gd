@@ -27,7 +27,12 @@ func refresh_status() -> void:
 		gem.frame = 4 - clampi(ammo_counts[tube_index], 0, 4)
 
 func set_bg_color(color_id: GlobalEnum.SorcererColor):
-		$SorcereColor.frame=color_id
+	# Le matériau du .tscn est partagé entre les 4 HUD joueurs : on en
+	# duplique un par instance avant d'y écrire les couleurs du joueur
+	var sprite: AnimatedSprite2D = $SorcereColor
+	var mat: ShaderMaterial = sprite.material.duplicate()
+	WizardPalette.apply_to_material(mat, color_id)
+	sprite.material = mat
 
 
 func _on_ammo_changed(tube_index: int, ammo_amount: int):

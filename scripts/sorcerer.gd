@@ -109,18 +109,28 @@ func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	level_scale = get_parent().transform.get_scale()
 	var slot := PlayerManager.get_player_slot(controller_id)
-	# Apparition à la porte d'entrée du terrain1 si la scène en contient une
-	# (level, magasins) : les joueurs sont écartés autour de la porte selon
-	# leur rang. Sinon (Home, écran de pause) : ancien point central.
-	var entry_door: Node2D = get_parent().get_node_or_null("Terrain1PortesEntree")
-	if entry_door != null:
+	# Apparition aux portes d'entrée du terrain1 si la scène en contient :
+	# - une seule porte → joueurs écartés autour d'elle (level, magasins) ;
+	# - plusieurs portes → une porte par joueur, triées de la plus haute à
+	#   la plus basse (ex. magasin course : 1 couloir par joueur).
+	# Sinon (Home, écran de pause) : ancien point central.
+	var entry_doors: Array = []
+	for child in get_parent().get_children():
+		if child is Node2D and String(child.name).begins_with("Terrain1PortesEntree"):
+			entry_doors.append(child)
+	if not entry_doors.is_empty():
+		entry_doors.sort_custom(func(a, b): return a.position.y < b.position.y)
 		var active_ids := PlayerManager.active_player_ids()
 		var rank: int = active_ids.find(controller_id)
 		if rank == -1:
 			rank = slot
-		var player_count: int = maxi(1, active_ids.size())
-		position = entry_door.position \
-				+ Vector2((rank - (player_count - 1) / 2.0) * 64.0, -SPRITE_SIZE * 2.0)
+		if entry_doors.size() > 1:
+			var door: Node2D = entry_doors[rank % entry_doors.size()]
+			position = door.position + Vector2(64, -SPRITE_SIZE * 2.0)
+		else:
+			var player_count: int = maxi(1, active_ids.size())
+			position = entry_doors[0].position \
+					+ Vector2((rank - (player_count - 1) / 2.0) * 64.0, -SPRITE_SIZE * 2.0)
 	else:
 		position = (1.4 * screen_size / 2) + Vector2(slot * 64, 128)
 		position += Vector2(0, SPRITE_SIZE * slot)

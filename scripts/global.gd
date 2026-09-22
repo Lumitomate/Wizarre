@@ -6,7 +6,7 @@ var scenes = {
 	GlobalEnum.Location.HOMEPAGE: "res://scenes/niveaux/terrain1/homepage.tscn",
 	GlobalEnum.Location.LEVEL: "res://scenes/niveaux/terrain1/level.tscn",
 	GlobalEnum.Location.SHOP: "res://scenes/niveaux/magasin/shop.tscn",
-	GlobalEnum.Location.SHOP_2PLAYERS_REFLEX: "res://scenes/niveaux/magasin/shop_2players_reflex.tscn"
+	GlobalEnum.Location.SHOP_2PLAYERS_RACE: "res://scenes/niveaux/magasin/magasin_course/shop_2players_race.tscn"
 }
 
 func _ready() -> void:
@@ -15,9 +15,9 @@ func _ready() -> void:
 
 func goto_scene(scene: GlobalEnum.Location) -> void:
 	# Magasin à 2 joueurs : quand la partie compte exactement 2 joueurs,
-	# le magasin de base est remplacé par l'épreuve de réflexe
+	# le magasin de base est remplacé par l'épreuve de course
 	if scene == GlobalEnum.Location.SHOP and PlayerManager.game_players.size() == 2:
-		scene = GlobalEnum.Location.SHOP_2PLAYERS_REFLEX
+		scene = GlobalEnum.Location.SHOP_2PLAYERS_RACE
 	if scene == GlobalEnum.Location.HOMEPAGE:
 		# Retour sur Home : la partie précédente est terminée. Toutes les
 		# manettes connectées pourront créer des joueurs à la prochaine partie

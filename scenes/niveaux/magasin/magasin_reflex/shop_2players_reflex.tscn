@@ -1,14 +1,14 @@
 [gd_scene format=4 uid="uid://c7y0fpdjlli4t"]
 
-[ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="1_lx5au"]
-[ext_resource type="Script" uid="uid://5pxfc4db406c" path="res://scripts/shop_2players_reflex.gd" id="1_xfvoa"]
-[ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="6_8r1wq"]
-[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/niveaux/terrain1/map1_level_exit_door.tscn" id="8_y6sft"]
-[ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Map1/Terrain1_PortesEntree.png" id="10_entree"]
-[ext_resource type="PackedScene" uid="uid://pkgxqvb7he6h" path="res://scenes/niveaux/magasin/magasin_reflex/pressureplate_2players.tscn" id="11_trial"]
+[ext_resource type="Script" uid="uid://5pxfc4db406c" path="res://scripts/shop_2players_reflex.gd" id="1_2ebp3"]
+[ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="2_whb7n"]
+[ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="3_jp7t3"]
+[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/niveaux/terrain1/map1_level_exit_door.tscn" id="4_vqfy1"]
+[ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Map1/Terrain1_PortesEntree.png" id="5_rrf6l"]
+[ext_resource type="PackedScene" uid="uid://pkgxqvb7he6h" path="res://scenes/niveaux/magasin/pressureplate_2players.tscn" id="6_lcrta"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]
-texture = ExtResource("1_lx5au")
+texture = ExtResource("3_jp7t3")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
@@ -59,7 +59,7 @@ sources/0 = SubResource("TileSetAtlasSource_xfvoa")
 
 [node name="Shop2PlayersReflex" type="Node2D" unique_id=18106263]
 scale = Vector2(0.7, 0.7)
-script = ExtResource("1_xfvoa")
+script = ExtResource("1_2ebp3")
 
 [node name="Terrain1Fond" type="Sprite2D" parent="." unique_id=1021994143]
 z_index = -4000
@@ -67,7 +67,7 @@ z_as_relative = false
 texture_filter = 1
 position = Vector2(907.8571, 577.14276)
 scale = Vector2(2.0816796, 2.1996753)
-texture = ExtResource("6_8r1wq")
+texture = ExtResource("2_whb7n")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=885241608]
 z_index = 50
@@ -79,7 +79,7 @@ tile_set = SubResource("TileSet_1l46r")
 rendering_quadrant_size = 32
 physics_quadrant_size = 32
 
-[node name="ShopDoor" parent="." unique_id=1894555552 instance=ExtResource("8_y6sft")]
+[node name="ShopDoor" parent="." unique_id=1894555552 instance=ExtResource("4_vqfy1")]
 position = Vector2(1674.2861, 580)
 
 [node name="Terrain1PortesEntree" type="Sprite2D" parent="." unique_id=592914788]
@@ -87,9 +87,9 @@ z_index = -50
 texture_filter = 1
 position = Vector2(138.57141, 578.5713)
 scale = Vector2(2, 2)
-texture = ExtResource("10_entree")
+texture = ExtResource("5_rrf6l")
 
-[node name="Pressureplate2Players" parent="." unique_id=1806318726 instance=ExtResource("11_trial")]
+[node name="Pressureplate2Players" parent="." unique_id=1806318726 instance=ExtResource("6_lcrta")]
 position = Vector2(907.1428, 642.8571)
 scale = Vector2(2, 2)
 

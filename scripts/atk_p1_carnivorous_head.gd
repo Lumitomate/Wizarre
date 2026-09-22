@@ -146,3 +146,12 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body == target_enemy and not is_eating:
 		target_enemy = null
 		head.play("atk_p1_idle")
+
+
+## Rétracte la tête immédiatement, sans mordre (appelée quand tous les
+## ennemis du niveau ont été tués). La logique de retour à la base est
+## celle de _retract_head, déjà en place.
+func retract() -> void:
+	target_enemy = null
+	is_eating = false
+	is_retracting = true

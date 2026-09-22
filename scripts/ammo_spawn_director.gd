@@ -10,9 +10,14 @@ class_name AmmoSpawnDirector extends Node2D
 ## Temps (en secondes) entre deux cycles de tir
 @export var cycle_duration: float = 5.0
 
+# Progression par vague : la durée du cycle est multipliée par ce facteur
+# à chaque nouvelle vague (> 1 = ralentissement très léger)
+const SPAWN_TIME_FACTOR_PER_WAVE := 1.03
+
 
 func _ready() -> void:
-	$Cycle.wait_time = cycle_duration
+	# Vague 0 (première vague) = vitesse de base, puis léger ralentissement
+	$Cycle.wait_time = cycle_duration * pow(SPAWN_TIME_FACTOR_PER_WAVE, GlobalInfo.run_info["level_number"])
 	$Cycle.start()
 
 

@@ -26,6 +26,9 @@ var heads: Array[CarnivorousHead] = []
 var base_plante_initial_position: Vector2 = Vector2.ZERO
 var base_plante_initial_scale: Vector2 = Vector2.ONE
 
+func _ready() -> void:
+	add_to_group("atk_p1")
+
 func apply_level_scale(level_scale: Vector2) -> void:
 	$Sprite2D.scale = level_scale
 	$CollisionShape2D.scale = level_scale
@@ -46,7 +49,10 @@ func _process(delta: float) -> void:
 			_update_eye(delta)
 		return
 	if linear_velocity.length() < 10:
-		_plant()
+		# La plante ne peut éclore que sur le sol : si un ennemi ou un
+		# sorcier occupe l'emplacement, on attend qu'il libère la place
+		if _is_spot_free():
+			_plant()
 		return
 	if linear_velocity.dot(Vector2.RIGHT) < 0:
 		$Sprite2D.flip_h = true
@@ -88,6 +94,24 @@ func _plant():
 	base_plante.play(grow_animation)
 	base_plante.animation_finished.connect(_on_grow_finished, CONNECT_ONE_SHOT)
 	_setup_tier(attack_tier)
+
+
+
+## Vrai si aucun ennemi ni sorcier ne chevauche la graine : la plante
+## ne doit éclore que sur le sol.
+func _is_spot_free() -> bool:
+	var space_state := get_world_2d().direct_space_state
+	var params := PhysicsShapeQueryParameters2D.new()
+	params.shape = $CollisionShape2D.shape
+	params.transform = $CollisionShape2D.global_transform
+	# Masque tous les calques pour détecter ennemis et sorciers où qu'ils soient
+	params.collision_mask = 0x7FFFFFFF
+	params.exclude = [get_rid()]
+	for hit in space_state.intersect_shape(params):
+		var collider = hit.collider
+		if collider.is_in_group("enemy_group") or collider.is_in_group("player_group"):
+			return false
+	return true
 
 func _snap_to_ground():
 	var space_state = get_world_2d().direct_space_state
@@ -139,6 +163,22 @@ func _on_head_finished():
 	heads_remaining -= 1
 	if heads_remaining <= 0:
 		is_shrinking = true
+
+
+## Rétracte la plante quand tous les ennemis du niveau ont été tués :
+## - graine encore en vol → elle disparaît directement ;
+## - plante posée → les têtes rentrent à la base (retract de chaque tête),
+##   puis la logique existante (_on_head_finished / is_shrinking) rétracte
+##   la base et libère le nœud.
+func retract() -> void:
+	if is_shrinking:
+		return
+	if not is_planted:
+		queue_free()
+		return
+	for head in heads:
+		if is_instance_valid(head):
+			head.retract()
 
 func is_closest_head_for_enemy(requester: CarnivorousHead, enemy: Node2D) -> bool:
 	var min_distance = requester.head.global_position.distance_to(enemy.global_position)

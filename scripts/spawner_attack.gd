@@ -64,7 +64,10 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 		GlobalEnum.AttackType.G1:
 			var ice_ball: AttackIceBall = ice_ball_scene.instantiate()
 			ice_ball.transform = ice_ball.transform.rotated(player_direction.angle())
-			ice_ball.apply_level_scale(2 * level_scale)
+			# Taille par tier : le tier 3 garde la taille actuelle (facteur 1),
+			# tier 2 = 75 %, tier 1 = 50 %
+			var g1_tier_scale := 0.5 + 0.25 * (int_attack_tier - 1)
+			ice_ball.apply_level_scale(2 * level_scale * g1_tier_scale)
 			ice_ball.position = player_position + 60 * player_direction.normalized()
 			ice_ball.linear_velocity = 300 * int_attack_tier * player_direction.normalized()
 			spawn_list.append(ice_ball)

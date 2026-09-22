@@ -108,8 +108,11 @@ func _ready() -> void:
 	add_to_group("player_group")
 	screen_size = get_viewport_rect().size
 	level_scale = get_parent().transform.get_scale()
-	position = (1.4 * screen_size / 2) + Vector2(controller_id * 64, 128)
-	position += Vector2(0, SPRITE_SIZE * controller_id)
+	# Apparition décalée par emplacement (0 à 3), pas par device id :
+	# les ids des joueurs clavier (100/101) ne doivent pas décaler
+	var slot := PlayerManager.get_player_slot(controller_id)
+	position = (1.4 * screen_size / 2) + Vector2(slot * 64, 128)
+	position += Vector2(0, SPRITE_SIZE * slot)
 	if input_device == -1:
 		input_device = controller_id
 	load_data()
@@ -181,9 +184,9 @@ func _on_attack_animation_finished() -> void:
 func _process(_delta: float) -> void:
 	# Détection front montant (juste-appuyé) pour les 3 boutons de tube,
 	# mise à jour chaque frame pour ne rater aucun appui
-	var jx := _tube_button_just_pressed(0, JOY_BUTTON_X)
-	var jy := _tube_button_just_pressed(1, JOY_BUTTON_Y)
-	var jb := _tube_button_just_pressed(2, JOY_BUTTON_B)
+	var jx := _tube_button_just_pressed(0)
+	var jy := _tube_button_just_pressed(1)
+	var jb := _tube_button_just_pressed(2)
 
 	if frozen:
 		# Sorcier d'affichage (écran de pause) : uniquement le soulèvement
@@ -196,7 +199,7 @@ func _process(_delta: float) -> void:
 			select_tube(2)
 		return
 
-	var new_direction = Vector2(Input.get_joy_axis(input_device, JOY_AXIS_LEFT_X), Input.get_joy_axis(input_device, JOY_AXIS_LEFT_Y))
+	var new_direction = PlayerInput.direction(input_device)
 	if new_direction.length() > 0.2:
 		direction = new_direction
 	else:
@@ -233,10 +236,10 @@ func _process(_delta: float) -> void:
 			select_tube(2)
 
 	if can_dash and not is_dashing:
-		if Input.is_joy_button_pressed(input_device, JOY_BUTTON_LEFT_SHOULDER):
+		if PlayerInput.button_pressed(input_device, PlayerInput.Action.DASH):
 			start_dash()
 			
-	if !Input.is_joy_button_pressed(input_device, JOY_BUTTON_A):
+	if not PlayerInput.button_pressed(input_device, PlayerInput.Action.JUMP):
 		is_jump_long_press = false
 
 	
@@ -272,15 +275,16 @@ func _physics_process(delta: float) -> void:
 		return
 
 	# Mouvements horizontaux
-	if Input.get_joy_axis(input_device, JOY_AXIS_LEFT_X) < -0.2:
+	var axis := PlayerInput.direction(input_device)
+	if axis.x < -0.2:
 		velocity.x = -speed
-	elif Input.get_joy_axis(input_device, JOY_AXIS_LEFT_X) > 0.2:
+	elif axis.x > 0.2:
 		velocity.x = speed
 	else:
 		velocity.x = 0
 
 	# Saut + nuancier
-	if is_on_floor() and Input.is_joy_button_pressed(input_device, JOY_BUTTON_A) and !is_jump_long_press:
+	if is_on_floor() and PlayerInput.button_pressed(input_device, PlayerInput.Action.JUMP) and !is_jump_long_press:
 		is_jump_long_press = true
 		jump_pressed_time = 0.0
 		velocity.y = -jump_impulse_min
@@ -300,7 +304,7 @@ func _physics_process(delta: float) -> void:
 		# Pendant le knockback, on ignore les inputs et la gravité
 		return
 
-	if Input.is_joy_button_pressed(input_device, JOY_BUTTON_A) and is_jump_long_press:
+	if PlayerInput.button_pressed(input_device, PlayerInput.Action.JUMP) and is_jump_long_press:
 		jump_pressed_time += delta
 		if jump_pressed_time <= max_jump_time:
 			var t = jump_pressed_time / max_jump_time
@@ -322,7 +326,7 @@ func _physics_process(delta: float) -> void:
 	# Glissade (1A) : en l'air, collé au mur, stick poussé vers le mur.
 	# La glissade ralentie est limitée dans le temps : au-delà de
 	# wall_slide_max_duration on re-chute normalement (le wall jump reste possible).
-	var axis_x := Input.get_joy_axis(input_device, JOY_AXIS_LEFT_X)
+	var axis_x := axis.x
 	var touching_wall := wall_side != 0 and axis_x * wall_side > 0.2 and velocity.y > 0
 	if touching_wall:
 		wall_slide_timer += delta
@@ -341,7 +345,7 @@ func _physics_process(delta: float) -> void:
 	# Front montant uniquement : maintenir A ne déclenche pas le wall jump,
 	# il faut un nouvel appui (sinon un saut au sol suivi du maintien de A
 	# contre un mur redéclencherait un wall jump automatiquement).
-	var jump_button_pressed := Input.is_joy_button_pressed(input_device, JOY_BUTTON_A)
+	var jump_button_pressed := PlayerInput.button_pressed(input_device, PlayerInput.Action.JUMP)
 	var jump_button_just_pressed := jump_button_pressed and not jump_button_prev
 	jump_button_prev = jump_button_pressed
 	if not is_on_floor() and wall_side != 0 and jump_button_just_pressed:
@@ -587,8 +591,8 @@ func fire_attack(tube_index: int) -> void:
 # Lit le bouton d'attaque du tube : renvoie true seulement si
 # le bouton est pressé ET que le verrou de relâchement n'est pas actif.
 # Si le verrou est actif, il se lève dès que le bouton est relâché.
-func _fire_button_pressed(tube_index: int, button: JoyButton) -> bool:
-	var pressed := Input.is_joy_button_pressed(input_device, button)
+func _fire_button_pressed(tube_index: int) -> bool:
+	var pressed := PlayerInput.button_pressed(input_device, _tube_button(tube_index))
 	if fire_wait_release.get(tube_index, false):
 		if not pressed:
 			fire_wait_release[tube_index] = false
@@ -600,11 +604,19 @@ func _fire_button_pressed(tube_index: int, button: JoyButton) -> bool:
 # qui renvoie true à chaque frame tant que le bouton est maintenu).
 # Essentiel en boutique : sans ça, select_tube est rappelé chaque frame et
 # le tube se referme aussitôt sorti.
-func _tube_button_just_pressed(tube_index: int, button: JoyButton) -> bool:
-	var pressed := Input.is_joy_button_pressed(input_device, button)
+func _tube_button_just_pressed(tube_index: int) -> bool:
+	var pressed := PlayerInput.button_pressed(input_device, _tube_button(tube_index))
 	var was_pressed: bool = tube_buttons_prev.get(tube_index, false)
 	tube_buttons_prev[tube_index] = pressed
 	return pressed and not was_pressed
+
+
+## Bouton logique d'un tube d'attaque (0/1/2 → ATK1/ATK2/ATK3)
+func _tube_button(tube_index: int) -> PlayerInput.Action:
+	match tube_index:
+		0: return PlayerInput.Action.ATK1
+		1: return PlayerInput.Action.ATK2
+		_: return PlayerInput.Action.ATK3
 
 func select_tube(tube_index: int) -> void:
 	if tube_index < 0 or tube_index >= 3:

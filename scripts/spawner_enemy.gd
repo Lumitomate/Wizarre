@@ -9,17 +9,28 @@ var enemy_scene: PackedScene = preload("res://scenes/entities/ennemies/enemy_fly
 var enemy_2lifes_scene: PackedScene = preload("res://scenes/entities/ennemies/enemy_2lifes.tscn")
 var enemy_fly_scene: PackedScene = preload("res://scenes/entities/ennemies/enemy_fly.tscn")
 
-# Chances de chaque variante lors d'un spawn (la base prend le reste) :
-# 30 % de monstres à 2 PV, 10 % de groupes de 5 mouches, 60 % de base
-const TWO_LIFES_CHANCE := 0.3
-const FLY_CHANCE := 0.1
 # Nombre de mouches par groupe
 const FLY_GROUP_SIZE := 5
 # Éparpillement des mouches autour du spawner (en px)
 const FLY_GROUP_SPREAD := 48.0
 
+# Répartition des variantes selon la vague (interpolation linéaire) :
+#   vague 0  : 100 % simple,  0 % 2 vies,  0 % mouches
+#   vague 15 :  10 % simple, 45 % 2 vies, 45 % mouches
+# Au-delà de la vague 15, la répartition finale reste appliquée.
+const MIX_START_WAVE := 0
+const MIX_END_WAVE := 15
+const MIX_START_CHANCES := {"simple": 1.0, "two_lifes": 0.0, "fly": 0.0}
+const MIX_END_CHANCES := {"simple": 0.1, "two_lifes": 0.45, "fly": 0.45}
+
+# Progression par vague : le temps entre deux apparitions est multiplié
+# par ce facteur à chaque nouvelle vague (< 1 = accélération très légère)
+const SPAWN_TIME_FACTOR_PER_WAVE := 0.97
+
 func _ready() -> void:
 	$AnimatedSprite2D.play("SpawnerApparition")
+	# Vague 0 (première vague) = vitesse de base, puis légère accélération
+	$SpawnCooldown.wait_time *= pow(SPAWN_TIME_FACTOR_PER_WAVE, GlobalInfo.run_info["level_number"])
 	$SpawnCooldown.wait_time += randf()
 	$SpawnCooldown.start()
 
@@ -46,14 +57,27 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 func _on_block_spawn() -> void:
 	can_spawn = false
 
+## Chances de chaque variante pour la vague en cours : interpolation
+## linéaire de MIX_START_CHANCES à MIX_END_CHANCES entre MIX_START_WAVE
+## et MIX_END_WAVE, puis palier au-delà.
+func _wave_chances() -> Dictionary:
+	var wave: int = GlobalInfo.run_info["level_number"]
+	var t := clampf(float(wave - MIX_START_WAVE) / float(MIX_END_WAVE - MIX_START_WAVE), 0.0, 1.0)
+	var chances := {}
+	for key: String in MIX_START_CHANCES:
+		chances[key] = lerpf(MIX_START_CHANCES[key], MIX_END_CHANCES[key], t)
+	return chances
+
+
 func spawn() -> void:
 	if can_spawn:
-		# Variante aléatoire : 10 % groupe de 5 mouches, 30 % monstre à
-		# 2 PV, 60 % monstre de base
+		# Répartition selon la vague, tirage dans l'ordre : mouches,
+		# 2 vies, puis simple (la base prend le reste)
+		var chances := _wave_chances()
 		var roll := randf()
-		if roll < FLY_CHANCE:
+		if roll < chances["fly"]:
 			_spawn_fly_group()
-		elif roll < FLY_CHANCE + TWO_LIFES_CHANCE:
+		elif roll < chances["fly"] + chances["two_lifes"]:
 			_spawn_enemy(enemy_2lifes_scene)
 		else:
 			_spawn_enemy(enemy_scene)

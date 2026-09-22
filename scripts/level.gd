@@ -40,12 +40,15 @@ func add_player_hud(controller_id):
 
 	var player_info : PlayerInfo = player_info_scene.instantiate()
 
-	# Décalage horizontal par joueur : id + id/2 (division entière)
+	# Décalage horizontal par joueur : emplacement + emplacement/2 (division
+	# entière) (layout 4 joueurs : 0, 269, 807, 1076 px). L'emplacement
+	# (0-3) remplace l'id de device : les joueurs clavier sont intégrés
 	@warning_ignore("integer_division")
-	var hud_offset: int = HUD_PANEL_SPACING * (controller_id + controller_id / 2)
+	var slot: int = PlayerManager.get_player_slot(controller_id)
+	var hud_offset: int = HUD_PANEL_SPACING * (slot + slot / 2)
 	player_info.position = Vector2(8, START_Y_POSITION) + Vector2(hud_offset, 0)
 
-	player_info.set_bg_color(controller_id % 4)
+	player_info.set_bg_color(slot)
 
 	if controller_id in GlobalInfo.run_info["players_info"].keys():
 		player_info.load_data(GlobalInfo.run_info["players_info"][controller_id])
@@ -71,6 +74,11 @@ func _on_enemy_killed() -> void:
 
 	if enemies_killed == enemies_to_kill:
 		$Terrain1PortesSortieOuverture1.play()
+		# Les plantes carnivores (P1) encore en jeu se rétractent au lieu
+		# de continuer à attaquer une fois la vague terminée
+		for plant in get_tree().get_nodes_in_group("atk_p1"):
+			if plant.has_method("retract"):
+				plant.retract()
 
 
 

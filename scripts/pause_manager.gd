@@ -76,18 +76,22 @@ func _process(delta: float) -> void:
 		return
 
 	if not paused:
-		# Start d'un joueur connecté -> pause
+		# Start d'une manette de joueur connectée -> pause
 		for device in PlayerManager.connected_game_devices():
-			if Input.is_joy_button_pressed(device, JOY_BUTTON_START):
+			if PlayerInput.button_pressed(device, PlayerInput.Action.PAUSE):
 				pause_game()
 				break
+		# Clavier (partagé par les joueurs clavier) : Échap -> pause
+		if Input.is_physical_key_pressed(KEY_ESCAPE):
+			pause_game()
 		return
 
-	# Jauge Reprendre : n'importe quel joueur connecté peut maintenir A.
+	# Jauge Reprendre : n'importe quel joueur connecté peut maintenir son
+	# bouton de saut (manette A, Espace clavier 1, pavé 0/Entrée clavier 2).
 	# Plusieurs joueurs simultanés = même comportement (une seule jauge).
 	var holding := false
 	for device in PlayerManager.connected_game_devices():
-		if Input.is_joy_button_pressed(device, JOY_BUTTON_A):
+		if PlayerInput.button_pressed(device, PlayerInput.Action.JUMP):
 			holding = true
 			break
 
@@ -160,7 +164,7 @@ func _spawn_dummies() -> void:
 		var id: int = connected_ids[i]
 		var dummy: Sorcerer = PlayerManager.sorcerer_scene.instantiate()
 		dummy.controller_id = id
-		dummy.sorcerer_color = (id % 4) as GlobalEnum.SorcererColor
+		dummy.sorcerer_color = PlayerManager.get_player_slot(id) as GlobalEnum.SorcererColor
 		dummy.input_device = PlayerManager.get_input_device(id)
 		dummy.frozen = true
 		dummy.can_fire = false

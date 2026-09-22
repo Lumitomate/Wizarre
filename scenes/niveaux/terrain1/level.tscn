@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://diof008bvy13y"]
 
 [ext_resource type="Script" uid="uid://5gcf6jt1wdlb" path="res://scripts/level.gd" id="1_m2rcd"]
-[ext_resource type="Texture2D" uid="uid://t04ujik8071u" path="res://assets/sprites/Map1/TileMap_BriquesViolettes.png" id="2_iq37h"]
+[ext_resource type="Texture2D" uid="uid://0hepm0i1tyol" path="res://assets/sprites/Map1/TileMap_BriquesViolettes.png" id="2_iq37h"]
 [ext_resource type="PackedScene" uid="uid://dig4mpq1rxqfl" path="res://scenes/spawner_enemy.tscn" id="3_5twdy"]
 [ext_resource type="PackedScene" path="res://scenes/spawner_ammo.tscn" id="4_ybquc"]
 [ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Map1/Terrain1_PortesEntree.png" id="5_c7wow"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://uar7blb4jike" path="res://scenes/hud/hud_progress_bar.tscn" id="9_cuaat"]
 [ext_resource type="AudioStream" uid="uid://x8r5wa8nng4e" path="res://assets/sound/theme.mp3" id="10_ide4y"]
 [ext_resource type="PackedScene" path="res://scenes/ammo_spawn_director.tscn" id="11_dir"]
+[ext_resource type="PackedScene" path="res://scenes/hud/hud_wave_number.tscn" id="12_5twdy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8gofh"]
 texture = ExtResource("2_iq37h")
@@ -184,10 +185,10 @@ scale = Vector2(2.1395502, 2.4269478)
 texture = ExtResource("8_q0h6m")
 
 [node name="ProgressBar" parent="." unique_id=542118470 instance=ExtResource("9_cuaat")]
-offset_left = 547.0
-offset_top = 46.0
-offset_right = 547.07996
-offset_bottom = 46.079998
+offset_left = 546.0
+offset_top = 49.0
+offset_right = 546.07996
+offset_bottom = 49.079998
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=580644228]
 stream = ExtResource("10_ide4y")
@@ -243,6 +244,12 @@ position = Vector2(870.8266, -340.3497)
 scale = Vector2(0.9915451, 1.3777784)
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(205.71423, 704.2857, 194.90674, 735.7143, 205.71423, 768.5714, 367.82605, 768.5714, 456.0869, 704.2857)
+
+[node name="WaveNumber" parent="." unique_id=433018384 instance=ExtResource("12_5twdy")]
+top_level = true
+z_index = 700
+position = Vector2(636, 14)
+scale = Vector2(2, 2)
 
 [connection signal="block_spawn" from="." to="EnnemySpawner" method="_on_block_spawn"]
 [connection signal="block_spawn" from="." to="EnnemySpawner2" method="_on_block_spawn"]

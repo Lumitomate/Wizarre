@@ -62,5 +62,6 @@ enum DoorType {
 enum Location {
 	HOMEPAGE,
 	LEVEL,
-	SHOP
+	SHOP,
+	SHOP_2PLAYERS_REFLEX
 }

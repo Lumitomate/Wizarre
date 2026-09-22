@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="6_8r1wq"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/niveaux/magasin/shop_trial_door.tscn" id="7_ajxib"]
 [ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/niveaux/terrain1/map1_level_exit_door.tscn" id="8_y6sft"]
+[ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Map1/Terrain1_PortesEntree.png" id="10_entree"]
 [ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_object.tscn" id="9_m4ofw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]
@@ -119,3 +120,10 @@ position = Vector2(1687.1428, 325.7143)
 [connection signal="sorcerer_contact_bubble" from="Bulle2" to="." method="_on_bubble_sorcerer_contact_bubble"]
 [connection signal="sorcerer_contact_bubble" from="Bulle3" to="." method="_on_bubble_sorcerer_contact_bubble"]
 [connection signal="shop_entered" from="ShopDoor" to="." method="_on_shop_door_shop_entered"]
+
+[node name="Terrain1PortesEntree" type="Sprite2D" parent="."]
+z_index = -50
+texture_filter = 1
+position = Vector2(907.14294, 741.0)
+scale = Vector2(2, 2)
+texture = ExtResource("10_entree")

@@ -69,7 +69,10 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 			var g1_tier_scale := 0.5 + 0.25 * (int_attack_tier - 1)
 			ice_ball.apply_level_scale(2 * level_scale * g1_tier_scale)
 			ice_ball.position = player_position + 60 * player_direction.normalized()
-			ice_ball.linear_velocity = 300 * int_attack_tier * player_direction.normalized()
+			# Vitesse de lancement par tier : le tier 1 part moins fort
+			# (200 au lieu de 300), les tiers suivants gardent leur vitesse
+			const G1_LAUNCH_SPEEDS := [200.0, 600.0, 900.0]
+			ice_ball.linear_velocity = Vector2(G1_LAUNCH_SPEEDS[int_attack_tier - 1], 0).rotated(player_direction.angle())
 			spawn_list.append(ice_ball)
 			
 		GlobalEnum.AttackType.P1:

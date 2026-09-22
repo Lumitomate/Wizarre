@@ -5,7 +5,8 @@ var current_scene = null
 var scenes = {
 	GlobalEnum.Location.HOMEPAGE: "res://scenes/niveaux/terrain1/homepage.tscn",
 	GlobalEnum.Location.LEVEL: "res://scenes/niveaux/terrain1/level.tscn",
-	GlobalEnum.Location.SHOP: "res://scenes/niveaux/magasin/shop.tscn"
+	GlobalEnum.Location.SHOP: "res://scenes/niveaux/magasin/shop.tscn",
+	GlobalEnum.Location.SHOP_2PLAYERS_REFLEX: "res://scenes/niveaux/magasin/shop_2players_reflex.tscn"
 }
 
 func _ready() -> void:
@@ -13,6 +14,10 @@ func _ready() -> void:
 	current_scene = root.get_child(-1)
 
 func goto_scene(scene: GlobalEnum.Location) -> void:
+	# Magasin à 2 joueurs : quand la partie compte exactement 2 joueurs,
+	# le magasin de base est remplacé par l'épreuve de réflexe
+	if scene == GlobalEnum.Location.SHOP and PlayerManager.game_players.size() == 2:
+		scene = GlobalEnum.Location.SHOP_2PLAYERS_REFLEX
 	if scene == GlobalEnum.Location.HOMEPAGE:
 		# Retour sur Home : la partie précédente est terminée. Toutes les
 		# manettes connectées pourront créer des joueurs à la prochaine partie

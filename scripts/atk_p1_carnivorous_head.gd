@@ -30,6 +30,14 @@ var is_retracting: bool = false
 var bite_triggered: bool = false
 var plant_parent: Node = null
 
+# Validation d'emplacement : la tête ne doit jamais être dans un mur ni
+# hors de l'écran. Dernier endroit valide connu (auquel on la ramène).
+var _last_valid_position := Vector2.ZERO
+var _spot_validated := false
+
+# Marge par rapport aux bords de l'écran (en px monde)
+const SCREEN_MARGIN := 40.0
+
 func setup(origin: Node2D, rest_pos: Vector2, t_offset: float, tier: int = 1):
 	stem_origin = origin
 	head_rest_position = rest_pos
@@ -55,6 +63,7 @@ func _process(delta):
 		_chase_enemy(delta)
 	else:
 		_idle_movement(delta)
+	_validate_spot()
 	_update_stem()
 
 func _idle_movement(delta):
@@ -155,3 +164,74 @@ func retract() -> void:
 	target_enemy = null
 	is_eating = false
 	is_retracting = true
+
+
+## Vrai si la tête peut être à cette position : centre hors des murs
+## (tuiles du décor ; ennemis et sorciers ignorés) et dans l'écran.
+func _is_spot_valid(pos: Vector2) -> bool:
+	var viewport := get_viewport()
+	var screen_pos: Vector2 = viewport.canvas_transform * pos
+	var screen_size := viewport.get_visible_rect().size
+	if screen_pos.x < SCREEN_MARGIN or screen_pos.x > screen_size.x - SCREEN_MARGIN \
+			or screen_pos.y < SCREEN_MARGIN or screen_pos.y > screen_size.y - SCREEN_MARGIN:
+		return false
+	# Le centre de la tête est-il à l'intérieur d'une tuile du décor ?
+	var space_state := get_world_2d().direct_space_state
+	var params := PhysicsPointQueryParameters2D.new()
+	params.position = pos
+	# Tous les calques : on détecte le décor quel que soit son calque,
+	# puis on ignore les entités (ennemi/sorcier)
+	params.collision_mask = 0x7FFFFFFF
+	for hit in space_state.intersect_point(params, 4):
+		var collider = hit.collider
+		if collider.is_in_group("enemy_group") or collider.is_in_group("player_group"):
+			continue
+		return false
+	return true
+
+
+## Cherche un endroit valide pour la tête (elle doit "pouvoir apparaître") :
+## spirale autour de la base de la plante, en commençant vers le haut, puis
+## décrochage vertical au-dessus de la base. Le point de repos de l'idle est
+## ajusté pour que l'oscillation reste dans la zone valide.
+func _find_valid_spot() -> void:
+	var base: Vector2 = stem_origin.global_position if stem_origin != null else (plant_parent as Node2D).global_position
+	var target: Vector2 = head.global_position
+	if not _is_spot_valid(target):
+		var valid = _find_valid_around(base)
+		if valid == null:
+			for dy in range(2, 48, 2):
+				var candidate: Vector2 = base + Vector2(0, -float(dy))
+				if _is_spot_valid(candidate):
+					valid = candidate
+					break
+		if valid == null:
+			valid = base
+		head.global_position = valid
+		head_rest_position = plant_parent.to_local(valid)
+	_last_valid_position = head.global_position
+	_spot_validated = true
+
+
+## Premier emplacement valide trouvé en spirale autour de center,
+## ou null si aucun (jusqu'à 160 px).
+func _find_valid_around(center: Vector2) -> Variant:
+	for radius in [24.0, 48.0, 72.0, 96.0, 120.0, 160.0]:
+		for i in 16:
+			var angle := -PI / 2.0 + TAU * float(i) / 16.0
+			var candidate: Vector2 = center + Vector2(cos(angle), sin(angle)) * radius
+			if _is_spot_valid(candidate):
+				return candidate
+	return null
+
+
+## Après un déplacement : si la tête finit dans un mur ou hors de l'écran,
+## on la ramène au dernier endroit valide connu.
+func _validate_spot() -> void:
+	if not _spot_validated:
+		_find_valid_spot()
+		return
+	if _is_spot_valid(head.global_position):
+		_last_valid_position = head.global_position
+	else:
+		head.global_position = _last_valid_position

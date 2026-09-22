@@ -108,11 +108,22 @@ func _ready() -> void:
 	add_to_group("player_group")
 	screen_size = get_viewport_rect().size
 	level_scale = get_parent().transform.get_scale()
-	# Apparition décalée par emplacement (0 à 3), pas par device id :
-	# les ids des joueurs clavier (100/101) ne doivent pas décaler
 	var slot := PlayerManager.get_player_slot(controller_id)
-	position = (1.4 * screen_size / 2) + Vector2(slot * 64, 128)
-	position += Vector2(0, SPRITE_SIZE * slot)
+	# Apparition à la porte d'entrée du terrain1 si la scène en contient une
+	# (level, magasins) : les joueurs sont écartés autour de la porte selon
+	# leur rang. Sinon (Home, écran de pause) : ancien point central.
+	var entry_door: Node2D = get_parent().get_node_or_null("Terrain1PortesEntree")
+	if entry_door != null:
+		var active_ids := PlayerManager.active_player_ids()
+		var rank: int = active_ids.find(controller_id)
+		if rank == -1:
+			rank = slot
+		var player_count: int = maxi(1, active_ids.size())
+		position = entry_door.position \
+				+ Vector2((rank - (player_count - 1) / 2.0) * 64.0, -SPRITE_SIZE * 2.0)
+	else:
+		position = (1.4 * screen_size / 2) + Vector2(slot * 64, 128)
+		position += Vector2(0, SPRITE_SIZE * slot)
 	if input_device == -1:
 		input_device = controller_id
 	load_data()

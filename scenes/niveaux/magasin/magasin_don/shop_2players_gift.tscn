@@ -1,0 +1,202 @@
+[gd_scene format=4 uid="uid://cwkyuvaylv7i1"]
+
+[ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="1_sti6k"]
+[ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="2_c0d2s"]
+[ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/niveaux/terrain1/map1_level_exit_door.tscn" id="3_1s6hq"]
+[ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Map1/Terrain1_PortesEntree.png" id="4_o8ehn"]
+[ext_resource type="Texture2D" uid="uid://ci4ksrxtd1ovq" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreBase.png" id="5_uql7t"]
+[ext_resource type="Texture2D" uid="uid://dyjo7chhbyq1q" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé1.png" id="6_e4kij"]
+[ext_resource type="Texture2D" uid="uid://6rpiahc8fgoj" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé2.png" id="7_n0qaa"]
+[ext_resource type="Texture2D" uid="uid://ch5iotc66uxan" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé3.png" id="8_8g6o8"]
+[ext_resource type="Texture2D" uid="uid://beokmydpouhdr" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé4.png" id="9_sevdh"]
+[ext_resource type="Texture2D" uid="uid://d1m7yxucd2vps" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé5.png" id="10_ccaiq"]
+[ext_resource type="Texture2D" uid="uid://rqlu5tkfmr7t" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé6.png" id="11_oa8p3"]
+[ext_resource type="Texture2D" uid="uid://do2whdngpwv3s" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé7.png" id="12_byxra"]
+[ext_resource type="Texture2D" uid="uid://d2i3bs7l6v8l4" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé8.png" id="13_jeo3v"]
+[ext_resource type="Texture2D" uid="uid://ck0nhlg42ei0s" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé9.png" id="14_n6u3o"]
+[ext_resource type="Texture2D" uid="uid://cru32wxiv4mei" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé10.png" id="15_jvrnj"]
+[ext_resource type="Texture2D" uid="uid://77ajpq4hj870" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé11.png" id="16_hlar5"]
+[ext_resource type="Texture2D" uid="uid://dw0uup17ankao" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé12.png" id="17_3dfst"]
+[ext_resource type="Texture2D" uid="uid://bdyo1ttbpied2" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé13.png" id="18_02dkv"]
+[ext_resource type="Texture2D" uid="uid://u4w73l3nt626" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé14.png" id="19_eea3s"]
+[ext_resource type="Texture2D" uid="uid://ccfgyulou77um" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé15.png" id="20_geomd"]
+[ext_resource type="Texture2D" uid="uid://by6iihxgjv4ul" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé16.png" id="21_eh7sa"]
+[ext_resource type="Texture2D" uid="uid://dhc3naivp2b1b" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé17.png" id="22_o3iay"]
+[ext_resource type="Texture2D" uid="uid://c0onvqsvtxc5o" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé18.png" id="23_tdrd8"]
+[ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_object.tscn" id="24_4dv5q"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a0arv"]
+texture = ExtResource("2_c0d2s")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -8.990763, 16, -8.980848, 16, 16, -16, 16)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(16, -16, -16, -16, -16, -9.775223, 16, -9.879527)
+4:0/0/physics_layer_0/polygon_0/one_way = true
+
+[sub_resource type="TileSet" id="TileSet_aduyq"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 12
+sources/0 = SubResource("TileSetAtlasSource_a0arv")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f3c62"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_uql7t")
+}],
+"loop": 0,
+"name": &"Idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_e4kij")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_n0qaa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_8g6o8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_sevdh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ccaiq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_oa8p3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_byxra")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_jeo3v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_n6u3o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_jvrnj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_hlar5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_3dfst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_02dkv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_eea3s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_geomd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_eh7sa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_o3iay")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_tdrd8")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g8fqb"]
+radius = 25.0
+height = 58.0
+
+[node name="Shop2PlayersGift" type="Node2D" unique_id=509115402]
+
+[node name="Terrain1Fond" type="Sprite2D" parent="." unique_id=2031802209]
+z_index = -4000
+z_as_relative = false
+texture_filter = 1
+position = Vector2(907.8571, 577.14276)
+scale = Vector2(2.0816796, 2.1996753)
+texture = ExtResource("1_sti6k")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1456971089]
+z_index = 50
+texture_filter = 1
+position = Vector2(11, 1)
+scale = Vector2(2, 2)
+tile_map_data = PackedByteArray("AAD//wAAAAABAAEAAAD//wEAAAABAAEAAAD//wIAAAABAAEAAAD//wMAAAACAAEAAAD//wQAAAACAAEAAAD//wUAAAACAAEAAAD//wYAAAACAAEAAAD//wcAAAABAAEAAAD//wgAAAABAAEAAAD//wkAAAABAAEAAAD//woAAAABAAEAAAD//wsAAAABAAEAAAATAAAAAAABAAEAAAAAAAAAAAABAAEAAAABAAAAAAABAAIAAAACAAAAAAABAAIAAAADAAAAAAABAAIAAAAEAAAAAAABAAIAAAAFAAAAAAABAAIAAAAGAAAAAAABAAIAAAAHAAAAAAABAAIAAAAIAAAAAAABAAIAAAAJAAAAAAABAAIAAAAKAAAAAAABAAIAAAALAAAAAAABAAIAAAAMAAAAAAAEAAIAAAANAAAAAAAEAAIAAAAOAAAAAAAEAAIAAAAPAAAAAAAEAAIAAAAQAAAAAAABAAEAAAARAAAAAAABAAEAAAASAAAAAAABAAEAAAAAAA8AAAABAAAAAAABAA8AAAABAAAAAAACAA8AAAABAAAAAAADAA8AAAABAAAAAAAEAA8AAAABAAEAAAAFAA8AAAABAAEAAAAGAA8AAAABAAEAAAAHAA8AAAABAAEAAAAIAA8AAAABAAEAAAAJAA8AAAABAAEAAAAKAA8AAAABAAEAAAALAA8AAAABAAEAAAAMAA8AAAABAAEAAAANAA8AAAABAAEAAAAOAA8AAAABAAEAAAAPAA8AAAABAAEAAAAQAA8AAAABAAEAAAARAA8AAAABAAEAAAASAA8AAAABAAEAAAATAA8AAAABAAEAAAAUAA8AAAABAAEAAAAVAA8AAAABAAAAAAAWAA8AAAABAAAAAAAXAA8AAAABAAEAAAAYAA8AAAABAAEAAAAZAA8AAAABAAEAAAAaAA8AAAABAAEAAAAbAA8AAAABAAEAAAAUAAAAAAABAAEAAAAVAAAAAAABAAEAAAAWAAAAAAABAAEAAAAXAAAAAAABAAEAAAAYAAAAAAABAAEAAAAZAAAAAAABAAEAAAAaAAAAAAABAAIAAAAbAAAAAAABAAIAAAAcAA8AAAABAAEAAAAcAAAAAAABAAEAAAD//w8AAAABAAEAAAAAAAEAAAAEAAIAAAABAAEAAAAEAAIAAAACAAEAAAAEAAIAAAADAAEAAAAEAAIAAAAEAAEAAAABAAEAAAAFAAEAAAABAAEAAAAGAAEAAAAEAAIAAAAHAAEAAAAEAAIAAAALAAEAAAABAAEAAAAMAAEAAAAEAAIAAAANAAEAAAAEAAIAAAAOAAEAAAAEAAIAAAAPAAEAAAAEAAIAAAAQAAEAAAABAAEAAAARAAEAAAABAAEAAAAIAAEAAAAEAAIAAAAJAAEAAAAEAAIAAAAKAAEAAAABAAEAAAAUAAEAAAAEAAIAAAATAAEAAAAEAAIAAAASAAEAAAAEAAIAAAAVAAEAAAAEAAIAAAAWAAEAAAABAAEAAAAXAAEAAAABAAEAAAAYAAEAAAAEAAIAAAAZAAEAAAAEAAIAAAAaAAEAAAAEAAIAAAAbAAEAAAAEAAIAAAAcAAEAAAABAAEAAAAcAAIAAAABAAEAAAD//wwAAAABAAEAAAD//w0AAAACAAEAAAD//w4AAAACAAEAAAAcAAMAAAAAAAEAAAAcAAQAAAAAAAEAAAAcAAUAAAAAAAEAAAAcAAYAAAAAAAEAAAAcAAcAAAAAAAEAAAAcAAgAAAAAAAEAAAAcAAkAAAAAAAEAAAAcAAoAAAABAAEAAAAcAAsAAAABAAEAAAAcAAwAAAABAAEAAAAcAA0AAAAAAAEAAAAcAA4AAAAAAAEAAAAAAAIAAAABAAIAAAABAAIAAAABAAIAAAACAAIAAAABAAIAAAADAAIAAAABAAIAAAAEAAIAAAABAAIAAAAFAAIAAAABAAIAAAAGAAIAAAABAAIAAAAHAAIAAAABAAIAAAAIAAIAAAABAAIAAAAJAAIAAAABAAIAAAAKAAIAAAABAAIAAAALAAIAAAABAAIAAAAMAAIAAAABAAIAAAANAAIAAAABAAIAAAAOAAIAAAABAAIAAAAPAAIAAAABAAIAAAAQAAIAAAABAAIAAAARAAIAAAABAAIAAAASAAIAAAABAAIAAAATAAIAAAABAAIAAAAUAAIAAAABAAIAAAAVAAIAAAABAAIAAAAWAAIAAAABAAIAAAAXAAIAAAABAAIAAAAYAAIAAAABAAIAAAAZAAIAAAABAAIAAAAaAAIAAAABAAIAAAAbAAIAAAABAAIAAAAAAAkAAAABAAEAAAABAAkAAAABAAEAAAACAAkAAAABAAEAAAADAAkAAAABAAEAAAAEAAkAAAABAAEAAAAFAAkAAAABAAEAAAAGAAkAAAABAAEAAAAHAAkAAAABAAEAAAAIAAkAAAABAAEAAAAJAAkAAAABAAEAAAAKAAkAAAABAAEAAAALAAkAAAABAAEAAAAMAAkAAAABAAEAAAANAAkAAAABAAEAAAAOAAkAAAABAAEAAAAPAAkAAAABAAEAAAAQAAkAAAABAAEAAAARAAkAAAABAAEAAAASAAkAAAABAAEAAAATAAkAAAABAAEAAAAUAAkAAAABAAEAAAAVAAkAAAACAAIAAAAAAAgAAAABAAAAAAABAAgAAAABAAAAAAACAAgAAAABAAAAAAADAAgAAAABAAAAAAAEAAgAAAABAAEAAAAFAAgAAAABAAEAAAAGAAgAAAABAAEAAAAHAAgAAAABAAEAAAAIAAgAAAABAAEAAAAJAAgAAAABAAEAAAAKAAgAAAABAAEAAAALAAgAAAABAAEAAAAMAAgAAAABAAEAAAANAAgAAAABAAEAAAAOAAgAAAABAAEAAAAPAAgAAAABAAEAAAAQAAgAAAABAAEAAAARAAgAAAABAAEAAAASAAgAAAABAAEAAAATAAgAAAABAAEAAAAUAAgAAAABAAEAAAAVAAgAAAACAAAAAAAYAAsAAAABAAAAAAAZAAsAAAABAAAAAAAaAAsAAAABAAAAAAAbAAsAAAABAAAAAAAYAAwAAAABAAEAAAAZAAwAAAABAAEAAAAaAAwAAAABAAEAAAAbAAwAAAABAAEAAAAbAA0AAAABAAEAAAAbAA4AAAABAAEAAAAaAA4AAAABAAEAAAAZAA0AAAABAAEAAAAYAA0AAAABAAEAAAAYAA4AAAABAAEAAAAaAA0AAAABAAEAAAAZAA4AAAABAAEAAAAXAAsAAAAAAAAAAAAXAAwAAAAAAAEAAAAXAA0AAAAAAAEAAAAXAA4AAAAAAAEAAAAWAA0AAAAEAAAAAAA=")
+tile_set = SubResource("TileSet_aduyq")
+rendering_quadrant_size = 32
+physics_quadrant_size = 32
+
+[node name="ShopDoor" parent="." unique_id=1894555552 instance=ExtResource("3_1s6hq")]
+position = Vector2(1722.2861, 643)
+
+[node name="Terrain1PortesEntree" type="Sprite2D" parent="." unique_id=474799347]
+z_index = -50
+texture_filter = 1
+position = Vector2(105, 899)
+scale = Vector2(2, 2)
+texture = ExtResource("4_o8ehn")
+
+[node name="Terrain1PortesEntree2" type="Sprite2D" parent="." unique_id=873092073]
+z_index = -50
+texture_filter = 1
+position = Vector2(105, 450)
+scale = Vector2(2, 2)
+texture = ExtResource("4_o8ehn")
+
+[node name="Bubble" type="StaticBody2D" parent="." unique_id=384086052]
+position = Vector2(1579, 643)
+scale = Vector2(2, 2)
+
+[node name="AnimatedSprite2D_Bulle" type="AnimatedSprite2D" parent="Bubble" unique_id=153946495]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_f3c62")
+animation = &"Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubble" unique_id=1234992667]
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_g8fqb")
+
+[node name="SpawnerObjet" parent="Bubble" unique_id=1685397250 instance=ExtResource("24_4dv5q")]

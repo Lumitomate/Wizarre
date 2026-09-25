@@ -13,12 +13,20 @@
 [ext_resource type="Texture2D" uid="uid://bo185l33d7kfl" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_AtkF/Sorcier_AtkF11.png" id="11_tex"]
 [ext_resource type="Texture2D" uid="uid://7y4umji5avr" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_AtkF/Sorcier_AtkF12.png" id="12_tex"]
 [ext_resource type="Texture2D" uid="uid://dbcont0xl1s8n" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_Saut/Sorcier_Saut9.png" id="13_tex"]
+[ext_resource type="Texture2D" uid="uid://1066sibhw0ji" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_Mort/SR_mort_V1_2.png" id="13_ul37b"]
+[ext_resource type="Texture2D" uid="uid://d3uocxfsiirqk" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_Mort/SR_mort_V1_3.png" id="14_m7tf8"]
 [ext_resource type="Texture2D" uid="uid://hravn8ies3d1" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_Saut/Sorcier_Saut10.png" id="14_tex"]
+[ext_resource type="Texture2D" uid="uid://thp48ioc3f3n" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_Mort/SR_mort_V1_4.png" id="15_3lces"]
 [ext_resource type="Texture2D" uid="uid://cyyx0hm6ene62" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_Saut/Sorcier_Saut11.png" id="15_tex"]
+[ext_resource type="Texture2D" uid="uid://dgrd3d88euid5" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_Mort/SR_mort_V1_5.png" id="16_k8hdi"]
 [ext_resource type="Texture2D" uid="uid://dp2eheqslyims" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_Saut/Sorcier_Saut12.png" id="16_tex"]
+[ext_resource type="Texture2D" uid="uid://emrguyx70drp" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_Mort/SR_mort_V1_6.png" id="17_ev8mx"]
 [ext_resource type="Texture2D" uid="uid://cgwtk1fw1apry" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_Idle/Sorcier_Idle1.png" id="17_tex"]
+[ext_resource type="Texture2D" uid="uid://7453sbopeig4" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_Mort/SR_mort_V1_7.png" id="18_mdsah"]
 [ext_resource type="Texture2D" uid="uid://p6yt2snv2vcc" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_Idle/Sorcier_Idle2.png" id="18_tex"]
+[ext_resource type="Texture2D" uid="uid://0ey4in8y046y" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_Mort/SR_mort_V1_8.png" id="19_01opd"]
 [ext_resource type="Texture2D" uid="uid://d252pmyqalajy" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_Idle/Sorcier_Idle3.png" id="19_tex"]
+[ext_resource type="Texture2D" uid="uid://cm0crjutrg4k5" path="res://assets/sprites/Sorciers/SorcierRouge/SorcierR_Mort/SR_mort_V1_9.png" id="20_g8udo"]
 [ext_resource type="Texture2D" uid="uid://c333rqfhe8f88" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_Idle/Sorcier_Idle4.png" id="20_tex"]
 [ext_resource type="Texture2D" uid="uid://bv007nby6bmcf" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_Idle/Sorcier_Idle5.png" id="21_tex"]
 [ext_resource type="Texture2D" uid="uid://cq6of3s16e7ch" path="res://assets/sprites/Sorciers/Sorcier/Sorcier_Idle/Sorcier_Idle6.png" id="22_tex"]
@@ -87,6 +95,35 @@ animations = [{
 "loop": 0,
 "name": &"attack_fire",
 "speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_ul37b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_m7tf8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_3lces")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_k8hdi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_ev8mx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_mdsah")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_01opd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_g8udo")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -220,7 +257,9 @@ position = Vector2(-0.5, 2)
 texture_filter = 1
 material = SubResource("ShaderMaterial_34bfb")
 sprite_frames = SubResource("SpriteFrames_6urby")
-animation = &"attack_fire"
+animation = &"death"
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1715000558]
 position = Vector2(0, 1)

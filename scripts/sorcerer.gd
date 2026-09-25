@@ -106,6 +106,9 @@ var hit_flash_interval: float = 0.05  # intervalle de clignotement
 
 func _ready() -> void:
 	add_to_group("player_group")
+	# Nouvelle run : réarme le verrou du fondu de game over (variable static,
+	# elle persiste sinon d'une partie à l'autre)
+	_game_over_fade_started = false
 	screen_size = get_viewport_rect().size
 	level_scale = get_parent().transform.get_scale()
 	var slot := PlayerManager.get_player_slot(controller_id)
@@ -740,18 +743,58 @@ func hit(damage: int) -> void:
 		# --- Fin ---
 
 
+# Anti-double-déclenchement : si plusieurs sorciers meurent dans la même
+# fenêtre de 2 s (quasi simultanément), un seul fondu doit être lancé.
+static var _game_over_fade_started: bool = false
+
+
 func die() -> void:
 	export_data()
-	# Le sorcier disparaît mais la partie continue tant qu'il reste au
-	# moins un joueur en vie : seul la mort de TOUS les joueurs ramène à
-	# l'écran d'accueil
+	# Le corps reste au sol comme une "ragdoll" (bond léger + frame 0 de
+	# l'animation death) au lieu de disparaître. Le sorcier lui-même est
+	# libéré : il renaît au magasin suivant, et le cadavre s'effacera
+	# tout seul à ce moment-là.
+	var corpse := SorcererCorpse.from_sorcerer(self)
+	# Ajout différé obligatoire : die() peut être appelée depuis un callback
+	# physique (ex: _on_explosion_body_entered), et on ne peut pas ajouter un
+	# corps à l'arbre pendant que le serveur physique flushe ses requêtes.
+	get_parent().add_child.call_deferred(corpse)
+	# La partie continue tant qu'il reste au moins un joueur en vie :
+	# seul la mort de TOUS les joueurs ramène à l'écran d'accueil
 	queue_free()
 	if not _other_players_alive():
 		# Game over : la run est finie, on repart des sorts par défaut.
 		# Sans ça, les sorts exportés à la mort (export_data) seraient
 		# rechargés par load_data au prochain spawn.
 		GlobalInfo.reset_players_spells()
-		Global.goto_scene(GlobalEnum.Location.HOMEPAGE)
+		if not _game_over_fade_started:
+			_game_over_fade_started = true
+			_fade_to_homepage()
+
+
+# Game over : fondu au noir de 2 s avant le retour à l'écran d'accueil.
+func _fade_to_homepage() -> void:
+	# Overlay noir plein écran au-dessus de tout (HUD compris)
+	var layer := CanvasLayer.new()
+	layer.name = "GameOverFade"
+	layer.layer = 100
+	var overlay := ColorRect.new()
+	overlay.color = Color(0, 0, 0, 0)
+	overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	# Bloque les inputs pendant le fondu (et le retour à l'accueil)
+	overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	layer.add_child(overlay)
+	# Ajout différé : die() peut venir d'un callback physique
+	get_tree().root.add_child.call_deferred(layer)
+
+	# Tween porté par l'arbre (et non par ce sorcier, sur le point d'être
+	# libéré) : il survit au changement de scène jusqu'au callback final
+	var tween := get_tree().create_tween()
+	tween.tween_property(overlay, "color:a", 1.0, 2.0)
+	tween.tween_callback(Global.goto_scene.bind(GlobalEnum.Location.HOMEPAGE))
+	# L'overlay vit sur la racine : il survivrait sinon au changement de
+	# scène et laisserait un écran noir permanent au-dessus de la homepage
+	tween.tween_callback(layer.queue_free)
 
 
 # Y a-t-il encore au moins un joueur (autre que ce sorcier) en vie ?

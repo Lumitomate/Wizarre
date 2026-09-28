@@ -298,6 +298,18 @@ func _physics_process(delta: float) -> void:
 		set_state(GlobalEnum.State.FALL if not is_on_floor() else GlobalEnum.State.IDLE)
 		return
 
+	# Ronce P3 en croissance : le sorcier est immobile (il dirige la pousse
+	# avec le stick), la gravité continue s'il était en l'air. Pendant le
+	# vol de la graine (FLYING), il reste libre de ses mouvements.
+	var own_bramble := _get_own_bramble()
+	if own_bramble != null and own_bramble.is_growing():
+		velocity.x = 0
+		if not is_on_floor():
+			velocity.y += fall_acceleration * delta
+		move_and_slide()
+		set_state(GlobalEnum.State.FALL if not is_on_floor() else GlobalEnum.State.IDLE)
+		return
+
 	# Mouvements horizontaux
 	var axis := PlayerInput.direction(input_device)
 	if axis.x < -0.2:
@@ -471,6 +483,9 @@ func start_dash() -> void:
 	# (munition rendue)
 	_cancel_light_bow()
 	_cancel_light_target()
+	# Dasher pendant la croissance d'une ronce (P3) la gèle sur place
+	# (la munition est déjà consommée au 1er appui, rien à rendre)
+	_freeze_own_bramble()
 	is_dashing = true
 	can_dash = false
 	dash_invincible = true
@@ -563,6 +578,19 @@ func fire_attack(tube_index: int) -> void:
 	if own_light_bow != null and attack_type != GlobalEnum.AttackType.L3:
 		return
 	if own_light_target != null and attack_type != GlobalEnum.AttackType.L2:
+		return
+	
+	# Ronce P3 en croissance : le lanceur ne peut pas lancer une autre
+	# attaque. 2e appui pendant la croissance → gel ; pendant le vol de la
+	# graine → rien à geler, on ignore (pas de nouvelle munition consommée)
+	var own_bramble := _get_own_bramble()
+	if own_bramble != null and attack_type != GlobalEnum.AttackType.P3:
+		return
+	if attack_type == GlobalEnum.AttackType.P3 and own_bramble != null:
+		if own_bramble.is_growing():
+			own_bramble.freeze_growth()
+		# Verrou de relâchement : éviter de re-geler tant que le bouton est maintenu
+		fire_wait_release[tube_index] = true
 		return
 	
 	# Cible lumineuse L2 : le 2e appui déclenche l'explosion du curseur
@@ -672,6 +700,24 @@ func _get_own_light_bow() -> AttackLightBow:
 		if bow != null and bow.caster == self and bow.phase == AttackLightBow.Phase.TARGETING:
 			return bow
 	return null
+
+# Cherche la ronce plantée par CE joueur encore en phase FLYING (graine
+# en vol) ou GROWING (croissance dirigée)
+func _get_own_bramble() -> AttackPlantBramble:
+	for node in get_tree().get_nodes_in_group("plant_bramble_group"):
+		var bramble := node as AttackPlantBramble
+		if bramble != null and bramble.caster == self \
+				and (bramble.phase == AttackPlantBramble.Phase.FLYING \
+				or bramble.phase == AttackPlantBramble.Phase.GROWING):
+			return bramble
+	return null
+
+# Gèle la ronce en croissance de CE joueur (dash ou 2e appui) : elle reste
+# en place 2 s puis se décompose (munition déjà consommée, rien à rendre)
+func _freeze_own_bramble() -> void:
+	var bramble := _get_own_bramble()
+	if bramble != null:
+		bramble.freeze_growth()
 
 # Annule l'arc lumineux planté par CE joueur et rend la munition du tube
 # qui le porte (le ciblage a déjà coûté 1 munition au 1er appui)

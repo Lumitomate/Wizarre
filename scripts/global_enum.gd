@@ -7,6 +7,7 @@ enum AttackType {
 	G1,  # IceBall     (boule de glace)   - atk_g1_ice_ball
 	P1,  # Carnivorous (plante carnivore) - atk_p1_carnivorous
 	P2,  # PlantBall   (boule de plante)  - atk_p2_explo
+	P3,  # PlantBrush   (ronce dirigeable) - atk_p3_plant_bramble
 	F2,  # FireWave    (vague de feu)     - atk_f2_wave
 	G2,  # IceSpike    (pique de glace)   - atk_g2_ice_spike
 	G3,  # IceBlade    (lame de glace)    - atk_g3_blade

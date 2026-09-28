@@ -14,7 +14,8 @@ var scarf_object_scene: PackedScene 	= preload("res://scenes/objets/obj_g2_scarf
 var beanie_object_scene: PackedScene 	= preload("res://scenes/objets/obj_g3_beanie.tscn")
 var belt_object_scene: PackedScene 	= preload("res://scenes/objets/obj_f3_belt.tscn")
 var brush_object_scene: PackedScene 	= preload("res://scenes/objets/obj_l3_brosse.tscn")
-var comb_object_scene: PackedScene 	= preload("res://scenes/objets/obj_l3_brosse.tscn")
+var comb_object_scene: PackedScene 	= preload("res://scenes/objets/obj_l2_comb.tscn")
+var bramble_object_scene: PackedScene 	= preload("res://scenes/objets/obj_p3_bramble.tscn")
 
 # Type final de l'objet proposé par ce spawner (-1 = pas encore choisi)
 var chosen_object_type: int = -1
@@ -25,7 +26,7 @@ const PROPOSABLE_TYPES := [
 	GlobalEnum.AttackType.F1, GlobalEnum.AttackType.F2, GlobalEnum.AttackType.F3,
 	GlobalEnum.AttackType.G1, GlobalEnum.AttackType.G2, GlobalEnum.AttackType.G3,
 	GlobalEnum.AttackType.L1, GlobalEnum.AttackType.L2, GlobalEnum.AttackType.L3,
-	GlobalEnum.AttackType.P1, GlobalEnum.AttackType.P2,
+	GlobalEnum.AttackType.P1, GlobalEnum.AttackType.P2, GlobalEnum.AttackType.P3,
 ]
 
 func _ready() -> void:
@@ -56,6 +57,9 @@ func _ready() -> void:
 		GlobalEnum.AttackType.P2:
 			attack_family = GlobalEnum.AttackFamily.Fossil
 			object_to_spawn_scene = jar_object_scene
+		GlobalEnum.AttackType.P3:
+			attack_family = GlobalEnum.AttackFamily.Fossil
+			object_to_spawn_scene = bramble_object_scene
 		GlobalEnum.AttackType.F2:
 			attack_family = GlobalEnum.AttackFamily.Fossil
 			object_to_spawn_scene = crown_object_scene

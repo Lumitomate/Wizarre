@@ -17,11 +17,11 @@ var run_info: Dictionary = {
 					"attack_tier" : 0
 				},
 				1: {  # Tube 2 → Pure : G3 = IceBlade tier III
-					"attack_type" : GlobalEnum.AttackType.P2,
+					"attack_type" : GlobalEnum.AttackType.P3,
 					"attack_tier" : 2
 				},
 				2: {  # Tube 3 → Tainted : L1 = LightRay tier I
-					"attack_type" : GlobalEnum.AttackType.P1,
+					"attack_type" : GlobalEnum.AttackType.F1,
 					"attack_tier" : 0
 				},
 			}

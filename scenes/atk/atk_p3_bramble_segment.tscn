@@ -1,0 +1,158 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/atk_p3_bramble_segment.gd" id="0_script"]
+[ext_resource type="Texture2D" uid="uid://b2scc4l80xjej" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Growth/Atk_P3_Ronce_1.png" id="1_o7ecp"]
+[ext_resource type="Texture2D" uid="uid://dymtx5dfta6e5" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Growth/Atk_P3_Ronce_2.png" id="2_e2ecs"]
+[ext_resource type="Texture2D" uid="uid://diyq26hjuo587" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Growth/Atk_P3_Ronce_3.png" id="3_uy04p"]
+[ext_resource type="Texture2D" uid="uid://df74dtiqk3lja" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Growth/Atk_P3_Ronce_4.png" id="4_mt6o5"]
+[ext_resource type="Texture2D" uid="uid://651tvl316f1j" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Growth/Atk_P3_Ronce_5.png" id="5_xtd2x"]
+[ext_resource type="Texture2D" uid="uid://c3ijyuc8syf84" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Growth/Atk_P3_Ronce_6.png" id="6_lm0k4"]
+[ext_resource type="Texture2D" uid="uid://dj1hqawdvwang" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Growth/Atk_P3_Ronce_7.png" id="7_02du4"]
+[ext_resource type="Texture2D" uid="uid://c761oacrrx10k" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Growth/Atk_P3_Ronce_8.png" id="8_deacx"]
+[ext_resource type="Texture2D" uid="uid://7he85vrqudu" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_10.png" id="9_503rw"]
+[ext_resource type="Texture2D" uid="uid://c7y8r3ift8l0c" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_11.png" id="10_bpclp"]
+[ext_resource type="Texture2D" uid="uid://c13e7snk15npm" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_12.png" id="11_fjylb"]
+[ext_resource type="Texture2D" uid="uid://dk216v2gsdgri" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_13.png" id="12_v0jr2"]
+[ext_resource type="Texture2D" uid="uid://bifvblwhadrt7" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_14.png" id="13_2kedt"]
+[ext_resource type="Texture2D" uid="uid://cl0vj71h7ioy0" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_15.png" id="14_08f1r"]
+[ext_resource type="Texture2D" uid="uid://djbjvf8xfkwg5" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_16.png" id="15_uyooy"]
+[ext_resource type="Texture2D" uid="uid://btytc42ws7p17" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_17.png" id="16_0urgi"]
+[ext_resource type="Texture2D" uid="uid://ddvqee0hug56x" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_18.png" id="17_4x7xj"]
+[ext_resource type="Texture2D" uid="uid://bjdv4rcs72xta" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_19.png" id="18_lnuet"]
+[ext_resource type="Texture2D" uid="uid://ds74v6rxwkwp4" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_20.png" id="19_ump0l"]
+[ext_resource type="Texture2D" uid="uid://bsia3etqi0dct" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_21.png" id="20_b5ier"]
+[ext_resource type="Texture2D" uid="uid://blacomjuj8ldf" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_22.png" id="21_gssdl"]
+[ext_resource type="Texture2D" uid="uid://cgorxdgv5lned" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_23.png" id="22_e40n6"]
+[ext_resource type="Texture2D" uid="uid://biwfrluqee88e" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Idle/Atk_P3_Ronce_24.png" id="23_mp038"]
+[ext_resource type="Texture2D" uid="uid://cd5b0ic7rbjo1" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Decomposition/Atk_P3_Decomposition_1.png" id="24_deacx"]
+[ext_resource type="Texture2D" uid="uid://cyxwj30l6xmxp" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Decomposition/Atk_P3_Decomposition_2.png" id="25_503rw"]
+[ext_resource type="Texture2D" uid="uid://by24p14arxin7" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Decomposition/Atk_P3_Decomposition_3.png" id="26_bpclp"]
+[ext_resource type="Texture2D" uid="uid://bu5j0eiu4jq8l" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Decomposition/Atk_P3_Decomposition_4.png" id="27_fjylb"]
+[ext_resource type="Texture2D" uid="uid://crjpqxgkev7c4" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Decomposition/Atk_P3_Decomposition_5.png" id="28_v0jr2"]
+[ext_resource type="Texture2D" uid="uid://bgtff6tlk8lke" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Decomposition/Atk_P3_Decomposition_6.png" id="29_2kedt"]
+[ext_resource type="Texture2D" uid="uid://dh4e8j6o8wjx4" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/AtkP3_Decomposition/Atk_P3_Decomposition_7.png" id="30_08f1r"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_702tw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_o7ecp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_e2ecs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_uy04p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_mt6o5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xtd2x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_lm0k4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_02du4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_deacx")
+}],
+"loop": 0,
+"name": &"Grow",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_503rw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_bpclp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_fjylb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_v0jr2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_2kedt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_08f1r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_uyooy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_0urgi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_4x7xj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_lnuet")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_ump0l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_b5ier")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_gssdl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_e40n6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_mp038")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_deacx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_503rw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_bpclp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_fjylb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_v0jr2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_2kedt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_08f1r")
+}],
+"loop": 0,
+"name": &"decomposition",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_702tw"]
+size = Vector2(16, 16)
+
+[node name="AtkP3BrambleSegment" type="Area2D" unique_id=1152711580]
+collision_mask = 5
+script = ExtResource("0_script")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=246129250]
+position = Vector2(0, -8)
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_702tw")
+animation = &"decomposition"
+
+[node name="CollisionShape2D_hitboxDamage" type="CollisionShape2D" parent="." unique_id=633019626]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_702tw")

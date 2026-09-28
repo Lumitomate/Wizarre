@@ -14,7 +14,7 @@ static var ice_blade_scene: PackedScene = preload("res://scenes/atk/atk_g3_blade
 static var mine_scene: PackedScene = preload("res://scenes/atk/atk_f3_mine.tscn")
 static var lighttarget_scene: PackedScene = preload("res://scenes/atk/atk_l2_light_target.tscn")
 static var lightbow_scene: PackedScene = preload("res://scenes/atk/atk_l3_light_bow.tscn")
-
+static var bramble_scene: PackedScene = preload("res://scenes/atk/atk_p3_plant_bramble.tscn")
 static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier, player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
 	
 	var spawn_list: Array[Node]
@@ -93,6 +93,21 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 			plant_ball.setup_tier(int_attack_tier)
 			spawn_list.append(plant_ball)
 			
+		GlobalEnum.AttackType.P3:
+			# Conteneur de la ronce : base au point de tir, tronçons poussés
+			# en chaîne par le conteneur lui-même (pilotage stick, cf. L2)
+			var bramble: AttackPlantBramble = bramble_scene.instantiate()
+			bramble.attack_tier = int_attack_tier
+			bramble.caster = caster
+			# La ronce pousse verticalement par défaut (le stick la dirige,
+			# ±60° par tronçon). Comme la graine P1 : lancée devant le sorcier,
+			# elle vole, retombe et ne plante que sur un emplacement libre
+			bramble.direction = Vector2.UP
+			bramble.level_scale = level_scale
+			bramble.launch_velocity = 350 * player_direction.normalized()
+			bramble.position = player_position + 60 * player_direction.normalized()
+			spawn_list.append(bramble)
+
 		GlobalEnum.AttackType.F2:
 			var fire_wave: AttackFireWave = fire_wave_scene.instantiate()
 			fire_wave.direction = player_direction.normalized()

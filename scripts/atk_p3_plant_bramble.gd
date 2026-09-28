@@ -57,7 +57,7 @@ const TIP_BULB_SINK := 8.0
 # toute la hauteur. L'espacement entre tronçons en découle pour qu'ils se
 # touchent sans trou, quelle que soit l'échelle.
 const SEGMENT_CONTENT_HEIGHT := 16.0
-const SEGMENT_INTERVAL := 0.2          # 1 tronçon toutes les 0,2 s (8/12/16 selon tier)
+const SEGMENT_INTERVAL := 0.2          # 1 tronçon toutes les 0,2 s (5/9/13 tronçons selon tier)
 const MAX_TURN := PI / 3.0             # ±60° entre deux tronçons consécutifs
 const GEL_DURATION := 2.0              # gel avant décomposition
 const CASCADE_INTERVAL := 0.1          # 0,1 s entre deux tronçons qui se décomposent
@@ -102,7 +102,7 @@ var _connector_done := false           # tronçon de liaison fini de pousser
 
 func _ready() -> void:
 	add_to_group("plant_bramble_group")
-	_max_segments = 6 + (attack_tier - 1) * 4
+	_max_segments = 5 + (attack_tier - 1) * 4
 	# Graine en vol : même échelle que la graine P1 (2 × level_scale)
 	var e := level_scale.x * 2.0
 	seed_sprite.scale = Vector2(e, e)

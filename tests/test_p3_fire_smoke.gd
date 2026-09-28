@@ -82,12 +82,12 @@ func _physics_process(_delta: float) -> void:
 		95:
 			_check(_bramble._segments.size() >= 6, "6 tronçons à ~1,5 s")
 		120:
-			_check(_bramble._segments.size() == 7, "tier I = 6 tiges + 1 tronçon de liaison")
+			_check(_bramble._segments.size() == 6, "tier I = 5 tiges + 1 tronçon de liaison")
 			_check(not _bramble.is_growing(), "fin de croissance → WAITING")
 			var bulb: Sprite2D = _bramble._tip_bulb
 			_check(bulb != null and is_instance_valid(bulb) and bulb.get_parent() == _bramble,
 				"bulbe sur le dernier tronçon")
-			var expected_y := -(_bramble._segment_spacing() * 7.0 + (32.0 - 8.0) * 4.0)
+			var expected_y := -(_bramble._segment_spacing() * 6.0 + (32.0 - 8.0) * 4.0)
 			_check(abs(bulb.position.y - expected_y) < 1.0,
 				"bulbe calé en haut du dernier sprite (y=%.0f, attendu %.0f)" % [bulb.position.y, expected_y])
 			_check(bulb.texture == AttackPlantBramble.TIP_BULB_FRAMES[20],
@@ -97,10 +97,13 @@ func _physics_process(_delta: float) -> void:
 				"decomposition apres gel de 2 s")
 			_check(not is_instance_valid(_bramble._tip_bulb),
 				"cascade depuis le bout : bulbe libéré avec son tronçon")
-		280:
-			_check(_bramble._segments[0]._decomposing, "cascade atteint la base")
+		260:
+			var seg0: AttackPlantBrambleSegment = _bramble._segments[0]
+			_check((is_instance_valid(seg0) and seg0._decomposing)
+				or not _bramble.get_node("BaseBack").visible,
+				"cascade atteint la base")
 			_check(not _bramble.get_node("BaseBack").visible, "base disparue")
-		320:
+		300:
 			if _failures == 0:
 				print("RESULT: PASS")
 				get_tree().quit(0)

@@ -42,3 +42,18 @@ func reset_players_spells() -> void:
 		if not (controller_id is int):
 			continue
 		run_info["players_info"][controller_id]["spells"] = default_spells.duplicate(true)
+
+
+## Reset complet de la run (game over : retour à la homepage) — comme si
+## on relançait le jeu depuis le début :
+## - niveau de vague atteint remis à 0 (sinon la run suivante repart sur
+##   la difficulté de la vague où tout le monde est mort) ;
+## - durée de run remise à 0 ;
+## - entrées par manette supprimées : vies, énergies et sorts reviennent
+##   à "default" au prochain spawn (load_data retombe dessus).
+func reset_run() -> void:
+	run_info["level_number"] = 0
+	run_info["run_duration"] = 0
+	for controller_id in run_info["players_info"].keys():
+		if controller_id is int:
+			run_info["players_info"].erase(controller_id)

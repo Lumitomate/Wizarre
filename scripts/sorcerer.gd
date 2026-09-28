@@ -809,10 +809,11 @@ func die() -> void:
 	# seul la mort de TOUS les joueurs ramène à l'écran d'accueil
 	queue_free()
 	if not _other_players_alive():
-		# Game over : la run est finie, on repart des sorts par défaut.
-		# Sans ça, les sorts exportés à la mort (export_data) seraient
-		# rechargés par load_data au prochain spawn.
-		GlobalInfo.reset_players_spells()
+		# Game over : reset complet de la run (vague, durée, sorts, vies et
+		# énergies de chaque manette) — la run suivante repart du début.
+		# Sans ça, les données exportées à la mort (export_data) et le
+		# niveau de vague atteint seraient rechargés au prochain spawn.
+		GlobalInfo.reset_run()
 		if not _game_over_fade_started:
 			_game_over_fade_started = true
 			_fade_to_homepage()
@@ -838,6 +839,9 @@ func _fade_to_homepage() -> void:
 	var tween := get_tree().create_tween()
 	tween.tween_property(overlay, "color:a", 1.0, 2.0)
 	tween.tween_callback(Global.goto_scene.bind(GlobalEnum.Location.HOMEPAGE))
+	# Réarme le verrou statique pour le prochain game over (le static survit
+	# au changement de scène : sans reset, un 2e game over ne referait rien)
+	tween.tween_callback(func() -> void: Sorcerer._game_over_fade_started = false)
 	# L'overlay vit sur la racine : il survivrait sinon au changement de
 	# scène et laisserait un écran noir permanent au-dessus de la homepage
 	tween.tween_callback(layer.queue_free)

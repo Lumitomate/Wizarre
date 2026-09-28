@@ -49,9 +49,10 @@ func _process(delta: float) -> void:
 			_update_eye(delta)
 		return
 	if linear_velocity.length() < 10:
-		# La plante ne peut éclore que sur le sol : si un ennemi ou un
-		# sorcier occupe l'emplacement, on attend qu'il libère la place
-		if _is_spot_free():
+		# Éclosion uniquement posée sur le sol : au sommet d'un lancer
+		# vertical la vitesse est aussi ~0, donc on exige en plus un contact
+		# sol détecté par un rayon court vers le bas
+		if _is_on_ground() and _is_spot_free():
 			_plant()
 		return
 	if linear_velocity.dot(Vector2.RIGHT) < 0:
@@ -112,6 +113,20 @@ func _is_spot_free() -> bool:
 		if collider.is_in_group("enemy_group") or collider.is_in_group("player_group"):
 			return false
 	return true
+
+## Vrai si la graine repose sur le sol : rayon court vers le bas, juste
+## sous le bas de la capsule (sinon le rayon toucherait le sol bien plus
+## bas et la plante écloserait en l'air au sommet d'un lancer vertical)
+func _is_on_ground() -> bool:
+	var space_state := get_world_2d().direct_space_state
+	var half_height: float = ($CollisionShape2D.shape.height / 2.0) * $CollisionShape2D.scale.y
+	var query := PhysicsRayQueryParameters2D.create(
+		global_position,
+		global_position + Vector2(0, half_height + 6.0)
+	)
+	query.exclude = [get_rid()]
+	return not space_state.intersect_ray(query).is_empty()
+
 
 func _snap_to_ground():
 	var space_state = get_world_2d().direct_space_state

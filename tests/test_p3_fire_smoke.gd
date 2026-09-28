@@ -42,7 +42,9 @@ func _ready() -> void:
 	_check(attacks.size() == 1, "spawn_attack(P3) produit 1 attaque")
 	_bramble = attacks[0]
 	add_child(_bramble)
-	# Déterminisme : graine immobile → plantation immédiate sur le sol
+	# Déterminisme : graine posée au sol (surface y=352, capsule mi-hauteur
+	# 24 px à l'échelle du test) et immobile → plantation immédiate
+	_bramble.global_position = Vector2(460, 326)
 	_bramble.linear_velocity = Vector2.ZERO
 
 

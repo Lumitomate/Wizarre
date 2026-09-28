@@ -123,7 +123,9 @@ func _process(delta: float) -> void:
 	if phase != Phase.FLYING:
 		return
 	if linear_velocity.length() < SEED_REST_SPEED:
-		if _is_spot_free():
+		# Éclosion uniquement posée sur le sol (cf. graine P1) : au sommet
+		# d'un lancer vertical la vitesse est aussi ~0
+		if _is_on_ground() and _is_spot_free():
 			_plant()
 		return
 	if linear_velocity.dot(Vector2.RIGHT) < 0:
@@ -177,6 +179,18 @@ func _plant() -> void:
 	_next_position = Vector2.ZERO
 	_spawn_segment()
 	_spawn_timer = 0.0
+
+
+## Vrai si la graine repose sur le sol (rayon court vers le bas, cf. P1)
+func _is_on_ground() -> bool:
+	var space_state := get_world_2d().direct_space_state
+	var half_height: float = (seed_collision.shape.height / 2.0) * seed_collision.scale.y
+	var query := PhysicsRayQueryParameters2D.create(
+		global_position,
+		global_position + Vector2(0, half_height + 6.0)
+	)
+	query.exclude = [get_rid()]
+	return not space_state.intersect_ray(query).is_empty()
 
 
 ## Colle la graine (et donc la base de la ronce) au sol (copié de la graine P1)

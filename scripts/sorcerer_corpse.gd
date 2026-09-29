@@ -27,6 +27,14 @@ const FADE_DURATION := 0.6       # durée du fondu de disparition
 const FALL_OVER_DURATION := 0.45 # durée de la bascule à l'horizontale
 
 var controller_id: int = 0
+## Respawn géré par le cadavre (homepage) : délai en secondes avant de
+## faire re-spawn le joueur (valeurs par défaut, comme une nouvelle
+## manette). < 0 = pas de respawn (comportement d'origine des magasins).
+var respawn_delay: float = -1.0
+var _respawn_timer: float = 0.0
+## Config de spawn du joueur remplacé (can_fire / tubes_selectable),
+## capturée à la mort pour la restituer au respawn
+var _respawn_config: Dictionary = {}
 
 var _sprite: AnimatedSprite2D
 var _replay_delay: float = 0.0
@@ -38,9 +46,16 @@ var _is_fading: bool = false
 
 # Construit le cadavre à partir d'un sorcier : copie transform, forme de
 # collision, sprite frames et matériau (couleurs de robe du défunt).
-static func from_sorcerer(sorcerer: Sorcerer) -> SorcererCorpse:
+static func from_sorcerer(sorcerer: Sorcerer, p_respawn_delay: float = -1.0) -> SorcererCorpse:
 	var corpse := SorcererCorpse.new()
 	corpse.controller_id = sorcerer.controller_id
+	corpse.respawn_delay = p_respawn_delay
+	# La config du joueur mort est restituée au respawn (homepage :
+	# attaques activées, tubes sélectables)
+	corpse._respawn_config = {
+		"can_fire": sorcerer.can_fire,
+		"tubes_selectable": sorcerer.tubes_selectable,
+	}
 	corpse.position = sorcerer.position
 	corpse.scale = sorcerer.scale
 	var source_sprite: AnimatedSprite2D = sorcerer.get_node("AnimatedSprite2D")
@@ -104,6 +119,7 @@ func _physics_process(delta: float) -> void:
 	_apply_entity_push()
 	_update_replay(delta)
 	_update_revive_poll(delta)
+	_update_respawn(delta)
 
 
 # Les entités passent à travers le corps, mais le chevauchement le pousse
@@ -151,6 +167,22 @@ func _on_animation_finished() -> void:
 		_sprite.stop()
 		_sprite.frame = 0
 		_is_replaying = false
+
+
+## Respawn du joueur sur la homepage : après le délai, ses données
+## sauvegardées sont EFFACÉES (retour aux valeurs par défaut : 3 vies,
+## énergies et sorts de base — comme une nouvelle manette), puis il
+## re-spawn via PlayerManager. Le fondu du cadavre est assuré par
+## _update_revive_poll (il détecte le nouveau sorcier et disparaît).
+func _update_respawn(delta: float) -> void:
+	if respawn_delay < 0.0:
+		return
+	_respawn_timer += delta
+	if _respawn_timer < respawn_delay:
+		return
+	respawn_delay = -1.0   # une seule fois
+	GlobalInfo.run_info["players_info"].erase(controller_id)
+	PlayerManager.spawn_player(get_parent(), controller_id, _respawn_config)
 
 
 # Le joueur a repris vie au magasin suivant → le corps disparaît en fondu.

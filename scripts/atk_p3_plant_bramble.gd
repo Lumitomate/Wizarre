@@ -52,12 +52,26 @@ const TIP_BULB_CANVAS_BOTTOM := 32.0   # distance centre→bas du canvas 96×64
 # bas du canvas → on le fait chevaucher la pointe pour supprimer l'espace
 # perçu entre le bulbe et le dernier tronçon (moitié d'un espacement = 8 px)
 const TIP_BULB_SINK := 8.0
+# Échelle du bulbe : c'est le MÊME sprite que la tête de la plante P1,
+# laquelle n'a pas d'échelle propre (cf. apply_level_scale de la graine P1
+# : seule la graine en vol est agrandie). Le multiplier par le
+# grossissement des ronces (sprite_scale_multiplier) le rendait 1,4× plus
+# gros que la tête carnivore. À 1.0, il a exactement la taille de la tête
+# P1, et suit l'échelle de la scène comme elle.
+const TIP_BULB_SCALE := 1.0
 
 # Hauteur du dessin d'un tronçon dans son canvas 32×16 : le contenu occupe
 # toute la hauteur. L'espacement entre tronçons en découle pour qu'ils se
 # touchent sans trou, quelle que soit l'échelle.
 const SEGMENT_CONTENT_HEIGHT := 16.0
-const SEGMENT_INTERVAL := 0.2          # 1 tronçon toutes les 0,2 s (5/9/13 tronçons selon tier)
+## Vitesse de pousse : 1 tronçon toutes les 0,1 s (2× plus rapide qu'à
+## l'origine, 0,2 s). L'anim Grow de chaque tronçon est accélérée d'autant
+## (GROW_SPEED_SCALE, transmise au tronçon) pour se terminer avant l'émission
+## du suivant.
+const SEGMENT_INTERVAL := 0.1
+## speed_scale de l'anim Grow : 8 frames à 12 fps = 0,667 s à vitesse 1,
+## donc 0,667 / SEGMENT_INTERVAL ≈ 6,8 pour finir en ~0,1 s
+const GROW_SPEED_SCALE := 6.8
 const MAX_TURN := PI / 3.0             # ±60° entre deux tronçons consécutifs
 const GEL_DURATION := 2.0              # gel avant décomposition
 const CASCADE_INTERVAL := 0.1          # 0,1 s entre deux tronçons qui se décomposent
@@ -66,6 +80,8 @@ const CLEANUP_DELAY := 1.5             # après la fin de la cascade (anim decom
 
 # Graine (vol initial, cf. graine P1)
 const SEED_REST_SPEED := 10.0          # vitesse sous laquelle la graine est posée
+const MONDE_MASK := 8                  # calque du décor (tuiles) : seuls les sols comptent
+
 
 # Grossissement des sprites : les ronces natives font 32×16 px, trop petits
 # face aux personnages ; 2× comme la plante carnivore (P1)
@@ -93,6 +109,8 @@ var _tip_bulb: Sprite2D = null         # bulbe glissant sur la pointe de la ronc
 var _growth_elapsed := 0.0             # temps écoulé depuis la plantation
 var _bulb_segment_index := 0           # tronçon actuellement coiffé par le bulbe
 var _connector_done := false           # tronçon de liaison fini de pousser
+## Rebond de la graine sur les sorciers (composant réutilisable)
+var _rebond: RebondSorciers = null
 
 @onready var base_back: AnimatedSprite2D = $BaseBack
 @onready var base_front: AnimatedSprite2D = $BaseFront
@@ -111,6 +129,12 @@ func _ready() -> void:
 	# La base n'apparaît qu'une fois la graine plantée
 	base_back.scale = Vector2.ZERO
 	base_front.scale = Vector2.ZERO
+	# Rebond sur les sorciers : composant réutilisable (détection du corps
+	# visible, normale calculée contre la capsule élargie jusqu'aux pieds,
+	# ennemis traversés, lanceur inclus dans les rebonds)
+	_rebond = RebondSorciers.new()
+	_rebond.echelle = seed_collision.scale.x
+	add_child(_rebond)
 
 
 func is_growing() -> bool:
@@ -130,6 +154,8 @@ func _process(delta: float) -> void:
 		return
 	if linear_velocity.dot(Vector2.RIGHT) < 0:
 		seed_sprite.flip_h = true
+
+
 
 
 ## Vrai si aucun ennemi ni sorcier ne chevauche la graine : la ronce ne
@@ -170,10 +196,15 @@ func _plant() -> void:
 	tween.tween_property(base_front, "scale", target_scale, BASE_APPEAR_DURATION)
 	# Bulbe de pointe : au-dessus des tiges (z 0), il glisse le long de la
 	# ronce pendant la croissance
+	# Bulbe de pointe : au-dessus des tiges (z 0), il glisse le long de la
+	# ronce pendant la croissance. Nearest : comme tous les sprites du jeu
+	# (les nœuds de la scène P3 sont en Nearest, ce nœud créé au runtime
+	# doit l'être aussi, sinon il serait lissé)
 	_tip_bulb = Sprite2D.new()
 	_tip_bulb.texture = TIP_BULB_FRAMES[0]
 	_tip_bulb.z_index = 1
-	_tip_bulb.scale = Vector2(target_scale.x, target_scale.y)
+	_tip_bulb.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_tip_bulb.scale = Vector2(TIP_BULB_SCALE, TIP_BULB_SCALE)
 	add_child(_tip_bulb)
 	# Premier tronçon immédiat, depuis la base
 	_next_position = Vector2.ZERO
@@ -182,6 +213,9 @@ func _plant() -> void:
 
 
 ## Vrai si la graine repose sur le sol (rayon court vers le bas, cf. P1)
+## Restreint au DÉCOR (calque tuiles) : sans ça, un sorcier qui saute
+## sous la graine flottante est pris pour du sol et la ronce pousse en
+## plein vol à son sommet
 func _is_on_ground() -> bool:
 	var space_state := get_world_2d().direct_space_state
 	var half_height: float = (seed_collision.shape.height / 2.0) * seed_collision.scale.y
@@ -190,6 +224,7 @@ func _is_on_ground() -> bool:
 		global_position + Vector2(0, half_height + 6.0)
 	)
 	query.exclude = [get_rid()]
+	query.collision_mask = 8
 	return not space_state.intersect_ray(query).is_empty()
 
 
@@ -201,6 +236,8 @@ func _snap_to_ground() -> void:
 		global_position + Vector2(0, 200)
 	)
 	query.exclude = [get_rid()]
+	# Décor uniquement : un sorcier sous la graine ne doit pas servir de sol
+	query.collision_mask = 8
 	var result = space_state.intersect_ray(query)
 	if result:
 		global_position.y = result.position.y
@@ -300,6 +337,7 @@ func _spawn_segment() -> void:
 	# pousse : on ne transmet que s'il est encore valide
 	if caster != null and is_instance_valid(caster):
 		seg.caster = caster
+	seg.grow_speed_scale = GROW_SPEED_SCALE
 	seg.start_grow()
 	_segments.append(seg)
 	_bulb_segment_index = seg.index
@@ -341,7 +379,8 @@ func _update_bulb_position(full: bool = false, delta: float = 0.0) -> void:
 		_tip_bulb.rotation = lerp_angle(_tip_bulb.rotation, seg.rotation, minf(1.0, delta * 15.0))
 	# Origine du bulbe : contenu ancré en bas du canvas (32 px), enfoncé de
 	# TIP_BULB_SINK dans la tige pour que le bas du bulbe chevauche la pointe
-	var target := tip + d * ((TIP_BULB_CANVAS_BOTTOM - TIP_BULB_SINK) * level_scale.x * sprite_scale_multiplier)
+	# (offset × échelle du bulbe, pas celle des tronçons)
+	var target := tip + d * ((TIP_BULB_CANVAS_BOTTOM - TIP_BULB_SINK) * TIP_BULB_SCALE)
 	if full:
 		_tip_bulb.position = target
 	else:
@@ -373,6 +412,7 @@ func _spawn_connector_segment() -> void:
 	add_child(seg)
 	if caster != null and is_instance_valid(caster):
 		seg.caster = caster
+	seg.grow_speed_scale = GROW_SPEED_SCALE
 	seg.start_grow()
 	_segments.append(seg)
 	_bulb_segment_index = seg.index

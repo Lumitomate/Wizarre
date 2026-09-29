@@ -18,6 +18,19 @@ func _ready() -> void:
 			player.in_shop = true
 	# La porte de sortie s'ouvre dès l'arrivée dans la salle
 	$ShopDoor.play()
+	# Cinématique d'arrivée par la porte d'entrée (dgel des joueurs à la
+	# refermeture, cf. entry_door_cinematic.gd)
+	var porte := _find_entry_door()
+	if porte != null:
+		porte.lancer_cinematique()
+
+
+## Porte d'entrée cinématique de cette scène
+func _find_entry_door() -> EntryDoorCinematic:
+	for child in get_children():
+		if child is EntryDoorCinematic:
+			return child
+	return null
 
 
 func goto_level():

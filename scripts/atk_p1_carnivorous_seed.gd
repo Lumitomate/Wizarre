@@ -25,9 +25,18 @@ var is_shrinking: bool = false
 var heads: Array[CarnivorousHead] = []
 var base_plante_initial_position: Vector2 = Vector2.ZERO
 var base_plante_initial_scale: Vector2 = Vector2.ONE
+## Rebond de la graine sur les sorciers (composant réutilisable, comme la P3)
+var _rebond: RebondSorciers = null
 
 func _ready() -> void:
 	add_to_group("atk_p1")
+	# Rebond sur les sorciers : composant réutilisable (détection du corps
+	# visible, normale calculée contre la capsule élargie jusqu'aux pieds,
+	# ennemis traversés, lanceur inclus dans les rebonds). L'échelle de
+	# détection suit l'échelle des sprites (appliquée par le spawner).
+	_rebond = RebondSorciers.new()
+	_rebond.echelle = $CollisionShape2D.scale.x
+	add_child(_rebond)
 
 func apply_level_scale(level_scale: Vector2) -> void:
 	$Sprite2D.scale = level_scale

@@ -3,10 +3,16 @@ class_name EnemyFlying extends CharacterBody2D
 
 signal enemy_killed
 
+## Délai sans cible au-delà duquel l'ennemi fonce sur le sorcier le plus
+## proche, même si celui-ci est hors de sa zone de détection
+const NO_TARGET_CHASE_DELAY := 8.0
+
 @export var speed: int = 200
 @export var lives: int = 1  # la scène enemy_flying.tscn est la référence en jeu
 
 var target : Node2D = null
+# Temps écoulé sans aucune cible (remis à zéro dès qu'une cible est prise)
+var _no_target_timer: float = 0.0
 # Dernier sorcier à avoir infligé des dégâts (pour la représaille et le
 # signalement du tueur à l'essaim)
 var last_attacker: Node2D = null
@@ -51,7 +57,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			target = body
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if !is_bouncing:
 		if velocity.x > 0:
 			$AnimatedSprite2D.flip_h = true
@@ -60,6 +66,17 @@ func _process(_delta: float) -> void:
 	
 	if target != null:
 		set_navigation_target(target.global_position)
+		_no_target_timer = 0.0
+	else:
+		# Sans cible depuis trop longtemps : fonce sur le sorcier le plus
+		# proche, même hors de la zone de détection (évite les ennemis qui
+		# errent indéfiniment parce que personne ne passe à portée)
+		_no_target_timer += delta
+		if _no_target_timer >= NO_TARGET_CHASE_DELAY:
+			var nearest := _nearest_player()
+			if nearest != null:
+				target = nearest
+				_no_target_timer = 0.0
 
 
 func _physics_process(delta: float) -> void:
@@ -150,9 +167,9 @@ func _on_bounce_back_duration_timeout() -> void:
 	is_bouncing = false
 
 
-# Direction opposée au joueur (sorcier) le plus proche, Vector2.ZERO si aucun
-func _direction_away_from_nearest_player() -> Vector2:
-	var away := Vector2.UP
+# Sorcier (joueur) vivant le plus proche, null si aucun
+func _nearest_player() -> Node2D:
+	var nearest: Node2D = null
 	var min_distance := INF
 	for player in get_tree().get_nodes_in_group("player_group"):
 		if not is_instance_valid(player):
@@ -160,5 +177,13 @@ func _direction_away_from_nearest_player() -> Vector2:
 		var d: float = position.distance_to(player.global_position)
 		if d < min_distance:
 			min_distance = d
-			away = (position - player.global_position).normalized()
-	return away
+			nearest = player
+	return nearest
+
+
+# Direction opposée au joueur (sorcier) le plus proche, Vector2.UP si aucun
+func _direction_away_from_nearest_player() -> Vector2:
+	var player := _nearest_player()
+	if player == null:
+		return Vector2.UP
+	return (position - player.global_position).normalized()

@@ -16,6 +16,7 @@ const SPAWN_TIME_FACTOR_PER_WAVE := 1.03
 
 
 func _ready() -> void:
+	add_to_group("ammo_spawn_director_group")
 	# Vague 0 (première vague) = vitesse de base, puis léger ralentissement
 	$Cycle.wait_time = cycle_duration * pow(SPAWN_TIME_FACTOR_PER_WAVE, GlobalInfo.run_info["level_number"])
 	$Cycle.start()

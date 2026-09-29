@@ -28,6 +28,7 @@ const KEYBOARD_P2 := 101
 # Positions physiques des touches du clavier 1 :
 # direction ZQSD (AZERTY) = positions W/A/S/D, F/T/H attaques, G dash,
 # Espace ou Z (physique) = saut. Échap met le jeu en pause.
+# NB : W (Z en AZERTY) fait SAUTER et vise vers le haut en même temps.
 const KB1_BUTTONS := {
 	Action.JUMP: [KEY_SPACE, KEY_W],
 	Action.DASH: [KEY_G],
@@ -46,6 +47,7 @@ const KB1_DIRS := {
 # Clavier 2 : flèches pour la direction, pavé numérique 4/8/6 pour les
 # attaques, 5 pour le dash, saut sur pavé 0, Entrée ou flèche haut. Échap met le jeu
 # en pause (le pavé 0 reste réservé au saut).
+# NB : la flèche haut fait SAUTER et vise vers le haut en même temps.
 const KB2_BUTTONS := {
 	Action.JUMP: [KEY_KP_0, KEY_ENTER, KEY_UP],
 	Action.DASH: [KEY_KP_5],

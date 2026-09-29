@@ -21,6 +21,15 @@ uniform vec4 eye_color : source_color = vec4(0.373, 0.804, 0.894, 1.0);    // #5
 // Hérité de dash_white.gdshader : 0.0 = couleur normale, 1.0 = blanc complet
 uniform float white_amount : hint_range(0.0, 1.0) = 0.0;
 
+// Cinématique d'arrivée (sortie de la porte d'entrée) : 0.0 = sprite
+// invisible, 1.0 = sprite entièrement visible. La révélation monte du BAS
+// vers le HAUT du sprite (la lumière "monte" sur le corps) : les pixels
+// dont la hauteur normalisée dépasse le seuil restent invisibles.
+// Hauteur 0.0 = pieds du sprite, 1.0 = tête (UV.y inversé : le pixel art
+// est dessiné avec y=0 en haut, donc la position depuis les pieds est
+// 1.0 - UV.y). Hors cinématique : 1.0 = tout visible, aucun coût.
+uniform float arrival_fade : hint_range(0.0, 1.0) = 1.0;
+
 // Tolérance de comparaison : couvre l'arrondi float du décodage texture,
 // tout en restant très en dessous de l'écart entre couleurs de la palette.
 const float EPSILON = 0.5 / 255.0;
@@ -47,5 +56,15 @@ void fragment() {
 
 	// Effet dash blanc, appliqué après le recolorisage (comportement identique
 	// à l'ancien dash_white.gdshader)
-	COLOR = vec4(mix(col, vec3(1.0), white_amount), COLOR.a);
+	vec3 out_col = mix(col, vec3(1.0), white_amount);
+	float out_a = COLOR.a;
+	// Fade d'arrivée : révèle le sprite du bas vers le haut (large bande
+	// douce de FADE_SOFTNESS pour éviter la frontière nette pixel par pixel)
+	if (arrival_fade < 1.0) {
+		const float FADE_SOFTNESS = 0.25;
+		float height_from_feet = 1.0 - UV.y;
+		float threshold = arrival_fade * (1.0 + FADE_SOFTNESS);
+		out_a *= clamp((threshold - height_from_feet) / FADE_SOFTNESS, 0.0, 1.0);
+	}
+	COLOR = vec4(out_col, out_a);
 }

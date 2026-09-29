@@ -28,7 +28,11 @@ var _level_scale: Vector2 = Vector2.ONE
 
 func apply_level_scale(level_scale: Vector2) -> void:
 	_level_scale = level_scale
-	$AnimatedSprite2D.scale = level_scale
+	if $AnimatedSprite2D:
+		$AnimatedSprite2D.scale = level_scale
+	# Appliquer le level_scale aussi à la hitbox d'explosion pour qu'elle corresponde au sprite
+	if explosion_shape:
+		explosion_shape.scale = level_scale
 	#$PushArea/CollisionShape2D.scale = level_scale
 
 func setup_tier(tier: int) -> void:
@@ -55,7 +59,8 @@ func _process(delta: float) -> void:
 			explosion_timer += delta
 			var t = clamp(explosion_timer / explosion_duration, 0.0, 1.0)
 			var current_scale = lerp(0.0, explosion_max_scale, t)
-			explosion_shape.scale = Vector2.ONE * current_scale
+			# Appliquer le level_scale pour que la hitbox corresponde au sprite visuel
+			explosion_shape.scale = _level_scale * current_scale
 			explosion_area.monitoring = true
 			if t >= 1.0:
 				is_explosion_growing = false

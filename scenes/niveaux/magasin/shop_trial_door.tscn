@@ -279,4 +279,9 @@ shape = SubResource("RectangleShape2D_lms48")
 wait_time = 1.5
 one_shot = true
 
+[node name="ZonePassage" type="Area2D" parent="." unique_id=4482117659]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ZonePassage" unique_id=4482117660]
+shape = SubResource("RectangleShape2D_lms48")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

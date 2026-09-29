@@ -1,0 +1,199 @@
+[gd_scene format=3 uid="uid://cdyq6i8q65yee"]
+
+[ext_resource type="Script" path="res://scripts/sablier.gd" id="1_sabgd"]
+[ext_resource type="Texture2D" uid="uid://b8t1ae8i58sl0" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement1.png" id="1_1djuf"]
+[ext_resource type="Texture2D" uid="uid://c1bqj3q82u8n8" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement2.png" id="2_oexjp"]
+[ext_resource type="Texture2D" uid="uid://btfr6v2lbyqc5" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement3.png" id="3_pv8bj"]
+[ext_resource type="Texture2D" uid="uid://dmyicqfh8c5jg" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement4.png" id="4_y1atf"]
+[ext_resource type="Texture2D" uid="uid://dqny72bt0mc54" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement5.png" id="5_7iib3"]
+[ext_resource type="Texture2D" uid="uid://bmclix5cq7kls" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement6.png" id="6_8wuhm"]
+[ext_resource type="Texture2D" uid="uid://c1r4t1t7k2qeb" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement7.png" id="7_hrqqb"]
+[ext_resource type="Texture2D" uid="uid://l1imjc1ywje7" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement8.png" id="8_m6q3g"]
+[ext_resource type="Texture2D" uid="uid://dpiqv7stf3lpx" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement9.png" id="9_1h45i"]
+[ext_resource type="Texture2D" uid="uid://cyerifo4a7a8r" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement10.png" id="10_ef5h2"]
+[ext_resource type="Texture2D" uid="uid://cxkixee1o7fao" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement11.png" id="11_01qye"]
+[ext_resource type="Texture2D" uid="uid://705nevxxntd7" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement12.png" id="12_kam7h"]
+[ext_resource type="Texture2D" uid="uid://dkf3tlc601kvb" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement13.png" id="13_utsw0"]
+[ext_resource type="Texture2D" uid="uid://dmyg55oa3yr5p" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement14.png" id="14_js3iy"]
+[ext_resource type="Texture2D" uid="uid://coytkx12a5s7v" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement15.png" id="15_hppda"]
+[ext_resource type="Texture2D" uid="uid://pfuxrpt5wqao" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement16.png" id="16_gwudn"]
+[ext_resource type="Texture2D" uid="uid://c6epjux6lpisd" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement17.png" id="17_nx731"]
+[ext_resource type="Texture2D" uid="uid://c0lk8ph8j2eph" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement18.png" id="18_agj4q"]
+[ext_resource type="Texture2D" uid="uid://i5f3uxwfo1lr" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement19.png" id="19_xph4i"]
+[ext_resource type="Texture2D" uid="uid://bvx0nc6oqcfkn" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement20.png" id="20_ioyb3"]
+[ext_resource type="Texture2D" uid="uid://doua5gdm3chjq" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement21.png" id="21_763o8"]
+[ext_resource type="Texture2D" uid="uid://dn0kh5qv6u4bn" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement22.png" id="22_si1ba"]
+[ext_resource type="Texture2D" uid="uid://ch1f6behplksf" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement23.png" id="23_dt8k0"]
+[ext_resource type="Texture2D" uid="uid://cf6akwey4qkh2" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement24.png" id="24_l3qkw"]
+[ext_resource type="Texture2D" uid="uid://871xesc46mcy" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement25.png" id="25_lnfwp"]
+[ext_resource type="Texture2D" uid="uid://don60hpvbm2cy" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement26.png" id="26_s0qse"]
+[ext_resource type="Texture2D" uid="uid://b7u7e0dopfgj7" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement27.png" id="27_x8jd8"]
+[ext_resource type="Texture2D" uid="uid://cfch3rbtt4a60" path="res://assets/sprites/outils/Sablier/Sablier_Ecoulement/Sablier_Ecoulement28.png" id="28_hqkxi"]
+[ext_resource type="Texture2D" uid="uid://n14rcdr64meh" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation1.png" id="29_mlpeg"]
+[ext_resource type="Texture2D" uid="uid://bm6jb0diorb7d" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation2.png" id="30_d2ss6"]
+[ext_resource type="Texture2D" uid="uid://fs4gf48r4yq0" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation3.png" id="31_1cngl"]
+[ext_resource type="Texture2D" uid="uid://bd1twrldloqip" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation4.png" id="32_a4n6b"]
+[ext_resource type="Texture2D" uid="uid://i457kh8jalgw" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation5.png" id="33_6meff"]
+[ext_resource type="Texture2D" uid="uid://dhmg3dqod30b2" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation6.png" id="34_dri6o"]
+[ext_resource type="Texture2D" uid="uid://bstk5v2e5qp2x" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation7.png" id="35_lloil"]
+[ext_resource type="Texture2D" uid="uid://dd2m4ms3qca6" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation8.png" id="36_k4wgo"]
+[ext_resource type="Texture2D" uid="uid://cvwvw766hiytp" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation9.png" id="37_wpdfv"]
+[ext_resource type="Texture2D" uid="uid://b5gs53emddpbj" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation10.png" id="38_tjyul"]
+[ext_resource type="Texture2D" uid="uid://dqprjap2ryvkh" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation11.png" id="39_ourbp"]
+[ext_resource type="Texture2D" uid="uid://dhayt825n32m" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation12.png" id="40_s3kc3"]
+[ext_resource type="Texture2D" uid="uid://ddc85atb8lpyy" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation13.png" id="41_u3ydw"]
+[ext_resource type="Texture2D" uid="uid://byyq5syjoucp1" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation14.png" id="42_r4kj2"]
+[ext_resource type="Texture2D" uid="uid://bghfxe8d8kbuj" path="res://assets/sprites/outils/Sablier/Sablier_Rotation/Sablier_Rotation15.png" id="43_w0f0s"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_702tw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_1djuf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_oexjp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_pv8bj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_y1atf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7iib3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8wuhm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_hrqqb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_m6q3g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_1h45i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ef5h2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_01qye")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_kam7h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_utsw0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_js3iy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_hppda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_gwudn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_nx731")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_agj4q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_xph4i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ioyb3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_763o8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_si1ba")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_dt8k0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_l3qkw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_lnfwp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_s0qse")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_x8jd8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_hqkxi")
+}],
+"loop": 0,
+"name": &"ecoulement",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("29_mlpeg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_d2ss6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_1cngl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_a4n6b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_6meff")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_dri6o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_lloil")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_k4wgo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_wpdfv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_tjyul")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_ourbp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_s3kc3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_u3ydw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_r4kj2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_w0f0s")
+}],
+"loop": 0,
+"name": &"rotation",
+"speed": 12.0
+}]
+
+[node name="Sablier" type="Node2D" unique_id=1477993193]
+script = ExtResource("1_sabgd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1466779863]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_702tw")
+animation = &"rotation"
+frame = 14
+frame_progress = 1.0
+

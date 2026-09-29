@@ -13,6 +13,9 @@ var index: int = 0
 var level_scale := Vector2.ONE
 var damage: int = 1
 var grow_done := false
+## Vitesse de l'anim Grow, fixée par le conteneur (atk_p3_plant_bramble.gd)
+## pour rester synchronisée avec l'intervalle d'émission des tronçons
+var grow_speed_scale: float = 3.4
 
 var _decomposing := false
 
@@ -49,9 +52,9 @@ func grow_fraction() -> float:
 
 
 func start_grow() -> void:
-	# 8 frames : accélérées pour finir en ~0,2 s, avant le tronçon suivant
-	# (intervalle d'émission : 0,2 s)
-	sprite.speed_scale = 3.4
+	# 8 frames : accélérées pour finir avant le tronçon suivant (l'intervalle
+	# d'émission et la vitesse correspondante sont fixés par le conteneur)
+	sprite.speed_scale = grow_speed_scale
 	sprite.play("Grow")
 
 

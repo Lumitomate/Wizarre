@@ -34,6 +34,51 @@ func _ready() -> void:
 	$ProgressBar.set_percent(0)
 	$AudioStreamPlayer.play()
 
+	# Cinématique d'arrivée : gèle les spawners le temps que les sorciers
+	# sortent de la porte d'entrée, puis libère tout quand la porte se referme
+	_set_spawners_frozen(true)
+	var porte := _find_entry_door()
+	if porte != null:
+		porte.cinematique_terminee.connect(_liberer_spawners)
+		porte.lancer_cinematique()
+	else:
+		_liberer_spawners()
+
+
+## Gèle (ou libère) les spawners d'ennemis et de munitions du niveau
+func _set_spawners_frozen(frozen: bool) -> void:
+	for spawner in get_tree().get_nodes_in_group("enemy_spawner_group"):
+		spawner.set_physics_process(not frozen)
+		spawner.set_process(not frozen)
+		# Gel complet : timer + animation en cours (une vague déjà
+		# programmée sinon apparaîtrait pendant l'ouverture de la porte)
+		spawner.set_spawning_frozen(frozen)
+	for spawner in get_tree().get_nodes_in_group("ammo_spawner_group"):
+		spawner.set_physics_process(not frozen)
+		spawner.set_process(not frozen)
+	for director in get_tree().get_nodes_in_group("ammo_spawn_director_group"):
+		director.set_physics_process(not frozen)
+		director.set_process(not frozen)
+		var timer: Timer = director.get_node_or_null("Cycle")
+		if timer != null:
+			if frozen:
+				timer.stop()
+			else:
+				timer.start()
+
+
+## Fin de la cinématique d'arrivée : les spawners démarrent
+func _liberer_spawners() -> void:
+	_set_spawners_frozen(false)
+
+
+## Porte d'entrée cinématique du niveau (une seule dans level.tscn)
+func _find_entry_door() -> EntryDoorCinematic:
+	for child in get_children():
+		if child is EntryDoorCinematic:
+			return child
+	return null
+
 
 
 func add_player_hud(controller_id):

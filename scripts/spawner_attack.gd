@@ -2,6 +2,8 @@ class_name AttackSpawner
 
 const SPRITE_SIZE = 64
 
+
+
 static var fireball_scene: PackedScene = preload("res://scenes/atk/atk_f0_fireball.tscn")
 static var lightray_scene: PackedScene = preload("res://scenes/atk/atk_l1_light_ray.tscn")
 static var firecolumn_scene: PackedScene = preload("res://scenes/atk/atk_f1_fire_column.tscn")
@@ -15,6 +17,20 @@ static var mine_scene: PackedScene = preload("res://scenes/atk/atk_f3_mine.tscn"
 static var lighttarget_scene: PackedScene = preload("res://scenes/atk/atk_l2_light_target.tscn")
 static var lightbow_scene: PackedScene = preload("res://scenes/atk/atk_l3_light_bow.tscn")
 static var bramble_scene: PackedScene = preload("res://scenes/atk/atk_p3_plant_bramble.tscn")
+
+
+## Direction de lancer JAMAIS exactement verticale : si la visée est pile
+## au-dessus (ou en dessous), on incline légèrement vers l'avant du sorcier
+## (10°). Sinon une graine retombe pile sur la tête de son lanceur et y
+## rebondit indéfiniment sans jamais s'écarter.
+static func _direction_sans_vertical(direction: Vector2, caster: Node2D) -> Vector2:
+	var dir := direction.normalized()
+	if absf(dir.x) < 0.08:
+		var cote := 1.0
+		if caster != null and is_instance_valid(caster) and caster.has_node("AnimatedSprite2D"):
+			cote = -1.0 if caster.get_node("AnimatedSprite2D").flip_h else 1.0
+		dir = dir.rotated(cote * deg_to_rad(10.0))
+	return dir
 static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier, player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
 	
 	var spawn_list: Array[Node]
@@ -80,7 +96,7 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 			carnivorous.transform = carnivorous.transform.rotated(player_direction.angle())
 			carnivorous.apply_level_scale(2 * level_scale)
 			carnivorous.position = player_position + 60 * player_direction.normalized()
-			carnivorous.linear_velocity = 200 * player_direction.normalized()
+			carnivorous.linear_velocity = 200 * _direction_sans_vertical(player_direction, caster)
 			carnivorous.attack_tier = int_attack_tier
 			spawn_list.append(carnivorous)
 
@@ -104,7 +120,7 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 			# elle vole, retombe et ne plante que sur un emplacement libre
 			bramble.direction = Vector2.UP
 			bramble.level_scale = level_scale
-			bramble.launch_velocity = 350 * player_direction.normalized()
+			bramble.launch_velocity = 350 * _direction_sans_vertical(player_direction, caster)
 			bramble.position = player_position + 60 * player_direction.normalized()
 			spawn_list.append(bramble)
 

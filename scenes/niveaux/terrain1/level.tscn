@@ -4,7 +4,20 @@
 [ext_resource type="Texture2D" uid="uid://0hepm0i1tyol" path="res://assets/sprites/Map1/TileMap_BriquesViolettes.png" id="2_iq37h"]
 [ext_resource type="PackedScene" uid="uid://dig4mpq1rxqfl" path="res://scenes/spawner_enemy.tscn" id="3_5twdy"]
 [ext_resource type="PackedScene" path="res://scenes/spawner_ammo.tscn" id="4_ybquc"]
+[ext_resource type="Script" uid="uid://c405e65ed23db4" path="res://scripts/entry_door_cinematic.gd" id="door_cine"]
 [ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Map1/Terrain1_PortesEntree.png" id="5_c7wow"]
+[ext_resource type="Texture2D" uid="uid://cnivm25r0l0m2" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes1.png" id="doorf_1"]
+[ext_resource type="Texture2D" uid="uid://dvx37fa6rmhx0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes2.png" id="doorf_2"]
+[ext_resource type="Texture2D" uid="uid://oqc1hwn3b3bd" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes3.png" id="doorf_3"]
+[ext_resource type="Texture2D" uid="uid://d8igu64tcxwn" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes4.png" id="doorf_4"]
+[ext_resource type="Texture2D" uid="uid://gookosf30w20" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes5.png" id="doorf_5"]
+[ext_resource type="Texture2D" uid="uid://blxkm21hqnn48" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes6.png" id="doorf_6"]
+[ext_resource type="Texture2D" uid="uid://c6wlrsd5ml2qt" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes7.png" id="doorf_7"]
+[ext_resource type="Texture2D" uid="uid://bug35vvv68ldr" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes8.png" id="doorf_8"]
+[ext_resource type="Texture2D" uid="uid://cajiv88sq25pe" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes9.png" id="doorf_9"]
+[ext_resource type="Texture2D" uid="uid://drfdh0tbbobia" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes10.png" id="doorf_10"]
+[ext_resource type="Texture2D" uid="uid://b2lv6btvjuwb0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes11.png" id="doorf_11"]
+[ext_resource type="Texture2D" uid="uid://cw60wnkydyxuy" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes12.png" id="doorf_12"]
 [ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/niveaux/terrain1/map1_level_exit_door.tscn" id="6_d1axm"]
 [ext_resource type="PackedScene" uid="uid://co1gwjkps8hvc" path="res://scenes/torch.tscn" id="7_nsh6l"]
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="8_q0h6m"]
@@ -77,6 +90,50 @@ sources/0 = SubResource("TileSetAtlasSource_8gofh")
 vertices = PackedVector2Array(1510.7266, 347.6172, 1792.9219, 204.28906, 1794.2266, 437.28125, 1598.3516, 440.14844, 1498.3984, 392.5703, 1600.0938, 518.59375, 1791.4297, 705.6328, 1631.75, 687.1406, 1318.1406, 638, 1313.0078, 625.71094, 1791.4297, 951.4219, 1645.3281, 737.1406, 1631.75, 787.1406, 1043.7422, 912.8594, 1054.5391, 864.1094, 1335.4063, 787.1406, 1497.3203, 302.79688, 24.226563, 204.28906, 1287.5703, 304.46875, 1147.4531, 377.28906, 529.03906, 301.4297, 1043.6563, 817.1406, 1321.8125, 737.1406, 492.84375, 736.8906, 1082.2188, 722.8594, 1234.3125, 722.8594, 770.90625, 817.1406, 477.39063, 788.5703, 1126.6016, 512.3203, 1359.6797, 467.14063, 1082.2969, 625.71094, 978.4531, 660, 1070.5078, 673.3828, 732.03125, 722.8594, 743.71094, 672.64844, 835.9297, 660, 298.34375, 348.97656, 213.09375, 440.07813, 22.90625, 438.64063, 311.85938, 301.4297, 758.22656, 864.10156, 19.9375, 950, 184.03906, 788.5703, 1335.4063, 687.1406, 770.8281, 912.8594, 18.59375, 704.2031, 168.59375, 736.8906, 211.32813, 517.1797, 184.14063, 687.1406, 477.28906, 687.1406, 497.64063, 636.39844, 731.9531, 624.28906, 686.14844, 512.3203, 502.84375, 624.28906, 452.39063, 470, 579.7969, 722.8594, 683.09375, 422.45313, 670.4922, 378.1172, 1134.9766, 418.96875, 976.8906, 430, 837.4922, 430, 1148.1875, 467.14063, 669.5703, 470, 310.9375, 393.3125)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8, 9), PackedInt32Array(6, 10, 11, 7), PackedInt32Array(12, 11, 10), PackedInt32Array(12, 10, 13, 14, 15), PackedInt32Array(1, 0, 16), PackedInt32Array(17, 1, 16, 18), PackedInt32Array(17, 18, 19, 20), PackedInt32Array(15, 14, 21, 22), PackedInt32Array(23, 24, 25, 22, 21, 26, 27), PackedInt32Array(28, 29, 3, 5, 9, 30), PackedInt32Array(31, 28, 30), PackedInt32Array(31, 30, 32), PackedInt32Array(33, 34, 35, 31, 32, 24), PackedInt32Array(36, 37, 38, 17, 39), PackedInt32Array(27, 26, 40, 41, 42), PackedInt32Array(8, 7, 43), PackedInt32Array(25, 8, 43, 22), PackedInt32Array(13, 10, 41, 44), PackedInt32Array(40, 44, 41), PackedInt32Array(42, 41, 45, 46), PackedInt32Array(46, 45, 47, 48), PackedInt32Array(49, 48, 47, 50), PackedInt32Array(35, 34, 51), PackedInt32Array(52, 35, 51), PackedInt32Array(52, 51, 53, 47, 37, 54), PackedInt32Array(33, 24, 23), PackedInt32Array(55, 33, 23), PackedInt32Array(50, 55, 23, 49), PackedInt32Array(53, 50, 47), PackedInt32Array(56, 57, 19, 58, 59, 60), PackedInt32Array(29, 4, 3), PackedInt32Array(61, 29, 28), PackedInt32Array(61, 28, 59, 58), PackedInt32Array(56, 60, 52, 62), PackedInt32Array(54, 62, 52), PackedInt32Array(63, 54, 37), PackedInt32Array(36, 63, 37), PackedInt32Array(19, 57, 20), PackedInt32Array(17, 20, 39)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(14.285713, 194.2857, 12.857142, 448.5714, 202.85713, 449.99997, 201.42856, 512.8571, 8.571428, 699.99994, 9.999999, 959.99994, 1801.4285, 961.4285, 1801.4285, 701.4285, 1609.9999, 514.2857, 1608.5713, 449.99997, 1804.2856, 447.14282, 1802.857, 194.2857)])
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_porteentree"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("doorf_1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_12")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="Level" type="Node2D" unique_id=68664965]
 texture_filter = 1
@@ -151,12 +208,14 @@ launch_force = 150.0
 
 [node name="AmmoSpawnDirector" parent="." unique_id=100189438 instance=ExtResource("11_dir")]
 
-[node name="Terrain1PortesEntree" type="Sprite2D" parent="." unique_id=87839468]
+[node name="Terrain1PortesEntree" type="AnimatedSprite2D" parent="." unique_id=87839468]
 z_index = -50
 texture_filter = 1
 position = Vector2(907.14294, 768.57153)
 scale = Vector2(2, 2)
-texture = ExtResource("5_c7wow")
+sprite_frames = SubResource("SpriteFrames_porteentree")
+animation = &"default"
+script = ExtResource("door_cine")
 
 [node name="Terrain1PortesSortieOuverture1" parent="." unique_id=1894555552 instance=ExtResource("6_d1axm")]
 z_index = -50

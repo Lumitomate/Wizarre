@@ -5,6 +5,8 @@ signal enemy_spawned
 @export var can_spawn: bool = true
 
 var players_in_range: Array[Sorcerer]
+## Spawning gelé (cinématique d'arrivée) : aucune vague ne peut apparaître
+var frozen: bool = false
 var enemy_scene: PackedScene = preload("res://scenes/entities/ennemies/enemy_flying.tscn")
 var enemy_2lifes_scene: PackedScene = preload("res://scenes/entities/ennemies/enemy_2lifes.tscn")
 var enemy_fly_scene: PackedScene = preload("res://scenes/entities/ennemies/enemy_fly.tscn")
@@ -28,11 +30,33 @@ const MIX_END_CHANCES := {"simple": 0.1, "two_lifes": 0.45, "fly": 0.45}
 const SPAWN_TIME_FACTOR_PER_WAVE := 0.97
 
 func _ready() -> void:
+	add_to_group("enemy_spawner_group")
 	$AnimatedSprite2D.play("SpawnerApparition")
 	# Vague 0 (première vague) = vitesse de base, puis légère accélération
 	$SpawnCooldown.wait_time *= pow(SPAWN_TIME_FACTOR_PER_WAVE, GlobalInfo.run_info["level_number"])
 	$SpawnCooldown.wait_time += randf()
 	$SpawnCooldown.start()
+
+## Gel du spawning (cinématique d'arrivée) : stoppe le timer ET l'animation
+## en cours — un spawn part de animation_finished, pas du timer : couper
+## le timer seul laisserait la vague déjà programmée apparaître quand même
+func set_spawning_frozen(value: bool) -> void:
+	frozen = value
+	if value:
+		$SpawnCooldown.stop()
+		$AnimatedSprite2D.stop()
+		$AnimatedSprite2D.animation = &"SpawnerIdle"
+	else:
+		$SpawnCooldown.start()
+		# Spawner vivant dès la libération : l'anim idle tourne en boucle
+		# (sinon le sprite reste figé sur l'anim idle ARRÊTÉE du gel)
+		$AnimatedSprite2D.play("SpawnerIdle")
+		# Première vague rapide : on rejoue tout de suite l'anim d'apparition
+		# (comme au chargement du niveau avant la cinématique), sinon il
+		# faudrait attendre un cycle complet du timer (10 s). Uniquement si
+		# aucun joueur n'est déjà dans la zone (règle habituelle du spawner).
+		if players_in_range.is_empty() and can_spawn:
+			$AnimatedSprite2D.play("SpawnerApparition")
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_group") and not body in players_in_range:
@@ -45,17 +69,26 @@ func _on_body_exited(body: Node2D) -> void:
 
 
 func _on_spawn_cooldown_timeout() -> void:
-	if players_in_range.is_empty() and can_spawn:
-		$AnimatedSprite2D.play("SpawnerApparition")
+	if frozen or not players_in_range.is_empty() or not can_spawn:
+		return
+	$AnimatedSprite2D.play("SpawnerApparition")
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if $AnimatedSprite2D.animation==&"SpawnerApparition":
+		if frozen:
+			$AnimatedSprite2D.animation = &"SpawnerIdle"
+			return
 		spawn()
 		$AnimatedSprite2D.play("SpawnerIdle")
 
 func _on_block_spawn() -> void:
 	can_spawn = false
+	# Quota atteint : le spawner ne fait plus apparaître de monstres, mais
+	# il reste VIVANT visuellement — si son anim est arrêtée (ex. gel de la
+	# cinématique d'arrivée), on relance l'anim idle en boucle
+	if not $AnimatedSprite2D.is_playing():
+		$AnimatedSprite2D.play("SpawnerIdle")
 
 ## Chances de chaque variante pour la vague en cours : interpolation
 ## linéaire de MIX_START_CHANCES à MIX_END_CHANCES entre MIX_START_WAVE

@@ -223,6 +223,8 @@ func spawn_player(parent: Node, controller_id: int, player_config: Dictionary = 
 			player.can_fire = player_config[k]
 		elif k == "tubes_selectable":
 			player.tubes_selectable = player_config[k]
+		elif k == "in_homepage":
+			player.in_homepage = player_config[k]
 		elif k == "lives":
 			player.lives = player_config[k]
 

@@ -1,9 +1,13 @@
-class_name Sorcerer extends CharacterBody2D
+class_name Sorcerer
+extends CharacterBody2D
 
 const SPRITE_SIZE = 64
 
 signal ammo_changed
 signal life_changed
+## Émis à la fin de la sortie de porte (fade + décalage terminés) : la
+## porte chaîne la sortie du sorcier suivant dessus
+signal door_exit_done
 
 @export var speed: int = 400
 var jump_pressed_time: float = 0.0
@@ -28,6 +32,129 @@ var input_device: int = -1
 # Sorcier d'affichage (écran de pause) : idle + soulèvement de tuyaux
 # uniquement — ni physique, ni déplacement, ni saut, ni attaque, ni dash
 var frozen: bool = false
+# Cinématique d'arrivée (sortie de la porte d'entrée) : phase en cours,
+# gelée jusqu'à la refermeture de la porte. Gérée par la porte
+# (EntryDoorCinematic) : start_door_exit() lance la sortie de ce sorcier.
+var _door_exit_active := false
+var _door_exit_phase := 0          # 0 = fade sur place, 1 = décalage latéral
+var _door_exit_target := Vector2.ZERO
+var _door_exit_decalage: int = 0   # sens du décalage : -1 gauche, +1 droite, 0 aucun
+var _door_exit_dernier := false    # dernier sorti : prévient la porte de refermer
+## La porte d'où ce sorcier sort (référence directe : dans les scènes à
+## plusieurs portes, chercher par type retournerait toujours la première)
+var _door_cine: EntryDoorCinematic = null
+## Couche de collision d'origine, restaurée à la fin de la sortie de porte
+var _collision_layer_origin: int = 1
+
+# Cinématique d'arrivée : durée du fade bas→haut et vitesse de décalage
+const DOOR_EXIT_FADE_DURATION := 0.6
+const DOOR_EXIT_WALK_SPEED := 120.0
+
+
+## Vrai si ce sorcier est rattaché à une porte d'entrée cinématique
+func _has_entry_door_cinematic() -> bool:
+	return _door_cine != null and is_instance_valid(_door_cine)
+
+
+## Sortie de porte (cinématique d'arrivée), appelée par EntryDoorCinematic
+## au tour du sorcier : fade d'opacité du bas vers le haut (anim walk sur
+## place), puis décalage latéral vers target. `dernier` = ce sorcier est le
+## dernier de la porte : quand son fade est fini, la porte se referme.
+func start_door_exit(target: Vector2, dernier: bool) -> void:
+	_door_exit_active = true
+	_door_exit_phase = 0
+	_door_exit_dernier = dernier
+	# Sens du décalage déduit de la cible (la porte fournit la position
+	# finale : centre = pas de décalage)
+	_door_exit_decalage = 0
+	if absf(target.x - position.x) > 1.0:
+		_door_exit_decalage = 1 if target.x > position.x else -1
+	_door_exit_target = target
+	# Marche sur place pendant le fade (impression de sortir en marchant)
+	$AnimatedSprite2D.play("walk")
+	# Pose les pieds sur la ligne de sol réelle de la scène (le bas du
+	# sprite de porte peut être enfoncé sous le sol selon les décors)
+	_door_exit_snap_to_ground()
+	# Sac invisible au départ : son fade démarre à la MOITIÉ du fade du corps
+	if has_node("SorcererSac"):
+		$SorcererSac.modulate.a = 0.0
+	# Fade bas → haut en DOOR_EXIT_FADE_DURATION (tween sur le paramètre shader)
+	var tween := create_tween()
+	tween.tween_method(_set_arrival_fade, 0.0, 1.0, DOOR_EXIT_FADE_DURATION)
+	tween.tween_callback(_on_door_exit_fade_done)
+	# Sac : fade 0 → 1 sur la 2e moitié du fade du corps (démarre à 50 %)
+	if has_node("SorcererSac"):
+		var tween_sac := create_tween()
+		tween_sac.tween_interval(DOOR_EXIT_FADE_DURATION * 0.5)
+		tween_sac.tween_property($SorcererSac, "modulate:a", 1.0, DOOR_EXIT_FADE_DURATION * 0.5)
+
+
+func _set_arrival_fade(v: float) -> void:
+	dash_shader_material.set_shader_parameter("arrival_fade", v)
+
+
+func _on_door_exit_fade_done() -> void:
+	# Fade terminé : le shader d'arrivée est désactivé (1.0 = tout visible,
+	# aucun coût dans le shader), le sprite est un sprite normal
+	_set_arrival_fade(1.0)
+	# Sécurité : le sac est bien entièrement visible (son tween couvre la
+	# 2e moitié du fade du corps, donc il vient de se terminer)
+	if has_node("SorcererSac"):
+		$SorcererSac.modulate.a = 1.0
+	if _door_exit_decalage == 0:
+		# Rang centre (ou porte à un seul sorcier) : pas de décalage, la
+		# sortie est déjà terminée
+		_finish_door_exit()
+	else:
+		_door_exit_phase = 1
+		$AnimatedSprite2D.flip_h = _door_exit_decalage < 0
+
+
+func _finish_door_exit() -> void:
+	_door_exit_active = false
+	# Sorcier en place : idle (ne marche plus dans le vide), puis contrôles
+	# immédiats — pas d'attente de la refermeture de la porte, qui n'est
+	# que cosmétique. La collision est restaurée : il redevient solide.
+	$AnimatedSprite2D.play("idle")
+	frozen = false
+	collision_layer = _collision_layer_origin
+	# La sortie est complète : la porte peut faire sortir le suivant
+	door_exit_done.emit()
+	if _door_exit_dernier:
+		# Dernier sorcier apparu : SA porte se referme (pendant que tout le
+		# monde peut déjà jouer)
+		if _door_cine != null and is_instance_valid(_door_cine):
+			_door_cine.porte_dernier_sorcier_sorti()
+
+
+## Pose les pieds du sorcier sur la ligne de sol de la scène : ray vers le
+## bas depuis le centre de la porte (même principe que le snap de la
+## ronce P3). Le bas du sprite de porte peut être enfoncé sous le sol
+## affiché selon les scènes (ex. level : la porte est dans le socle) : si
+## le départ du ray est DANS un solide, on remonte par paliers de 64 px
+## jusqu'à trouver une face de sol praticable.
+func _door_exit_snap_to_ground() -> void:
+	var space_state := get_world_2d().direct_space_state
+	# Exclut tous les sorciers : les autres attendent au même point de la
+	# porte et ne doivent pas servir de "sol"
+	var exclude: Array[RID] = [get_rid()]
+	for player in get_tree().get_nodes_in_group("player_group"):
+		if player != self and is_instance_valid(player):
+			exclude.append(player.get_rid())
+	var porte_global := global_position
+	if _door_cine != null and is_instance_valid(_door_cine):
+		porte_global = _door_cine.global_position
+	for palier in range(0, 5):
+		var depart := porte_global + Vector2(0, -32.0 - 64.0 * palier)
+		var query := PhysicsRayQueryParameters2D.create(
+			depart, depart + Vector2(0, 500.0 + 64.0 * palier)
+		)
+		query.exclude = exclude
+		var result := space_state.intersect_ray(query)
+		# Ne retient qu'une face orientée vers le haut (un vrai sol)
+		if result and result["normal"].y < -0.5:
+			position.y = get_parent().to_local(result["position"]).y - 32.0
+			return
 
 # --- Dash ---
 @export var dash_speed: int = 1200
@@ -54,10 +181,19 @@ var damage_label_scene: PackedScene = preload("res://scenes/hud/hud_damage_label
 var lives: int = 3
 var screen_size: Vector2
 var direction: Vector2 = Vector2.RIGHT
+## Dernière direction de visée NON NEUTRE (stick ou touches). Persiste
+## quand on relâche : relâcher le haut après avoir visé en haut garde la
+## graine (et les autres attaques) qui partent vers le haut. Sans ça, la
+## visée neutre dégénère en un vecteur vers le BAS (voir direction), et
+## la graine partait sous le sorcier.
+var aim_direction: Vector2 = Vector2.RIGHT
 var energy_counts: Array = [3, 3, 3]  # Fossil, Pure, Tainted
 # Maximum de munitions par tube (0 à 4 : le HUD ne couvre que cet intervalle)
 const MAX_ENERGY := 4
 var in_shop: bool = false
+## Sur la homepage : les attaques sont utilisables et la mort déclenche un
+## respawn après 1,5 s (géré par le cadavre), jamais le game over.
+var in_homepage: bool = false
 # Tuyaux soulevables hors boutique (écran home) : X/Y/B font sortir les
 # tuyaux comme en boutique, sans pouvoir tirer
 var tubes_selectable: bool = false
@@ -129,11 +265,24 @@ func _ready() -> void:
 			rank = slot
 		if entry_doors.size() > 1:
 			var door: Node2D = entry_doors[rank % entry_doors.size()]
-			position = door.position + Vector2(64, -SPRITE_SIZE * 2.0)
+			# Un seul sorcier par porte (course : 1 couloir/joueur) : il
+			# reste au centre, sans décalage. Pieds posés sur la ligne de
+			# sol de cette scène (snap, cf. _door_exit_snap_to_ground)
+			position = door.position + Vector2(0, 32.0)
+			var door_cine := door as EntryDoorCinematic
+			if door_cine != null:
+				door_cine.inscrire_sorcier(self, 0)
+				_door_cine = door_cine
 		else:
-			var player_count: int = maxi(1, active_ids.size())
-			position = entry_doors[0].position \
-					+ Vector2((rank - (player_count - 1) / 2.0) * 64.0, -SPRITE_SIZE * 2.0)
+			var door: Node2D = entry_doors[0]
+			# Départ au centre de la porte, pieds posés sur la ligne de sol
+			# de cette scène (snap, cf. _door_exit_snap_to_ground) : la
+			# sortie le décalera ensuite
+			position = door.position + Vector2(0, 32.0)
+			var door_cine := door as EntryDoorCinematic
+			if door_cine != null:
+				door_cine.inscrire_sorcier(self, rank)
+				_door_cine = door_cine
 	else:
 		position = (1.4 * screen_size / 2) + Vector2(slot * 64, 128)
 		position += Vector2(0, SPRITE_SIZE * slot)
@@ -142,7 +291,26 @@ func _ready() -> void:
 	load_data()
 	lives = 3
 
-	$AnimatedSprite2D.play("walk")
+	# Cinématique d'arrivée : si une porte d'entrée est présente dans la
+	# scène, le sorcier démarre invisible (fade arrival_fade 0) et gelé.
+	# La porte déclenche sa sortie via start_door_exit(). Sans porte
+	# (homepage, écran de pause) : apparition classique immédiate.
+	# NB : le matériau du sorcier est créé plus bas dans _ready (les
+	# sous-ressources d'une scène sont partagées entre instances, chaque
+	# joueur a besoin de ses propres couleurs de shader) → le fade 0 est
+	# appliqué juste après sa création (voir _apply_arrival_fade_0)
+	if _has_entry_door_cinematic():
+		frozen = true
+		$AnimatedSprite2D.play("idle")
+		# Sac invisible tant que la cinématique ne l'a pas révélé
+		if has_node("SorcererSac"):
+			$SorcererSac.modulate.a = 0.0
+		# Fantôme pendant l'attente et le fade : les sorciers attendent tous
+		# au même point (le centre de la porte), sans se bloquer mutuellement
+		_collision_layer_origin = collision_layer
+		collision_layer = 0
+	else:
+		$AnimatedSprite2D.play("walk")
 
 	if not $AnimatedSprite2D.animation_finished.is_connected(_on_attack_animation_finished):
 		$AnimatedSprite2D.animation_finished.connect(_on_attack_animation_finished)
@@ -163,6 +331,10 @@ func _ready() -> void:
 	dash_shader_material.shader = preload("res://assets/shaders/wizard_color.gdshader")
 	WizardPalette.apply_to_material(dash_shader_material, sorcerer_color)
 	$AnimatedSprite2D.material = dash_shader_material
+	# Le sorcier arrive par une porte : invisible tant que la cinématique
+	# d'arrivée ne l'a pas fait sortir (le fade est animé via le shader)
+	if frozen and _has_entry_door_cinematic():
+		dash_shader_material.set_shader_parameter("arrival_fade", 0.0)
 
 
 func set_state(new_state: GlobalEnum.State) -> void:
@@ -226,6 +398,7 @@ func _process(_delta: float) -> void:
 	var new_direction = PlayerInput.direction(input_device)
 	if new_direction.length() > 0.2:
 		direction = new_direction
+		aim_direction = new_direction
 	else:
 		direction = Vector2(Vector2.RIGHT.dot(direction), 0.00001).normalized() * 0.1
 	if direction.x < -0.2:
@@ -269,6 +442,20 @@ func _process(_delta: float) -> void:
 	
 
 func _physics_process(delta: float) -> void:
+	# Cinématique d'arrivée : le sorcier est gelé (frozen) pendant le fade
+	# sur place ; ici on pilote uniquement le décalage latéral de fin de
+	# sortie (marche contrôlée, pas d'inputs, pas de gravité) — AVANT le
+	# check frozen, puisque le sorcier reste gelé jusqu'à la fin de
+	# la cinématique
+	if _door_exit_active and _door_exit_phase == 1:
+		var reste := _door_exit_target.x - position.x
+		if absf(reste) <= DOOR_EXIT_WALK_SPEED * delta:
+			position = Vector2(_door_exit_target.x, position.y)
+			_finish_door_exit()
+		else:
+			position.x += signf(reste) * DOOR_EXIT_WALK_SPEED * delta
+		return
+
 	# Sorcier d'affichage : aucune physique (il resterait sinon en chute
 	# sur l'écran de pause, et le bouton de saut le ferait sauter)
 	if frozen:
@@ -490,11 +677,13 @@ func start_dash() -> void:
 	can_dash = false
 	dash_invincible = true
 
-	# On dash dans la direction actuelle du stick, ou dans le sens du regard si le stick est au repos
+	# On dash dans la direction actuelle du stick, ou dans le sens du regard
+	# si le stick est au repos (ATTENTION : pas de "flip_h and -1 or 1" —
+	# en GDScript, and/or renvoient un booléen, donc toujours +1 = droite !)
 	if direction.length() > 0.2:
 		dash_direction = direction.normalized()
 	else:
-		dash_direction = Vector2($AnimatedSprite2D.flip_h and -1 or 1, 0)
+		dash_direction = Vector2(-1.0 if $AnimatedSprite2D.flip_h else 1.0, 0)
 
 	for group_name in dash_ignore_groups:
 		for body in get_tree().get_nodes_in_group(group_name):
@@ -636,7 +825,7 @@ func fire_attack(tube_index: int) -> void:
 	if attack_type == GlobalEnum.AttackType.F3:
 		fire_wait_release[tube_index] = true
 	
-	var attack_list := AttackSpawner.spawn_attack(attack_type, attack_tier, position, direction, screen_size, level_scale, self)
+	var attack_list := AttackSpawner.spawn_attack(attack_type, attack_tier, position, aim_direction, screen_size, level_scale, self)
 	for attack in attack_list:
 		self.get_parent().add_child(attack)
 
@@ -799,8 +988,9 @@ func die() -> void:
 	# Le corps reste au sol comme une "ragdoll" (bond léger + frame 0 de
 	# l'animation death) au lieu de disparaître. Le sorcier lui-même est
 	# libéré : il renaît au magasin suivant, et le cadavre s'effacera
-	# tout seul à ce moment-là.
-	var corpse := SorcererCorpse.from_sorcerer(self)
+	# tout seul à ce moment-là. Sur la homepage, le cadavre fait au
+	# contraire RE-SPAWNER le joueur après 1,5 s (valeurs par défaut).
+	var corpse := SorcererCorpse.from_sorcerer(self, 1.5 if in_homepage else -1.0)
 	# Ajout différé obligatoire : die() peut être appelée depuis un callback
 	# physique (ex: _on_explosion_body_entered), et on ne peut pas ajouter un
 	# corps à l'arbre pendant que le serveur physique flushe ses requêtes.
@@ -808,11 +998,12 @@ func die() -> void:
 	# La partie continue tant qu'il reste au moins un joueur en vie :
 	# seul la mort de TOUS les joueurs ramène à l'écran d'accueil
 	queue_free()
-	if not _other_players_alive():
+	if not in_homepage and not _other_players_alive():
 		# Game over : reset complet de la run (vague, durée, sorts, vies et
 		# énergies de chaque manette) — la run suivante repart du début.
 		# Sans ça, les données exportées à la mort (export_data) et le
 		# niveau de vague atteint seraient rechargés au prochain spawn.
+		# NB : jamais sur la homepage — les joueurs y ressuscitent tous.
 		GlobalInfo.reset_run()
 		if not _game_over_fade_started:
 			_game_over_fade_started = true

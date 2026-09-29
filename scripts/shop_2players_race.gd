@@ -11,6 +11,10 @@ extends Node2D
 
 signal save_data
 
+## Nombre de portes d'entrée dont la cinématique n'est pas encore finie :
+## le sablier démarre quand la dernière a terminé (tous les joueurs libres)
+var _portes_entree_actives := 0
+
 ## Seed de génération (-1 = aléatoire à chaque arrivée dans le magasin)
 @export var layout_seed: int = -1
 
@@ -33,10 +37,32 @@ func _ready() -> void:
 			player.in_shop = true
 	# La porte de sortie s'ouvre dès l'arrivée dans la salle
 	$ShopDoor.play()
+	# La rotation du sablier démarre avec l'ouverture des portes d'entrée
+	$Sablier.demarrer_rotation()
 	_generate_corridors()
 	# La bulle s'ouvre dès l'arrivée (anim de cassure) ; sa hitbox saute
 	# à la frame 15 dans _process, libérant l'objet spawné en son centre
 	$Bubble/AnimatedSprite2D_Bulle.play("default")
+	# Cinématique d'arrivée : UNE porte par joueur (1 couloir chacun),
+	# chaque porte lance sa propre séquence ; le dégel des joueurs se fait
+	# à la refermeture de leur porte (cf. entry_door_cinematic.gd)
+	for child in get_children():
+		if child is EntryDoorCinematic:
+			_portes_entree_actives += 1
+			child.cinematique_terminee.connect(_on_porte_entree_terminee)
+			child.lancer_cinematique()
+	if _portes_entree_actives == 0:
+		# Aucune porte d'entrée : le sablier démarre immédiatement
+		$Sablier.demarrer()
+
+
+## Une porte d'entrée a fini sa cinématique (porte refermée, joueur libéré).
+## Quand la DERNIÈRE a terminé, tous les joueurs sont libres : le sablier
+## démarre, et sa fin refermera la porte d'épreuve (connexion dans la scène).
+func _on_porte_entree_terminee() -> void:
+	_portes_entree_actives -= 1
+	if _portes_entree_actives <= 0:
+		$Sablier.demarrer()
 
 
 func _process(_delta: float) -> void:

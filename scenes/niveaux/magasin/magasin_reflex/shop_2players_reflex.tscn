@@ -5,6 +5,19 @@
 [ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="3_jp7t3"]
 [ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/niveaux/terrain1/map1_level_exit_door.tscn" id="4_vqfy1"]
 [ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Map1/Terrain1_PortesEntree.png" id="5_rrf6l"]
+[ext_resource type="Texture2D" uid="uid://cnivm25r0l0m2" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes1.png" id="doorf_1"]
+[ext_resource type="Texture2D" uid="uid://dvx37fa6rmhx0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes2.png" id="doorf_2"]
+[ext_resource type="Texture2D" uid="uid://oqc1hwn3b3bd" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes3.png" id="doorf_3"]
+[ext_resource type="Texture2D" uid="uid://d8igu64tcxwn" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes4.png" id="doorf_4"]
+[ext_resource type="Texture2D" uid="uid://gookosf30w20" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes5.png" id="doorf_5"]
+[ext_resource type="Texture2D" uid="uid://blxkm21hqnn48" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes6.png" id="doorf_6"]
+[ext_resource type="Texture2D" uid="uid://c6wlrsd5ml2qt" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes7.png" id="doorf_7"]
+[ext_resource type="Texture2D" uid="uid://bug35vvv68ldr" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes8.png" id="doorf_8"]
+[ext_resource type="Texture2D" uid="uid://cajiv88sq25pe" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes9.png" id="doorf_9"]
+[ext_resource type="Texture2D" uid="uid://drfdh0tbbobia" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes10.png" id="doorf_10"]
+[ext_resource type="Texture2D" uid="uid://b2lv6btvjuwb0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes11.png" id="doorf_11"]
+[ext_resource type="Texture2D" uid="uid://cw60wnkydyxuy" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes12.png" id="doorf_12"]
+[ext_resource type="Script" uid="uid://c405e65ed23db4" path="res://scripts/entry_door_cinematic.gd" id="door_cine"]
 [ext_resource type="PackedScene" uid="uid://pkgxqvb7he6h" path="res://scenes/niveaux/magasin/pressureplate_2players.tscn" id="6_lcrta"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]
@@ -57,6 +70,50 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 12
 sources/0 = SubResource("TileSetAtlasSource_xfvoa")
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_porteentree"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("doorf_1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_12")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
 [node name="Shop2PlayersReflex" type="Node2D" unique_id=18106263]
 scale = Vector2(0.7, 0.7)
 script = ExtResource("1_2ebp3")
@@ -82,12 +139,14 @@ physics_quadrant_size = 32
 [node name="ShopDoor" parent="." unique_id=1894555552 instance=ExtResource("4_vqfy1")]
 position = Vector2(1674.2861, 580)
 
-[node name="Terrain1PortesEntree" type="Sprite2D" parent="." unique_id=592914788]
+[node name="Terrain1PortesEntree" type="AnimatedSprite2D" parent="." unique_id=592914788]
 z_index = -50
 texture_filter = 1
 position = Vector2(138.57141, 578.5713)
 scale = Vector2(2, 2)
-texture = ExtResource("5_rrf6l")
+sprite_frames = SubResource("SpriteFrames_porteentree")
+animation = &"default"
+script = ExtResource("door_cine")
 
 [node name="Pressureplate2Players" parent="." unique_id=1806318726 instance=ExtResource("6_lcrta")]
 position = Vector2(907.1428, 642.8571)

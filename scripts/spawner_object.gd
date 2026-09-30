@@ -94,7 +94,7 @@ func _ready() -> void:
 		scene_root = scene_root.get_parent()
 	var target_scale: Vector2 = (scene_root as Node2D).global_transform.get_scale()
 	var parent_scale: Vector2 = get_global_transform().get_scale()
-	object_to_spawn.scale = Vector2(target_scale.x / parent_scale.x, target_scale.y / parent_scale.y)
+	object_to_spawn.scale = Vector2(target_scale.x / parent_scale.x, target_scale.y / parent_scale.y) * 2
 	
 	get_parent().add_child.call_deferred(object_to_spawn)
 

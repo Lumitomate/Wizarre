@@ -825,7 +825,15 @@ func fire_attack(tube_index: int) -> void:
 	if attack_type == GlobalEnum.AttackType.F3:
 		fire_wait_release[tube_index] = true
 	
-	var attack_list := AttackSpawner.spawn_attack(attack_type, attack_tier, position, aim_direction, screen_size, level_scale, self)
+	# Direction de tir de la vague F2 : si aucune direction n'est indiquée
+	# (stick au repos), la vague part à l'horizontal dans la direction du
+	# regard. Sinon elle suivrait la dernière visée (aim_direction),
+	# potentiellement verticale ou diagonale.
+	var shoot_direction := aim_direction
+	if attack_type == GlobalEnum.AttackType.F2 and PlayerInput.direction(input_device).length() <= 0.2:
+		shoot_direction = Vector2(-1.0 if $AnimatedSprite2D.flip_h else 1.0, 0)
+	
+	var attack_list := AttackSpawner.spawn_attack(attack_type, attack_tier, position, shoot_direction, screen_size, level_scale, self)
 	for attack in attack_list:
 		self.get_parent().add_child(attack)
 

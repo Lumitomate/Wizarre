@@ -122,8 +122,7 @@ radius = 15.0
 [node name="ObjetMiroir" type="Area2D" unique_id=2070854314]
 scale = Vector2(2, 2)
 script = ExtResource("1_ebl7y")
-item_attack_family = 2
-item_attack_type = 1
+item_attack_type = 7
 
 [node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=518273926]
 texture_filter = 1

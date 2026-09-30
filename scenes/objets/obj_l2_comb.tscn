@@ -1,19 +1,47 @@
 [gd_scene format=3 uid="uid://boi6wj4tu8hns"]
 
 [ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_l2comb"]
-[ext_resource type="Texture2D" uid="uid://d2bxnje5yqnqc" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Obj_AtkL2_Peigne2.png" id="2_85dyg"]
+[ext_resource type="Texture2D" uid="uid://dd0abyhbm20wc" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Item_AtkL2_Anim_Comb/Obj_AtkL2_Peigne_1.png" id="2_dsjqr"]
+[ext_resource type="Texture2D" uid="uid://cdj6h5jg44e5b" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Item_AtkL2_Anim_Comb/Obj_AtkL2_Peigne_2.png" id="3_7kn6a"]
 [ext_resource type="Texture2D" uid="uid://dxx1883bb545w" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Obj_AtkL2_Peigne1.png" id="3_nnylk"]
+[ext_resource type="Texture2D" uid="uid://b6k1jivtn0ujh" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Item_AtkL2_Anim_Comb/Obj_AtkL2_Peigne_3.png" id="4_2xfku"]
 [ext_resource type="Texture2D" uid="uid://cd2bdv5jnyp8u" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Obj_AtkL2_Peigne3.png" id="4_ch2ld"]
+[ext_resource type="Texture2D" uid="uid://r6vbk86btfg8" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Item_AtkL2_Anim_Comb/Obj_AtkL2_Peigne_4.png" id="5_8xj4h"]
+[ext_resource type="Texture2D" uid="uid://csmsvap5fg3vc" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Item_AtkL2_Anim_Comb/Obj_AtkL2_Peigne_5.png" id="6_4h3vj"]
+[ext_resource type="Texture2D" uid="uid://b17ndiqvnqs5x" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Item_AtkL2_Anim_Comb/Obj_AtkL2_Peigne_6.png" id="7_jun1y"]
+[ext_resource type="Texture2D" uid="uid://f7vbhr7lsfqh" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Item_AtkL2_Anim_Comb/Obj_AtkL2_Peigne_7.png" id="8_ubb8d"]
+[ext_resource type="Texture2D" uid="uid://i3cug7jei0ly" path="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Item_AtkL2_Anim_Comb/Obj_AtkL2_Peigne_8.png" id="9_o8kox"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_702tw"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_85dyg")
+"texture": ExtResource("2_dsjqr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7kn6a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2xfku")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_8xj4h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_4h3vj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jun1y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ubb8d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_o8kox")
 }],
 "loop": 1,
 "name": &"Argent",
-"speed": 5.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -37,13 +65,13 @@ radius = 15.0
 
 [node name="ObjAtkl2Comb" type="Area2D" unique_id=125393339]
 script = ExtResource("1_l2comb")
-item_attack_family = 2
-item_attack_type = 10
+item_attack_type = 8
 
 [node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=356972715]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_702tw")
-animation = &"Or"
+animation = &"Argent"
+frame_progress = 0.2626023
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356963871]
 shape = SubResource("CircleShape2D_1rv7g")

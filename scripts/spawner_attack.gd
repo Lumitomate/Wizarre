@@ -79,6 +79,7 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 		
 		GlobalEnum.AttackType.G1:
 			var ice_ball: AttackIceBall = ice_ball_scene.instantiate()
+			ice_ball.caster = caster
 			ice_ball.transform = ice_ball.transform.rotated(player_direction.angle())
 			# Taille par tier : le tier 3 garde la taille actuelle (facteur 1),
 			# tier 2 = 75 %, tier 1 = 50 %
@@ -126,6 +127,7 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 
 		GlobalEnum.AttackType.F2:
 			var fire_wave: AttackFireWave = fire_wave_scene.instantiate()
+			fire_wave.caster = caster
 			fire_wave.direction = player_direction.normalized()
 			fire_wave.position = player_position + 60 * player_direction.normalized()
 			fire_wave.tier_scale = 1.0 + (int_attack_tier - 1) * 3.0

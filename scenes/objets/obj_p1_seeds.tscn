@@ -41,7 +41,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("7_6tm4p")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Argent",
 "speed": 12.0
 }, {
@@ -64,7 +64,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("13_ehssc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Bronze",
 "speed": 12.0
 }, {
@@ -87,7 +87,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("19_c7tmh")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Or",
 "speed": 12.0
 }]
@@ -97,6 +97,7 @@ radius = 11.045361
 
 [node name="ObjetGraines" type="Area2D" unique_id=1282256053]
 script = ExtResource("1_kskdy")
+item_attack_type = 10
 metadata/_custom_type_script = "uid://5meir351x02q"
 
 [node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=1385089945]

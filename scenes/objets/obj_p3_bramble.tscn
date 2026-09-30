@@ -1,8 +1,12 @@
 [gd_scene format=3 uid="uid://cf3beltobj002"]
 
 [ext_resource type="Script" uid="uid://5meir351x02q" path="res://scripts/object_attack.gd" id="1_script"]
-
 [ext_resource type="Texture2D" uid="uid://dj8nrpyrpwmmr" path="res://assets/sprites/Attaques/Plante/Icone_AtkP/Icone_AtkP3.png" id="2_tex"]
+[ext_resource type="Texture2D" uid="uid://bxxx5ohhi88k6" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/Item_AtkP3_Pot/Obj_AtkP3_Anim_Bramble1.png" id="3_buiq5"]
+[ext_resource type="Texture2D" uid="uid://c4ktnfmuld1lw" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/Item_AtkP3_Pot/Obj_AtkP3_Anim_Bramble2.png" id="4_myh77"]
+[ext_resource type="Texture2D" uid="uid://c8ogpuo624ftg" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/Item_AtkP3_Pot/Obj_AtkP3_Anim_Bramble3.png" id="5_0kl6h"]
+[ext_resource type="Texture2D" uid="uid://cf4jyq726au5w" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/Item_AtkP3_Pot/Obj_AtkP3_Anim_Bramble4.png" id="6_c7g16"]
+[ext_resource type="Texture2D" uid="uid://cgnrb3oad8fru" path="res://assets/sprites/Attaques/Plante/AtkP3_Ronce/Item_AtkP3_Pot/Obj_AtkP3_Anim_Bramble5.png" id="7_qo4nt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p3"]
 animations = [{
@@ -10,23 +14,35 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_tex")
 }],
-"loop": true,
-"name": &"Bronze",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_tex")
-}],
-"loop": true,
+"loop": 1,
 "name": &"Argent",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("3_buiq5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_myh77")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_0kl6h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_c7g16")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_qo4nt")
+}],
+"loop": 2,
+"name": &"Bronze",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_tex")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Or",
 "speed": 5.0
 }]
@@ -37,13 +53,13 @@ radius = 15.0
 [node name="ObjP3Bramble" type="Area2D" unique_id=2070854321]
 scale = Vector2(2, 2)
 script = ExtResource("1_script")
-item_attack_family = 0
-item_attack_type = 6
+item_attack_type = 12
 
 [node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=518273932]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_p3")
 animation = &"Bronze"
+frame_progress = 0.44904724
 
 [node name="Area2D" type="CollisionShape2D" parent="." unique_id=1861019472]
 shape = SubResource("CircleShape2D_p3")

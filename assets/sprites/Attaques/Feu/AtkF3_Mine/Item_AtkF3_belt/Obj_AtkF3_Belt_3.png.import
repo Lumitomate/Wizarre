@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkx0h1p4h5t8j"
-path="res://.godot/imported/AtkG3_Beanie.png-95d60586b304403ad657a39d1b4827e5.ctex"
+uid="uid://bvdbedavfcqa7"
+path="res://.godot/imported/Obj_AtkF3_Belt_3.png-b24374d76306935c876eec9367049ffb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Attaques/Glace/AtkG3_Lame/Item_AtkG3_Beanie/AtkG3_Beanie.png"
-dest_files=["res://.godot/imported/AtkG3_Beanie.png-95d60586b304403ad657a39d1b4827e5.ctex"]
+source_file="res://assets/sprites/Attaques/Feu/AtkF3_Mine/Item_AtkF3_belt/Obj_AtkF3_Belt_3.png"
+dest_files=["res://.godot/imported/Obj_AtkF3_Belt_3.png-b24374d76306935c876eec9367049ffb.ctex"]
 
 [params]
 

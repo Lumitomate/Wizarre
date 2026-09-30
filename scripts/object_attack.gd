@@ -1,8 +1,8 @@
 class_name AttackObject extends Area2D
 
-@export var item_attack_family: GlobalEnum.AttackFamily
+var item_attack_family: GlobalEnum.AttackFamily
 @export var item_attack_type: GlobalEnum.AttackType
-@export var item_attack_tier: GlobalEnum.AttackTier
+var item_attack_tier: GlobalEnum.AttackTier
 
 var animation_name: String
 

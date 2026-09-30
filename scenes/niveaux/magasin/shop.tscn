@@ -1,13 +1,12 @@
 [gd_scene format=4 uid="uid://c8asp7sfbs6ub"]
 
-[ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="1_lx5au"]
 [ext_resource type="Script" uid="uid://cq52ldvgscuwm" path="res://scripts/shop.gd" id="1_xfvoa"]
+[ext_resource type="Texture2D" uid="uid://0hepm0i1tyol" path="res://assets/sprites/Map1/TileMap_BriquesViolettes.png" id="3_vgwsm"]
 [ext_resource type="PackedScene" uid="uid://dd8ufu1klh2j8" path="res://scenes/niveaux/magasin/bubble.tscn" id="4_m4ofw"]
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="6_8r1wq"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/niveaux/magasin/shop_trial_door.tscn" id="7_ajxib"]
 [ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/niveaux/terrain1/map1_level_exit_door.tscn" id="8_y6sft"]
 [ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_object.tscn" id="9_m4ofw"]
-[ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Map1/Terrain1_PortesEntree.png" id="10_entree"]
 [ext_resource type="Texture2D" uid="uid://cnivm25r0l0m2" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes1.png" id="doorf_1"]
 [ext_resource type="Texture2D" uid="uid://dvx37fa6rmhx0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes2.png" id="doorf_2"]
 [ext_resource type="Texture2D" uid="uid://oqc1hwn3b3bd" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes3.png" id="doorf_3"]
@@ -20,10 +19,10 @@
 [ext_resource type="Texture2D" uid="uid://drfdh0tbbobia" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes10.png" id="doorf_10"]
 [ext_resource type="Texture2D" uid="uid://b2lv6btvjuwb0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes11.png" id="doorf_11"]
 [ext_resource type="Texture2D" uid="uid://cw60wnkydyxuy" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes12.png" id="doorf_12"]
-[ext_resource type="Script" uid="uid://c405e65ed23db4" path="res://scripts/entry_door_cinematic.gd" id="door_cine"]
+[ext_resource type="Script" uid="uid://bexngqe2x1hd0" path="res://scripts/entry_door_cinematic.gd" id="door_cine"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xfvoa"]
-texture = ExtResource("1_lx5au")
+texture = ExtResource("3_vgwsm")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -48,11 +47,6 @@ texture_region_size = Vector2i(32, 32)
 2:0/0/terrains_peering_bit/bottom_side = 0
 2:0/0/terrains_peering_bit/bottom_left_corner = 0
 2:0/0/terrains_peering_bit/left_side = 0
-3:0/0 = 0
-3:0/0/terrain_set = 0
-3:0/0/terrain = 0
-3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-3:0/0/terrains_peering_bit/bottom_side = 0
 0:1/0 = 0
 0:1/0/terrain_set = 0
 0:1/0/terrain = 0
@@ -145,9 +139,6 @@ texture_region_size = Vector2i(32, 32)
 4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 4:1/0 = 0
 4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -8.990763, 16, -8.980848, 16, 16, -16, 16)
-4:0/0 = 0
-4:0/0/terrain_set = 0
-4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 5:1/0 = 0
 6:1/0 = 0
 7:1/0 = 0
@@ -157,6 +148,12 @@ texture_region_size = Vector2i(32, 32)
 7:3/0 = 0
 6:3/0 = 0
 5:3/0 = 0
+5:0/0 = 0
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, -16, 16, -14, -16, -14)
+4:0/0/physics_layer_0/polygon_0/one_way = true
 
 [sub_resource type="TileSet" id="TileSet_1l46r"]
 tile_size = Vector2i(32, 32)
@@ -205,7 +202,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("doorf_12")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 10.0
 }]
@@ -273,7 +270,6 @@ texture_filter = 1
 position = Vector2(138.57144, 897.1428)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_porteentree")
-animation = &"default"
 script = ExtResource("door_cine")
 
 [connection signal="sorcerer_contact_bubble" from="Bulle" to="." method="_on_bubble_sorcerer_contact_bubble"]

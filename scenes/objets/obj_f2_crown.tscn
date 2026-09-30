@@ -53,7 +53,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_1c88x")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Argent",
 "speed": 5.0
 }, {
@@ -82,7 +82,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("17_ye6wl")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Bronze",
 "speed": 5.0
 }, {
@@ -111,7 +111,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("25_7rt2x")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Or",
 "speed": 5.0
 }]
@@ -121,7 +121,7 @@ radius = 16.0
 
 [node name="Obj_f2_Couronne" type="Area2D" unique_id=429451792]
 script = ExtResource("1_0v2fh")
-item_attack_type = 6
+item_attack_type = 2
 
 [node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=185374400]
 texture_filter = 1

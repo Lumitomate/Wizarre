@@ -72,7 +72,6 @@ const SEGMENT_INTERVAL := 0.1
 ## speed_scale de l'anim Grow : 8 frames à 12 fps = 0,667 s à vitesse 1,
 ## donc 0,667 / SEGMENT_INTERVAL ≈ 6,8 pour finir en ~0,1 s
 const GROW_SPEED_SCALE := 6.8
-const MAX_TURN := PI / 3.0             # ±60° entre deux tronçons consécutifs
 const GEL_DURATION := 2.0              # gel avant décomposition
 const CASCADE_INTERVAL := 0.1          # 0,1 s entre deux tronçons qui se décomposent
 const BASE_APPEAR_DURATION := 0.3      # apparition de la base : scale 0 → 100 %
@@ -109,6 +108,9 @@ var _tip_bulb: Sprite2D = null         # bulbe glissant sur la pointe de la ronc
 var _growth_elapsed := 0.0             # temps écoulé depuis la plantation
 var _bulb_segment_index := 0           # tronçon actuellement coiffé par le bulbe
 var _connector_done := false           # tronçon de liaison fini de pousser
+## Direction du dernier tronçon posé : l'angle entre deux tronçons
+## consécutifs est limité à ±_get_max_turn() au moment de la pose
+var _last_direction := Vector2.UP
 ## Rebond de la graine sur les sorciers (composant réutilisable)
 var _rebond: RebondSorciers = null
 
@@ -208,6 +210,7 @@ func _plant() -> void:
 	add_child(_tip_bulb)
 	# Premier tronçon immédiat, depuis la base
 	_next_position = Vector2.ZERO
+	_last_direction = direction
 	_spawn_segment()
 	_spawn_timer = 0.0
 
@@ -300,6 +303,20 @@ func _process_growing(delta: float) -> void:
 		_spawn_connector_segment()
 
 
+# Angle maximal entre un tronçon et le suivant, qui dépend du tier :
+# ±25° au tier 1, ±35° au tier 2, ±45° au tier 3.
+func _get_max_turn() -> float:
+	match attack_tier:
+		1:
+			return deg_to_rad(25.0)
+		2:
+			return deg_to_rad(35.0)
+		3:
+			return deg_to_rad(45.0)
+		_:
+			return deg_to_rad(45.0)
+
+
 func _steer() -> void:
 	# Direction voulue par le lanceur (comme la cible L2 : si le lanceur a
 	# disparu, la ronce continue dans la dernière direction connue)
@@ -312,7 +329,7 @@ func _steer() -> void:
 	var prev_angle := direction.angle()
 	# wrapf : take le plus court chemin angulaire, puis limite à ±60°
 	var delta_angle := wrapf(stick.normalized().angle() - prev_angle, -PI, PI)
-	var clamped := clampf(delta_angle, -MAX_TURN, MAX_TURN)
+	var clamped := clampf(delta_angle, -_get_max_turn(), _get_max_turn())
 	direction = Vector2.RIGHT.rotated(prev_angle + clamped)
 
 
@@ -327,10 +344,18 @@ func _spawn_segment() -> void:
 	seg.index = _segments.size()
 	seg.level_scale = level_scale * sprite_scale_multiplier
 	seg.position = _next_position
+	# Angle entre ce tronçon et le précédent limité à ±max_turn (±25°/35°/45°
+	# selon le tier) : le stick pilote `direction` en continu, mais c'est à
+	# la POSE du tronçon que l'écart avec le précédent est bridé
+	var prev_angle := _last_direction.angle()
+	var delta_angle := wrapf(direction.angle() - prev_angle, -PI, PI)
+	var max_turn := _get_max_turn()
+	var seg_direction := Vector2.RIGHT.rotated(prev_angle + clampf(delta_angle, -max_turn, max_turn))
+	_last_direction = seg_direction
 	# Les sprites de ronce sont dessinés verticaux (pointant vers le haut,
 	# comme les segments de la colonne F1) : angle + PI/2 → direction UP
 	# = sprite non pivoté
-	seg.rotation = direction.angle() + PI / 2.0
+	seg.rotation = seg_direction.angle() + PI / 2.0
 	seg.enemy_touched.connect(_on_enemy_touched)
 	add_child(seg)
 	# Le lanceur peut avoir disparu (mort, changement de scène) pendant la
@@ -341,7 +366,7 @@ func _spawn_segment() -> void:
 	seg.start_grow()
 	_segments.append(seg)
 	_bulb_segment_index = seg.index
-	_next_position += direction * _segment_spacing()
+	_next_position += seg_direction * _segment_spacing()
 
 
 # Positionne le bulbe sur la pointe VISIBLE de la ronce : il glisse le

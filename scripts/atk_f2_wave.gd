@@ -3,8 +3,10 @@ extends AttackProjectile
 
 @export var speed: int = 1000
 @export var tier_scale: float = 1.0
+@export var spawn_immunity_time: float = 1
 
 var direction: Vector2 = Vector2.LEFT
+var player_immunity: bool = true
 
 const FRAME_HEIGHTS = {
 	0: 0,
@@ -49,6 +51,10 @@ func _ready() -> void:
 	collision_shape.disabled = true
 	body_entered.connect(_on_body_entered)
 
+	# Start the immunity timer (player cannot hit themselves for 0.15s after spawn)
+	await get_tree().create_timer(spawn_immunity_time).timeout
+	player_immunity = false
+
 func setup_tier(tier: int) -> void:
 	max_frame = TIER_MAX_FRAMES.get(tier, 62)
 
@@ -73,6 +79,10 @@ func _update_hitbox(current_frame: int) -> void:
 	for p in BASE_POINTS:
 		new_points.append(Vector2(p.x * scale_x, p.y * scale_y))
 	collision_shape.polygon = new_points
+
+func can_damage(body: Node2D) -> bool:
+	# Le lanceur est immunisé juste après le spawn pour éviter que la vague ne le touche
+	return not (player_immunity and body == caster)
 
 func _get_height_for_frame(frame: int) -> float:
 	var sorted_frames = FRAME_HEIGHTS.keys()

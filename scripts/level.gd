@@ -19,6 +19,16 @@ var player_info_scene: PackedScene = preload("res://scenes/hud/hud_players_info.
 
 func _ready() -> void:
 
+	# Si on arrive depuis la homepage, reset les munitions et les vies
+	if GlobalInfo.run_info.get("from_homepage", false):
+		for controller_id in GlobalInfo.run_info["players_info"].keys():
+			if controller_id is String:
+				continue
+			if controller_id in GlobalInfo.run_info["players_info"]:
+				GlobalInfo.run_info["players_info"][controller_id]["energy_counts"] = [3, 3, 3]
+				GlobalInfo.run_info["players_info"][controller_id]["lives"] = 3
+	GlobalInfo.run_info["from_homepage"] = false
+
 	enemies_to_kill += 3 * GlobalInfo.run_info["level_number"]
 	level_start_time = Time.get_ticks_msec()
 

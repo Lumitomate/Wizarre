@@ -41,7 +41,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("6_5i84w")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Argent",
 "speed": 12.0
 }, {
@@ -64,7 +64,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("12_qytdt")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Bronze",
 "speed": 12.0
 }, {
@@ -87,7 +87,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("18_f83a0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Or",
 "speed": 12.0
 }]
@@ -97,6 +97,7 @@ radius = 15.0
 
 [node name="ObjBocal" type="Area2D" unique_id=1231062677]
 script = ExtResource("1_5iheg")
+item_attack_type = 11
 
 [node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=1437117453]
 texture_filter = 1

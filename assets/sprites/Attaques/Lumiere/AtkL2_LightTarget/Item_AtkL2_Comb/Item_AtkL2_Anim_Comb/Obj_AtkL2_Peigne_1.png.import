@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd5egj3podef6"
-path="res://.godot/imported/Obj_AtkF3_Belt.png-13f2bf18d3eced3bafa4c123c1eddd69.ctex"
+uid="uid://dd0abyhbm20wc"
+path="res://.godot/imported/Obj_AtkL2_Peigne_1.png-34dc38085e6b4b6c32ef12cca6240c33.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/Attaques/Feu/AtkF3_Mine/Item_AtkF3_belt/Obj_AtkF3_Belt.png"
-dest_files=["res://.godot/imported/Obj_AtkF3_Belt.png-13f2bf18d3eced3bafa4c123c1eddd69.ctex"]
+source_file="res://assets/sprites/Attaques/Lumiere/AtkL2_LightTarget/Item_AtkL2_Comb/Item_AtkL2_Anim_Comb/Obj_AtkL2_Peigne_1.png"
+dest_files=["res://.godot/imported/Obj_AtkL2_Peigne_1.png-34dc38085e6b4b6c32ef12cca6240c33.ctex"]
 
 [params]
 

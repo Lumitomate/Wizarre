@@ -53,7 +53,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("9_w5pfy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Argent",
 "speed": 5.0
 }, {
@@ -82,7 +82,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("17_4tsh7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Bronze",
 "speed": 5.0
 }, {
@@ -111,7 +111,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("25_cm2pb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Or",
 "speed": 5.0
 }]
@@ -121,8 +121,7 @@ radius = 15.0
 
 [node name="Obj_g2_echarpe" type="Area2D" unique_id=1665522815]
 script = ExtResource("1_sbjek")
-item_attack_family = 1
-item_attack_type = 7
+item_attack_type = 5
 
 [node name="ObjetAttaqueAnimation" type="AnimatedSprite2D" parent="." unique_id=1021971407]
 texture_filter = 1

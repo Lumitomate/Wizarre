@@ -41,7 +41,10 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 		GlobalEnum.AttackType.F0:
 			player_position *= level_scale
 			var spread = PI / 4
-			for i in range(attack_tier):
+			# Tier 0-based (0 = I) : int_attack_tier = nombre de boules (1 à
+			# 3), réparties en éventail autour de la visée (même convention
+			# que les autres attaques, cf. G1 : tier 1 = I)
+			for i in range(int_attack_tier):
 				var fireball: AttackFireBall = fireball_scene.instantiate()
 				fireball.transform = fireball.transform.rotated(player_direction.angle() + (i * spread) - (int_attack_tier - 1) * spread / 2 )
 				fireball.position = player_position + 60 * player_direction.normalized()

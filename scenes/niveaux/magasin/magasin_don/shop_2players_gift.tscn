@@ -3,20 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="1_sti6k"]
 [ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="2_c0d2s"]
 [ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/niveaux/terrain1/map1_level_exit_door.tscn" id="3_1s6hq"]
-[ext_resource type="Texture2D" uid="uid://d30n8paybkdkv" path="res://assets/sprites/Map1/Terrain1_PortesEntree.png" id="4_o8ehn"]
-[ext_resource type="Texture2D" uid="uid://cnivm25r0l0m2" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes1.png" id="doorf_1"]
-[ext_resource type="Texture2D" uid="uid://dvx37fa6rmhx0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes2.png" id="doorf_2"]
-[ext_resource type="Texture2D" uid="uid://oqc1hwn3b3bd" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes3.png" id="doorf_3"]
-[ext_resource type="Texture2D" uid="uid://d8igu64tcxwn" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes4.png" id="doorf_4"]
-[ext_resource type="Texture2D" uid="uid://gookosf30w20" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes5.png" id="doorf_5"]
-[ext_resource type="Texture2D" uid="uid://blxkm21hqnn48" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes6.png" id="doorf_6"]
-[ext_resource type="Texture2D" uid="uid://c6wlrsd5ml2qt" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes7.png" id="doorf_7"]
-[ext_resource type="Texture2D" uid="uid://bug35vvv68ldr" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes8.png" id="doorf_8"]
-[ext_resource type="Texture2D" uid="uid://cajiv88sq25pe" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes9.png" id="doorf_9"]
-[ext_resource type="Texture2D" uid="uid://drfdh0tbbobia" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes10.png" id="doorf_10"]
-[ext_resource type="Texture2D" uid="uid://b2lv6btvjuwb0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes11.png" id="doorf_11"]
-[ext_resource type="Texture2D" uid="uid://cw60wnkydyxuy" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes12.png" id="doorf_12"]
-[ext_resource type="Script" uid="uid://c405e65ed23db4" path="res://scripts/entry_door_cinematic.gd" id="door_cine"]
 [ext_resource type="Texture2D" uid="uid://ci4ksrxtd1ovq" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreBase.png" id="5_uql7t"]
 [ext_resource type="Texture2D" uid="uid://dyjo7chhbyq1q" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé1.png" id="6_e4kij"]
 [ext_resource type="Texture2D" uid="uid://6rpiahc8fgoj" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé2.png" id="7_n0qaa"]
@@ -37,6 +23,19 @@
 [ext_resource type="Texture2D" uid="uid://dhc3naivp2b1b" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé17.png" id="22_o3iay"]
 [ext_resource type="Texture2D" uid="uid://c0onvqsvtxc5o" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé18.png" id="23_tdrd8"]
 [ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_object.tscn" id="24_4dv5q"]
+[ext_resource type="Texture2D" uid="uid://cnivm25r0l0m2" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes1.png" id="doorf_1"]
+[ext_resource type="Texture2D" uid="uid://dvx37fa6rmhx0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes2.png" id="doorf_2"]
+[ext_resource type="Texture2D" uid="uid://oqc1hwn3b3bd" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes3.png" id="doorf_3"]
+[ext_resource type="Texture2D" uid="uid://d8igu64tcxwn" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes4.png" id="doorf_4"]
+[ext_resource type="Texture2D" uid="uid://gookosf30w20" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes5.png" id="doorf_5"]
+[ext_resource type="Texture2D" uid="uid://blxkm21hqnn48" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes6.png" id="doorf_6"]
+[ext_resource type="Texture2D" uid="uid://c6wlrsd5ml2qt" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes7.png" id="doorf_7"]
+[ext_resource type="Texture2D" uid="uid://bug35vvv68ldr" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes8.png" id="doorf_8"]
+[ext_resource type="Texture2D" uid="uid://cajiv88sq25pe" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes9.png" id="doorf_9"]
+[ext_resource type="Texture2D" uid="uid://drfdh0tbbobia" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes10.png" id="doorf_10"]
+[ext_resource type="Texture2D" uid="uid://b2lv6btvjuwb0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes11.png" id="doorf_11"]
+[ext_resource type="Texture2D" uid="uid://cw60wnkydyxuy" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes12.png" id="doorf_12"]
+[ext_resource type="Script" uid="uid://bexngqe2x1hd0" path="res://scripts/entry_door_cinematic.gd" id="door_cine"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a0arv"]
 texture = ExtResource("2_c0d2s")
@@ -87,6 +86,50 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 12
 sources/0 = SubResource("TileSetAtlasSource_a0arv")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_porteentree"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("doorf_1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("doorf_12")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f3c62"]
 animations = [{
@@ -162,50 +205,6 @@ animations = [{
 radius = 25.0
 height = 58.0
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_porteentree"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("doorf_1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("doorf_2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("doorf_3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("doorf_4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("doorf_5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("doorf_6")
-}, {
-"duration": 1.0,
-"texture": ExtResource("doorf_7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("doorf_8")
-}, {
-"duration": 1.0,
-"texture": ExtResource("doorf_9")
-}, {
-"duration": 1.0,
-"texture": ExtResource("doorf_10")
-}, {
-"duration": 1.0,
-"texture": ExtResource("doorf_11")
-}, {
-"duration": 1.0,
-"texture": ExtResource("doorf_12")
-}],
-"loop": false,
-"name": &"default",
-"speed": 10.0
-}]
-
 [node name="Shop2PlayersGift" type="Node2D" unique_id=509115402]
 
 [node name="Terrain1Fond" type="Sprite2D" parent="." unique_id=2031802209]
@@ -235,7 +234,6 @@ texture_filter = 1
 position = Vector2(105, 899)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_porteentree")
-animation = &"default"
 script = ExtResource("door_cine")
 
 [node name="Terrain1PortesEntree2" type="AnimatedSprite2D" parent="." unique_id=873092073]
@@ -244,7 +242,6 @@ texture_filter = 1
 position = Vector2(105, 450)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_porteentree")
-animation = &"default"
 script = ExtResource("door_cine")
 
 [node name="Bubble" type="StaticBody2D" parent="." unique_id=384086052]

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://hoobefb07ees"]
+
+[ext_resource type="Script" uid="uid://bmtvwpjopdvss" path="res://scripts/shop_router.gd" id="1_router"]
+
+[node name="ShopRouter" type="Node" unique_id=2128826014]
+script = ExtResource("1_router")
+magasins_3_joueurs = Array[int]([6, 5])
+poids_3_joueurs = Array[float]([1.0, 1.0])
+magasins_4_joueurs = Array[int]([6, 5, 2])
+poids_4_joueurs = Array[float]([1.0, 1.0, 1.0])

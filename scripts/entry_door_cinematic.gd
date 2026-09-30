@@ -46,6 +46,18 @@ func inscrire_sorcier(sorcier: Sorcerer, rang: int) -> void:
 	_en_attente[rang] = sorcier
 
 
+## Vide la file des sorciers inscrits et rompt leurs liens avec la porte.
+## Utilisé par le magasin Shophands : tous les sorciers se sont
+## auto-inscrits à la porte à leur spawn (comportement par défaut du
+## sorcier), mais seul le décideur doit en sortir — les receveurs restent
+## dans leurs espaces clos. La scène réinscrit ensuite le décideur seul.
+func reinitialiser_inscriptions() -> void:
+	for sorcier in _en_attente:
+		if sorcier != null and is_instance_valid(sorcier):
+			sorcier._door_cine = null
+	_en_attente.clear()
+
+
 ## Lance la cinématique : ouverture de la porte, puis sorties décalées.
 func lancer_cinematique() -> void:
 	# Connexion fin d'anim : mi-anim → première sortie ; fin → porte ouverte

@@ -64,6 +64,14 @@ _Avoid_: Stage, Wave, Arena
 A rest area between levels where sorcerers can change their attack types and tiers. Access is automatic when the level's enemy quota is met.
 _Avoid_: Store, Merchant, Upgrade Shop
 
+**Shophands**:
+The 3-4 player shop: a randomly chosen sorcerer (the Decider) is locked at the top with three pressure plates and closing hands, and sends the visit's single item to one of the other sorcerers, each locked in a side box. The exit door opens only once the item is caught.
+_Avoid_: Hand Shop, Gift Shop
+
+**Decider**:
+The sorcerer randomly chosen at each Shophands visit to decide who receives the shop's single item. The Decider never receives the item.
+_Avoid_: Chooser, Dealer, Giver
+
 **Power-up**:
 An item dropped by enemies or placed in the shop. Collecting it changes a sorcerer's attack configuration.
 _Avoid_: Pickup, Bonus, Collectible

@@ -99,6 +99,7 @@
 [ext_resource type="Texture2D" uid="uid://hjuxrma235yg" path="res://assets/sprites/Magasin/MagasinMains/MainG/AnimLongue/Mains_Direction29.png" id="97_yrukx"]
 [ext_resource type="Texture2D" uid="uid://fc7hbkcfwynw" path="res://assets/sprites/Magasin/MagasinMains/MainG/AnimLongue/Mains_Direction30.png" id="98_akxwo"]
 [ext_resource type="Texture2D" uid="uid://dpcngd7ry4nk4" path="res://assets/sprites/Magasin/MagasinMains/MainG/AnimLongue/Mains_Direction31.png" id="99_74mj0"]
+[ext_resource type="Script" uid="uid://c5qr53tlvpm16" path="res://scripts/shop_hands_decider.gd" id="100_dec"]
 [ext_resource type="Texture2D" uid="uid://ijwnah1tioyo" path="res://assets/sprites/Magasin/MagasinMains/MainG/AnimLongue/Mains_Direction32.png" id="100_y8g4e"]
 [ext_resource type="Texture2D" uid="uid://6fqke3c5p5e6" path="res://assets/sprites/Magasin/MagasinMains/MainG/AnimLongue/Mains_Direction33.png" id="101_jmdwc"]
 [ext_resource type="Texture2D" uid="uid://c7ll73gtbghgq" path="res://assets/sprites/Magasin/MagasinMains/MainG/AnimLongue/Mains_Direction34.png" id="102_4rn63"]
@@ -351,7 +352,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("69_ejcnc")
 }],
-"loop": false,
+"loop": 0,
 "name": &"FermetureD",
 "speed": 24.0
 }]
@@ -566,7 +567,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("138_jm3qp")
 }],
-"loop": false,
+"loop": 0,
 "name": &"FermetureB",
 "speed": 24.0
 }]
@@ -781,7 +782,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("138_jm3qp")
 }],
-"loop": false,
+"loop": 0,
 "name": &"FermetureG",
 "speed": 24.0
 }]
@@ -793,6 +794,7 @@ size = Vector2(96, 128)
 size = Vector2(352, 96)
 
 [node name="ShophandsDecider" type="Area2D" unique_id=1507469723]
+script = ExtResource("100_dec")
 
 [node name="MainD" type="AnimatedSprite2D" parent="." unique_id=1391522571]
 texture_filter = 1
@@ -808,12 +810,16 @@ position = Vector2(0, 112)
 rotation = -1.5707964
 sprite_frames = SubResource("SpriteFrames_x6apq")
 animation = &"FermetureB"
+frame = 68
+frame_progress = 1.0
 
 [node name="MainG" type="AnimatedSprite2D" parent="." unique_id=1949415576]
 texture_filter = 1
 position = Vector2(-112, 0)
 sprite_frames = SubResource("SpriteFrames_nhdtu")
 animation = &"FermetureG"
+frame = 68
+frame_progress = 1.0
 
 [node name="Cadre" type="Sprite2D" parent="." unique_id=1348132533]
 texture_filter = 1
@@ -828,10 +834,10 @@ visible = false
 shape = SubResource("RectangleShape2D_p7wnf")
 
 [node name="PressurePlate" parent="." unique_id=1955049382 instance=ExtResource("141_vpbjt")]
-position = Vector2(-41.999992, -63)
+position = Vector2(-57.999992, -63)
 
 [node name="PressurePlate2" parent="." unique_id=161839707 instance=ExtResource("141_vpbjt")]
 position = Vector2(0, -63)
 
 [node name="PressurePlate3" parent="." unique_id=1159118456 instance=ExtResource("141_vpbjt")]
-position = Vector2(42, -63)
+position = Vector2(58, -63)

@@ -181,11 +181,11 @@ var damage_label_scene: PackedScene = preload("res://scenes/hud/hud_damage_label
 var lives: int = 3
 var screen_size: Vector2
 var direction: Vector2 = Vector2.RIGHT
-## Dernière direction de visée NON NEUTRE (stick ou touches). Persiste
-## quand on relâche : relâcher le haut après avoir visé en haut garde la
-## graine (et les autres attaques) qui partent vers le haut. Sans ça, la
-## visée neutre dégénère en un vecteur vers le BAS (voir direction), et
-## la graine partait sous le sorcier.
+## Dernière direction de visée NON NEUTRE (stick ou touches). Recalée à
+## chaque frame où une direction est pressée : au moment du tir, elle vaut
+## donc la direction tenue. Si AUCUNE direction n'est tenue au moment du
+## tir, l'attaque part devant le sorcier (sens du regard, cf. fire_attack) —
+## notamment après un saut clavier, dont la touche EST la touche « haut ».
 var aim_direction: Vector2 = Vector2.RIGHT
 var energy_counts: Array = [3, 3, 3]  # Fossil, Pure, Tainted
 # Maximum de munitions par tube (0 à 4 : le HUD ne couvre que cet intervalle)
@@ -825,12 +825,16 @@ func fire_attack(tube_index: int) -> void:
 	if attack_type == GlobalEnum.AttackType.F3:
 		fire_wait_release[tube_index] = true
 	
-	# Direction de tir de la vague F2 : si aucune direction n'est indiquée
-	# (stick au repos), la vague part à l'horizontal dans la direction du
-	# regard. Sinon elle suivrait la dernière visée (aim_direction),
-	# potentiellement verticale ou diagonale.
+	# Direction de tir : si AUCUNE direction n'est indiquée au moment du
+	# tir (stick au repos, aucune touche), l'attaque part à l'horizontal
+	# dans la direction du REGARD — pas vers le haut : au clavier, la touche
+	# de saut EST la touche « haut » (W / flèche haut), et sans cette règle
+	# l'attaque tirée après un saut partait vers le haut. Pour viser en
+	# hauteur (ou en diagonale), il faut maintenir la direction au moment
+	# du tir — même règle que le dash, déjà « sens du regard » si le stick
+	# est au repos.
 	var shoot_direction := aim_direction
-	if attack_type == GlobalEnum.AttackType.F2 and PlayerInput.direction(input_device).length() <= 0.2:
+	if PlayerInput.direction(input_device).length() <= 0.2:
 		shoot_direction = Vector2(-1.0 if $AnimatedSprite2D.flip_h else 1.0, 0)
 	
 	var attack_list := AttackSpawner.spawn_attack(attack_type, attack_tier, position, shoot_direction, screen_size, level_scale, self)

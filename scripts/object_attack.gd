@@ -1,5 +1,10 @@
 class_name AttackObject extends Area2D
 
+## Émis quand un sorcier attrape l'objet (juste avant sa disparition) :
+## le magasin Shophands s'en sert pour ouvrir sa porte de sortie une fois
+## l'objet pris (cf. shop_hands.gd).
+signal attrapee(sorcier: Sorcerer)
+
 var item_attack_family: GlobalEnum.AttackFamily
 @export var item_attack_type: GlobalEnum.AttackType
 var item_attack_tier: GlobalEnum.AttackTier
@@ -48,4 +53,5 @@ func _on_body_entered(body: Node2D) -> void:
 		var tier: int = SpellRules.compute_tier(projected_spells, item_attack_type)
 		
 		sorcerer.set_attack(tube_index, item_attack_type, tier)
+		attrapee.emit(sorcerer)
 		queue_free()

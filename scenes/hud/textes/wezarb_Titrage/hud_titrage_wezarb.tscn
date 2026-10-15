@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://c6nnm0uhww1vw"]
+
+[ext_resource type="Texture2D" uid="uid://8l45ppefyswc" path="res://assets/sprites/HUD/Homepage/TitreWezarb/TitrageBrique.png" id="1_k4www"]
+[ext_resource type="Texture2D" uid="uid://c6swj7cucq1uq" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_A.png" id="2_6i73l"]
+[ext_resource type="Texture2D" uid="uid://j67pyh6l45i4" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_A_C.png" id="3_eljfc"]
+[ext_resource type="Texture2D" uid="uid://dn3d6c26qt1vo" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_B.png" id="4_led6u"]
+[ext_resource type="Texture2D" uid="uid://bl8d7842caonx" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_B_C.png" id="5_npgxq"]
+[ext_resource type="Texture2D" uid="uid://2kgrfvf1np84" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_E.png" id="6_wvfad"]
+[ext_resource type="Texture2D" uid="uid://c7f8yybop8xc6" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_E_C.png" id="7_enxpo"]
+[ext_resource type="Texture2D" uid="uid://biptqagd4tgje" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_R.png" id="8_xggnh"]
+[ext_resource type="Texture2D" uid="uid://bstch5lx4opt6" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_R_C.png" id="9_krkel"]
+[ext_resource type="Texture2D" uid="uid://cxw18tr62401p" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_W.png" id="10_gledk"]
+[ext_resource type="Texture2D" uid="uid://cvv0x04g0adk5" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_W_C.png" id="11_kubjo"]
+[ext_resource type="Texture2D" uid="uid://cqx0qvpiuw3b0" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_Z.png" id="12_h2g7p"]
+[ext_resource type="Texture2D" uid="uid://w7422vc6se4f" path="res://assets/sprites/HUD/Homepage/TitreWezarb/Titrage_Z_C.png" id="13_gy6hg"]
+[ext_resource type="Script" uid="uid://bmec4ke2vta3u" path="res://scripts/liquid_flow_controller.gd" id="14_ctrl"]
+
+[node name="HudTitrageWezarb" type="Area2D" unique_id=1550081620 groups=["titrage_wezarb"]]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("14_ctrl")
+float_amplitude = 1.0
+float_period = 10.0
+
+[node name="TitrageBrique" type="Sprite2D" parent="." unique_id=1257375802]
+visible = false
+texture_filter = 1
+position = Vector2(261, 219)
+texture = ExtResource("1_k4www")
+
+[node name="TitrageA" type="Sprite2D" parent="." unique_id=392396587]
+texture_filter = 1
+position = Vector2(276, 44)
+texture = ExtResource("2_6i73l")
+
+[node name="TitrageA_Circuit" type="Sprite2D" parent="." unique_id=939407724]
+texture_filter = 1
+position = Vector2(276, 44)
+texture = ExtResource("3_eljfc")
+
+[node name="CollisionPolygon2D A" type="CollisionPolygon2D" parent="." unique_id=238869282]
+position = Vector2(276, 44)
+build_mode = 1
+polygon = PackedVector2Array(-28, -44, 36, -44, 36, 44, -28, 44)
+
+[node name="TitrageB" type="Sprite2D" parent="." unique_id=1486556357]
+texture_filter = 1
+position = Vector2(434, 44)
+texture = ExtResource("4_led6u")
+
+[node name="TitrageB_Circuit" type="Sprite2D" parent="." unique_id=1853612149]
+texture_filter = 1
+position = Vector2(434, 44)
+texture = ExtResource("5_npgxq")
+
+[node name="CollisionPolygon2D B" type="CollisionPolygon2D" parent="." unique_id=269348076]
+position = Vector2(434, 44)
+polygon = PackedVector2Array(-26, -44, 38, -44, 38, 44, -26, 44)
+
+[node name="TitrageE" type="Sprite2D" parent="." unique_id=635913332]
+texture_filter = 1
+position = Vector2(132, 68)
+texture = ExtResource("6_wvfad")
+
+[node name="TitrageE_Circuit" type="Sprite2D" parent="." unique_id=761485023]
+texture_filter = 1
+position = Vector2(132, 68)
+texture = ExtResource("7_enxpo")
+
+[node name="CollisionPolygon2D E" type="CollisionPolygon2D" parent="." unique_id=1273217817]
+position = Vector2(132, 68)
+polygon = PackedVector2Array(-36, -44, 28, -44, 28, 44, -36, 44)
+
+[node name="TitrageR" type="Sprite2D" parent="." unique_id=2051231775]
+texture_filter = 1
+position = Vector2(354, 44)
+texture = ExtResource("8_xggnh")
+
+[node name="TitrageR_Circuit" type="Sprite2D" parent="." unique_id=1243435780]
+texture_filter = 1
+position = Vector2(354, 44)
+texture = ExtResource("9_krkel")
+
+[node name="CollisionPolygon2D R" type="CollisionPolygon2D" parent="." unique_id=995459621]
+position = Vector2(354, 44)
+polygon = PackedVector2Array(-26, -44, 38, -44, 38, 44, -26, 44)
+
+[node name="TitrageW" type="Sprite2D" parent="." unique_id=751541745]
+texture_filter = 1
+position = Vector2(46, 68)
+texture = ExtResource("10_gledk")
+
+[node name="TitrageW_Circuit" type="Sprite2D" parent="." unique_id=773414387]
+texture_filter = 1
+position = Vector2(46, 68)
+texture = ExtResource("11_kubjo")
+
+[node name="CollisionPolygon2D W" type="CollisionPolygon2D" parent="." unique_id=2018110348]
+position = Vector2(46, 68)
+polygon = PackedVector2Array(-46, -44, 34, -44, 34, 44, -46, 44)
+
+[node name="TitrageZ" type="Sprite2D" parent="." unique_id=1567466570]
+texture_filter = 1
+position = Vector2(236, 56)
+texture = ExtResource("12_h2g7p")
+
+[node name="TitrageZ_Circuit" type="Sprite2D" parent="." unique_id=206197762]
+texture_filter = 1
+position = Vector2(236, 56)
+texture = ExtResource("13_gy6hg")
+
+[node name="CollisionPolygon2D Z" type="CollisionPolygon2D" parent="." unique_id=1756251063]
+position = Vector2(236, 56)
+polygon = PackedVector2Array(-236, -56, 0, -56, 0, -28, -32, 40, 236, 40, 236, 56, -64, 56, -64, 28, -32, -40, -236, -40)

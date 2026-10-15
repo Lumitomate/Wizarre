@@ -1069,6 +1069,15 @@ func add_energy(tube_index: int, amount: int) -> void:
 	
 
 
+## Vrai tant que ce sorcier ne peut pas être blessé : dash (pendant et
+## 0,5 s après), délai après un dégât reçu, et toute future source
+## d'invincibilité ajoutée à can_take_damage. Les attaques qui ciblent
+## (ex. têtes carnivores P1) s'en servent pour ne pas viser ni consommer
+## une proie invincible — un dash est une esquive totale.
+func est_intouchable() -> bool:
+	return not can_take_damage
+
+
 func hit(damage: int) -> void:
 	if can_take_damage:
 		lives -= damage

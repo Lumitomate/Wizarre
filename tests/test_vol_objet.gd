@@ -44,11 +44,17 @@ func _physics_process(_delta: float) -> void:
 		# ~0.12s après le contact : rétrécissement en cours
 		print("rétrécissement en cours: ", objet.scale.x < 1.0, " (true attendu)")
 		print("sphère visible (fondu en cours): ", objet._sphere.modulate.a > 0.0, " (true attendu)")
-		# Sphère colorée : famille de l'objet (P1 → plante → vert)
+		# Sphère colorée : famille de l'objet (P1 → plante → vert), posée
+		# sur le HALO (le cœur est blanc-brûlant)
 		var attendu: Color = WizardPalette.get_attack_family_color(GlobalEnum.AttackType.P1)
-		var c := objet._sphere.modulate
-		print("sphère couleur élément (vert plante): ",
+		var halo: Sprite2D = objet._sphere.get_node("Halo")
+		var c := halo.modulate
+		print("sphère halo couleur élément (vert plante): ",
 			Color(c.r, c.g, c.b).is_equal_approx(attendu), " (true attendu)")
+		var coeur: Sprite2D = objet._sphere.get_node("Coeur")
+		print("sphère cœur blanc-brûlant: ", coeur.modulate == Color(1, 1, 1, 1)
+			and coeur.material.blend_mode == CanvasItemMaterial.BLEND_MODE_ADD,
+			" (true attendu)")
 	if step == 40:
 		# ~0.6s après le contact : vol (0.4s) + absorption (0.05s) terminés
 		print("objet libéré après absorption: ", not is_instance_valid(objet) or not objet.is_inside_tree(),

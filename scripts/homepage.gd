@@ -27,6 +27,9 @@ func add_player_hud(controller_id):
 	var player_info_scene = preload("res://scenes/hud/hud_players_info.tscn")
 	var player_info = player_info_scene.instantiate()
 	var slot = PlayerManager.get_player_slot(controller_id)
+	# Division entière volontaire : même formule d'espacement des panneaux
+	# HUD que level.gd (les panneaux sont groupés par deux)
+	@warning_ignore("integer_division")
 	var hud_offset = 269 * (slot + slot / 2)
 	player_info.position = Vector2(8, 25) + Vector2(hud_offset, 0)
 	player_info.set_bg_color(slot)

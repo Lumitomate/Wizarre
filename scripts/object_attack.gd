@@ -46,7 +46,7 @@ const HEAT_SHADER := preload("res://assets/shaders/heat_wave.gdshader")
 
 var _sorcier_cible: Sorcerer = null
 var _depart: Vector2 = Vector2.ZERO
-var _sphere: Sprite2D = null
+var _sphere: Node2D = null
 # Garde anti double-catch : la coupure de collision est différée (serveur
 # physique), deux corps entrant dans la même frame déclencheraient sinon
 # deux vols.
@@ -113,12 +113,11 @@ func _lancer_vol(sorcerer: Sorcerer) -> void:
 	if _onde != null and is_instance_valid(_onde):
 		_onde.queue_free()
 		_onde = null
-	# Sphère colorée qui remplace l'objet en vol (enfant : hérite du
-	# rétrécissement du parent). Couleur = famille de l'objet, mêmes
-	# teintes que les rayons de sélection des tubes (cf. WizardPalette).
-	_sphere = _creer_sphere()
+	# Sphère LUMINEUSE qui remplace l'objet en vol (enfant : hérite du
+	# rétrécissement du parent) — même langage que le rayon des tubes :
+	# halo additive coloré par la famille de l'objet + cœur blanc-brûlant.
 	var couleur: Color = WizardPalette.get_attack_family_color(item_attack_type)
-	_sphere.modulate = Color(couleur.r, couleur.g, couleur.b, 0.0)
+	_sphere = _creer_sphere(couleur)
 	add_child(_sphere)
 	# Taille cible : le sprite de l'objet réduit au diamètre de la sphère
 	var sprite := $ObjetAttaqueAnimation as AnimatedSprite2D
@@ -202,26 +201,47 @@ func _finaliser() -> void:
 		_sorcier_cible.set_attack(tube_index, item_attack_type, tier)
 	queue_free()
 
-## Petite sphère à bord doux, générée pixel par pixel (aucun
-## asset) : cœur opaque, liseré fondu sur le dernier quart du rayon.
-## Sa couleur est appliquée via modulate au moment du vol (famille de
-## l'élément, cf. WizardPalette.get_attack_family_color).
+## Petite sphère lumineuse générée en code (aucun asset) : deux couches
+## additives — un HALO coloré (l'élément) et un CŒUR blanc-brûlant —
+## sur une texture à fondu doux, même langage que le rayon des tubes.
+## Le conteneur porte l'alpha (fondu du vol et d'absorption) ; les
+## couleurs sont posées par couche pour que le cœur reste blanc quelle
+## que soit la teinte de l'élément.
 ## Texture en CACHE STATIQUE : identique pour tous les objets, elle
 ## n'est générée qu'une fois par partie.
 static var _sphere_texture: ImageTexture = null
 
-func _creer_sphere() -> Sprite2D:
+func _creer_sphere(couleur: Color) -> Node2D:
 	if _sphere_texture == null:
 		_sphere_texture = _generer_texture_sphere()
-	var sphere := Sprite2D.new()
-	sphere.texture = _sphere_texture
-	sphere.modulate.a = 0.0
-	sphere.z_index = 1
-	return sphere
+	var conteneur := Node2D.new()
+	conteneur.modulate.a = 0.0
+	var halo := Sprite2D.new()
+	halo.name = "Halo"
+	halo.texture = _sphere_texture
+	halo.modulate = Color(couleur.r, couleur.g, couleur.b, 1.0)
+	_halo_additif(halo)
+	var coeur := Sprite2D.new()
+	coeur.name = "Coeur"
+	coeur.texture = _sphere_texture
+	coeur.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	coeur.scale = Vector2.ONE * 0.55
+	_halo_additif(coeur)
+	conteneur.add_child(halo)
+	conteneur.add_child(coeur)
+	conteneur.z_index = 1
+	return conteneur
 
 
-## Génération de la texture de la sphère (pixel par pixel) : cœur
-## opaque, bord fondu sur le dernier quart du rayon.
+## Blending additif (lueur) sur un sprite d'effet
+func _halo_additif(sprite: Sprite2D) -> void:
+	var material := CanvasItemMaterial.new()
+	material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	sprite.material = material
+
+
+## Génération de la texture de la sphère (pixel par pixel) : fondu doux
+## et long — un cœur plein au centre qui s'évanouit en halo.
 func _generer_texture_sphere() -> ImageTexture:
 	var taille := 24
 	var rayon := (taille - 1) * 0.5
@@ -229,7 +249,8 @@ func _generer_texture_sphere() -> ImageTexture:
 	for y in taille:
 		for x in taille:
 			var d := Vector2(x - rayon, y - rayon).length() / rayon
-			var a := clampf((1.0 - d) / 0.25, 0.0, 1.0)
+			var a := clampf((1.0 - d) / 0.5, 0.0, 1.0)
+			img.set_pixel(x, y, Color(1, 1, 1, a))
 			img.set_pixel(x, y, Color(1, 1, 1, a))
 	return ImageTexture.create_from_image(img)
 

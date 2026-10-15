@@ -392,6 +392,7 @@ size = Vector2(154, 108)
 script = ExtResource("1_dsgr2")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=328022374]
+collision_layer = 9
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatableBody2D" unique_id=561332772]
 texture_filter = 1

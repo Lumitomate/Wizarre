@@ -2,7 +2,6 @@ class_name AttackFireWave
 extends AttackProjectile
 
 @export var speed: int = 1000
-@export var tier_scale: float = 1.0
 @export var spawn_immunity_time: float = 1
 
 var direction: Vector2 = Vector2.LEFT
@@ -68,7 +67,9 @@ func _on_frame_changed() -> void:
 	_update_hitbox(sprite.frame)
 
 func _update_hitbox(current_frame: int) -> void:
-	var height = _get_height_for_frame(current_frame) * tier_scale
+	# La hauteur suit l'animation (qui s'arrête plus tôt aux tiers 1 et 2) :
+	# la hitbox colle ainsi à la taille visuelle de la vague à chaque tier
+	var height = _get_height_for_frame(current_frame)
 	if height <= 0:
 		collision_shape.disabled = true
 		return

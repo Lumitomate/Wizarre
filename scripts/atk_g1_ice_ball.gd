@@ -20,7 +20,8 @@ func _on_body_entered(body: Node2D) -> void:
 	if not can_damage(body):
 		return
 	if body.is_in_group("enemy_group"):
-		body.hit(1, caster)
+		# Origine = la boule de glace : l'ennemi éclate dans le sens de son vol
+		body.hit(1, caster, self)
 	elif body.is_in_group("player_group"):
 		body.hit(1)
 

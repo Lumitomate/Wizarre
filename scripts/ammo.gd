@@ -66,4 +66,14 @@ func _on_pickup_area_body_entered(body: Node2D) -> void:
 	# L'ordre de GlobalEnum.EnergyType (Fossil, Pure, Tainted) correspond
 	# exactement aux tubes du sorcier (energy_counts) : Fossil = tube 0, etc.
 	sorcerer.add_energy(ammo_type, 1)
+	_fly_to_hud(sorcerer)
 	queue_free()
+
+
+## Copie visuelle qui vole vers la gemme du HUD du ramasseur. Cosmétique :
+## le compteur est déjà incrémenté ; sans HUD trouvé, on saute le vol.
+func _fly_to_hud(sorcerer: Sorcerer) -> void:
+	for hud in get_tree().get_nodes_in_group("player_hud_group"):
+		if hud.controller_id == sorcerer.controller_id:
+			hud.fly_ammo_in(ammo_type, global_position, global_scale)
+			return

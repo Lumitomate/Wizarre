@@ -23,6 +23,13 @@ var level_scale: Vector2
 var screen_size: Vector2
 
 var damage_label_scene = preload("res://scenes/hud/hud_damage_label.tscn")
+var death_burst_scene = preload("res://scenes/objets/enemy_death_burst.tscn")
+
+## Quantités de débris à la mort (l'éclatement) ; la mouche les réduit
+@export var burst_chunks_min := 3
+@export var burst_chunks_max := 6
+@export var burst_blood_min := 30
+@export var burst_blood_max := 50
 
 
 func _ready() -> void:
@@ -117,7 +124,7 @@ func bounce_on(collider: CollisionObject2D) -> void:
 	is_bouncing = true
 
 
-func hit(damage: int, attacker: Node2D = null) -> void:
+func hit(damage: int, attacker: Node2D = null, origin: Node2D = null) -> void:
 	var damage_label = damage_label_scene.instantiate()
 	damage_label.position = level_scale * (position - Vector2(0, 64))
 	damage_label.amount = damage
@@ -144,19 +151,51 @@ func hit(damage: int, attacker: Node2D = null) -> void:
 		is_bouncing = true
 		# --- Fin ---
 		if lives == 0:
-			die(attacker)
+			die(attacker, origin)
 		$DamageCooldown.start()
 		can_take_damage = false
 
 
-func die(attacker: Node2D = null) -> void:
+func die(attacker: Node2D = null, origin: Node2D = null) -> void:
 	if attacker != null:
 		last_attacker = attacker
+	# Éclatement en morceaux + sang, orienté par le sens de l'attaque fatale
+	_spawn_death_burst(origin)
 	# queue_free AVANT l'émission du signal : les auditeurs qui vérifient
 	# l'état d'un groupe (ex : essaim de mouches) voient bien cet ennemi
 	# comme mort au moment du handler
 	queue_free()
 	enemy_killed.emit()
+
+
+## Fait éclater l'ennemi en débris à sa position. Direction = opposée à
+## l'origine du coup fatal (projectile, graine, ronce…), avec repli sur le
+## sorcier attaquant puis vers le haut si rien n'est disponible.
+func _spawn_death_burst(origin: Node2D = null) -> void:
+	var source := origin
+	if source == null or not is_instance_valid(source):
+		source = last_attacker
+	var burst_direction := Vector2.UP
+	if source != null and is_instance_valid(source):
+		burst_direction = global_position - source.global_position
+		if burst_direction.length() > 0.01:
+			burst_direction = burst_direction.normalized()
+		else:
+			burst_direction = Vector2.UP
+	var burst: EnemyDeathBurst = death_burst_scene.instantiate()
+	burst.position = position
+	burst.direction = burst_direction
+	burst.chunk_count_min = burst_chunks_min
+	burst.chunk_count_max = burst_chunks_max
+	burst.blood_count_min = burst_blood_min
+	burst.blood_count_max = burst_blood_max
+	# Un ennemi peut mourir hors de l'arbre (tests) : pas d'éclatement alors
+	# add_child différé : hit() est souvent appelé depuis un signal de contact
+	# (projectile), pendant le flush des requêtes physiques — y créer des
+	# CharacterBody2D à ce moment est interdit par le moteur
+	var parent := get_parent()
+	if parent != null:
+		parent.add_child.call_deferred(burst)
 
 
 func _on_damage_cooldown_timeout() -> void:

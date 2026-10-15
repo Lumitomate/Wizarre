@@ -133,7 +133,6 @@ static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: Global
 			fire_wave.caster = caster
 			fire_wave.direction = player_direction.normalized()
 			fire_wave.position = player_position + 60 * player_direction.normalized()
-			fire_wave.tier_scale = 1.0 + (int_attack_tier - 1) * 3.0
 			fire_wave.setup_tier(int_attack_tier)
 			fire_wave.rotation = player_direction.angle()
 			spawn_list.append(fire_wave)

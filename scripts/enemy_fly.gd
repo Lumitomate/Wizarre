@@ -26,6 +26,11 @@ func _ready() -> void:
 	# l'animation et configurer la navigation
 	super()
 	speed = fly_speed
+	# Une mouche éclate plus discrètement qu'un volant (hiérarchie visuelle)
+	burst_chunks_min = 1
+	burst_chunks_max = 3
+	burst_blood_min = 16
+	burst_blood_max = 24
 
 
 func _process(_delta: float) -> void:
@@ -53,7 +58,7 @@ func set_random_navigation_target() -> void:
 
 # Mort d'une mouche : les mouches survivantes de l'essaim prennent le
 # sorcier qui l'a tuée pour cible (celles qui n'en ont pas déjà une)
-func die(attacker: Node2D = null) -> void:
+func die(attacker: Node2D = null, origin: Node2D = null) -> void:
 	var killer := attacker if attacker != null else last_attacker
 	if killer != null and is_instance_valid(killer) and killer.is_in_group("player_group"):
 		for member in swarm:

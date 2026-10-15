@@ -49,6 +49,7 @@ func _ready():
 	plant_parent = get_parent()
 	detection_zone.body_entered.connect(_on_area_2d_body_entered)
 	detection_zone.body_exited.connect(_on_area_2d_body_exited)
+	head.animation_finished.connect(_on_head_anim_finished)
 	head.play("atk_p1_idle")
 
 func _process(delta):
@@ -79,6 +80,12 @@ func _idle_movement(delta):
 func _chase_enemy(delta):
 	var direction = target_enemy.global_position - head.global_position
 	var distance = direction.length()
+	# Cible devenue invalide ou INTANGIBLE (dash) : décrochage immédiat —
+	# un dash est une esquive totale, la tête perd la trace (sans se
+	# consommer, cf. _abandonner_cible)
+	if not _cible_mangeable(target_enemy):
+		_abandonner_cible()
+		return
 	if distance < 20.0:
 		_start_eating()
 	else:
@@ -86,29 +93,81 @@ func _chase_enemy(delta):
 		head.position += direction.normalized() * speed * delta * 60
 		head.rotation = lerp_angle(head.rotation, direction.angle() + PI/2, delta * 5.0)
 
+
+## Une cible peut-elle être mangée ? Présente, vivante et pas
+## intouchable (dash, délai post-dégât). Les ennemis ne sont jamais
+## intouchables ; les sorciers se vérifient via est_intouchable().
+func _cible_mangeable(cible: Node2D) -> bool:
+	if cible == null or not is_instance_valid(cible):
+		return false
+	if cible is EnemyFlying:
+		return true
+	if cible is Sorcerer:
+		return not cible.est_intouchable()
+	return not cible.is_in_group("player_group") \
+			or not cible.has_method("est_intouchable") \
+			or not cible.est_intouchable()
+
 func _start_eating():
 	if is_eating:
+		return
+	# Filet avant engagement : la cible a pu devenir invalide ou
+	# intouchable entre l'acquisition et le lancement de la morsure
+	if not _cible_mangeable(target_enemy):
+		_abandonner_cible()
 		return
 	is_eating = true
 	bite_triggered = false
 	head.play("atk_p1_bite")
 	head.frame_changed.connect(_on_bite_frame_changed)
-	await head.animation_finished
+
+## Fin d'une animation NON BOUCLÉE de la tête. Seule la fin de
+## "atk_p1_bite" déclenche la consommation : la morsure a abouti (proie
+## réellement mangée) → rétractation + libération de la tête. Une
+## morsure ratée (cible partie ou intouchable) repasse à idle AVANT la
+## fin de l'anim : pas d'événement, pas de consommation — c'est
+## exactement ce qui rend le filet sûr (un await sur une anim
+## interrompue ne se résoudrait jamais et polluerait la morsure
+## suivante).
+func _on_head_anim_finished() -> void:
+	if head.animation != "atk_p1_bite" or not is_eating:
+		return
 	head.frame_changed.disconnect(_on_bite_frame_changed)
-	target_enemy = null
-	is_eating = false
-	is_retracting = true
+	if bite_triggered:
+		# Proie réellement mangée : la tête est consommée
+		target_enemy = null
+		is_eating = false
+		is_retracting = true
 
 func _on_bite_frame_changed():
 	if bite_triggered:
 		return
 	if head.animation == "atk_p1_bite" and head.frame == bite_kill_frame:
 		bite_triggered = true
-		if target_enemy and is_instance_valid(target_enemy):
-			if target_enemy is EnemyFlying:
-				target_enemy.die(caster)
-			elif target_enemy.is_in_group("player_group"):
-				target_enemy.hit(1)
+		if not _cible_mangeable(target_enemy):
+			# Morsure RATÉE (cible partie ou devenue intouchable entre le
+			# ciblage et la morsure) : la tête ne se consomme PAS —
+			# déconnexion immédiate (l'anim de morsure va être coupée par
+			# le passage à idle : son animation_finished ne viendra jamais)
+			# puis retour à l'idle, tête toujours disponible.
+			head.frame_changed.disconnect(_on_bite_frame_changed)
+			_abandonner_cible()
+			is_eating = false
+			head.play("atk_p1_idle")
+			return
+		if target_enemy is EnemyFlying:
+			# Origine = la graine (stem_origin) : la proie est éjectée depuis la plante
+			target_enemy.die(caster, stem_origin)
+			# Proie réellement mangée : la tête est consommée
+		elif target_enemy.is_in_group("player_group"):
+			target_enemy.hit(1)
+			# Proie réellement mangée : la tête est consommée
+
+## Décrochage sans morsure : cible libérée, retour à l'anim idle sur
+## place (la tête reste disponible pour la prochaine proie).
+func _abandonner_cible() -> void:
+	target_enemy = null
+	head.play("atk_p1_idle")
 
 func _retract_head(delta):
 	var target_local = head.position + (to_local(stem_origin.global_position) - to_local(stem_anchor.global_position))
@@ -148,6 +207,14 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			target_enemy = body
 			head.play("atk_p1_open")
 		elif body.is_in_group("player_group") and attack_tier < 3:
+			# Un sorcier intouchable (dash) n'est pas mangeable : pas de
+			# ciblage, la tête reste disponible (le dash traverse — et
+			# l'exploit « dash gratuit qui consomme la tête » est fermé)
+			if body is Sorcerer and body.est_intouchable():
+				return
+			if plant_parent and plant_parent.has_method("is_closest_head_for_enemy"):
+				if not plant_parent.is_closest_head_for_enemy(self, body):
+					return
 			target_enemy = body
 			head.play("atk_p1_open")
 

@@ -96,7 +96,8 @@ func _on_body_entered(body: Node2D) -> void:
 	# Le lanceur peut avoir été libéré entre-temps (mort, changement de scène)
 	var reprisal_caster: Node2D = caster if caster != null and is_instance_valid(caster) else null
 	if body.is_in_group("enemy_group"):
-		body.hit(damage, reprisal_caster)
+		# Origine = le tronçon de ronce : l'ennemi est éjecté depuis la plante
+		body.hit(damage, reprisal_caster, self)
 		enemy_touched.emit(index)
 	elif body.is_in_group("player_group"):
 		# Tout sorcier au contact est blessé (y compris le lanceur)

@@ -94,6 +94,7 @@ func _find_entry_door() -> EntryDoorCinematic:
 func add_player_hud(controller_id):
 
 	var player_info : PlayerInfo = player_info_scene.instantiate()
+	player_info.controller_id = controller_id
 
 	# Décalage horizontal par joueur : emplacement + emplacement/2 (division
 	# entière) (layout 4 joueurs : 0, 269, 807, 1076 px). L'emplacement

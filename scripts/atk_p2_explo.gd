@@ -97,7 +97,8 @@ func _start_explosion() -> void:
 
 func _on_explosion_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy_group"):
-		body.hit(explosion_damage, caster)
+		# Origine = le point d'explosion : l'ennemi est éjecté depuis la boule
+		body.hit(explosion_damage, caster, self)
 	elif body.is_in_group("player_group"):
 		body.hit(1)
 

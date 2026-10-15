@@ -94,7 +94,8 @@ func _physics_process(delta: float) -> void:
 				if body.is_in_group("player_group") or body.is_in_group("enemy_group"):
 					hit_bodies.append(body)
 					if body.is_in_group("enemy_group"):
-						body.hit(1, player)
+						# Origine = le sorcier : les lames gravitent autour de lui
+						body.hit(1, player, player)
 					else:
 						body.hit(1)
 

@@ -30,13 +30,22 @@ const PROPOSABLE_TYPES := [
 ]
 
 func _ready() -> void:
+	spawn_object()
+
+
+## Crée l'objet correspondant à chosen_object_type (appelé au démarrage,
+## ou par la scène hôte pour re-spawner après un re-tirage de type — la
+## coordination anti-doublon des magasins à bulles multiples).
+func spawn_object() -> void:
 	# Tous les objets du magasin apparaissent en Bronze. Le tier réel de
 	# l'attaque est calculé à la prise, selon les attaques du joueur
 	# (voir object_attack.gd)
 	var attack_tier: GlobalEnum.AttackTier = GlobalEnum.AttackTier.I
 	
-	var final_type: int = _pick_unique_type()
-	chosen_object_type = final_type
+	var final_type: int = chosen_object_type
+	if final_type == -1:
+		final_type = _pick_unique_type()
+		chosen_object_type = final_type
 	
 	var attack_family
 	var object_to_spawn_scene: PackedScene

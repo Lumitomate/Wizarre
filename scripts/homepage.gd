@@ -3,12 +3,14 @@ extends Node2D
 func _ready():
 	# can_fire=true : les attaques sont utilisables sur l'écran home
 	# (tir ami : les joueurs peuvent s'atteindre entre eux).
-	# tubes_selectable=true : X/Y/B soulèvent les tuyaux du sac,
-	# comme dans la boutique.
+	# PAS de tubes_selectable ici : X/Y/B doivent uniquement TIRER — en
+	# le laissant à true, la fenêtre de cooldown après un tir (can_fire
+	# false pendant 0,4 s) ouvrait la branche tubes_selectable et un
+	# spam des boutons soulevait les tuyaux (exploit corrigé).
 	# in_homepage=true : si un joueur perd toutes ses vies, son cadavre
 	# reste 1,5 s puis il respawn (valeurs par défaut, comme une nouvelle
 	# manette) — jamais de game over sur cet écran.
-	var config := {"can_fire": true, "tubes_selectable": true, "in_homepage": true}
+	var config := {"can_fire": true, "in_homepage": true}
 	PlayerManager.spawn_all_players(self, config)
 	PlayerManager.player_added.connect(_on_player_added)
 
@@ -18,7 +20,7 @@ func _ready():
 		add_player_hud(controller_id)
 
 func _on_player_added(controller_id):
-	PlayerManager.spawn_player(self, controller_id, {"can_fire": true, "tubes_selectable": true, "in_homepage": true})
+	PlayerManager.spawn_player(self, controller_id, {"can_fire": true, "in_homepage": true})
 	add_player_hud(controller_id)
 
 func add_player_hud(controller_id):

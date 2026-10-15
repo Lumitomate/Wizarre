@@ -100,6 +100,7 @@ func add_player_hud(controller_id):
 	# (0-3) remplace l'id de device : les joueurs clavier sont intégrés
 	@warning_ignore("integer_division")
 	var slot: int = PlayerManager.get_player_slot(controller_id)
+	@warning_ignore("integer_division")
 	var hud_offset: int = HUD_PANEL_SPACING * (slot + slot / 2)
 	player_info.position = Vector2(8, START_Y_POSITION) + Vector2(hud_offset, 0)
 

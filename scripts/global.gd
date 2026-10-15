@@ -1,6 +1,11 @@
 extends Node
 
 var current_scene = null
+# Garde anti double-appel : deux signaux qui déclencheraient un
+# changement de scène dans la même fenêtre (ex : fondu de sortie fini
+# juste avant le free de la scène) ne doivent déclencher qu'un seul
+# changement. Réarmé une fois la nouvelle scène en place.
+var _scene_change_in_progress: bool = false
 
 var scenes = {
 	GlobalEnum.Location.HOMEPAGE: "res://scenes/niveaux/terrain1/homepage.tscn",
@@ -9,7 +14,9 @@ var scenes = {
 	GlobalEnum.Location.SHOP_2PLAYERS_REFLEX: "res://scenes/niveaux/magasin/magasin_reflex/shop_2players_reflex.tscn",
 	GlobalEnum.Location.SHOP_2PLAYERS_RACE: "res://scenes/niveaux/magasin/magasin_course/shop_2players_race.tscn",
 	GlobalEnum.Location.SHOP_4PLAYERS_RACE: "res://scenes/niveaux/magasin/magasin_course/shop_4players_race.tscn",
-	GlobalEnum.Location.SHOP_HANDS: "res://scenes/niveaux/magasin/magasin_don/shop_hands.tscn"
+	GlobalEnum.Location.SHOP_HANDS: "res://scenes/niveaux/magasin/magasin_don/shop_hands.tscn",
+	GlobalEnum.Location.SHOP_2PLAYERS_INTRO: "res://scenes/niveaux/magasin/magasin_intro/shop_2players_intro.tscn",
+	GlobalEnum.Location.SHOP_4PLAYERS_INTRO: "res://scenes/niveaux/magasin/magasin_intro/shop_4players_intro.tscn",
 }
 
 func _ready() -> void:
@@ -17,6 +24,9 @@ func _ready() -> void:
 	current_scene = root.get_child(-1)
 
 func goto_scene(scene: GlobalEnum.Location) -> void:
+	if _scene_change_in_progress:
+		return
+	_scene_change_in_progress = true
 	# Le magasin est tiré au sort selon le nombre de joueurs et les poids
 	# réglés dans l'autoload ShopRouter (inspecteur) : magasin classique,
 	# réflexe, course ou Shophands — cf. scripts/shop_router.gd
@@ -43,3 +53,4 @@ func _deferred_goto_scene(path: String) -> void:
 	get_tree().root.add_child(current_scene)
 	
 	get_tree().current_scene = current_scene
+	_scene_change_in_progress = false

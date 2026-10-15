@@ -98,7 +98,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("4_5krgc")
 }],
-"loop": true,
+"loop": 1,
 "name": &"ascenseur_descente",
 "speed": 24.0
 }, {
@@ -334,7 +334,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("81_cn7cw")
 }],
-"loop": false,
+"loop": 0,
 "name": &"ascenseur_energie",
 "speed": 24.0
 }]
@@ -349,7 +349,7 @@ size = Vector2(176, 34)
 size = Vector2(185.5, 32)
 
 [sub_resource type="Animation" id="Animation_5vsp2"]
-length = 3.0
+length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -357,10 +357,10 @@ tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 3),
+"times": PackedFloat32Array(0, 3.9666667),
 "transitions": PackedFloat32Array(3.0314326, 3.0314326),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, 160)]
+"values": [Vector2(0, 0), Vector2(0, 500)]
 }
 
 [sub_resource type="Animation" id="Animation_s7ra4"]
@@ -422,7 +422,6 @@ debug_color = Color(0.6552929, 0.92977226, 0.99999994, 0.41960785)
 
 [node name="Timer" type="Timer" parent="AnimatableBody2D" unique_id=1427993435]
 
-[connection signal="animation_finished" from="AnimatableBody2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="frame_changed" from="AnimatableBody2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="body_entered" from="AnimatableBody2D/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="AnimatableBody2D/Area2D" to="." method="_on_area_2d_body_exited"]

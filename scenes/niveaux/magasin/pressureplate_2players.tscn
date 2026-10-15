@@ -448,4 +448,4 @@ position = Vector2(0, -2)
 shape = SubResource("CapsuleShape2D_1rv7g")
 
 [node name="SpawnerObjet" parent="." unique_id=1685397250 instance=ExtResource("86_7royl")]
-position = Vector2(0, -17)
+position = Vector2(0, -39)

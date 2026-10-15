@@ -75,23 +75,9 @@ func _update_eye(delta: float) -> void:
 		oeil.rotation = lerp_angle(oeil.rotation, target_angle, delta * eye_rotation_speed)
 
 func _get_closest_entity() -> Node2D:
-	var closest: Node2D = null
-	var min_distance: float = INF
-	for enemy in get_tree().get_nodes_in_group("enemy_group"):
-		if not is_instance_valid(enemy):
-			continue
-		var d = oeil.global_position.distance_to(enemy.global_position)
-		if d < min_distance:
-			min_distance = d
-			closest = enemy
-	for player in get_tree().get_nodes_in_group("player_group"):
-		if not is_instance_valid(player):
-			continue
-		var d = oeil.global_position.distance_to(player.global_position)
-		if d < min_distance:
-			min_distance = d
-			closest = player
-	return closest
+	# Entité la plus proche (ennemie ou joueur) pour l'orientation de
+	# l'œil — logique mutualisée dans EntityFinder
+	return EntityFinder.plus_proche(self, oeil.global_position, ["enemy_group", "player_group"])
 
 func _plant():
 	is_planted = true

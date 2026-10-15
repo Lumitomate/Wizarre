@@ -67,5 +67,9 @@ enum Location {
 	SHOP_2PLAYERS_REFLEX,
 	SHOP_2PLAYERS_RACE,
 	SHOP_4PLAYERS_RACE,
-	SHOP_HANDS
+	SHOP_HANDS,
+	# En dernier : les scènes .tscn stockent les Locations en int — les
+	# valeurs existantes ne doivent jamais bouger.
+	SHOP_2PLAYERS_INTRO,
+	SHOP_4PLAYERS_INTRO,
 }

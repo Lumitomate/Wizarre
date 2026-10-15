@@ -168,17 +168,9 @@ func _on_bounce_back_duration_timeout() -> void:
 
 
 # Sorcier (joueur) vivant le plus proche, null si aucun
+# (logique mutualisée dans EntityFinder)
 func _nearest_player() -> Node2D:
-	var nearest: Node2D = null
-	var min_distance := INF
-	for player in get_tree().get_nodes_in_group("player_group"):
-		if not is_instance_valid(player):
-			continue
-		var d: float = position.distance_to(player.global_position)
-		if d < min_distance:
-			min_distance = d
-			nearest = player
-	return nearest
+	return EntityFinder.plus_proche(self, global_position, ["player_group"])
 
 
 # Direction opposée au joueur (sorcier) le plus proche, Vector2.UP si aucun

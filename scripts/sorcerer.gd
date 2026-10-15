@@ -156,6 +156,78 @@ func _door_exit_snap_to_ground() -> void:
 			position.y = get_parent().to_local(result["position"]).y - 32.0
 			return
 
+# --- Fondu de sortie (porte de sortie de boutique / de niveau) ---
+# Miroir du fade d'arrivée : tween arrival_fade 1 → 0 sur le même shader,
+# sac en parallèle. Lancé par la porte de sortie (exit_doors.gd) quand un
+# joueur entre dans sa zone ; la téléportation n'a lieu qu'à la fin du
+# fondu (micro-validation par temps passé devant la porte). Si le joueur
+# quitte la zone, la porte appelle cancel_exit_fade() : retour express
+# vers opaque et progression réinitialisée (le prochain contact repart
+# de zéro).
+
+## Durée du fondu de sortie : identique au fade d'arrivée
+const EXIT_FADE_DURATION := DOOR_EXIT_FADE_DURATION
+## Durée du retour express vers opaque quand le fondu est annulé
+const EXIT_FADE_RETURN_DURATION := 0.2
+
+var _exit_fade_active: bool = false
+var _exit_fade_tween: Tween = null
+
+## Démarre le fondu de sortie. `on_done` est appelé à la fin du fondu :
+## validation définitive (la porte téléporte alors tout le monde).
+func start_exit_fade(on_done: Callable) -> void:
+	if _exit_fade_active:
+		return
+	_exit_fade_active = true
+	# Fantôme vis-à-vis des autres joueurs pendant le fondu, SANS toucher
+	# aux collision_layers : l'Area2D de la porte détecte les corps via
+	# collision_mask — un layer à 0 la ferait "perdre" le sorcier
+	# (body_exited immédiat) et annulerait le fondu aussitôt. Les
+	# exceptions n'affectent que les contacts entre corps.
+	for other in get_tree().get_nodes_in_group("player_group"):
+		if other != self and other is Node2D:
+			add_collision_exception_with(other)
+	# Départ du fondu : valeur actuelle du shader (1.0 en jeu normal)
+	var depart: float = dash_shader_material.get_shader_parameter("arrival_fade")
+	_exit_fade_tween = create_tween()
+	_exit_fade_tween.set_parallel(true)
+	_exit_fade_tween.tween_method(_set_arrival_fade, depart, 0.0, EXIT_FADE_DURATION)
+	if has_node("SorcererSac"):
+		_exit_fade_tween.tween_property($SorcererSac, "modulate:a", 0.0, EXIT_FADE_DURATION)
+	_exit_fade_tween.chain().tween_callback(_finish_exit_fade.bind(on_done))
+
+## Annule le fondu en cours (joueur sorti de la zone de la porte) :
+## retour express vers opaque, progression repartira de zéro au prochain
+## contact. Sans effet si le fondu est déjà terminé (validation
+## définitive) ou jamais démarré.
+func cancel_exit_fade() -> void:
+	if not _exit_fade_active:
+		return
+	_exit_fade_active = false
+	_remove_exit_fade_exceptions()
+	if _exit_fade_tween != null and _exit_fade_tween.is_valid():
+		_exit_fade_tween.kill()
+	_exit_fade_tween = null
+	# Retour express corps + sac vers l'opacité normale
+	var depart: float = dash_shader_material.get_shader_parameter("arrival_fade")
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_method(_set_arrival_fade, depart, 1.0, EXIT_FADE_RETURN_DURATION)
+	if has_node("SorcererSac"):
+		tween.tween_property($SorcererSac, "modulate:a", 1.0, EXIT_FADE_RETURN_DURATION)
+
+## Fin du fondu : plus rien à annuler, la téléportation est lancée.
+func _finish_exit_fade(on_done: Callable) -> void:
+	_exit_fade_active = false
+	_exit_fade_tween = null
+	_remove_exit_fade_exceptions()
+	on_done.call()
+
+func _remove_exit_fade_exceptions() -> void:
+	for other in get_tree().get_nodes_in_group("player_group"):
+		if other != self and other is Node2D:
+			remove_collision_exception_with(other)
+
 # --- Dash ---
 @export var dash_speed: int = 1200
 @export var dash_duration: float = 0.1 # durée du dash en secondes
@@ -172,6 +244,9 @@ func _door_exit_snap_to_ground() -> void:
 
 var is_dashing: bool = false
 var can_dash: bool = true
+# Matériau des traînées de dash (créé à la première traînée, partagé par
+# toutes : mêmes couleurs, white_amount figé à 1)
+var _dash_trail_material: ShaderMaterial = null
 var dash_direction: Vector2 = Vector2.RIGHT
 var dash_shader_material: ShaderMaterial
 var dash_trail_accumulator: float = 0.0
@@ -258,7 +333,14 @@ func _ready() -> void:
 		if child is Node2D and String(child.name).begins_with("Terrain1PortesEntree"):
 			entry_doors.append(child)
 	if not entry_doors.is_empty():
-		entry_doors.sort_custom(func(a, b): return a.position.y < b.position.y)
+		# Tri (y, puis x) : ordre déterministe quand plusieurs portes partagent
+		# la même hauteur (ex. intro 4 joueurs : haut-gauche, haut-droite,
+		# bas-gauche, bas-droite). Le rang d'un joueur identifie alors toujours
+		# la même porte, et le couloir inactif (scellé) est toujours le dernier.
+		entry_doors.sort_custom(func(a, b):
+			if not is_equal_approx(a.position.y, b.position.y):
+				return a.position.y < b.position.y
+			return a.position.x < b.position.x)
 		var active_ids := PlayerManager.active_player_ids()
 		var rank: int = active_ids.find(controller_id)
 		if rank == -1:
@@ -632,10 +714,15 @@ func spawn_dash_afterimage() -> void:
 	afterimage.z_index = z_index + 10 # au-dessus de tout pour être visible
 
 	# Dupliqué pour hériter aussi des couleurs du shader (sinon les
-	# traînées de dash apparaîtraient avec la palette rouge de base)
-	var afterimage_material: ShaderMaterial = dash_shader_material.duplicate()
-	afterimage_material.set_shader_parameter("white_amount", 1.0)
-	afterimage.material = afterimage_material
+	# traînées de dash apparaîtraient avec la palette rouge de base).
+	# Matériau de traînée mis en cache par sorcier : toutes les traînées
+	# partagent les mêmes paramètres (white_amount = 1, palette du
+	# propriétaire) — dupliquer à chaque image rémanente (~100/s pendant
+	# un dash) allouait un matériau pour rien.
+	if _dash_trail_material == null:
+		_dash_trail_material = dash_shader_material.duplicate()
+		_dash_trail_material.set_shader_parameter("white_amount", 1.0)
+	afterimage.material = _dash_trail_material
 	afterimage.modulate.a = dash_trail_start_alpha
 
 	# Crée le tween directement sur l'afterimage pour une meilleure gestion
@@ -878,38 +965,68 @@ func select_tube(tube_index: int) -> void:
 	# Délègue l'animation au sac (noms de nœuds et animations gérés par SorcererSac)
 	$SorcererSac.select_tube(tube_index)
 
-# Cherche une mine posée par CE joueur encore en phase idle
+# Cherche une mine posée par CE joueur encore en phase idle.
+# Caches : ces recherches sont appelées chaque frame physique (cible
+# lumineuse et ronce) — un scan complet du groupe à chaque appel coûterait
+# 4 joueurs × 60 fps. On ne re-scanne que si le cache est invalide
+# (libéré, plus le nôtre, ou phase changée).
+var _own_mine_cache: AttackFireMine = null
+var _own_light_target_cache: AttackLightTarget = null
+var _own_light_bow_cache: AttackLightBow = null
+var _own_bramble_cache: AttackPlantBramble = null
+
 func _get_own_mine() -> AttackFireMine:
+	var cache := _own_mine_cache
+	if cache != null and is_instance_valid(cache) and cache.caster == self \
+			and cache.phase == AttackFireMine.Phase.IDLE:
+		return cache
 	for node in get_tree().get_nodes_in_group("fire_mine_group"):
 		var mine := node as AttackFireMine
 		if mine != null and mine.caster == self and mine.phase == AttackFireMine.Phase.IDLE:
+			_own_mine_cache = mine
 			return mine
 	return null
 
 # Cherche la cible lumineuse posée par CE joueur encore en phase TARGETING
 func _get_own_light_target() -> AttackLightTarget:
+	var cache := _own_light_target_cache
+	if cache != null and is_instance_valid(cache) and cache.caster == self \
+			and cache.phase == AttackLightTarget.Phase.TARGETING:
+		return cache
 	for node in get_tree().get_nodes_in_group("light_target_group"):
 		var target := node as AttackLightTarget
 		if target != null and target.caster == self and target.phase == AttackLightTarget.Phase.TARGETING:
+			_own_light_target_cache = target
 			return target
 	return null
 
 # Cherche l'arc lumineux planté par CE joueur encore en phase TARGETING
 func _get_own_light_bow() -> AttackLightBow:
+	var cache := _own_light_bow_cache
+	if cache != null and is_instance_valid(cache) and cache.caster == self \
+			and cache.phase == AttackLightBow.Phase.TARGETING:
+		return cache
 	for node in get_tree().get_nodes_in_group("light_bow_group"):
 		var bow := node as AttackLightBow
 		if bow != null and bow.caster == self and bow.phase == AttackLightBow.Phase.TARGETING:
+			_own_light_bow_cache = bow
 			return bow
 	return null
 
 # Cherche la ronce plantée par CE joueur encore en phase FLYING (graine
 # en vol) ou GROWING (croissance dirigée)
 func _get_own_bramble() -> AttackPlantBramble:
+	var cache := _own_bramble_cache
+	if cache != null and is_instance_valid(cache) and cache.caster == self \
+			and (cache.phase == AttackPlantBramble.Phase.FLYING \
+			or cache.phase == AttackPlantBramble.Phase.GROWING):
+		return cache
 	for node in get_tree().get_nodes_in_group("plant_bramble_group"):
 		var bramble := node as AttackPlantBramble
 		if bramble != null and bramble.caster == self \
 				and (bramble.phase == AttackPlantBramble.Phase.FLYING \
 				or bramble.phase == AttackPlantBramble.Phase.GROWING):
+			_own_bramble_cache = bramble
 			return bramble
 	return null
 
@@ -975,17 +1092,15 @@ func hit(damage: int) -> void:
 		red_flash.tween_property($AnimatedSprite2D, "self_modulate", Color.WHITE, 0.15)
 		hit_knockback_timer = 0.3  # durée du knockback (secondes)
 		# Knockback basé sur la direction de l'ennemi (repoussé par lui)
-		# On cherche l'ennemi le plus proche pour définir la direction du knockback
-		var nearest_enemy = Vector2.ZERO
-		var min_dist = 99999.0
-		for node in get_tree().get_nodes_in_group("enemy_group"):
-			if node is CharacterBody2D:
-				var d = position.distance_to(node.position)
-				if d < min_dist:
-					min_dist = d
-					nearest_enemy = (position - node.position).normalized()
-		var kb_x = nearest_enemy.x * 1000.0
-		var kb_y = nearest_enemy.y * 1000.0 - 200.0
+		# On cherche l'ennemi le plus proche pour définir la direction du
+		# knockback (logique mutualisée dans EntityFinder). Sans ennemi :
+		# repoussé vers le haut, comme avant.
+		var plus_proche := EntityFinder.plus_proche(self, global_position, ["enemy_group"])
+		var direction_knockback := Vector2.ZERO
+		if plus_proche != null:
+			direction_knockback = (position - plus_proche.global_position).normalized()
+		var kb_x = direction_knockback.x * 1000.0
+		var kb_y = direction_knockback.y * 1000.0 - 200.0
 		hit_knockback_velocity = Vector2(kb_x, kb_y)
 		# --- Fin ---
 

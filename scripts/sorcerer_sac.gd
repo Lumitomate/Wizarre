@@ -15,6 +15,27 @@ const ICON_RISE := 15.0
 
 signal spell_changed(tube_index)
 
+# --- Flash de sélection (rayon au-dessus du tube qui sort) ---
+# Colonne de lumière additive colorée selon la famille du sort du tube
+# (feu rouge, glace bleu, lumière jaune, plante vert, vide → blanc,
+# cf. WizardPalette.get_attack_family_color). Lancée uniquement quand un
+# tube SORT (sélection / changement) — jamais sur les refermetures — et
+# pas pour le sorcier d'affichage du pause (frozen).
+const FLASH_WIDTH := 12.0
+const FLASH_HEIGHT := 40.0
+## Résolution de génération de la texture (2× la taille affichée, pour
+## lisser les bords horizontaux)
+const FLASH_TEX_WIDTH := 24.0
+const FLASH_TEX_HEIGHT := 80.0
+## Échelle du sprite : taille affichée / résolution de génération
+const FLASH_SCALE := Vector2(FLASH_WIDTH / FLASH_TEX_WIDTH, FLASH_HEIGHT / FLASH_TEX_HEIGHT)
+const FLASH_BURST := 0.1   # jaillissement (scale 0 → 1)
+const FLASH_HOLD := 0.15   # tenue pleine
+const FLASH_FADE := 0.25   # fondu
+
+var _flash: Sprite2D = null
+var _flash_tween: Tween = null
+
 func _ready() -> void:
 	var sorcerer = get_parent() as Sorcerer
 	if sorcerer != null:
@@ -170,6 +191,8 @@ func select_tube(tube_index: int) -> void:
 	
 	# Le nouveau tube sort (16 frames)
 	play_grow_anim(tube_index)
+	# Flash de sélection au-dessus du tube qui sort
+	_flasher_tube(tube_index)
 	
 	# Les tubes non concernés reviennent à l'affichage statique
 	for i in range(3):
@@ -210,6 +233,78 @@ func get_spell(tube_index: int) -> Dictionary:
 	if tube_index < 0 or tube_index >= 3:
 		return {}
 	return tube_spells[tube_index]
+
+
+## Flash lumineux au-dessus du tube `tube_index` qui vient de sortir :
+## colonne additive qui jaillit de la bouche du tube, tient, puis fond
+## (total ~0,5 s, terminé avant la fin de la montée du tube). Re-flash
+## sur sélection rapide : le tween précédent est tué, le rayon repart.
+func _flasher_tube(tube_index: int) -> void:
+	var sorcerer = get_parent() as Sorcerer
+	# Sorcier d'affichage du pause : le soulèvement des tuyaux y est
+	# décoratif, un flash lumineux au milieu du menu serait du bruit
+	if sorcerer == null or sorcerer.frozen:
+		return
+	if _flash == null:
+		_flash = _creer_flash()
+		add_child(_flash)
+	# Couleur : famille du sort contenu (blanc si tube vide)
+	var spell: Dictionary = sorcerer.spells[tube_index]
+	var couleur: Color = WizardPalette.get_attack_family_color(spell.get("attack_type", -1))
+	_flash.modulate = Color(couleur.r, couleur.g, couleur.b, 1.0)
+	# Ancrage : base du rayon à la bouche du tube (position de base de
+	# l'icône du sort, qui est centrée sur le tube)
+	_flash.position = Vector2(spell_icons[tube_index].position.x, icon_base_y[tube_index])
+	if _flash_tween != null and _flash_tween.is_valid():
+		_flash_tween.kill()
+	_flash.scale = Vector2(FLASH_SCALE.x, 0.02)
+	_flash_tween = create_tween()
+	_flash_tween.tween_property(_flash, "scale:y", FLASH_SCALE.y, FLASH_BURST)
+	_flash_tween.tween_interval(FLASH_HOLD)
+	_flash_tween.tween_property(_flash, "modulate:a", 0.0, FLASH_FADE)
+
+
+## Construit le sprite du rayon (une fois pour toutes) : texture
+## générée par pixel — fondu VERTICAL (transparent en haut, opaque à la
+## base) × fondu HORIZONTAL (cœur plein, bords légèrement transparents,
+## profil parabolique). Blending additif. Origine à la base du rayon
+## (centré en x, s'étend vers le haut) pour que le jaillissement scale
+## vers le haut uniquement. Texture en CACHE STATIQUE : identique pour
+## tous les sorciers, elle n'est générée qu'une fois par partie.
+static var _flash_texture: ImageTexture = null
+
+func _creer_flash() -> Sprite2D:
+	if _flash_texture == null:
+		_flash_texture = _generer_texture_flash()
+	var flash := Sprite2D.new()
+	flash.texture = _flash_texture
+	flash.centered = false
+	flash.offset = Vector2(-FLASH_TEX_WIDTH * 0.5, -FLASH_TEX_HEIGHT)
+	flash.scale = FLASH_SCALE
+	var material := CanvasItemMaterial.new()
+	material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	flash.material = material
+	flash.z_index = 5
+	return flash
+
+
+## Génération de la texture du rayon (pixel par pixel) : fondu vertical
+## (transparent en haut → opaque à la base) × fondu horizontal (cœur
+## plein, bords légèrement transparents, profil parabolique).
+func _generer_texture_flash() -> ImageTexture:
+	var largeur := int(FLASH_TEX_WIDTH)
+	var hauteur := int(FLASH_TEX_HEIGHT)
+	var img := Image.create(largeur, hauteur, false, Image.FORMAT_RGBA8)
+	for y in hauteur:
+		# Fondu vertical : 0 (transparent) en haut → 1 (opaque) à la base
+		var alpha_v := float(y) / (hauteur - 1)
+		for x in largeur:
+			# Fondu horizontal : 1 au centre → 0 sur les bords (parabole,
+			# bords légèrement transparents sans creux marqué)
+			var u := absf(float(x) - (largeur - 1) * 0.5) / ((largeur - 1) * 0.5)
+			var a := alpha_v * (1.0 - u * u)
+			img.set_pixel(x, y, Color(1, 1, 1, a))
+	return ImageTexture.create_from_image(img)
 
 func get_energy_count(tube_index: int) -> int:
 	if tube_index < 0 or tube_index >= 3:

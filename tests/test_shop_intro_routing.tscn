@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://tests/test_shop_intro_routing.gd" id="1_test"]
+
+[node name="TestShopIntroRouting" type="Node2D"]
+script = ExtResource("1_test")

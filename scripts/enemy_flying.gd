@@ -52,8 +52,8 @@ func enemy_setup():
 	await get_tree().physics_frame
 	set_navigation_target(Vector2(randi() % int(screen_size.x), randi() % int(screen_size.y)))
 
-func set_navigation_target(target_position: Vector2):
-	$NavigationAgent2D.target_position = target_position
+func set_navigation_target(cible: Vector2):
+	$NavigationAgent2D.target_position = cible
 	
 func set_random_navigation_target():
 	set_navigation_target(screen_size / 4 + Vector2(randi() % int(screen_size.x / 2), randi() % int(screen_size.y / 2)))

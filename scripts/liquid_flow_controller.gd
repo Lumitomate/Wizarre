@@ -105,11 +105,11 @@ func _ready() -> void:
 		if circuit == null or circuit.texture == null:
 			continue
 		var letter_sprite := get_node_or_null(NodePath("Titrage%s" % letter)) as Sprite2D
-		var material := ShaderMaterial.new()
-		material.shader = FLOW_SHADER
-		material.set_shader_parameter("texture_size", circuit.texture.get_size())
-		circuit.material = material
-		_materials[circuit] = material
+		var mat := ShaderMaterial.new()
+		mat.shader = FLOW_SHADER
+		mat.set_shader_parameter("texture_size", circuit.texture.get_size())
+		circuit.material = mat
+		_materials[circuit] = mat
 		_letters[polygon] = circuit
 		_queries[polygon] = _build_query(polygon)
 		# Données de flottement : la lettre emmène son circuit (même position
@@ -120,11 +120,11 @@ func _ready() -> void:
 			var shadow := Sprite2D.new()
 			shadow.name = "Titrage%s_Ombre" % letter
 			shadow.texture = shadow_tex
-			shadow.texture_filter = 1
+			shadow.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 			var ring := Sprite2D.new()
 			ring.name = "Titrage%s_Cerne" % letter
 			ring.texture = outline_tex
-			ring.texture_filter = 1
+			ring.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 			add_child(shadow)
 			add_child(ring)
 			_motion.append({
@@ -141,11 +141,11 @@ func _ready() -> void:
 	var max_radius := 0.0
 	for circuit: Sprite2D in _letters.values():
 		max_radius = maxf(max_radius, circuit.texture.get_size().length())
-	for material: ShaderMaterial in _materials.values():
-		material.set_shader_parameter("wave_radius_px", max_radius)
+	for mat: ShaderMaterial in _materials.values():
+		mat.set_shader_parameter("wave_radius_px", max_radius)
 		# Bande de fondu = moitié du rayon : chaque pixel s'estompe sur
 		# ~1/3 de la durée du retrait quand le front le traverse.
-		material.set_shader_parameter("fade_band_px", max_radius * 0.5)
+		mat.set_shader_parameter("fade_band_px", max_radius * 0.5)
 	# Tri du flottement de gauche à droite (décalage de phase consécutif).
 	_motion.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		return (a.base as Vector2).x < (b.base as Vector2).x)
@@ -354,21 +354,21 @@ func _impact_uv(polygon: CollisionPolygon2D, circuit: Sprite2D, prev: Vector2, c
 
 
 func _trigger(circuit: Sprite2D, uv: Vector2, from_static: bool) -> void:
-	var material: ShaderMaterial = _materials.get(circuit)
-	if material == null:
+	var mat: ShaderMaterial = _materials.get(circuit)
+	if mat == null:
 		return
 	# Une attaque en mouvement remplace la vague en cours sur cette lettre.
 	if _tweens.has(circuit):
 		_tweens[circuit].kill()
 	_wave_static[circuit] = from_static
-	material.set_shader_parameter("hit_uv", uv)
-	material.set_shader_parameter("flow_front", 0.0)
-	material.set_shader_parameter("fade_front", 0.0)
+	mat.set_shader_parameter("hit_uv", uv)
+	mat.set_shader_parameter("flow_front", 0.0)
+	mat.set_shader_parameter("fade_front", 0.0)
 	var tween := create_tween()
 	_tweens[circuit] = tween
 	# Remplissage : le blanc avance depuis l'impact et reste derrière lui.
 	tween.tween_method(
-		func(progress: float) -> void: material.set_shader_parameter("flow_front", progress),
+		func(progress: float) -> void: mat.set_shader_parameter("flow_front", progress),
 		0.0, 1.0, fill_time
 	)
 	# Pause : la lettre entièrement blanche un instant.
@@ -376,7 +376,7 @@ func _trigger(circuit: Sprite2D, uv: Vector2, from_static: bool) -> void:
 	# Disparition : onde de retrait depuis l'impact, chaque pixel s'estompe
 	# progressivement pendant que le front le traverse.
 	tween.tween_method(
-		func(progress: float) -> void: material.set_shader_parameter("fade_front", progress),
+		func(progress: float) -> void: mat.set_shader_parameter("fade_front", progress),
 		0.0, 1.0, fade_time
 	)
 	tween.tween_callback(func() -> void:

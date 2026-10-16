@@ -87,12 +87,8 @@ static func _generer_aleatoire(rng: RandomNumberGenerator, largeur: int, hauteur
 	layout[hauteur - 1][j + 3] = true
 
 	# --- Piliers et éléments suspendus sur le reste du couloir ---
-	var hauteur_precedente := 0
 	for x in largeur:
 		if x >= j - 1 and x <= j + 3:
-			# colonnes du piège (et son entrée) : déjà gérées ci-dessus ;
-			# l'entrée du tunnel (j-1) doit rester au niveau du sol
-			hauteur_precedente = hauteur - 2 if x == j + 3 else 0
 			continue
 
 		# Pilier : hauteur 0..3 (le sorcier monte tout, donc pas de
@@ -100,7 +96,6 @@ static func _generer_aleatoire(rng: RandomNumberGenerator, largeur: int, hauteur
 		var h: int = [0, 0, 1, 1, 2, 3][rng.randi() % 6]
 		for k in h:
 			layout[hauteur - 1 - k][x] = true
-		hauteur_precedente = h
 
 		# --- Élément suspendu : stalactite ou bloc volant ---
 		# Valide seulement si ≥ 1 tuile de passage reste entre l'élément

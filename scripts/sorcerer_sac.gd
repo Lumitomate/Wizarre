@@ -227,6 +227,11 @@ func _close_tube_after_swap(tube_index: int) -> void:
 		return
 	if selected_tube == tube_index:
 		selected_tube = -1
+		# Synchronise le sorcier : un tube descendu ne doit plus accepter
+		# d'objet (la règle d'attrapage teste selected_tube du sorcier)
+		var sorcerer := get_parent() as Sorcerer
+		if sorcerer != null:
+			sorcerer.selected_tube = -1
 	play_reverse_anim(tube_index)
 
 func get_spell(tube_index: int) -> Dictionary:
@@ -281,9 +286,9 @@ func _creer_flash() -> Sprite2D:
 	flash.centered = false
 	flash.offset = Vector2(-FLASH_TEX_WIDTH * 0.5, -FLASH_TEX_HEIGHT)
 	flash.scale = FLASH_SCALE
-	var material := CanvasItemMaterial.new()
-	material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
-	flash.material = material
+	var mat := CanvasItemMaterial.new()
+	mat.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	flash.material = mat
 	flash.z_index = 5
 	return flash
 
@@ -305,6 +310,143 @@ func _generer_texture_flash() -> ImageTexture:
 			var a := alpha_v * (1.0 - u * u)
 			img.set_pixel(x, y, Color(1, 1, 1, a))
 	return ImageTexture.create_from_image(img)
+
+# --- Onde d'arrivée d'objet (anneau radial style Dead Cells) ---
+# Anneau lumineux ADDITIF fin qui jaillit de la bouche du tube quand un
+# objet y arrive (début de l'absorption, cf. object_attack._absorption).
+# Départ rapide, freinage en fin d'expansion (ease-out), fondu sur la
+# seconde moitié. Enfant du sac : l'onde suit le sorcier s'il marche.
+# Style PIXELISÉ : texture BASSE résolution agrandie avec filtrage
+# "nearest" (chaque texel devient un gros pixel carré à l'écran) et
+# profil d'opacité quantifié (bords nets, pas de dégradé lissé).
+# Couleur : famille de l'attaque portée par l'objet (cf. WizardPalette),
+# passée en paramètre car le sort n'est chargé dans le tube qu'après.
+const ONDE_RAYON := 15.0          # rayon final affiché (px)
+const ONDE_DUREE := 0.3           # durée totale (s)
+const ONDE_TEX_RAYON := 8.0       # rayon de l'anneau dans la texture (texels)
+const ONDE_TEX_TAILLE := 32.0     # résolution de la texture carrée (texels)
+const ONDE_TEX_EPAISSEUR := 2.0   # épaisseur de l'anneau en texels
+## Échelle finale : rayon affiché / rayon texture (24 px → ×3, un texel = 3 px écran)
+const ONDE_SCALE_MAX := ONDE_RAYON / ONDE_TEX_RAYON
+## Échelle de départ : l'anneau part d'un petit point (~1 px de rayon)
+const ONDE_SCALE_DEPART := 1.0 / ONDE_TEX_RAYON
+
+var _onde_arrivee: Sprite2D = null
+var _onde_arrivee_tween: Tween = null
+
+## Onde d'arrivée d'objet dans le tube `tube_index`. L'anneau naît de la
+## bouche du tube, s'étend jusqu'à ONDE_RAYON en ease-out sur ONDE_DUREE,
+## alpha plein au départ puis fondu sur la seconde moitié. Une nouvelle
+## onde pendant la précédente : le tween est tué, l'anneau repart.
+## Comme le flash de sélection : rien pour le sorcier d'affichage du
+## pause (frozen).
+func flasher_onde(tube_index: int, attack_type: int) -> void:
+	var sorcerer = get_parent() as Sorcerer
+	if sorcerer == null or sorcerer.frozen:
+		return
+	if tube_index < 0 or tube_index >= spell_icons.size():
+		return
+	if _onde_arrivee == null:
+		_onde_arrivee = _creer_onde_arrivee()
+		add_child(_onde_arrivee)
+	# Couleur : famille de l'attaque portée par l'objet (blanc si inconnu)
+	var couleur: Color = WizardPalette.get_attack_family_color(attack_type)
+	_onde_arrivee.modulate = Color(couleur.r, couleur.g, couleur.b, 1.0)
+	# Ancrage : position COURANTE de la gemme du sort. La gemme monte avec
+	# l'anim du tube (cf. _process, ICON_RISE), et l'onde se déclenche le
+	# plus souvent tube sorti — l'ancrer sur sa position de base (tube
+	# baissé) la ferait apparaître 15 px plus bas que la gemme réelle.
+	_onde_arrivee.position = spell_icons[tube_index].position
+	_lancer_particules_onde(_onde_arrivee.position, couleur)
+	if _onde_arrivee_tween != null and _onde_arrivee_tween.is_valid():
+		_onde_arrivee_tween.kill()
+	_onde_arrivee.scale = Vector2.ONE * ONDE_SCALE_DEPART
+	_onde_arrivee_tween = create_tween()
+	_onde_arrivee_tween.set_parallel(true)
+	_onde_arrivee_tween.tween_property(_onde_arrivee, "scale", Vector2.ONE * ONDE_SCALE_MAX, ONDE_DUREE)\
+		.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_onde_arrivee_tween.tween_property(_onde_arrivee, "modulate:a", 0.0, ONDE_DUREE * 0.5)\
+		.set_delay(ONDE_DUREE * 0.5)
+
+
+## Construit le sprite de l'anneau (une fois pour toutes) : texture
+## générée par pixel — anneau fin centré, profil linéaire doux. Blending
+## additif, même z_index que le flash. Texture en CACHE STATIQUE :
+## identique pour tous les sorciers, générée une fois par partie.
+static var _onde_arrivee_texture: ImageTexture = null
+
+func _creer_onde_arrivee() -> Sprite2D:
+	if _onde_arrivee_texture == null:
+		_onde_arrivee_texture = _generer_texture_onde_arrivee()
+	var onde := Sprite2D.new()
+	onde.texture = _onde_arrivee_texture
+	# Filtrage "nearest" : agrandissement sans lissage → gros pixels nets
+	onde.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	onde.material = CanvasItemMaterial.new()
+	onde.material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	onde.z_index = 5
+	return onde
+
+
+## Génération de la texture de l'anneau (pixel par pixel) : anneau
+## centré sur ONDE_TEX_RAYON, épaisseur ONDE_TEX_EPAISSEUR. Profil
+## QUANTIFIÉ (style pixel) : cœur plein, puis un anneau de
+## demi-intensité, puis rien — bords nets, sans dégradé lissé.
+func _generer_texture_onde_arrivee() -> ImageTexture:
+	var taille := int(ONDE_TEX_TAILLE)
+	var img := Image.create(taille, taille, false, Image.FORMAT_RGBA8)
+	var centre := (taille - 1) * 0.5
+	var demi_epaisseur := ONDE_TEX_EPAISSEUR * 0.5
+	for y in taille:
+		for x in taille:
+			var d := Vector2(x - centre, y - centre).length()
+			var u := absf(d - ONDE_TEX_RAYON) / demi_epaisseur
+			var a := 1.0 if u < 0.5 else (0.5 if u < 1.0 else 0.0)
+			img.set_pixel(x, y, Color(1, 1, 1, a))
+	return ImageTexture.create_from_image(img)
+
+
+## Petit éclat qui accompagne l'onde : 3 à 5 pixels carrés qui partent
+## radialement de la gemme dans des directions aléatoires, freinent
+## (ease-out) sur la même durée que l'anneau, fondent sur la seconde
+## moitié, puis se libèrent tout seuls. Même style pixelisé que
+## l'anneau : un carré de la taille d'un « gros pixel », blending additif.
+const ONDE_PARTICULE_TAILLE := 3   # px écran (un texel de l'anneau)
+const ONDE_PARTICULE_DISTANCE := 5  # part de ONDE_RAYON × ce facteur minimum
+static var _particule_texture: ImageTexture = null
+
+func _lancer_particules_onde(centre: Vector2, couleur: Color) -> void:
+	if _particule_texture == null:
+		_particule_texture = _generer_texture_carre(ONDE_PARTICULE_TAILLE)
+	var nombre := randi_range(3, 5)
+	for i in nombre:
+		var angle := randf() * TAU
+		var distance := ONDE_RAYON * randf_range(ONDE_PARTICULE_DISTANCE, 1.0)
+		var particule := Sprite2D.new()
+		particule.texture = _particule_texture
+		particule.set_meta("onde_particule", true)  # repérable par les tests
+		particule.position = centre
+		particule.modulate = Color(couleur.r, couleur.g, couleur.b, 1.0)
+		particule.material = CanvasItemMaterial.new()
+		particule.material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+		particule.z_index = 5
+		add_child(particule)
+		var tween := create_tween()
+		tween.set_parallel(true)
+		tween.tween_property(particule, "position",\
+			centre + Vector2.from_angle(angle) * distance, ONDE_DUREE)\
+			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_property(particule, "modulate:a", 0.0, ONDE_DUREE * 0.5)\
+			.set_delay(ONDE_DUREE * 0.5)
+		tween.chain().tween_callback(particule.queue_free)
+
+
+## Texture d'un carré blanc plein (pixel de particule)
+func _generer_texture_carre(taille: int) -> ImageTexture:
+	var img := Image.create(taille, taille, false, Image.FORMAT_RGBA8)
+	img.fill(Color(1, 1, 1, 1))
+	return ImageTexture.create_from_image(img)
+
 
 func get_energy_count(tube_index: int) -> int:
 	if tube_index < 0 or tube_index >= 3:

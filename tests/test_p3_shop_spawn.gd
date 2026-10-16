@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 # Test runtime : instancie le vrai magasin et vérifie que les objets
 # d'attaque (dont potentiellement P3) spawn correctement.

@@ -7,7 +7,8 @@ extends SceneTree
 
 var mine: AttackFireMine
 var floor_y := 1000.0
-var block_underside_y := 932.0  # face du bloc tournée vers le sol
+# Variante SANS bloc (cf. test_mine_block.gd pour la variante avec bloc) :
+# la mine doit toucher le sol, pas un plafond
 var player_y := 980.0           # centre du sorcier (~20 px au-dessus du sol)
 var step := 0
 var exploded_checked := false
@@ -32,8 +33,6 @@ func _initialize() -> void:
 	floor_body.position = Vector2(0, floor_y + 50)
 	floor_body.collision_layer = 4
 	root.add_child(floor_body)
-
-	var block_underside_y := INF  # pas de bloc
 
 	# Mine réelle, spawn IDENTIQUE au jeu (spawner_attack) : sorcier sous le
 	# bloc, mine au-dessus de sa tête

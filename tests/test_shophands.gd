@@ -167,7 +167,7 @@ func _test_shop(nb_joueurs: int) -> void:
 	add_child(shop)
 	await _frames(5)
 
-	var porte: Node2D = shop.get_node("Terrain1PortesEntree")
+	var _porte: Node2D = shop.get_node("Terrain1PortesEntree")  # existence seule
 	var marqueurs: Array[Marker2D] = [
 		shop.get_node("Marker2D_spawnerSorcier_2"),
 		shop.get_node("Marker2D_spawnerSorcier_3"),
@@ -203,7 +203,12 @@ func _test_shop(nb_joueurs: int) -> void:
 	if shop._objet != null:
 		_check(not shop._objet.monitoring, "objet : hitbox désactivée au centre (le décideur ne peut pas le voler)")
 		_check(shop._objet.z_index == -1, "objet derrière le cadre et les tuiles")
-		_check(shop._objet.position.distance_to(Vector2(875, 481)) < 1.0,
+		# L'objet LÉVITE (±5 px, phase aléatoire) : la position mesurée
+		# bouge à chaque tirage. On vérifie son ANCRE de lévitation
+		# (_base_position, fixée à sa première frame physique) —
+		# déterministe. Vérifier position bruterait le test au hasard.
+		_check(shop._objet._base_initialisee \
+			and shop._objet._base_position.distance_to(Vector2(875, 481)) < 1.0,
 			"objet flottant au centre du cadre")
 	else:
 		_check(false, "objet spawné au centre")
@@ -242,6 +247,17 @@ func _test_shop(nb_joueurs: int) -> void:
 			return is_instance_valid(shop._objet) \
 				and shop._objet.position.distance_to(arrivee) < 4.0, 6.0)
 		_check(arrive, "objet réapparu au bloc 5/0 de l'espace de droite, flottant")
+		# Anti-régression du bug « retour au centre » : après l'émergence,
+		# la base de lévitation doit être le point d'arrivée — l'objet
+		# flotte SUR PLACE (avant correctif, la lévitation ramenait
+		# l'objet à son ancienne base du centre du cadre). C'est la BASE
+		# qu'on vérifie, pas la position brute : si l'objet est attrapé
+		# pendant sa montée (légitime, hitbox active à mi-émergence), il
+		# vole vers le tube et sa position ne dit plus rien du bloc.
+		await _frames(30)
+		_check(is_instance_valid(shop._objet) \
+			and shop._objet._base_position.distance_to(arrivee) < 1.0,
+			"objet reste flotter au bloc (base re-calée, pas de retour au centre)")
 		_check(is_instance_valid(shop._objet) and shop._objet.monitoring,
 			"hitbox de l'objet active après émergence")
 		# Attrapé → la porte de sortie s'ouvre

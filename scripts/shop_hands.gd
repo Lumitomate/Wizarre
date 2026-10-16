@@ -204,14 +204,18 @@ func _on_direction_choisie(direction: Vector2) -> void:
 		duree_glissement
 	)
 	# … puis disparition, courte pause, et réapparition au bloc de l'espace
-	# choisi, d'où il émerge doucement.
+	# choisi, d'où il émerge doucement. reposer_a re-cale la lévitation sur
+	# le bloc : sans lui, elle ramènerait l'objet au CENTRE (ancienne base).
 	tween.tween_callback(func(): _objet.visible = false)
 	tween.tween_interval(0.2)
-	tween.tween_callback(func() -> void:
-		_objet.position = bloc
-		_objet.visible = true)
+	tween.tween_callback(func() -> void: _objet.reposer_a(bloc))
+	tween.tween_callback(func() -> void: _objet.visible = true)
 	tween.tween_method(_monter_objet.bind(bloc), 0.0, 1.0, duree_emergence) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	# Fin d'émergence : la base de lévitation suit l'objet à sa position
+	# flottante (sinon il retomberait au niveau du bloc)
+	tween.tween_callback(func() -> void:
+		_objet.reposer_a(bloc + Vector2(0, -HAUTEUR_FLOTTAISON)))
 
 
 ## Montée douce de l'objet hors du bloc (t = progression 0→1). Sa hitbox

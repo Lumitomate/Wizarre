@@ -2,20 +2,30 @@ class_name AttackPlantBramble
 extends RigidBody2D
 
 # Ronce dirigeable (P3, PlantBrush) : une base sort du sol au point de tir,
-# puis des tronçons poussent en chaîne (comme les phalanges d'un doigt),
-# chacun dans la direction du précédent ±60°, pilotée par le stick.
+# puis des TIGES poussent en parallèle depuis cette même base — 1 au
+# tier I, 2 au tier II, 3 au tier III. Une tige est une chaîne de
+# tronçons (comme les phalanges d'un doigt), chacun dans la direction du
+# précédent ±max_turn, pilotée par le stick (toutes les tiges suivent le
+# stick de la même façon) ; ce sont les PREMIERS tronçons, pré-écartés
+# en éventail, qui séparent les tiges. Au tier III, les têtes partent
+# avec un léger décalage (gauche → centre → droite). Chaque tige a son
+# propre bulbe de tête et son budget de tronçons (budget TOTAL conservé :
+# 5 / 9 / 13, réparti au plus juste — surplus à la première lancée au
+# tier II, à la centrale au tier III).
 #
 # Le lanceur est immobilisé pendant la croissance (comme la cible L2).
 # Fins possibles :
-#  - 2e appui sur le bouton ou dash → gel sur place 2 s, puis décomposition
-#    depuis le bout de la ronce (le dernier tronçon) vers la base ;
-#  - contact ennemi (1 dégât) → décomposition depuis le tronçon touché,
-#    dans les deux sens ;
-#  - fin de croissance naturelle → gel automatique 2 s, puis décomposition
-#    depuis le bout.
+#  - 2e appui sur le bouton ou dash → gel sur place 2 s (dès que la
+#    dernière tige a fini de pousser), puis décomposition de chaque tige
+#    depuis son bout vers la base, cascades simultanées ;
+#  - contact ennemi (1 dégât) → SEULE la tige touchée se décompose
+#    (cascade dans les deux sens depuis le tronçon touché), les autres
+#    tiges continuent de vivre et de pousser ;
+#  - fin de croissance naturelle → gel automatique 2 s, puis
+#    décomposition de toutes les tiges.
 # Chaque tronçon passe en Decomposition à sa frame 2, en cascade de 0,1 s.
-# La hitbox disparaît dès qu'un tronçon se décompose ; la base disparaît
-# quand la cascade atteint le premier tronçon.
+# La hitbox disparaît dès qu'un tronçon se décompose ; la base (commune
+# à toutes les tiges) disparaît quand TOUTES les tiges ont été décomposées.
 
 const SEGMENT_SCENE: PackedScene = preload("res://scenes/atk/atk_p3_bramble_segment.tscn")
 
@@ -77,6 +87,16 @@ const CASCADE_INTERVAL := 0.1          # 0,1 s entre deux tronçons qui se déco
 const BASE_APPEAR_DURATION := 0.3      # apparition de la base : scale 0 → 100 %
 const CLEANUP_DELAY := 1.5             # après la fin de la cascade (anim decomp : 1,4 s)
 
+# --- Multi-tiges ---
+## Écart initial des premières directions : l'éventail de départ qui
+## sépare les tiges (commun aux tiers multi-tiges)
+const ECART_TIGES_DEG := 25.0
+## Décalage de départ des têtes au tier III (gauche → centre → droite)
+const ECART_TIGES := 0.15
+## Nombre de premiers tronçons qui posent la direction d'écartement de
+## la tige avant de suivre le stick (2 → séparation visible sans excès)
+const TIGES_TRONCONS_ECART := 2
+
 # Graine (vol initial, cf. graine P1)
 const SEED_REST_SPEED := 10.0          # vitesse sous laquelle la graine est posée
 const MONDE_MASK := 8                  # calque du décor (tuiles) : seuls les sols comptent
@@ -96,21 +116,27 @@ var level_scale := Vector2.ONE
 var launch_velocity := Vector2(200.0, 0)
 var phase := Phase.FLYING
 
-var _segments: Array[AttackPlantBrambleSegment] = []
-var _max_segments := 3
-var _spawn_timer := 0.0
+## Une tige : une chaîne de tronçons + son bulbe de tête, avec tout son
+## état de pousse et de décomposition. Toutes partent de la même base.
+class Tige:
+	var segments: Array[AttackPlantBrambleSegment] = []
+	var budget: int = 5                  # tronçons à émettre (hors tronçon de liaison)
+	var next_position := Vector2.ZERO    # position de pose du prochain tronçon
+	var last_direction := Vector2.UP     # direction du dernier tronçon posé
+	var bulb: Sprite2D = null            # bulbe de tête (naît au 1er tronçon)
+	var bulb_segment_index := 0          # tronçon actuellement coiffé par le bulbe
+	var connector_spawned := false       # tronçon de liaison émis (fin naturelle)
+	var connector_done := false          # tronçon de liaison fini de pousser
+	var start_delay := 0.0               # décalage de départ (tier III)
+	var spawn_timer := 0.0
+	var elapsed := 0.0                   # temps de croissance de LA tige (anim bulbe)
+	var cascade_order: Array[int] = []   # ordre de décomposition (vide = vivante)
+	var cascade_timer := 0.0
+	var cascade_started := false         # vrai dès que la tige se décompose
+
+var _tiges: Array[Tige] = []
 var _wait_timer := 0.0
-var _next_position := Vector2.ZERO
-var _cascade_order: Array[int] = []
-var _cascade_timer := 0.0
 var _cleanup_started := false
-var _tip_bulb: Sprite2D = null         # bulbe glissant sur la pointe de la ronce
-var _growth_elapsed := 0.0             # temps écoulé depuis la plantation
-var _bulb_segment_index := 0           # tronçon actuellement coiffé par le bulbe
-var _connector_done := false           # tronçon de liaison fini de pousser
-## Direction du dernier tronçon posé : l'angle entre deux tronçons
-## consécutifs est limité à ±_get_max_turn() au moment de la pose
-var _last_direction := Vector2.UP
 ## Rebond de la graine sur les sorciers (composant réutilisable)
 var _rebond: RebondSorciers = null
 
@@ -122,7 +148,6 @@ var _rebond: RebondSorciers = null
 
 func _ready() -> void:
 	add_to_group("plant_bramble_group")
-	_max_segments = 5 + (attack_tier - 1) * 4
 	# Graine en vol : même échelle que la graine P1 (2 × level_scale)
 	var e := level_scale.x * 2.0
 	seed_sprite.scale = Vector2(e, e)
@@ -143,7 +168,7 @@ func is_growing() -> bool:
 	return phase == Phase.GROWING
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Phase graine (cf. atk_p1_carnivorous_seed.gd) : la graine vole puis
 	# ne plante que si sa place est libre
 	if phase != Phase.FLYING:
@@ -196,23 +221,43 @@ func _plant() -> void:
 	var tween := create_tween().set_parallel(true)
 	tween.tween_property(base_back, "scale", target_scale, BASE_APPEAR_DURATION)
 	tween.tween_property(base_front, "scale", target_scale, BASE_APPEAR_DURATION)
-	# Bulbe de pointe : au-dessus des tiges (z 0), il glisse le long de la
-	# ronce pendant la croissance
-	# Bulbe de pointe : au-dessus des tiges (z 0), il glisse le long de la
-	# ronce pendant la croissance. Nearest : comme tous les sprites du jeu
-	# (les nœuds de la scène P3 sont en Nearest, ce nœud créé au runtime
-	# doit l'être aussi, sinon il serait lissé)
-	_tip_bulb = Sprite2D.new()
-	_tip_bulb.texture = TIP_BULB_FRAMES[0]
-	_tip_bulb.z_index = 1
-	_tip_bulb.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	_tip_bulb.scale = Vector2(TIP_BULB_SCALE, TIP_BULB_SCALE)
-	add_child(_tip_bulb)
-	# Premier tronçon immédiat, depuis la base
-	_next_position = Vector2.ZERO
-	_last_direction = direction
-	_spawn_segment()
-	_spawn_timer = 0.0
+	# Tiges : toutes partent de la même base ; ce sont les PREMIERS
+	# tronçons, pré-écartés en éventail, qui les séparent (le bulbe de
+	# chaque tige naît avec son premier tronçon)
+	_construire_tiges()
+
+
+## Construit les tiges selon le tier. Budget TOTAL de tronçons conservé
+## (5 / 9 / 13) réparti au plus juste : surplus à la première lancée au
+## tier II, à la centrale au tier III. Toutes partent de la même base
+## (aucun décalage d'origine) dans la direction de plantation tournée
+## de ±ECART_TIGES_DEG — ce sont les premiers tronçons qui écartent les
+## tiges. Au tier III, les départs sont décalés dans l'ordre
+## gauche → centre → droite.
+func _construire_tiges() -> void:
+	var ecart := deg_to_rad(ECART_TIGES_DEG)
+	var budgets: Array[int] = []
+	var ecarts: Array[float] = []
+	var delais: Array[float] = []
+	match attack_tier:
+		1:
+			budgets = [5]
+			ecarts = [0.0]
+			delais = [0.0]
+		2:
+			budgets = [5, 4]
+			ecarts = [-ecart, ecart]
+			delais = [0.0, 0.0]
+		_:
+			budgets = [4, 5, 4]
+			ecarts = [-ecart, 0.0, ecart]
+			delais = [0.0, ECART_TIGES, ECART_TIGES * 2.0]
+	for i in budgets.size():
+		var tige := Tige.new()
+		tige.budget = budgets[i]
+		tige.start_delay = delais[i]
+		tige.last_direction = direction.rotated(ecarts[i])
+		_tiges.append(tige)
 
 
 ## Vrai si la graine repose sur le sol (rayon court vers le bas, cf. P1)
@@ -254,8 +299,9 @@ func freeze_growth() -> void:
 		return
 	phase = Phase.WAITING
 	_wait_timer = 0.0
-	for seg in _segments:
-		seg.freeze_to_idle()
+	for tige in _tiges:
+		for seg in tige.segments:
+			seg.freeze_to_idle()
 
 
 func _physics_process(delta: float) -> void:
@@ -266,41 +312,65 @@ func _physics_process(delta: float) -> void:
 			_process_growing(delta)
 		Phase.WAITING:
 			_wait_timer += delta
-			# Le bulbe continue de suivre la pointe pendant la pousse du
-			# tronçon de liaison, puis se cale exactement (sans saut : sa
-			# cible est déjà au sommet quand grow_done passe à true)
-			_update_bulb_frame()
-			_update_bulb_position(false, delta)
-			if not _connector_done and _segments[_segments.size() - 1].grow_done:
-				_connector_done = true
-				_update_bulb_position(true)
-				if _tip_bulb != null:
-					_tip_bulb.texture = TIP_BULB_FRAMES[TIP_BULB_FRAMES.size() - 1]
+			# Chaque bulbe suit la pousse du tronçon de liaison de sa tige,
+			# puis se cale exactement (sans saut : sa cible est déjà au
+			# sommet quand grow_done passe à true)
+			for tige in _tiges:
+				if tige.bulb == null or tige.cascade_started:
+					continue
+				_update_bulb_frame(tige)
+				_update_bulb_position(tige, false, delta)
+				if tige.connector_spawned and not tige.connector_done \
+						and tige.segments[tige.segments.size() - 1].grow_done:
+					tige.connector_done = true
+					_update_bulb_position(tige, true)
+					tige.bulb.texture = TIP_BULB_FRAMES[TIP_BULB_FRAMES.size() - 1]
 			if _wait_timer >= GEL_DURATION:
 				_start_decomposition_from_top()
 		Phase.DECOMPOSING:
-			_process_decomposing(delta)
+			pass # cascades gérées pour chaque tige ci-dessous
+	# Cascades de décomposition, indépendantes par tige : elles tournent
+	# dans toutes les phases (une tige touchée se décompose pendant que
+	# les autres poussent)
+	_process_cascades(delta)
 
 
 func _process_growing(delta: float) -> void:
+	# Une seule direction voulue pour toutes les tiges (le stick la
+	# pilote comme avant, ±max_turn) ; chaque tige l'applique depuis SA
+	# dernière direction au moment de poser chaque tronçon → convergence
+	# naturelle vers des trajectoires parallèles
 	_steer()
-	_growth_elapsed += delta
-	_update_bulb_frame()
-	_update_bulb_position(false, delta)
-	_spawn_timer += delta
-	if _spawn_timer >= SEGMENT_INTERVAL and _segments.size() < _max_segments:
-		_spawn_timer = 0.0
-		_spawn_segment()
-	# Fin de croissance : tous les tronçons sont poussés et le dernier a
-	# terminé son Grow → gel automatique 2 s
-	if _segments.size() >= _max_segments and _segments[_segments.size() - 1].grow_done:
+	var toutes_finies := true
+	for tige in _tiges:
+		if tige.cascade_started:
+			continue  # tige touchée : elle ne pousse plus
+		if tige.start_delay > 0.0:
+			tige.start_delay -= delta
+			toutes_finies = false
+			continue
+		tige.elapsed += delta
+		_update_bulb_frame(tige)
+		_update_bulb_position(tige, false, delta)
+		tige.spawn_timer += delta
+		if tige.spawn_timer >= SEGMENT_INTERVAL and tige.segments.size() < tige.budget:
+			tige.spawn_timer = 0.0
+			_spawn_segment(tige)
+		var finie := tige.segments.size() >= tige.budget \
+			and tige.segments[tige.segments.size() - 1].grow_done
+		if finie and not tige.connector_spawned:
+			# Fin de croissance naturelle de la tige : tronçon de liaison
+			# (comble l'espace entre la dernière tige et le bulbe ; le
+			# bulbe le suit pendant sa pousse, cf. WAITING)
+			_spawn_connector_segment(tige)
+		if not finie:
+			toutes_finies = false
+	# Fin de croissance de la ronce entière : toutes les tiges ont émis
+	# leurs tronçons (les tronçons de liaison finissent de pousser pendant
+	# le gel, cf. WAITING) → gel automatique 2 s
+	if toutes_finies:
 		phase = Phase.WAITING
 		_wait_timer = 0.0
-		# Tronçon de liaison : comble l'espace entre la dernière tige et le
-		# bulbe (suit la direction du dernier tronçon, participe à la cascade).
-		# Le bulbe le suit pendant sa pousse (voir WAITING) et ne se cale
-		# sur son sommet que lorsqu'il a fini de pousser.
-		_spawn_connector_segment()
 
 
 # Angle maximal entre un tronçon et le suivant, qui dépend du tier :
@@ -339,19 +409,26 @@ func _segment_spacing() -> float:
 	return SEGMENT_CONTENT_HEIGHT * level_scale.x * sprite_scale_multiplier
 
 
-func _spawn_segment() -> void:
+func _spawn_segment(tige: Tige) -> void:
 	var seg: AttackPlantBrambleSegment = SEGMENT_SCENE.instantiate()
-	seg.index = _segments.size()
+	seg.index = tige.segments.size()
 	seg.level_scale = level_scale * sprite_scale_multiplier
-	seg.position = _next_position
-	# Angle entre ce tronçon et le précédent limité à ±max_turn (±25°/35°/45°
-	# selon le tier) : le stick pilote `direction` en continu, mais c'est à
-	# la POSE du tronçon que l'écart avec le précédent est bridé
-	var prev_angle := _last_direction.angle()
-	var delta_angle := wrapf(direction.angle() - prev_angle, -PI, PI)
-	var max_turn := _get_max_turn()
-	var seg_direction := Vector2.RIGHT.rotated(prev_angle + clampf(delta_angle, -max_turn, max_turn))
-	_last_direction = seg_direction
+	seg.position = tige.next_position
+	var seg_direction: Vector2
+	if tige.segments.size() < TIGES_TRONCONS_ECART:
+		# Les premiers tronçons posent la direction d'écartement de la
+		# tige : c'est eux qui ouvrent l'éventail entre les tiges
+		seg_direction = tige.last_direction
+	else:
+		# Angle entre ce tronçon et le précédent limité à ±max_turn
+		# (±25°/35°/45° selon le tier) : le stick pilote `direction` en
+		# continu, mais c'est à la POSE du tronçon que l'écart avec le
+		# précédent est bridé
+		var prev_angle := tige.last_direction.angle()
+		var delta_angle := wrapf(direction.angle() - prev_angle, -PI, PI)
+		var max_turn := _get_max_turn()
+		seg_direction = Vector2.RIGHT.rotated(prev_angle + clampf(delta_angle, -max_turn, max_turn))
+	tige.last_direction = seg_direction
 	# Les sprites de ronce sont dessinés verticaux (pointant vers le haut,
 	# comme les segments de la colonne F1) : angle + PI/2 → direction UP
 	# = sprite non pivoté
@@ -364,72 +441,77 @@ func _spawn_segment() -> void:
 		seg.caster = caster
 	seg.grow_speed_scale = GROW_SPEED_SCALE
 	seg.start_grow()
-	_segments.append(seg)
-	_bulb_segment_index = seg.index
-	_next_position += seg_direction * _segment_spacing()
+	tige.segments.append(seg)
+	tige.bulb_segment_index = tige.segments.size() - 1
+	tige.next_position += seg_direction * _segment_spacing()
+	# Le bulbe de la tige naît avec son premier tronçon
+	if tige.bulb == null:
+		tige.bulb = _creer_bulbe()
 
 
-# Positionne le bulbe sur la pointe VISIBLE de la ronce : il glisse le
+## Bulbe de pointe d'une tige : au-dessus des tiges (z 0), il glisse le
+	# long de la tige pendant la croissance. Nearest : comme tous les
+	# sprites du jeu (les nœuds de la scène P3 sont en Nearest, ce nœud
+	# créé au runtime doit l'être aussi, sinon il serait lissé)
+func _creer_bulbe() -> Sprite2D:
+	var bulb := Sprite2D.new()
+	bulb.texture = TIP_BULB_FRAMES[0]
+	bulb.z_index = 1
+	bulb.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	bulb.scale = Vector2(TIP_BULB_SCALE, TIP_BULB_SCALE)
+	add_child(bulb)
+	return bulb
+
+
+# Positionne le bulbe sur la pointe VISIBLE de SA tige : il glisse le
 # long de la polyligne formée par les tronçons (suit aussi la courbure
 # imposée par le stick), du bas du premier sprite à la plantation jusqu'au
 # haut du dernier sprite en fin de croissance. Continu → pas de téléportation.
-func _update_bulb_position(full: bool = false, delta: float = 0.0) -> void:
-	if _tip_bulb == null or _segments.is_empty():
+func _update_bulb_position(tige: Tige, full: bool = false, delta: float = 0.0) -> void:
+	if tige.bulb == null or tige.segments.is_empty():
 		return
 	var spacing := _segment_spacing()
-	# Longueur déjà poussée depuis la base : tronçons terminés + progression
-	# du tronçon en cours (son Grow dure ~l'intervalle d'émission)
 	var grown: float
 	if full:
-		grown = spacing * _segments.size()
+		grown = spacing * tige.segments.size()
 	else:
 		# Sync sur la progression RÉELLEMENT DESSINÉE de la tige en cours
-		# (frames de l'anim Grow) : le bulbe reste collé au bout visible au
-		# lieu d'avancer à vitesse constante pendant que la tige progresse
-		# par à-coups d'images
-		grown = (_segments.size() - 1) * spacing \
-			+ _segments[_segments.size() - 1].grow_fraction() * spacing
-	# Parcours de la polyligne : tronçon i couvre l'arc [i*spacing, (i+1)*spacing]
-	var i := mini(int(grown / spacing), _segments.size() - 1)
+		# (frames de l'anim Grow) : le bulbe reste collé au bout visible
+		grown = (tige.segments.size() - 1) * spacing \
+			+ tige.segments[tige.segments.size() - 1].grow_fraction() * spacing
+	var i := mini(int(grown / spacing), tige.segments.size() - 1)
 	var covered := grown - i * spacing
-	var seg := _segments[i]
+	var seg := tige.segments[i]
 	var d := Vector2.UP.rotated(seg.rotation)  # direction du tronçon (sprites verticaux)
 	var tip := seg.position + d * covered
-	# Le bulbe s'oriente comme le tronçon qu'il coiffe (texture dessinée
-	# verticale, même convention que les tiges). Rotation lissée par
-	# lerp_angle pour éviter les à-coups quand un nouveau tronçon tourne.
 	if full:
-		_tip_bulb.rotation = seg.rotation
+		tige.bulb.rotation = seg.rotation
 	else:
-		_tip_bulb.rotation = lerp_angle(_tip_bulb.rotation, seg.rotation, minf(1.0, delta * 15.0))
-	# Origine du bulbe : contenu ancré en bas du canvas (32 px), enfoncé de
-	# TIP_BULB_SINK dans la tige pour que le bas du bulbe chevauche la pointe
-	# (offset × échelle du bulbe, pas celle des tronçons)
+		tige.bulb.rotation = lerp_angle(tige.bulb.rotation, seg.rotation, minf(1.0, delta * 15.0))
 	var target := tip + d * ((TIP_BULB_CANVAS_BOTTOM - TIP_BULB_SINK) * TIP_BULB_SCALE)
 	if full:
-		_tip_bulb.position = target
+		tige.bulb.position = target
 	else:
-		# Lissage exponentiel : la cible est quantifiée par les frames de
-		# l'anim Grow ; le lerp absorbe les sauts → mouvement continu
-		_tip_bulb.position = _tip_bulb.position.lerp(target, minf(1.0, delta * 20.0))
+		tige.bulb.position = tige.bulb.position.lerp(target, minf(1.0, delta * 20.0))
 
 
 # Avance l'anim du bulbe (Bite1 → Bite21) proportionnellement à la durée
-# totale de croissance : plus lente au tier III qu'au tier I
-func _update_bulb_frame() -> void:
-	if _tip_bulb == null:
+# de croissance DE SA tige : toutes les têtes mûrissent en même temps une
+# fois leur pousse lancée (le décalage du tier III est dans le départ)
+func _update_bulb_frame(tige: Tige) -> void:
+	if tige.bulb == null:
 		return
-	var total := SEGMENT_INTERVAL * _max_segments
-	var p := clampf(_growth_elapsed / total, 0.0, 1.0)
-	_tip_bulb.texture = TIP_BULB_FRAMES[int(p * (TIP_BULB_FRAMES.size() - 1))]
+	var total := SEGMENT_INTERVAL * tige.budget
+	var p := clampf(tige.elapsed / total, 0.0, 1.0)
+	tige.bulb.texture = TIP_BULB_FRAMES[int(p * (TIP_BULB_FRAMES.size() - 1))]
 
 
 # Tronçon de liaison fin de pousse : dans le prolongement direct du
 # dernier tronçon (même direction, pas de pilotage stick)
-func _spawn_connector_segment() -> void:
-	var last := _segments[_segments.size() - 1]
+func _spawn_connector_segment(tige: Tige) -> void:
+	var last := tige.segments[tige.segments.size() - 1]
 	var seg: AttackPlantBrambleSegment = SEGMENT_SCENE.instantiate()
-	seg.index = _segments.size()
+	seg.index = tige.segments.size()
 	seg.level_scale = level_scale * sprite_scale_multiplier
 	seg.position = last.position + Vector2.UP.rotated(last.rotation) * _segment_spacing()
 	seg.rotation = last.rotation
@@ -439,59 +521,86 @@ func _spawn_connector_segment() -> void:
 		seg.caster = caster
 	seg.grow_speed_scale = GROW_SPEED_SCALE
 	seg.start_grow()
-	_segments.append(seg)
-	_bulb_segment_index = seg.index
+	tige.segments.append(seg)
+	tige.bulb_segment_index = tige.segments.size() - 1
+	tige.connector_spawned = true
 
 
-# Décomposition déclenchée par un contact ennemi sur le tronçon `index` :
-# cascade dans les deux sens depuis le point de contact
-func _on_enemy_touched(index: int) -> void:
-	if phase == Phase.DECOMPOSING:
+## Retrouve la tige qui contient le tronçon `seg` (null si introuvable)
+func _tige_de(seg: AttackPlantBrambleSegment) -> Tige:
+	for tige in _tiges:
+		if tige.segments.has(seg):
+			return tige
+	return null
+
+
+# Décomposition déclenchée par un contact ennemi sur un tronçon : SEULE
+# la tige qui le contient se décompose (cascade dans les deux sens depuis
+# le point de contact) — les autres tiges continuent de vivre et de pousser
+func _on_enemy_touched(seg: AttackPlantBrambleSegment) -> void:
+	var tige := _tige_de(seg)
+	if tige == null or tige.cascade_started:
 		return
+	var index := tige.segments.find(seg)
 	var order: Array[int] = []
-	for d in range(_segments.size()):
-		if index + d < _segments.size():
+	for d in range(tige.segments.size()):
+		if index + d < tige.segments.size():
 			order.append(index + d)
 		if d > 0 and index - d >= 0:
 			order.append(index - d)
-	_begin_decomposition(order)
+	_begin_decomposition(tige, order)
 
 
-# Décomposition depuis le bout de la ronce vers la base (gel / fin de
-# croissance)
+# Décomposition de chaque tige depuis son bout vers la base (gel / fin de
+# croissance) : les cascades démarrent toutes en même temps, chacune sur
+# sa propre tige
 func _start_decomposition_from_top() -> void:
-	var order: Array[int] = []
-	for i in range(_segments.size() - 1, -1, -1):
-		order.append(i)
-	_begin_decomposition(order)
-
-
-func _begin_decomposition(order: Array[int]) -> void:
 	phase = Phase.DECOMPOSING
-	_cascade_order = order
-	_cascade_timer = 0.0
+	for tige in _tiges:
+		if tige.cascade_started:
+			continue
+		var order: Array[int] = []
+		for i in range(tige.segments.size() - 1, -1, -1):
+			order.append(i)
+		_begin_decomposition(tige, order)
 
 
-func _process_decomposing(delta: float) -> void:
-	if not _cascade_order.is_empty():
-		_cascade_timer -= delta
-		if _cascade_timer > 0.0:
-			return
-		_cascade_timer = CASCADE_INTERVAL
-		var seg_index: int = _cascade_order.pop_front()
-		if seg_index < _segments.size() and is_instance_valid(_segments[seg_index]):
-			_segments[seg_index].start_decomposition()
-			# Le bulbe disparaît quand la cascade atteint le tronçon qu'il coiffe
-			if _tip_bulb != null and seg_index == _bulb_segment_index:
-				_tip_bulb.queue_free()
-				_tip_bulb = null
-		# La base disparaît quand la cascade atteint le premier tronçon
-		if seg_index == 0:
-			base_back.visible = false
-			base_front.visible = false
-	else:
-		# Cascade terminée : les tronçons finissent leur anim puis se
-		# libèrent ; on libère le conteneur juste après
-		if not _cleanup_started:
-			_cleanup_started = true
-			get_tree().create_timer(CLEANUP_DELAY).timeout.connect(queue_free)
+func _begin_decomposition(tige: Tige, order: Array[int]) -> void:
+	tige.cascade_started = true
+	tige.cascade_order = order
+	tige.cascade_timer = 0.0
+
+
+# Avance les cascades, indépendantes par tige : chaque tige décompose ses
+# tronçons à son rythme (CASCADE_INTERVAL). La base (commune) ne disparaît
+# que quand TOUTES les tiges ont été décomposées, puis le conteneur se
+# libère après l'anim de décomposition.
+func _process_cascades(delta: float) -> void:
+	if _cleanup_started or _tiges.is_empty():
+		# _tiges vide (phase graine, avant plantation) : sans ce garde, la
+		# boucle sur un tableau vide laisserait toutes_lancees et
+		# toutes_vides à true et armerait le nettoyage dès le lancement
+		return
+	var toutes_lancees := true
+	var toutes_vides := true
+	for tige in _tiges:
+		if not tige.cascade_order.is_empty():
+			toutes_vides = false
+			tige.cascade_timer -= delta
+			if tige.cascade_timer > 0.0:
+				continue
+			tige.cascade_timer = CASCADE_INTERVAL
+			var seg_index: int = tige.cascade_order.pop_front()
+			if seg_index < tige.segments.size() and is_instance_valid(tige.segments[seg_index]):
+				tige.segments[seg_index].start_decomposition()
+				# Le bulbe disparaît quand la cascade atteint le tronçon qu'il coiffe
+				if tige.bulb != null and seg_index == tige.bulb_segment_index:
+					tige.bulb.queue_free()
+					tige.bulb = null
+		if not tige.cascade_started:
+			toutes_lancees = false
+	if toutes_lancees and toutes_vides:
+		base_back.visible = false
+		base_front.visible = false
+		_cleanup_started = true
+		get_tree().create_timer(CLEANUP_DELAY).timeout.connect(queue_free)

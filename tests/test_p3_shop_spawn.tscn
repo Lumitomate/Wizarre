@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://tests/test_p3_shop_spawn.gd" id="1"]
 
-[node name="SpawnTest" type="Node"]
+[node name="SpawnTest" type="Node2D"]
 script = ExtResource("1")

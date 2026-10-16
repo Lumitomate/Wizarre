@@ -119,13 +119,18 @@ func _sortie_suivante() -> void:
 ##  - porte à un seul sorcier (shop race : 1 couloir/joueur) → centre ;
 ##  - 3 joueurs : le 3e (rang 2) s'arrête au milieu.
 ## Écart de 64 px (coords locales, = 1 largeur de porte / 2).
+## Division entière VOLONTAIRE : rang/2 et (rang+1)/2 sont des planchers
+## (rang 0→droite 64, rang 1→gauche 64, rang 2→droite 128...).
 func _offset_rang(rang: int) -> Vector2:
 	if _en_attente.size() <= 1:
 		return Vector2.ZERO
 	if _en_attente.size() == 3 and rang == 2:
 		return Vector2.ZERO
 	if rang % 2 == 0:
+		# Division entière VOLONTAIRE (plancher)
+		@warning_ignore("integer_division")
 		return Vector2(float(rang / 2 + 1) * 64.0, 0.0)   # droite
+	@warning_ignore("integer_division")
 	return Vector2(-float((rang + 1) / 2) * 64.0, 0.0)    # gauche
 
 

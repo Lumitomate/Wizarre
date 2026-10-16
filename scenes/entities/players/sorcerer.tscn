@@ -282,6 +282,8 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_34bfb")
 sprite_frames = SubResource("SpriteFrames_6urby")
 animation = &"jump"
+offset = Vector2(0, -16)
+position = Vector2(0, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1715000558]
 position = Vector2(0, 1)

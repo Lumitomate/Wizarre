@@ -6,7 +6,9 @@ extends Area2D
 # dès le début du Grow ; un contact ennemi blesse et prévient le conteneur.
 
 signal grow_finished
-signal enemy_touched(index: int)
+## Émis avec le tronçon lui-même : le conteneur retrouve la tige qui le
+## contient pour ne décomposer qu'elle
+signal enemy_touched(segment)
 
 var caster: Node2D = null
 var index: int = 0
@@ -98,7 +100,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy_group"):
 		# Origine = le tronçon de ronce : l'ennemi est éjecté depuis la plante
 		body.hit(damage, reprisal_caster, self)
-		enemy_touched.emit(index)
+		enemy_touched.emit(self)
 	elif body.is_in_group("player_group"):
 		# Tout sorcier au contact est blessé (y compris le lanceur)
 		body.hit(damage)

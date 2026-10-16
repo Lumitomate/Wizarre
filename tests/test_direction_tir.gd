@@ -66,7 +66,7 @@ func _tirer_et_direction(sorcier: Sorcerer) -> Vector2:
 	return boules[boules.size() - 1].direction
 
 
-func _boules(sorcier: Sorcerer) -> Array:
+func _boules(_sorcier: Sorcerer) -> Array:
 	var resultat := []
 	for child in get_children():
 		if child is AttackFireBall:

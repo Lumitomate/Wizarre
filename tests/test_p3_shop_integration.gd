@@ -70,8 +70,10 @@ func _run() -> void:
 		failures += 1
 	spawner2.free()
 
-	# 4. La scène d'attaque elle-même se charge
-	var atk_scene: PackedScene = load("res://scenes/atk/atk_p3_plant_bramble.tscn")
+	# 4. La scène du TRONÇON se charge (c'est là que vivent les anims
+	# Grow/Idle ; la scène conteneur n'a que base + graine, cf.
+	# atk_p3_bramble_segment.gd)
+	var atk_scene: PackedScene = load("res://scenes/atk/atk_p3_bramble_segment.tscn")
 	if atk_scene == null:
 		print("FAIL: atk_p3_plant_bramble.tscn ne se charge pas")
 		failures += 1

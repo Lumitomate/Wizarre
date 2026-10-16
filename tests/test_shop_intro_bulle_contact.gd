@@ -56,7 +56,7 @@ func _physics_process(_delta: float) -> void:
 		var bulle2: Node2D = inst.get_node("Bubble2")
 		bulle2.position = inst.get_node("Bubble").position + Vector2(200, 0)
 		var fired := {"value": false}
-		bulle2.get_node("ZoneContact").body_entered.connect(func(b: Node2D) -> void:
+		bulle2.get_node("ZoneContact").body_entered.connect(func(_b: Node2D) -> void:
 			fired.value = true)
 		sorcier_test.global_position = bulle2.global_position + Vector2(30, 0)
 		print(">>> sorcier placé à 30px du centre de la bulle 2 (zone 34px)")

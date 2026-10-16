@@ -23,6 +23,23 @@ var is_jumping: bool = false
 @export var wall_jump_impulse: int = 900 # impulsion verticale fixe du wall jump (plus haut que jump_impulse_min)
 @export var wall_jump_horizontal_impulse: int = 500 # impulsion horizontale de base, opposée au mur
 @export var wall_jump_stick_influence: float = 0.4 # à quel point le stick modifie la direction du wall jump
+
+# --- Squash & Stretch (effets PUREMENT VISUELS sur le sprite) ---
+# Ces paramètres ne touchent JAMAIS la physique : seule l'échelle/rotation
+# du sprite change, autour d'un pivot posé aux pieds (astuce offset de la
+# scène). Le squash ponctuel (tween) et le stretch procédural se composent
+# multiplicativement à chaque frame (cf. _maj_sprite).
+@export_group("Squash & Stretch")
+@export var anticipation_force := 0.12      # compression avant saut (proportion de la taille)
+@export var anticipation_duree := 0.1       # durée du squash d'anticipation (s)
+@export var stretch_force := 0.15           # étirement max en montée (proportion)
+@export var stretch_vitesse_max := 600.0    # px/s de montée → étirement maximal
+@export var atterrissage_force := 0.15      # squash max à l'impact (proportion)
+@export var atterrissage_duree := 0.18      # durée du squash d'atterrissage (s)
+@export var rebond_force := 0.05            # overshoot (léger étirement) après le squash
+@export var atterrissage_vitesse_max := 1200.0 # px/s d'impact → squash maximal
+@export var inclinaison_force := 5.0        # degrés d'inclinaison max en course
+@export var inclinaison_lissage := 10.0     # vitesse du lissage de l'inclinaison (par s)
 @export var sorcerer_color: GlobalEnum.SorcererColor
 var controller_id: int = 0
 # Device physique dont on lit les entrées : distinct de controller_id
@@ -303,6 +320,66 @@ var wall_slide_timer: float = 0.0 # temps de glissade accumulé pour la durée m
 var jump_button_prev: bool = false # état du bouton A à la frame précédente (front montant pour le wall jump)
 var last_wall_jump_side: int = 0 # côté du mur du dernier wall jump (-1 = mur à gauche, +1 = mur à droite) ; 0 = réarmé (sol touché)
 
+# --- Fumée de contact (atterrissage, mur, glissade, wall jump) ---
+# Bouffée de pixels blanc-gris (famille « matière », blending NORMAL —
+# la poussière masque la lumière, elle ne l'ajoute pas) qui jaillit aux
+# instants où le corps rencontre une surface, style Dead Cells :
+# atterrissage, premier contact d'une glissade murale, poussée du wall
+# jump, et émission continue pendant la glissade. Intensité proportionnelle
+# à la vitesse du contact : sous le seuil, rien (les micro-contacts ne
+# fument pas) ; au-delà, le nombre de particules grimpe jusqu'au max.
+# Seuil calé sur la gravité du jeu (fall_acceleration = 3000) : 400 px/s
+# ≈ une chute de 27 px minimum ; 1200 px/s ≈ une chute de 240 px = nuage max.
+const POUSSIERE_TAILLE := 3          # px écran par pixel de fumée
+const POUSSIERE_COULEURS: Array[Color] = [
+	Color(1, 1, 1), Color(0.85, 0.85, 0.85), Color(0.7, 0.7, 0.7)]
+const POUSSIERE_FORCE_MIN := 3       # particules au contact le plus doux
+const POUSSIERE_FORCE_MAX := 8       # particules au contact le plus violent
+const POUSSIERE_SEUIL_VITESSE := 400.0  # px/s : en dessous, pas de fumée
+const POUSSIERE_VITESSE_MAX := 1200.0   # px/s : au-delà, force maximale
+const POUSSIERE_DUREE := 0.35        # durée de vie d'une particule (s)
+const POUSSIERE_DISTANCE := 16.0     # dispersion depuis le point de contact (px)
+const POUSSIERE_DERIVE_HAUT := 10.0  # dérive verticale vers le haut (la fumée monte)
+const POUSSIERE_GLISCADE_INTERVAL := 0.07  # délai entre 2 particules pendant une glissade (s)
+## Teinture par la surface : mélange entre la couleur moyenne de la tuile
+## touchée et le blanc (0 = couleur brute du sol, 1 = blanc pur). 0.5 :
+## la fumée garde sa nature claire et lisible tout en prenant la teinte
+## du sol (briques violettes → fumée mauve claire).
+const POUSSIERE_TEINTE_MIX := 0.5
+## Écart angulaire de l'éventail (demi-angle autour de la normale). Au
+## sol : ±90° → les particules partent STRICTEMENT sur les côtés
+## (l'horizontale), jamais vers le haut — la dérive les fait monter
+## ensuite. Au mur : plus resserré (±60°).
+const POUSSIERE_EVENTAIL_SOL := PI / 2.0
+const POUSSIERE_EVENTAIL_MUR := PI / 3.0
+## Remontée du point d'émission au sol : les pixels de 3 px sont centrés
+## sur le point de contact, 2 px au-dessus de la surface les fait
+## flotter JUSTE au-dessus du sol au lieu d'à moitié dedans.
+const POUSSIERE_HAUSSE_PIEDS := 2.0
+
+var poussiere_glissade_accum: float = 0.0  # accumulateur d'émission continue de glissade
+var etait_au_sol: bool = false       # is_on_floor() de la frame précédente (détection d'atterrissage)
+var etait_en_glissade: bool = false  # glissade de la frame précédente (détection du contact du mur)
+static var _poussiere_texture: ImageTexture = null
+
+# --- Squash & stretch : état des effets visuels ---
+var _squash_tween: Tween = null       # tween d'anticipation ou d'atterrissage en cours
+var _squash_x := 0.0                  # écart d'échelle horizontale du tween ponctuel
+var _squash_y := 0.0                  # écart d'échelle verticale du tween ponctuel
+var _inclinaison := 0.0               # rotation lissée de course (radians)
+
+# --- Échantillonnage de la couleur de surface ---
+# La fumée prend la teinte de la tuile touchée (moyenne de la tuile,
+# mélangée à du blanc, cf. POUSSIERE_TEINTE_MIX). Coût : l'image de
+# l'atlas du tileset est décodée UNE fois par texture (cache statique),
+# la moyenne de chaque tuile est calculée à sa première utilisation
+# (cache statique) — ensuite, un atterrissage ne coûte que des lectures
+# en mémoire. Pas de tuile sous le contact (portes, sprites non-tuilés)
+# → repli sur le blanc-gris d'origine.
+var _tilemap_memo: TileMapLayer = null  # TileMapLayer du niveau, trouvé une fois
+static var _surface_images: Dictionary = {}   # texture de l'atlas → Image décodée
+static var _moyennes_tuiles: Dictionary = {}  # "textureId_x_y" → Color moyenne
+
 var current_state: GlobalEnum.State = GlobalEnum.State.IDLE
 # Vrai tant que l'animation d'attaque cosmétique est en cours (elle est
 # alors coupée par un changement d'état, ou relancée par un nouveau tir)
@@ -543,6 +620,10 @@ func _physics_process(delta: float) -> void:
 	if frozen:
 		return
 
+	# Effets visuels procéduraux (stretch, inclinaison) : lisent la
+	# vélocité sans jamais l'écrire, aucun impact gameplay
+	_update_effets_visuels(delta)
+
 	if is_dashing:
 		velocity = dash_direction * dash_speed
 		move_and_slide()
@@ -594,6 +675,15 @@ func _physics_process(delta: float) -> void:
 		jump_pressed_time = 0.0
 		velocity.y = -jump_impulse_min
 		set_state(GlobalEnum.State.JUMP)
+		# Anticipation visuelle en PARALLÈLE (aucun délai d'input) : le
+		# sorcier semble jaillir du sol en se décompressant. Pas d'effet
+		# équivalent au wall jump : la chute l'étire déjà, et le mur a
+		# son nuage de poussière.
+		_lancer_anticipation()
+		# Décollage : même bouffée qu'à l'atterrissage (pieds, éventail
+		# latéral), force indexée sur l'impulsion du saut — la fumée
+		# reste au point de départ, elle matérialise l'envol
+		spawn_poussiere(_position_pieds(), Vector2.UP, jump_impulse_min, POUSSIERE_EVENTAIL_SOL)
 
 	# --- Dead Cells style hit flash & blink ---
 	if is_hit_flash:
@@ -635,8 +725,20 @@ func _physics_process(delta: float) -> void:
 	var touching_wall := wall_side != 0 and axis_x * wall_side > 0.2 and velocity.y > 0
 	if touching_wall:
 		wall_slide_timer += delta
+		# Fumée au premier contact du mur (proportionnelle à la vitesse de
+		# chute à l'impact), puis émission continue légère tant que la
+		# glissade dure (les bottes raclent le mur)
+		if not etait_en_glissade:
+			spawn_poussiere(_position_contact_mur(wall_side), Vector2(-wall_side, 0), absf(velocity.y), POUSSIERE_EVENTAIL_MUR)
+		else:
+			poussiere_glissade_accum += delta
+			if poussiere_glissade_accum >= POUSSIERE_GLISCADE_INTERVAL:
+				poussiere_glissade_accum = 0.0
+				_spawn_particule_poussiere(_position_contact_mur(wall_side), Vector2(-wall_side, 0), POUSSIERE_EVENTAIL_MUR)
 	else:
 		wall_slide_timer = 0.0 # on repose le compteur dès qu'on quitte le mur
+		poussiere_glissade_accum = 0.0
+	etait_en_glissade = touching_wall
 	is_wall_sliding = touching_wall and wall_slide_timer <= wall_slide_max_duration
 
 	# Gravité (réduite pendant la glissade : la chute est plafonnée)
@@ -658,6 +760,14 @@ func _physics_process(delta: float) -> void:
 		if last_wall_jump_side != wall_side:
 			last_wall_jump_side = wall_side
 
+			# La poussée déloge un VRAI nuage au point de contact du mur :
+			# force maximale (la vitesse de chute est ici plafonnée par la
+			# glissade, trop basse pour le seuil), et particules partant en
+			# MAJORITÉ vers le bas (la poussière délogée tombe le long du mur).
+			# mur_cote clampe l'arrivée du côté libre : sans lui, l'éventail
+			# vers le bas renverrait une moitié des particules DANS le mur.
+			spawn_poussiere(_position_contact_mur(wall_side), Vector2.DOWN, POUSSIERE_VITESSE_MAX, POUSSIERE_EVENTAIL_MUR, wall_side)
+
 			# 4 : impulsion diagonale opposée au mur, légèrement modulée par le stick.
 			# Pousser plus loin du mur écarte la trajectoire, pousser vers le mur la resserre,
 			# mais impossible de sauter DANS le mur.
@@ -673,11 +783,19 @@ func _physics_process(delta: float) -> void:
 			set_state(GlobalEnum.State.JUMP)
 
 	# Physique
+	var vitesse_avant := velocity.y
 	move_and_slide()
 
 	# Mise à jour des états
 	if is_on_floor():
 		last_wall_jump_side = 0 # le sol réarme le wall jump (2B)
+		# Atterrissage : transition air → sol avec une vitesse de chute
+		# suffisante → bouffée proportionnelle à l'impact
+		if not etait_au_sol and vitesse_avant > 0.0:
+			spawn_poussiere(_position_pieds(), Vector2.UP, vitesse_avant, POUSSIERE_EVENTAIL_SOL)
+			# Squash d'impact, force ∝ vitesse d'atterrissage (mêmes
+			# données que la fumée) ; l'overshoot fait le rebond discret
+			_lancer_squash_atterrissage(clampf(vitesse_avant / atterrissage_vitesse_max, 0.25, 1.0))
 		if abs(velocity.x) > 0:
 			set_state(GlobalEnum.State.RUN)
 		else:
@@ -685,6 +803,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		if velocity.y > 0:
 			set_state(GlobalEnum.State.FALL)
+	etait_au_sol = is_on_floor()
 
 
 func _update_hit_flash(delta: float) -> void:
@@ -711,6 +830,11 @@ func spawn_dash_afterimage() -> void:
 	afterimage.global_rotation = $AnimatedSprite2D.global_rotation
 	afterimage.global_scale = $AnimatedSprite2D.global_scale
 	afterimage.flip_h = $AnimatedSprite2D.flip_h
+	# Même offset que le sprite (pivot aux pieds) : la traînée s'étend
+	# vers le haut depuis son origine, exactement comme le corps — et
+	# elle hérite de la pose déformée (inclinaison/squash) en cours,
+	# ce qui renforce la lecture du mouvement
+	afterimage.offset = $AnimatedSprite2D.offset
 	afterimage.z_index = z_index + 10 # au-dessus de tout pour être visible
 
 	# Dupliqué pour hériter aussi des couleurs du shader (sinon les
@@ -742,6 +866,264 @@ func is_dash_blocked() -> bool:
 		if dash_direction.dot(collision.get_normal()) < -0.1:
 			return true
 	return false
+
+
+# --- Squash & stretch : implémentation ---
+
+## Mise à jour par frame des effets CONTINUS (aucun impact gameplay :
+## la vélocité n'est que lue). Stretch : uniquement à la montée (la
+## descente et le sommet retrouvent la taille normale avant
+## l'atterrissage). Inclinaison : cible ∝ vitesse horizontale, lissée
+## exponentiellement (retour doux à 0° à l'arrêt).
+func _update_effets_visuels(delta: float) -> void:
+	var cible := clampf(velocity.x / float(speed), -1.0, 1.0) * deg_to_rad(inclinaison_force)
+	_inclinaison = lerpf(_inclinaison, cible, 1.0 - exp(-inclinaison_lissage * delta))
+	_maj_sprite()
+
+
+## Applique au sprite la composition procédural (stretch/inclinaison)
+## × squash ponctuel (tween). SEUL endroit où le sprite est transformé.
+func _maj_sprite() -> void:
+	var f := clampf(-velocity.y / stretch_vitesse_max, 0.0, 1.0)
+	var sprite := $AnimatedSprite2D
+	sprite.scale = Vector2(
+		(1.0 - stretch_force * f * 0.5) * (1.0 + _squash_x),
+		(1.0 + stretch_force * f) * (1.0 + _squash_y))
+	sprite.rotation = _inclinaison
+
+
+## Anticipation du saut : tween PUREMENT PARALLÈLE (le saut part
+## instantanément, l'effet se joue par-dessus la montée).
+func _lancer_anticipation() -> void:
+	if _squash_tween != null and _squash_tween.is_valid():
+		_squash_tween.kill()
+	_squash_tween = create_tween()
+	_squash_tween.tween_method(_appliquer_anticipation, 0.0, 1.0, anticipation_duree)
+
+
+## Courbe de l'anticipation : compression (0→35 %), retour (35→70 %),
+## puis taille normale — le stretch de la montée prend le relais.
+func _appliquer_anticipation(t: float) -> void:
+	if t < 0.35:
+		var s := t / 0.35
+		_squash_x = anticipation_force * s
+		_squash_y = -anticipation_force * s
+	elif t < 0.7:
+		var s := (t - 0.35) / 0.35
+		_squash_x = anticipation_force * (1.0 - s)
+		_squash_y = -anticipation_force * (1.0 - s)
+	else:
+		_squash_x = 0.0
+		_squash_y = 0.0
+	_maj_sprite()
+
+
+## Squash d'atterrissage : force entre 0 et 1 (∝ vitesse d'impact).
+func _lancer_squash_atterrissage(force: float) -> void:
+	if _squash_tween != null and _squash_tween.is_valid():
+		_squash_tween.kill()
+	_squash_tween = create_tween()
+	_squash_tween.tween_method(_appliquer_squash_atterrissage.bind(force), 0.0, 1.0, atterrissage_duree)
+
+
+## Courbe du squash d'atterrissage : impact (0→25 %), tenue (25→50 %),
+## overshoot vers un léger étirement (50→80 %), retour discret
+## (80→100 %). L'amplitude suit la force d'impact.
+func _appliquer_squash_atterrissage(t: float, force: float) -> void:
+	if t < 0.25:
+		var s := t / 0.25
+		_squash_x = atterrissage_force * force * s
+		_squash_y = -atterrissage_force * force * s
+	elif t < 0.5:
+		_squash_x = atterrissage_force * force
+		_squash_y = -atterrissage_force * force
+	elif t < 0.8:
+		var s := (t - 0.5) / 0.3
+		_squash_x = atterrissage_force * force * (1.0 - s) - rebond_force * force * s
+		_squash_y = -atterrissage_force * force * (1.0 - s) + rebond_force * force * s
+	else:
+		var s := (t - 0.8) / 0.2
+		_squash_x = -rebond_force * force * (1.0 - s)
+		_squash_y = rebond_force * force * (1.0 - s)
+	_maj_sprite()
+
+
+# --- Fumée de contact : implémentation ---
+
+## Bouffée de poussière au point de contact `centre`. `force` = vitesse du
+## contact (px/s) : en dessous de POUSSIERE_SEUIL_VITESSE, rien ; au-delà,
+## le nombre de particules monte linéairement jusqu'à POUSSIERE_FORCE_MAX.
+## `normale` = normale de la surface (UP au sol, horizontale au mur) :
+## les particules jaillissent en éventail autour de cette normale.
+func spawn_poussiere(centre: Vector2, normale: Vector2, force: float,\
+		eventail: float = POUSSIERE_EVENTAIL_MUR, mur_cote: int = 0) -> void:
+	if force < POUSSIERE_SEUIL_VITESSE:
+		return
+	var intensite := clampf(
+		(force - POUSSIERE_SEUIL_VITESSE) / (POUSSIERE_VITESSE_MAX - POUSSIERE_SEUIL_VITESSE),
+		0.0, 1.0)
+	var nombre := roundi(lerpf(POUSSIERE_FORCE_MIN, POUSSIERE_FORCE_MAX, intensite))
+	for i in nombre:
+		_spawn_particule_poussiere(centre, normale, eventail, mur_cote)
+
+
+## Une particule de fumée : pixel carré blanc-gris (nuance tirée au
+## hasard, comme le sang des ennemis a ses 3 couleurs), blending NORMAL
+## (pas de matériau : la poussière masque au lieu d'illuminer), éjectée
+## en éventail autour de `normale`, dérive vers le haut, fondu, puis
+## auto-libération. Ajoutée au PARENT du sorcier (le niveau) en
+## coordonnées GLOBALES : la fumée RESTE à l'endroit du contact au lieu
+## de suivre le sorcier — c'est elle qui matérialise d'où il a sauté.
+## Le tween est créé sur la particule elle-même : si le sorcier meurt
+## pendant, les particules finissent leur fondu et se libèrent seules.
+func _spawn_particule_poussiere(centre: Vector2, normale: Vector2,\
+		eventail: float = POUSSIERE_EVENTAIL_MUR, mur_cote: int = 0) -> void:
+	if _poussiere_texture == null:
+		_poussiere_texture = _generer_texture_carre(POUSSIERE_TAILLE)
+	var particule := Sprite2D.new()
+	particule.texture = _poussiere_texture
+	particule.set_meta("poussiere", true)  # repérable par les tests
+	var teinte := _nuance_poussiere(_couleur_surface(centre))
+	particule.modulate = Color(teinte.r, teinte.g, teinte.b, 1.0)
+	particule.z_index = 4
+	get_parent().add_child(particule)
+	particule.global_position = centre
+	var angle := normale.angle() + randf_range(-eventail, eventail)
+	var arrivee := centre \
+		+ Vector2.from_angle(angle) * POUSSIERE_DISTANCE * randf_range(0.3, 1.0) \
+		+ Vector2(0, -POUSSIERE_DERIVE_HAUT * randf_range(0.5, 1.0))
+	# Au mur : l'éventail peut renvoyer une particule DANS le mur — on
+	# clampe l'arrivée du côté libre (au moins 3 px du point de contact)
+	if mur_cote != 0:
+		var libre := -mur_cote
+		arrivee.x = centre.x + maxf((arrivee.x - centre.x) * libre, 3.0) * libre
+	var tween := particule.create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(particule, "global_position", arrivee, POUSSIERE_DUREE)\
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(particule, "modulate:a", 0.0, POUSSIERE_DUREE * 0.5)\
+		.set_delay(POUSSIERE_DUREE * 0.5)
+	tween.chain().tween_callback(particule.queue_free)
+
+
+## Couleur de FUMÉE pour un contact au point global `centre` : une des
+## 3 nuances de la teinte de la surface (mélangée au blanc, cf.
+## POUSSIERE_TEINTE_MIX), ou une des 3 nuances de gris d'origine si la
+## surface n'est pas une tuile (repli blanc-gris).
+func _nuance_poussiere(teinte: Color) -> Color:
+	if teinte == Color.WHITE:
+		return POUSSIERE_COULEURS[randi_range(0, POUSSIERE_COULEURS.size() - 1)]
+	match randi_range(0, 2):
+		0: return teinte.darkened(0.15)
+		1: return teinte
+		_: return teinte.lerp(Color.WHITE, 0.3)
+
+
+## Couleur de la surface au point global `centre` : moyenne de la tuile
+## du TileMapLayer du niveau sous ce point, mélangée au blanc. Blanc pur
+## si pas de tuile (repli) ou si la tuile est entièrement transparente.
+func _couleur_surface(centre: Vector2) -> Color:
+	var tilemap := _trouver_tilemap()
+	if tilemap == null:
+		return Color.WHITE
+	var cellule := tilemap.local_to_map(tilemap.to_local(centre))
+	var tuile: TileData = tilemap.get_cell_tile_data(cellule)
+	if tuile == null:
+		return Color.WHITE
+	var source := tilemap.tile_set.get_source(tilemap.get_cell_source_id(cellule)) as TileSetAtlasSource
+	if source == null or source.texture == null:
+		return Color.WHITE
+	var atlas_coords: Vector2i = tilemap.get_cell_atlas_coords(cellule)
+	var cle := "%s_%d_%d" % [source.texture.get_instance_id(), atlas_coords.x, atlas_coords.y]
+	if _moyennes_tuiles.has(cle):
+		return _moyennes_tuiles[cle].lerp(Color.WHITE, POUSSIERE_TEINTE_MIX)
+	var moyenne := _moyenne_tuile(source, atlas_coords)
+	_moyennes_tuiles[cle] = moyenne
+	return moyenne.lerp(Color.WHITE, POUSSIERE_TEINTE_MIX)
+
+
+## TileMapLayer du niveau : premier trouvé parmi les descendants du
+## parent du sorcier (le niveau), mémorisé (la recherche est coûteuse,
+## elle n'arrive qu'une fois par sorcier).
+func _trouver_tilemap() -> TileMapLayer:
+	if _tilemap_memo != null and is_instance_valid(_tilemap_memo):
+		return _tilemap_memo
+	var racine := get_parent()
+	if racine == null:
+		return null
+	var trouves := racine.find_children("*", "TileMapLayer", true, false)
+	if trouves.is_empty():
+		return null
+	_tilemap_memo = trouves[0]
+	return _tilemap_memo
+
+
+## Moyenne des pixels OPAQUES de la tuile `atlas_coords` dans l'atlas
+## `source` (les pixels transparents des tuiles à contours sont ignorés).
+func _moyenne_tuile(source: TileSetAtlasSource, atlas_coords: Vector2i) -> Color:
+	var img := _image_de_texture(source.texture)
+	if img == null:
+		return Color.WHITE
+	var taille := source.texture_region_size
+	var origine := atlas_coords * taille
+	var r := 0.0
+	var g := 0.0
+	var b := 0.0
+	var n := 0
+	for y in range(origine.y, origine.y + taille.y):
+		for x in range(origine.x, origine.x + taille.x):
+			var pixel := img.get_pixel(x, y)
+			if pixel.a > 0.0:
+				r += pixel.r
+				g += pixel.g
+				b += pixel.b
+				n += 1
+	if n == 0:
+		return Color.WHITE
+	return Color(r / n, g / n, b / n)
+
+
+## Image décodée d'une texture d'atlas (cache statique : le décodage
+## n'arrive qu'une fois par texture, pour tout le jeu).
+static func _image_de_texture(texture: Texture2D) -> Image:
+	if _surface_images.has(texture):
+		return _surface_images[texture]
+	var img := texture.get_image()
+	if img == null:
+		return null
+	if img.is_compressed():
+		img.decompress()
+	_surface_images[texture] = img
+	return img
+
+
+## Position globale des pieds du sorcier (bas de la capsule de collision),
+## scale du corps compris.
+func _position_pieds() -> Vector2:
+	var forme := $CollisionShape2D as CollisionShape2D
+	if forme == null or not forme.shape is CapsuleShape2D:
+		return global_position
+	var capsule := forme.shape as CapsuleShape2D
+	return global_position + Vector2(forme.position.x, forme.position.y + capsule.height * 0.5) * scale \
+		+ Vector2(0, -POUSSIERE_HAUSSE_PIEDS)
+
+
+## Point de contact avec le mur du côté `wall_side` (-1 = gauche, +1 = droite),
+## sur le flanc de la capsule (+2 px pour ne pas être DANS le mur).
+func _position_contact_mur(wall_side: int) -> Vector2:
+	var forme := $CollisionShape2D as CollisionShape2D
+	var rayon := 10.0
+	if forme != null and forme.shape is CapsuleShape2D:
+		rayon = (forme.shape as CapsuleShape2D).radius
+	return global_position + Vector2(wall_side * (rayon + 2.0), 0) * scale
+
+
+## Texture d'un carré blanc plein (pixel de fumée) — cache statique,
+## identique pour tous les sorciers.
+func _generer_texture_carre(taille: int) -> ImageTexture:
+	var img := Image.create(taille, taille, false, Image.FORMAT_RGBA8)
+	img.fill(Color(1, 1, 1, 1))
+	return ImageTexture.create_from_image(img)
 
 
 func stop_dash_on_collision() -> void:
@@ -961,9 +1343,13 @@ func _tube_button(tube_index: int) -> PlayerInput.Action:
 func select_tube(tube_index: int) -> void:
 	if tube_index < 0 or tube_index >= 3:
 		return
-	selected_tube = tube_index
-	# Délègue l'animation au sac (noms de nœuds et animations gérés par SorcererSac)
+	# Délègue l'animation au sac (noms de nœuds et animations gérés par
+	# SorcererSac), PUIS se synchronise : le sac peut RABAISSER le tube
+	# (ré-appui sur le tube sorti) — selected_tube doit refléter l'état
+	# visuel réel, sinon un objet pourrait être attrapé dans un tube
+	# descendu (la règle d'attrapage en boutique teste selected_tube)
 	$SorcererSac.select_tube(tube_index)
+	selected_tube = $SorcererSac.selected_tube
 
 # Cherche une mine posée par CE joueur encore en phase idle.
 # Caches : ces recherches sont appelées chaque frame physique (cible

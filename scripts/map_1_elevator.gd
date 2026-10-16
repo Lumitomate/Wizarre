@@ -74,6 +74,8 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	
 
 # 3 - avoir la frame à atteindre
+## Division entière VOLONTAIRE : la frame cible est un entier d'animation
+@warning_ignore("integer_division")
 func get_frame_to_reach()-> int:
 	
 	# Joueurs de la partie (une manette branchée en cours de partie et
@@ -84,6 +86,8 @@ func get_frame_to_reach()-> int:
 	if number_of_players_connected == 0:
 		return 0
 	
+	# Division entière VOLONTAIRE : la frame cible est un entier d'animation
+	@warning_ignore("integer_division")
 	return number_of_players_in_the_elevator * NUMBER_OF_FRAME_ELEVATOR / number_of_players_connected
 
 

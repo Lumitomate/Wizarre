@@ -58,7 +58,7 @@ func set_random_navigation_target() -> void:
 
 # Mort d'une mouche : les mouches survivantes de l'essaim prennent le
 # sorcier qui l'a tuée pour cible (celles qui n'en ont pas déjà une)
-func die(attacker: Node2D = null, origin: Node2D = null) -> void:
+func die(attacker: Node2D = null, _origin: Node2D = null) -> void:
 	var killer := attacker if attacker != null else last_attacker
 	if killer != null and is_instance_valid(killer) and killer.is_in_group("player_group"):
 		for member in swarm:

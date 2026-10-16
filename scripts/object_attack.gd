@@ -175,15 +175,29 @@ func _tube_cible(sorcier: Sorcerer) -> int:
 				tube_index = 0
 	return tube_index
 
-## Arrivée dans le tube : absorption visuelle (la sphère fond dans le
-## tube) puis chargement du sort.
+## Arrivée dans le tube : onde radiale d'arrivée (l'anneau jaillit de la
+## bouche du tube dès le début de l'absorption) puis absorption visuelle
+## (la sphère fond dans le tube) et chargement du sort.
 func _absorption() -> void:
+	_lancer_onde_arrivee()
 	if _sphere == null or not is_instance_valid(_sphere):
 		_finaliser()
 		return
 	var fondu := create_tween()
 	fondu.tween_property(_sphere, "modulate:a", 0.0, VOL_ABSORPTION)
 	fondu.tween_callback(_finaliser)
+
+## Onde d'arrivée : anneau radial coloré par la famille de l'objet,
+## géré par le SorcererSac (même langage visuel que le flash de
+## sélection). Déclenchée au début de l'absorption — l'instant où la
+## sphère touche le tube.
+func _lancer_onde_arrivee() -> void:
+	if _sorcier_cible == null or not is_instance_valid(_sorcier_cible):
+		return
+	var sac := _sorcier_cible.get_node_or_null("SorcererSac") as SorcererSac
+	if sac == null:
+		return
+	sac.flasher_onde(_tube_cible(_sorcier_cible), item_attack_type)
 
 ## Chargement du sort dans le tube de destination : tube re-déterminé à
 ## l'arrivée (le joueur peut avoir changé de sélection pendant le vol)
@@ -235,9 +249,9 @@ func _creer_sphere(couleur: Color) -> Node2D:
 
 ## Blending additif (lueur) sur un sprite d'effet
 func _halo_additif(sprite: Sprite2D) -> void:
-	var material := CanvasItemMaterial.new()
-	material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
-	sprite.material = material
+	var mat := CanvasItemMaterial.new()
+	mat.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	sprite.material = mat
 
 
 ## Génération de la texture de la sphère (pixel par pixel) : fondu doux
@@ -276,6 +290,19 @@ func _physics_process(delta: float) -> void:
 	)
 	position = _base_position + flottement + _recul
 	_maj_onde(delta)
+
+
+## Repositionne l'objet et RE-CALE sa lévitation sur un nouveau point
+## d'ancrage (utilisé par Shophands : téléport au bloc lors de la
+## décision, puis re-calage à la position flottante après l'émergence —
+## sinon la lévitation ramènerait l'objet à son ANCIENNE base à chaque
+## frame physique). Réinitialise le flottement : l'objet repose calme.
+func reposer_a(pos: Vector2) -> void:
+	position = pos
+	_base_position = pos
+	_base_initialisee = true
+	_temps = 0.0
+	_recul = Vector2.ZERO
 
 
 ## Ébranlement « objet poussé » (motif du titre, cf.
@@ -336,8 +363,8 @@ func _creer_onde() -> Sprite2D:
 		_onde_texture = ImageTexture.create_from_image(img)
 	var onde := Sprite2D.new()
 	onde.texture = _onde_texture
-	var material := ShaderMaterial.new()
-	material.shader = HEAT_SHADER
-	onde.material = material
+	var mat := ShaderMaterial.new()
+	mat.shader = HEAT_SHADER
+	onde.material = mat
 	onde.visible = false
 	return onde

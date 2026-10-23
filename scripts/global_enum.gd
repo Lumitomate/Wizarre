@@ -72,4 +72,5 @@ enum Location {
 	# valeurs existantes ne doivent jamais bouger.
 	SHOP_2PLAYERS_INTRO,
 	SHOP_4PLAYERS_INTRO,
+	SHOP_GAMBLING,
 }

@@ -17,6 +17,7 @@ var scenes = {
 	GlobalEnum.Location.SHOP_HANDS: "res://scenes/niveaux/magasin/magasin_don/shop_hands.tscn",
 	GlobalEnum.Location.SHOP_2PLAYERS_INTRO: "res://scenes/niveaux/magasin/magasin_intro/shop_2players_intro.tscn",
 	GlobalEnum.Location.SHOP_4PLAYERS_INTRO: "res://scenes/niveaux/magasin/magasin_intro/shop_4players_intro.tscn",
+	GlobalEnum.Location.SHOP_GAMBLING: "res://scenes/niveaux/magasin/magasin_casino/shop_gambling.tscn",
 }
 
 func _ready() -> void:

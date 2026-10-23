@@ -16,39 +16,55 @@ extends Node
 ##  - SHOP_4PLAYERS_RACE  : épreuve de course (3-4 joueurs, 1 couloir/joueur)
 ##  - SHOP_HANDS          : Shophands (3-4 joueurs, don d'un objet par le
 ##                          décideur, cf. docs/adr/0001-shophands.md)
+##  - SHOP_GAMBLING       : machine à sous du casino (le timing du joueur
+##                          désigne qui reçoit quelle attaque dans quel
+##                          tube, cf. gambling_machine.gd)
+
+## MODE TEST (temporaire) : si activé, TOUS les tirages renvoient
+## `magasin_force`, quel que soit le nombre de joueurs. Les magasins
+## d'intro ne passent pas par le routeur et ne sont donc pas affectés.
+@export var forcer_magasin: bool = false
+@export var magasin_force: GlobalEnum.Location = GlobalEnum.Location.SHOP_GAMBLING
 
 @export_group("Magasin à 1 joueur")
 ## Magasins possibles quand la partie compte 1 joueur.
 @export var magasins_1_joueur: Array[GlobalEnum.Location] = [
 	GlobalEnum.Location.SHOP,
+	GlobalEnum.Location.SHOP_GAMBLING,
 ]
 ## Poids de tirage correspondants (même ordre que la liste ci-dessus).
-@export var poids_1_joueur: Array[float] = [1.0]
+@export var poids_1_joueur: Array[float] = [1.0, 1.0]
 
 @export_group("Magasin à 2 joueurs")
 @export var magasins_2_joueurs: Array[GlobalEnum.Location] = [
 	GlobalEnum.Location.SHOP,
 	GlobalEnum.Location.SHOP_2PLAYERS_REFLEX,
 	GlobalEnum.Location.SHOP_2PLAYERS_RACE,
+	GlobalEnum.Location.SHOP_GAMBLING,
 ]
-@export var poids_2_joueurs: Array[float] = [1.0, 1.0, 1.0]
+@export var poids_2_joueurs: Array[float] = [1.0, 1.0, 1.0, 1.0]
 
 @export_group("Magasin à 3 joueurs")
 @export var magasins_3_joueurs: Array[GlobalEnum.Location] = [
 	GlobalEnum.Location.SHOP_HANDS,
+	GlobalEnum.Location.SHOP_GAMBLING,
 ]
-@export var poids_3_joueurs: Array[float] = [1.0]
+@export var poids_3_joueurs: Array[float] = [1.0, 1.0]
 
 @export_group("Magasin à 4 joueurs")
 @export var magasins_4_joueurs: Array[GlobalEnum.Location] = [
 	GlobalEnum.Location.SHOP_HANDS,
+	GlobalEnum.Location.SHOP_GAMBLING,
 ]
-@export var poids_4_joueurs: Array[float] = [1.0]
+@export var poids_4_joueurs: Array[float] = [1.0, 1.0]
 
 
 ## Tire au hasard le magasin d'un passage, selon le nombre de joueurs de la
 ## partie et les poids réglés dans l'inspecteur.
 func tirer_magasin(nb_joueurs: int) -> GlobalEnum.Location:
+	# Mode test : on court-circuite le tirage pondéré.
+	if forcer_magasin:
+		return magasin_force
 	var magasins: Array = []
 	var poids: Array = []
 	match nb_joueurs:

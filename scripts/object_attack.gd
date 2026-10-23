@@ -5,6 +5,12 @@ class_name AttackObject extends Area2D
 ## l'objet pris (cf. shop_hands.gd).
 signal attrapee(sorcier: Sorcerer)
 
+## Émis à la FIN du vol d'absorption, quand le sort est chargé dans le
+## tube (juste avant la libération de l'objet) : la machine à sous du
+## casino s'en sert pour savoir quand ouvrir la porte de sortie
+## (cf. gambling_machine.gd).
+signal delivre(sorcier: Sorcerer, tube_index: int)
+
 var item_attack_family: GlobalEnum.AttackFamily
 @export var item_attack_type: GlobalEnum.AttackType
 var item_attack_tier: GlobalEnum.AttackTier
@@ -45,6 +51,10 @@ const ONDE_ACTIVE := false
 const HEAT_SHADER := preload("res://assets/shaders/heat_wave.gdshader")
 
 var _sorcier_cible: Sorcerer = null
+## Tube de destination FORCÉ (>= 0) : utilisé par la livraison dirigée de
+## la machine à sous (donner_a) — le rouleau central de la machine décide
+## du tube, pas la sélection du joueur ni la famille de l'attaque.
+var _tube_force: int = -1
 var _depart: Vector2 = Vector2.ZERO
 var _sphere: Node2D = null
 # Garde anti double-catch : la coupure de collision est différée (serveur
@@ -78,6 +88,22 @@ func _ready() -> void:
 			
 	$ObjetAttaqueAnimation.play(animation_name)
 	
+## Livraison dirigée (machine à sous du casino, Q4) : lance le vol
+## d'absorption vers le sorcier désigné en FORÇANT l'index du tube de
+## destination — pas de contact requis, la machine « offre » l'objet.
+## Émet attrapee (parité avec la prise au contact) ; le signal delivre
+## partira à la fin du vol (cf. _finaliser).
+func donner_a(sorcier: Sorcerer, tube_index: int) -> void:
+	if _attrapee_deja:
+		return
+	_tube_force = clampi(tube_index, 0, 2)
+	_attrapee_deja = true
+	_sorcier_cible = sorcier
+	set_deferred("monitoring", false)
+	_lancer_vol(sorcier)
+	attrapee.emit(sorcier)
+
+
 func _on_body_entered(body: Node2D) -> void:
 	if _attrapee_deja:
 		return
@@ -159,9 +185,12 @@ func _position_tube() -> Vector2:
 		return _sorcier_cible.global_position
 	return tube.global_position
 
-## Index du tube de destination (règles d'origine : tube sélectionné en
-## boutique, sinon famille → tube).
+## Index du tube de destination : forcé si la livraison vient de la
+## machine à sous (donner_a), sinon règles d'origine : tube sélectionné
+## en boutique, sinon famille → tube.
 func _tube_cible(sorcier: Sorcerer) -> int:
+	if _tube_force >= 0:
+		return _tube_force
 	var tube_index: int = sorcier.selected_tube
 	if tube_index == -1:
 		match item_attack_family:
@@ -213,6 +242,7 @@ func _finaliser() -> void:
 		projected_spells[tube_index] = { "attack_type": item_attack_type, "attack_tier": 0 }
 		var tier: int = SpellRules.compute_tier(projected_spells, item_attack_type)
 		_sorcier_cible.set_attack(tube_index, item_attack_type, tier)
+		delivre.emit(_sorcier_cible, tube_index)
 	queue_free()
 
 ## Petite sphère lumineuse générée en code (aucun asset) : deux couches

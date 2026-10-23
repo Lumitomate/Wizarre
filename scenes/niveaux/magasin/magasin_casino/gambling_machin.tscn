@@ -1,0 +1,1127 @@
+[gd_scene format=3 uid="uid://bnlbfyneecwk2"]
+
+[ext_resource type="Texture2D" uid="uid://b3hxgdyfc2dd8" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Machine/Terrain1_Machine_1.png" id="1_4obmt"]
+[ext_resource type="Texture2D" uid="uid://bebtqb3yb0wos" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_2.png" id="1_okcdm"]
+[ext_resource type="Texture2D" uid="uid://ch5ey5di81n0q" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Machine/Terrain1_Machine_2.png" id="2_dd3xd"]
+[ext_resource type="Texture2D" uid="uid://bfp0066rd8kf3" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_3.png" id="2_mrnad"]
+[ext_resource type="Texture2D" uid="uid://cf4lo1s03r8q5" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Machine/Terrain1_Machine_3.png" id="3_p1gwd"]
+[ext_resource type="Texture2D" uid="uid://cjrvli0scxjor" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_4.png" id="3_xw332"]
+[ext_resource type="Texture2D" uid="uid://cf0rjodpljf8d" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Machine/Terrain1_Machine_4.png" id="4_3a56n"]
+[ext_resource type="Texture2D" uid="uid://4cis6pb0jh6" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_5.png" id="4_ptpgc"]
+[ext_resource type="Texture2D" uid="uid://dv17wwxvlb8tf" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Machine/Terrain1_Machine_5.png" id="5_s1rjc"]
+[ext_resource type="Texture2D" uid="uid://dwfp8bm7shp85" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_6.png" id="5_ukgw4"]
+[ext_resource type="Texture2D" uid="uid://cayqyr5cb0x5d" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_7.png" id="6_61kt1"]
+[ext_resource type="Texture2D" uid="uid://cyfbwkqo8vyvo" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Machine/Terrain1_Machine_6.png" id="6_y81ss"]
+[ext_resource type="Texture2D" uid="uid://43gosoc8syyf" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Machine/Terrain1_Machine_7.png" id="7_ue0ck"]
+[ext_resource type="Texture2D" uid="uid://de48g72p2vbrk" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_8.png" id="7_xn2j6"]
+[ext_resource type="Texture2D" uid="uid://bmgn52e7fq8ah" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Machine/Terrain1_Machine_8.png" id="8_0siad"]
+[ext_resource type="Texture2D" uid="uid://dg0wd5gyrlkls" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_9.png" id="8_spl3m"]
+[ext_resource type="Texture2D" uid="uid://bdrf130dwp713" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_10.png" id="9_l0wh6"]
+[ext_resource type="Texture2D" uid="uid://cajqa3v0nwrst" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Machine/Terrain1_Machine_9.png" id="9_x3ps3"]
+[ext_resource type="Texture2D" uid="uid://dyguvkyqrffg5" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Machine/Terrain1_Machine_10.png" id="10_fycxc"]
+[ext_resource type="Texture2D" uid="uid://dbmt8pg3ll0c4" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_11.png" id="10_snkoy"]
+[ext_resource type="Texture2D" uid="uid://dnbocnmdv6oav" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_12.png" id="11_gnkjg"]
+[ext_resource type="Texture2D" uid="uid://cavra5ybmo2di" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_13.png" id="12_s150f"]
+[ext_resource type="Texture2D" uid="uid://7ipey5r1qull" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_14.png" id="13_uepdi"]
+[ext_resource type="Texture2D" uid="uid://bcv5q6sw5t13v" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_15.png" id="14_nsv05"]
+[ext_resource type="Texture2D" uid="uid://30nxlj5ani75" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_16.png" id="15_af8sv"]
+[ext_resource type="Texture2D" uid="uid://dbgc0is6m4hkh" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_17.png" id="16_vltdp"]
+[ext_resource type="Texture2D" uid="uid://c180b6bf5lmhl" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_18.png" id="17_k4mcw"]
+[ext_resource type="Texture2D" uid="uid://doxgb4tbd6pdm" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_19.png" id="18_ittv8"]
+[ext_resource type="Texture2D" uid="uid://cmmusdj137gkm" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_20.png" id="19_e7le8"]
+[ext_resource type="Texture2D" uid="uid://5s0pf13wld1l" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_21.png" id="20_1hwgg"]
+[ext_resource type="Texture2D" uid="uid://duv4tjtc3fq1i" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_22.png" id="21_a4k61"]
+[ext_resource type="Texture2D" uid="uid://bvb0svxfsja0s" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_23.png" id="22_tsay5"]
+[ext_resource type="Texture2D" uid="uid://ba4t2kmun78f2" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_24.png" id="23_wxi8r"]
+[ext_resource type="Texture2D" uid="uid://divr8chlwmjeh" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_25.png" id="24_p52b6"]
+[ext_resource type="Texture2D" uid="uid://ctnw2sd8orlln" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_26.png" id="25_scgkc"]
+[ext_resource type="Texture2D" uid="uid://dyijwqxbbxoit" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_27.png" id="26_3yv7v"]
+[ext_resource type="Texture2D" uid="uid://dlufqvlckkps5" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_28.png" id="27_8xnp0"]
+[ext_resource type="Texture2D" uid="uid://dthgvhlqkpyfp" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_29.png" id="28_g77ry"]
+[ext_resource type="Texture2D" uid="uid://dkv2ngwqb63x7" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_30.png" id="29_pxn08"]
+[ext_resource type="Texture2D" uid="uid://cgvxy5jmmw70s" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_31.png" id="30_swkdh"]
+[ext_resource type="Texture2D" uid="uid://plgux4lgrov8" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_32.png" id="31_2aof6"]
+[ext_resource type="Texture2D" uid="uid://5161f5jp48xo" path="res://assets/sprites/Map1/Terrain1_Casino/Engrenage/Terrain1_Engrenage_1.png" id="32_k8512"]
+[ext_resource type="Texture2D" uid="uid://dkojfuja4rhmn" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_1.png" id="43_l52j0"]
+[ext_resource type="Texture2D" uid="uid://6m5jx2i8i5f1" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_2.png" id="44_fshbj"]
+[ext_resource type="Texture2D" uid="uid://b6ocu4i5rgf2q" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_3.png" id="45_yvwgl"]
+[ext_resource type="Texture2D" uid="uid://cjvn2e563wyuj" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_4.png" id="46_xpu43"]
+[ext_resource type="Texture2D" uid="uid://cdgjnsw213442" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_5.png" id="47_tndaj"]
+[ext_resource type="Texture2D" uid="uid://k4d60a8suujs" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_6.png" id="48_b6lto"]
+[ext_resource type="Texture2D" uid="uid://ccssdf0omv2tf" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_7.png" id="49_dvmh6"]
+[ext_resource type="Texture2D" uid="uid://bm201mbwqcdnn" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_8.png" id="50_lgre7"]
+[ext_resource type="Texture2D" uid="uid://7bmfw7qcru30" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_9.png" id="51_f1rv1"]
+[ext_resource type="Texture2D" uid="uid://4dwxo4p6m07w" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_10.png" id="52_d6luj"]
+[ext_resource type="Texture2D" uid="uid://dwd8y3bdjk2en" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_11.png" id="53_uem1x"]
+[ext_resource type="Texture2D" uid="uid://csjjhfvg4qsdt" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_12.png" id="54_lquyr"]
+[ext_resource type="Texture2D" uid="uid://bwljl7qnce0mb" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_13.png" id="55_kgwj3"]
+[ext_resource type="Texture2D" uid="uid://dp7agx04xlrhd" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_14.png" id="56_ldjlg"]
+[ext_resource type="Texture2D" uid="uid://kej208rclex5" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_15.png" id="57_m8t7i"]
+[ext_resource type="Texture2D" uid="uid://i5s4rhxonvc" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_16.png" id="58_syvoe"]
+[ext_resource type="Texture2D" uid="uid://b3gx0igdhco3n" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_17.png" id="59_idki4"]
+[ext_resource type="Texture2D" uid="uid://5uofwmfpbed8" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_18.png" id="60_j7hi5"]
+[ext_resource type="Texture2D" uid="uid://8yn521tl3shf" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_19.png" id="61_dp38n"]
+[ext_resource type="Texture2D" uid="uid://gkp7s84vdxrj" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_20.png" id="62_jc051"]
+[ext_resource type="Texture2D" uid="uid://dpgs0afnughre" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_21.png" id="63_hl13w"]
+[ext_resource type="Texture2D" uid="uid://dv3iqxdgyafjx" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_22.png" id="64_ltcgt"]
+[ext_resource type="Texture2D" uid="uid://ne8bgfa2i6yu" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_23.png" id="65_gbw47"]
+[ext_resource type="Texture2D" uid="uid://cj4aksyvcslil" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_24.png" id="66_sf4wd"]
+[ext_resource type="Texture2D" uid="uid://b3dstp1i78plk" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_25.png" id="67_n036p"]
+[ext_resource type="Texture2D" uid="uid://cpj1tvvd13l7v" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_26.png" id="68_g8l06"]
+[ext_resource type="Texture2D" uid="uid://7ji8r6ytvpq4" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_27.png" id="69_xd0jc"]
+[ext_resource type="Texture2D" uid="uid://cjoteyfeuba0o" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_28.png" id="70_gmnpc"]
+[ext_resource type="Texture2D" uid="uid://cc7wxrb5n430w" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_29.png" id="71_11pjq"]
+[ext_resource type="Texture2D" uid="uid://0053b4asxd72" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_30.png" id="72_wwet4"]
+[ext_resource type="Texture2D" uid="uid://cv63lpevk1ysj" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_31.png" id="73_q8roi"]
+[ext_resource type="Texture2D" uid="uid://bx3kfxombdoye" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_32.png" id="74_aepnd"]
+[ext_resource type="Texture2D" uid="uid://ck52gaur6nvgj" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_33.png" id="75_6dhi6"]
+[ext_resource type="Texture2D" uid="uid://t21s40qa37t1" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_34.png" id="76_o7c63"]
+[ext_resource type="Texture2D" uid="uid://ot1x0tdq66py" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_35.png" id="77_obgy6"]
+[ext_resource type="Texture2D" uid="uid://ca56o2sc5mpq0" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_36.png" id="78_rw0mn"]
+[ext_resource type="Texture2D" uid="uid://cmf4gu55gamhn" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_37.png" id="79_gec5x"]
+[ext_resource type="Texture2D" uid="uid://do08basl0mi2s" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_38.png" id="80_vbvlt"]
+[ext_resource type="Texture2D" uid="uid://cm0s6dgy5dhkh" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_39.png" id="81_a1g1g"]
+[ext_resource type="Texture2D" uid="uid://f1cydgytst5p" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_40.png" id="82_n1ew6"]
+[ext_resource type="Texture2D" uid="uid://b5pxgm6e6pv4t" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_41.png" id="83_do88x"]
+[ext_resource type="Texture2D" uid="uid://co88h0twha1m3" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_42.png" id="84_d1anq"]
+[ext_resource type="Texture2D" uid="uid://b1u44ocaau3rw" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_43.png" id="85_5sgxj"]
+[ext_resource type="Texture2D" uid="uid://r2dwko1r5afi" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_44.png" id="86_yw47i"]
+[ext_resource type="Texture2D" uid="uid://c8qovsxcq7ws3" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_45.png" id="87_slnci"]
+[ext_resource type="Texture2D" uid="uid://c7a3wahrwdypx" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_46.png" id="88_4idjh"]
+[ext_resource type="Texture2D" uid="uid://cwkgvx826i58t" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereC/Terrain1_Casino_LumièreCentre_47.png" id="89_1fe80"]
+[ext_resource type="Texture2D" uid="uid://ki1tmvv1k8pl" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_1.png" id="90_tfd28"]
+[ext_resource type="Texture2D" uid="uid://df6penyxhllcn" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_2.png" id="91_o6niq"]
+[ext_resource type="Texture2D" uid="uid://c4n17eud1xie6" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_3.png" id="92_n50fn"]
+[ext_resource type="Texture2D" uid="uid://b0j0yc3a35jxn" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_4.png" id="93_8t860"]
+[ext_resource type="Texture2D" uid="uid://clevm6oktl5uu" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_5.png" id="94_sldvj"]
+[ext_resource type="Texture2D" uid="uid://dnvg2d76fs40r" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_6.png" id="95_te52b"]
+[ext_resource type="Texture2D" uid="uid://cd438k21ryq1e" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_7.png" id="96_m5cj2"]
+[ext_resource type="Texture2D" uid="uid://c1mnoto8xtbfd" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_8.png" id="97_akpi0"]
+[ext_resource type="Texture2D" uid="uid://c1ssprcokk5g5" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_9.png" id="98_kspbt"]
+[ext_resource type="Texture2D" uid="uid://dxhvqw8eil5u8" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_10.png" id="99_j6qgk"]
+[ext_resource type="Texture2D" uid="uid://5qqabxf6orr6" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_11.png" id="100_2uqgn"]
+[ext_resource type="Texture2D" uid="uid://c7ccybg8f0oy4" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_12.png" id="101_dpunc"]
+[ext_resource type="Texture2D" uid="uid://bhfs4w7s0rrxi" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_13.png" id="102_xldcf"]
+[ext_resource type="Texture2D" uid="uid://lwksb46xccje" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_14.png" id="103_v3l0d"]
+[ext_resource type="Texture2D" uid="uid://dgq0n7bucx0dj" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_15.png" id="104_3d0l8"]
+[ext_resource type="Texture2D" uid="uid://58kfq8m08yey" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_16.png" id="105_itcue"]
+[ext_resource type="Texture2D" uid="uid://t754222fnc71" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_17.png" id="106_a4m32"]
+[ext_resource type="Texture2D" uid="uid://danbxwqn2cjbs" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_18.png" id="107_81pao"]
+[ext_resource type="Texture2D" uid="uid://dd1x5ypijpdta" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_19.png" id="108_cmhj7"]
+[ext_resource type="Texture2D" uid="uid://d2we0pi65eq2p" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_20.png" id="109_5x71u"]
+[ext_resource type="Texture2D" uid="uid://crum0t4bk7iro" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_21.png" id="110_i0gil"]
+[ext_resource type="Texture2D" uid="uid://bhx0ib8kjd2y4" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_22.png" id="111_5lc2e"]
+[ext_resource type="Texture2D" uid="uid://xvcrg02wjl6r" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_23.png" id="112_tsyq6"]
+[ext_resource type="Texture2D" uid="uid://cga4fbmdh3gdo" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_24.png" id="113_lqhyd"]
+[ext_resource type="Texture2D" uid="uid://6r7vx2hsh7ge" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_25.png" id="114_qnueh"]
+[ext_resource type="Texture2D" uid="uid://dnxkbqksqobsn" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_26.png" id="115_4lhf2"]
+[ext_resource type="Texture2D" uid="uid://lrk4ecf0a8y8" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_27.png" id="116_smg04"]
+[ext_resource type="Texture2D" uid="uid://yjplhh2wp2wh" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_28.png" id="117_u03tk"]
+[ext_resource type="Texture2D" uid="uid://deq1tidopoc34" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_29.png" id="118_cmiua"]
+[ext_resource type="Texture2D" uid="uid://cplpafbi16nao" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_30.png" id="119_bdrxc"]
+[ext_resource type="Texture2D" uid="uid://cwtgdxebacqt7" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_31.png" id="120_whmmf"]
+[ext_resource type="Texture2D" uid="uid://comiuf2r4a73y" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_32.png" id="121_33kvk"]
+[ext_resource type="Texture2D" uid="uid://cgfhy4sgtcuko" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_33.png" id="122_00vwg"]
+[ext_resource type="Texture2D" uid="uid://dcpqtm05mr1ej" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_34.png" id="123_2xa8y"]
+[ext_resource type="Texture2D" uid="uid://bufwq4e8j52l7" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_35.png" id="124_ysoiq"]
+[ext_resource type="Texture2D" uid="uid://cbek0qsiu400" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_36.png" id="125_0xnsy"]
+[ext_resource type="Texture2D" uid="uid://18xhlbm46udw" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_37.png" id="126_yhpej"]
+[ext_resource type="Texture2D" uid="uid://diuyic0gviuup" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_38.png" id="127_s0lak"]
+[ext_resource type="Texture2D" uid="uid://ctwhym5xgo1jg" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_39.png" id="128_ubn1f"]
+[ext_resource type="Texture2D" uid="uid://hmmspetkn05c" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_40.png" id="129_tfj5l"]
+[ext_resource type="Texture2D" uid="uid://u10xhd4gb8lt" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_41.png" id="130_lfx8c"]
+[ext_resource type="Texture2D" uid="uid://bbk8srlsaetun" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_42.png" id="131_sa17y"]
+[ext_resource type="Texture2D" uid="uid://bey4oataygbud" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_43.png" id="132_caj0d"]
+[ext_resource type="Texture2D" uid="uid://c04cdlrq7cpop" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_44.png" id="133_3dyum"]
+[ext_resource type="Texture2D" uid="uid://dil3ky26f6i3m" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_45.png" id="134_vdsu5"]
+[ext_resource type="Texture2D" uid="uid://cpleaba2t6kv3" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_46.png" id="135_3msqu"]
+[ext_resource type="Texture2D" uid="uid://bvphav0ktpxen" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_47.png" id="136_r7woc"]
+[ext_resource type="Texture2D" uid="uid://b03so35junc73" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_48.png" id="137_aw7l8"]
+[ext_resource type="Texture2D" uid="uid://b56iost48hgf" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_49.png" id="138_qifvd"]
+[ext_resource type="Texture2D" uid="uid://2q7113c4deqs" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_50.png" id="139_xe5jb"]
+[ext_resource type="Texture2D" uid="uid://y81380mrgm53" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_51.png" id="140_qwx21"]
+[ext_resource type="Texture2D" uid="uid://dikf22g07tdn4" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_52.png" id="141_53gqi"]
+[ext_resource type="Texture2D" uid="uid://p7m01oskcsa3" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_53.png" id="142_m0fvu"]
+[ext_resource type="Texture2D" uid="uid://b0fs5hr4lmox4" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_54.png" id="143_txco6"]
+[ext_resource type="Texture2D" uid="uid://gcnintn5devk" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereD/Terrain1_Casino_LumiereDroite_55.png" id="144_ryus4"]
+[ext_resource type="Texture2D" uid="uid://k6yibt76ru14" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_1.png" id="145_vbd3b"]
+[ext_resource type="Texture2D" uid="uid://c4ww0hggy7ecq" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_2.png" id="146_p78in"]
+[ext_resource type="Texture2D" uid="uid://s76s3f84diuw" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_3.png" id="147_vusm3"]
+[ext_resource type="Texture2D" uid="uid://q02gg2iemcg6" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_4.png" id="148_56ayi"]
+[ext_resource type="Texture2D" uid="uid://cmf8bkwqqbh07" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_5.png" id="149_ydw1q"]
+[ext_resource type="Texture2D" uid="uid://cwnfjbi0evlx" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_6.png" id="150_2jbq7"]
+[ext_resource type="Texture2D" uid="uid://c313eey3o71us" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_7.png" id="151_83dqq"]
+[ext_resource type="Texture2D" uid="uid://bjkdqd0nh4l30" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_8.png" id="152_eun5r"]
+[ext_resource type="Texture2D" uid="uid://d37p50o0rrk6s" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_9.png" id="153_w03mp"]
+[ext_resource type="Texture2D" uid="uid://n2k0e1d8nnrl" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_10.png" id="154_kjh52"]
+[ext_resource type="Texture2D" uid="uid://oeimnry1agba" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_11.png" id="155_omd5a"]
+[ext_resource type="Texture2D" uid="uid://b2meys6txxcc3" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_12.png" id="156_plbev"]
+[ext_resource type="Texture2D" uid="uid://xk111d5btis1" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_13.png" id="157_eir4v"]
+[ext_resource type="Texture2D" uid="uid://d2exgsdv006t2" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_14.png" id="158_cpbjm"]
+[ext_resource type="Texture2D" uid="uid://dr2ue082bu5iv" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_15.png" id="159_8mdgh"]
+[ext_resource type="Texture2D" uid="uid://1a6edowfwsbd" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_16.png" id="160_vpmys"]
+[ext_resource type="Texture2D" uid="uid://wkobya641q5f" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_17.png" id="161_orjsu"]
+[ext_resource type="Texture2D" uid="uid://kgb8oq04tyev" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_18.png" id="162_qk6sm"]
+[ext_resource type="Texture2D" uid="uid://0n2uuu0xb8q4" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_19.png" id="163_dygfc"]
+[ext_resource type="Texture2D" uid="uid://c1dm1ig7246j" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_20.png" id="164_juxog"]
+[ext_resource type="Texture2D" uid="uid://rcxn6aeclku" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_21.png" id="165_3mchu"]
+[ext_resource type="Texture2D" uid="uid://ccxxwldngfrh1" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_22.png" id="166_pcmdf"]
+[ext_resource type="Texture2D" uid="uid://bohwy1qxthh1h" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_23.png" id="167_nuw4b"]
+[ext_resource type="Texture2D" uid="uid://bxa37e0m851rq" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_24.png" id="168_y603i"]
+[ext_resource type="Texture2D" uid="uid://csb2xt04klkwy" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_25.png" id="169_5gvle"]
+[ext_resource type="Texture2D" uid="uid://dds2ky38k7sd4" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_26.png" id="170_jmui6"]
+[ext_resource type="Texture2D" uid="uid://bg35et25kxwk8" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_27.png" id="171_31u3k"]
+[ext_resource type="Texture2D" uid="uid://breiut6jcqucr" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_28.png" id="172_iloy6"]
+[ext_resource type="Texture2D" uid="uid://d217x4haxxnm7" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_29.png" id="173_rx0hs"]
+[ext_resource type="Texture2D" uid="uid://ckgt3n2xw4fle" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_30.png" id="174_8ae40"]
+[ext_resource type="Texture2D" uid="uid://igrhiaacnkb4" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_31.png" id="175_xepie"]
+[ext_resource type="Texture2D" uid="uid://bhhiv2cgfs88y" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_32.png" id="176_obqck"]
+[ext_resource type="Texture2D" uid="uid://dwtdefun2r6uy" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_33.png" id="177_7uo2y"]
+[ext_resource type="Texture2D" uid="uid://vatvjto15cn" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_34.png" id="178_61od3"]
+[ext_resource type="Texture2D" uid="uid://calgkks6gjslk" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_35.png" id="179_h4s1e"]
+[ext_resource type="Texture2D" uid="uid://cgg2vwi4hwrpt" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_36.png" id="180_4aqut"]
+[ext_resource type="Texture2D" uid="uid://ctx1xakq2o1du" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_37.png" id="181_lwxb4"]
+[ext_resource type="Texture2D" uid="uid://b42lw7xjpg3iq" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_38.png" id="182_g3vag"]
+[ext_resource type="Texture2D" uid="uid://ca7hr0beew2k6" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_39.png" id="183_7jcmt"]
+[ext_resource type="Texture2D" uid="uid://c2enqxa05oujb" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_40.png" id="184_tkrxf"]
+[ext_resource type="Texture2D" uid="uid://xbd4da6uy7ta" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_41.png" id="185_rin8l"]
+[ext_resource type="Texture2D" uid="uid://jjwdyjkw0vsp" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_42.png" id="186_v8rri"]
+[ext_resource type="Texture2D" uid="uid://cs687et8gxr2p" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_43.png" id="187_hgmbo"]
+[ext_resource type="Texture2D" uid="uid://d2js0oifqcjcf" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_44.png" id="188_p07nn"]
+[ext_resource type="Texture2D" uid="uid://dl8w727mgfuwq" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_45.png" id="189_wff0p"]
+[ext_resource type="Texture2D" uid="uid://bjgkj3xxdqq4w" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_46.png" id="190_5u4jx"]
+[ext_resource type="Texture2D" uid="uid://h30f5kvv7j0h" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_47.png" id="191_2hnj7"]
+[ext_resource type="Texture2D" uid="uid://dk7l0ev36hpbc" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_48.png" id="192_r8rnj"]
+[ext_resource type="Texture2D" uid="uid://dcdj0p2fc67ig" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_49.png" id="193_drhvi"]
+[ext_resource type="Texture2D" uid="uid://c7l8r06ohogx7" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_50.png" id="194_wou3w"]
+[ext_resource type="Texture2D" uid="uid://b2nd250wueq2i" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_51.png" id="195_3aqug"]
+[ext_resource type="Texture2D" uid="uid://bk4cemibeh47b" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_52.png" id="196_3hx33"]
+[ext_resource type="Texture2D" uid="uid://co3yxlt54qvm6" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_53.png" id="197_klwit"]
+[ext_resource type="Texture2D" uid="uid://sit712khujhu" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_54.png" id="198_klfyk"]
+[ext_resource type="Texture2D" uid="uid://gieroxnlmqf2" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/Lumiere/LumiereG/Terrain1_Casino_LumiereGauche_55.png" id="199_xw2hf"]
+[ext_resource type="Texture2D" uid="uid://q8fewaucs62g" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/PlaquePression/Terrain1_PlaquePression1.png" id="200_cct0e"]
+[ext_resource type="Texture2D" uid="uid://cy4o7yoqueqvd" path="res://assets/sprites/Map1/Terrain1_Casino/Machine/PlaquePression/Terrain1_BasePlaquePression1.png" id="201_hfwap"]
+[ext_resource type="Script" uid="uid://rt5la7ewu4d4" path="res://scripts/gambling_machine.gd" id="script_machine"]
+[ext_resource type="Script" uid="uid://dpig6jt5ddb4" path="res://scripts/gambling_reel.gd" id="script_rouleau"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1rv7g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("32_k8512")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_okcdm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_mrnad")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_xw332")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ptpgc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ukgw4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_61kt1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_xn2j6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_spl3m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_l0wh6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_snkoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_gnkjg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_s150f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_uepdi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_nsv05")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_af8sv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_vltdp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_k4mcw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ittv8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_e7le8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_1hwgg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_a4k61")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_tsay5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_wxi8r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_p52b6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_scgkc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_3yv7v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_8xnp0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_g77ry")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_pxn08")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_swkdh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_2aof6")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_olbfw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ukgw4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_61kt1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_xn2j6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_spl3m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_l0wh6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_snkoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_gnkjg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_s150f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_uepdi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_nsv05")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_af8sv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_vltdp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_k4mcw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ittv8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_e7le8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_1hwgg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_a4k61")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_tsay5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_wxi8r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_p52b6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_scgkc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_3yv7v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_8xnp0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_g77ry")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_pxn08")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_swkdh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_2aof6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_k8512")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_okcdm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_mrnad")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_xw332")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ptpgc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_702tw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4obmt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_dd3xd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_p1gwd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3a56n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_s1rjc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_y81ss")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ue0ck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_0siad")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_x3ps3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_fycxc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3m2ya"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("43_l52j0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_fshbj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_yvwgl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_xpu43")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_tndaj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_b6lto")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_dvmh6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_lgre7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_f1rv1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_d6luj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_uem1x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_lquyr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_kgwj3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_ldjlg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_m8t7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_syvoe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_idki4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_j7hi5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_dp38n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_jc051")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_hl13w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_ltcgt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_gbw47")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_sf4wd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_n036p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_g8l06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_xd0jc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_gmnpc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_11pjq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_wwet4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_q8roi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_aepnd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_6dhi6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_o7c63")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_obgy6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_rw0mn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_gec5x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_vbvlt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_a1g1g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_n1ew6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_do88x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84_d1anq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_5sgxj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("86_yw47i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_slnci")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_4idjh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_1fe80")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ekyp3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("90_tfd28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("91_o6niq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_n50fn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_8t860")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_sldvj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_te52b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_m5cj2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_akpi0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98_kspbt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_j6qgk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_2uqgn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_dpunc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_xldcf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("103_v3l0d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_3d0l8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_itcue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_a4m32")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_81pao")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108_cmhj7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_5x71u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_i0gil")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_5lc2e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112_tsyq6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113_lqhyd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("114_qnueh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("115_4lhf2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("116_smg04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("117_u03tk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("118_cmiua")
+}, {
+"duration": 1.0,
+"texture": ExtResource("119_bdrxc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("120_whmmf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("121_33kvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("122_00vwg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("123_2xa8y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("124_ysoiq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("125_0xnsy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("126_yhpej")
+}, {
+"duration": 1.0,
+"texture": ExtResource("127_s0lak")
+}, {
+"duration": 1.0,
+"texture": ExtResource("128_ubn1f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("129_tfj5l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("130_lfx8c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("131_sa17y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("132_caj0d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("133_3dyum")
+}, {
+"duration": 1.0,
+"texture": ExtResource("134_vdsu5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("135_3msqu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("136_r7woc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("137_aw7l8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("138_qifvd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("139_xe5jb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("140_qwx21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("141_53gqi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("142_m0fvu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("143_txco6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("144_ryus4")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xty43"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("145_vbd3b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("146_p78in")
+}, {
+"duration": 1.0,
+"texture": ExtResource("147_vusm3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("148_56ayi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("149_ydw1q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("150_2jbq7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("151_83dqq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("152_eun5r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("153_w03mp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("154_kjh52")
+}, {
+"duration": 1.0,
+"texture": ExtResource("155_omd5a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("156_plbev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("157_eir4v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("158_cpbjm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("159_8mdgh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("160_vpmys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("161_orjsu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("162_qk6sm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("163_dygfc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("164_juxog")
+}, {
+"duration": 1.0,
+"texture": ExtResource("165_3mchu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("166_pcmdf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("167_nuw4b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("168_y603i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("169_5gvle")
+}, {
+"duration": 1.0,
+"texture": ExtResource("170_jmui6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("171_31u3k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("172_iloy6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("173_rx0hs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("174_8ae40")
+}, {
+"duration": 1.0,
+"texture": ExtResource("175_xepie")
+}, {
+"duration": 1.0,
+"texture": ExtResource("176_obqck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("177_7uo2y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("178_61od3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("179_h4s1e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("180_4aqut")
+}, {
+"duration": 1.0,
+"texture": ExtResource("181_lwxb4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("182_g3vag")
+}, {
+"duration": 1.0,
+"texture": ExtResource("183_7jcmt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("184_tkrxf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("185_rin8l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("186_v8rri")
+}, {
+"duration": 1.0,
+"texture": ExtResource("187_hgmbo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("188_p07nn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("189_wff0p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("190_5u4jx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("191_2hnj7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("192_r8rnj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("193_drhvi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("194_wou3w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("195_3aqug")
+}, {
+"duration": 1.0,
+"texture": ExtResource("196_3hx33")
+}, {
+"duration": 1.0,
+"texture": ExtResource("197_klwit")
+}, {
+"duration": 1.0,
+"texture": ExtResource("198_klfyk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("199_xw2hf")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_702tw"]
+size = Vector2(64, 53)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pilier"]
+size = Vector2(64, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_zone"]
+size = Vector2(64, 58)
+
+[node name="GamblingMachin" type="Area2D" unique_id=1057124547]
+script = ExtResource("script_machine")
+
+[node name="Engernage1" type="AnimatedSprite2D" parent="." unique_id=1065459402]
+texture_filter = 1
+position = Vector2(-46, -10)
+sprite_frames = SubResource("SpriteFrames_1rv7g")
+
+[node name="EngrenageDecale2" type="AnimatedSprite2D" parent="." unique_id=833389831]
+texture_filter = 1
+position = Vector2(46, -10)
+sprite_frames = SubResource("SpriteFrames_olbfw")
+
+[node name="Engernage3" type="AnimatedSprite2D" parent="." unique_id=725320957]
+texture_filter = 1
+position = Vector2(124, 176)
+sprite_frames = SubResource("SpriteFrames_1rv7g")
+
+[node name="Engernage4" type="AnimatedSprite2D" parent="." unique_id=1727514347]
+texture_filter = 1
+position = Vector2(-176, 193)
+sprite_frames = SubResource("SpriteFrames_1rv7g")
+
+[node name="Machine" type="AnimatedSprite2D" parent="." unique_id=64804238]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_702tw")
+autoplay = "default"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=353651250]
+polygon = PackedVector2Array(-224, 223, -193, 223, -193, 197, -177, 197, -177, 178, -160, 178, -160, 163, -128, 163, -128, 223, -64, 223, -64, 163, -32, 163, -32, 223, 32, 223, 32, 163, 64, 163, 64, 223, 128, 223, 128, 163, 160, 163, 160, 178, 177, 178, 177, 197, 193, 197, 193, 223, 224, 223, 224, 255, -224, 255)
+
+[node name="LumiereCentre" type="AnimatedSprite2D" parent="." unique_id=1542491060]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_3m2ya")
+
+[node name="LumiereDroite" type="AnimatedSprite2D" parent="." unique_id=238966486]
+texture_filter = 1
+position = Vector2(128, 0)
+sprite_frames = SubResource("SpriteFrames_ekyp3")
+
+[node name="LumiereGauche" type="AnimatedSprite2D" parent="." unique_id=1516384562]
+texture_filter = 1
+position = Vector2(-128, 0)
+sprite_frames = SubResource("SpriteFrames_xty43")
+
+; Piliers de pression : StaticBody2D solides (le joueur se tient DESSUS,
+; cf. pressureplate_2players) + zone de détection enfant couvrant le corps
+; du joueur debout sur le pilier (y machine 165..223) sans rattraper
+; celui qui marche sur les tours voisines (pieds à y=163).
+[node name="PlaquePressionGauche" type="StaticBody2D" parent="." unique_id=566617617]
+position = Vector2(-96, 194)
+
+[node name="Sprite" type="Sprite2D" parent="PlaquePressionGauche"]
+texture_filter = 1
+texture = ExtResource("200_cct0e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlaquePressionGauche"]
+shape = SubResource("RectangleShape2D_pilier")
+
+[node name="ZoneDetection" type="Area2D" parent="PlaquePressionGauche"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlaquePressionGauche/ZoneDetection"]
+shape = SubResource("RectangleShape2D_zone")
+
+[node name="PlaquePressionCentre" type="StaticBody2D" parent="." unique_id=1299214386]
+position = Vector2(0, 194)
+
+[node name="Sprite" type="Sprite2D" parent="PlaquePressionCentre"]
+texture_filter = 1
+texture = ExtResource("200_cct0e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlaquePressionCentre"]
+shape = SubResource("RectangleShape2D_pilier")
+
+[node name="ZoneDetection" type="Area2D" parent="PlaquePressionCentre"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlaquePressionCentre/ZoneDetection"]
+shape = SubResource("RectangleShape2D_zone")
+
+[node name="PlaquePressionDroite" type="StaticBody2D" parent="." unique_id=1768475443]
+position = Vector2(96, 194)
+
+[node name="Sprite" type="Sprite2D" parent="PlaquePressionDroite"]
+texture_filter = 1
+texture = ExtResource("200_cct0e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlaquePressionDroite"]
+shape = SubResource("RectangleShape2D_pilier")
+
+[node name="ZoneDetection" type="Area2D" parent="PlaquePressionDroite"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlaquePressionDroite/ZoneDetection"]
+shape = SubResource("RectangleShape2D_zone")
+
+; Bandeau-avant du socle : copie statique de la bande de briques du bas du
+; sprite machine (y texture 478..510 = y machine 223..255). Cette bande est
+; identique sur les 10 frames de l'animation (vérifié), donc aucune
+; désynchronisation possible. Dessinée APRÈS les piliers : quand un pilier
+; s'enfonce, sa partie basse glisse DERRIÈRE le rebord au lieu de se
+; superposer par-dessus la machine. La zone est entièrement solide
+; (CorpsSolide + piliers) : aucun personnage ne peut s'y trouver.
+[node name="SocleAvant" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_4obmt")
+centered = false
+position = Vector2(-256, 223)
+region_enabled = true
+region_rect = Rect2(0, 478, 512, 32)
+
+[node name="BasePlaquePression" type="Sprite2D" parent="." unique_id=80032494]
+texture_filter = 1
+texture = ExtResource("201_hfwap")
+
+[node name="SlotGauche" type="Node2D" parent="." unique_id=282273764]
+position = Vector2(-96, 44)
+
+[node name="Vitrine" type="Control" parent="SlotGauche" unique_id=77377606]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -25.5
+offset_top = -32.0
+offset_right = 25.5
+offset_bottom = 32.0
+mouse_filter = 2
+
+[node name="Rouleau" type="Node2D" parent="SlotGauche/Vitrine" unique_id=1736521940]
+texture_filter = 1
+position = Vector2(25.5, 32)
+script = ExtResource("script_rouleau")
+
+[node name="SlotCentre" type="Node2D" parent="." unique_id=1288821331]
+position = Vector2(0, 44)
+
+[node name="Vitrine" type="Control" parent="SlotCentre" unique_id=1041015001]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -25.5
+offset_top = -32.0
+offset_right = 25.5
+offset_bottom = 32.0
+mouse_filter = 2
+
+[node name="Rouleau" type="Node2D" parent="SlotCentre/Vitrine" unique_id=652872939]
+texture_filter = 1
+position = Vector2(25.5, 32)
+script = ExtResource("script_rouleau")
+
+[node name="SlotDroite" type="Node2D" parent="." unique_id=1892843701]
+position = Vector2(96, 44)
+
+[node name="Vitrine" type="Control" parent="SlotDroite" unique_id=2107475306]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -25.5
+offset_top = -32.0
+offset_right = 25.5
+offset_bottom = 32.0
+mouse_filter = 2
+
+[node name="Rouleau" type="Node2D" parent="SlotDroite/Vitrine" unique_id=1278841685]
+texture_filter = 1
+position = Vector2(25.5, 32)
+script = ExtResource("script_rouleau")
+
+[node name="CorpsSolide" type="StaticBody2D" parent="." unique_id=1717980967]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CorpsSolide" unique_id=298168392]
+polygon = PackedVector2Array(-224, 223, -193, 223, -193, 197, -177, 197, -177, 178, -160, 178, -160, 163, -128, 163, -128, 223, -64, 223, -64, 163, -32, 163, -32, 223, 32, 223, 32, 163, 64, 163, 64, 223, 128, 223, 128, 163, 160, 163, 160, 178, 177, 178, 177, 197, 193, 197, 193, 223, 224, 223, 224, 255, -224, 255)

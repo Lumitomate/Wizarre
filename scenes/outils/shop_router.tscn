@@ -8,4 +8,4 @@ magasins_3_joueurs = Array[int]([6, 5, 9])
 poids_3_joueurs = Array[float]([1.0, 1.0, 1.0])
 magasins_4_joueurs = Array[int]([6, 5, 2, 9])
 poids_4_joueurs = Array[float]([1.0, 1.0, 1.0, 1.0])
-forcer_magasin = true
+forcer_magasin = false

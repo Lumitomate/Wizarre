@@ -25,6 +25,10 @@ signal calage_termine(rouleau: GamblingReel)
 const PITCH := 48.0
 ## Vitesse de défilement (px/s), vers le bas (Q10).
 const VITESSE := 100.0
+## Distance minimale (px) que le rouleau parcourt pendant la lumière
+## quand sa cible est forcée : en dessous, il fait un tour complet de
+## plus (le rouleau ne doit jamais sembler figé pendant la lumière).
+const DEPLACEMENT_MIN := 96.0
 ## Demi-axe (px) du « cylindre virtuel » : la hauteur d'un symbole
 ## s'annule à cette distance du centre de la vitrine. VOLONTAIREMENT plus
 ## grand que la demi-hauteur de vitrine (37 px) : au bord, un symbole a
@@ -54,6 +58,12 @@ var _offset := 0.0
 var _vitesse := VITESSE
 var _symboles: Array[Sprite2D] = []
 var _tween_calage: Tween = null
+## Tween d'offset du freinage à cible forcée (cf. _atteindre_cible).
+var _tween_offset: Tween = null
+## Cible forcée (index de symbole) fixée par la machine avant le calage :
+## le rouleau se cale sur ce symbole au lieu du « prochain cran » du
+## timing (tirage optimisé du casino). -1 = comportement normal.
+var _cible_forcee := -1
 
 
 func _ready() -> void:
@@ -95,11 +105,37 @@ func _process(delta: float) -> void:
 ## Freinage anticipé : décélère de VITESSE à VITESSE_FIN pendant la
 ## durée donnée (celle de l'animation lumière, passée par la machine).
 ## Le rouleau continue de tourner, plus lentement.
+## Avec une cible forcée (tirage du casino) : le rouleau pilote son
+## offset directement par un tween vers la cible — il atterrit dessus
+## à la fin de la lumière. Le calage final n'avale alors que le
+## backspin, pas jusqu'à un tour complet à ~1280 px/s qui ferait
+## flouter le rouleau juste après l'avoir freiné à 25 px/s.
 func commencer_freinage(duree: float) -> void:
 	if etat != Etat.TOURNE:
 		return
+	if _cible_forcee >= 0:
+		_atteindre_cible(duree)
+		return
 	var tween := create_tween()
 	tween.tween_property(self, "_vitesse", VITESSE_FIN, duree) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+
+## Atterrit exactement sur la cible à la fin de la lumière (`duree`) :
+## l'offset est piloté par un tween (la vitesse est annulée, le _process
+## n'avance plus). La distance est la distance vers l'avant jusqu'au
+## centre du symbole forcé ; si elle est trop petite, le rouleau fait
+## un tour complet de plus pour ne jamais sembler figé pendant la
+## lumière. TRANS_SINE EASE_OUT : le rouleau décélère et s'arrête
+## doucement sur la cible — le comportement d'un vrai bandit manchot.
+func _atteindre_cible(duree: float) -> void:
+	var depart := _offset
+	var distance := _distance_vers_symbole(_cible_forcee)
+	if distance < DEPLACEMENT_MIN:
+		distance += float(_symboles.size()) * PITCH
+	_vitesse = 0.0
+	_tween_offset = create_tween()
+	_tween_offset.tween_method(_fixer_offset, depart, depart + distance, duree) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 
@@ -110,18 +146,31 @@ func avancer(distance: float) -> void:
 	_repositionner()
 
 
+## Force la cible du calage : le symbole d'index `index` sera calé
+## exactement au centre de la vitrine. Ignoré si l'index est invalide.
+func forcer_cible(index: int) -> void:
+	if index < 0 or index >= _symboles.size():
+		return
+	_cible_forcee = index
+
+
 ## Lance l'arrêt (fin de l'animation lumière, Q11). Le rouleau continue
-## jusqu'au prochain centre de symbole en le dépassant de DEPASSEMENT px,
-## puis revient en arrière se caler exactement dessus. Émet
-## calage_termine une fois calé.
+## jusqu'à sa cible — symbole forcé (forcer_cible) ou prochain cran —
+## en le dépassant de DEPASSEMENT px, puis revient en arrière se caler
+## exactement dessus. Émet calage_termine une fois calé.
 func lancer_calage() -> void:
 	if etat != Etat.TOURNE:
 		return
 	etat = Etat.SE_CALLE
+	# La lumière peut finir une frame avant le tween d'offset : on le
+	# coupe, l'offset courant est la position d'arrêt (à quelques px de
+	# la cible — le calage avale le reste)
+	if _tween_offset != null and _tween_offset.is_valid():
+		_tween_offset.kill()
 	# La cible est fixée MAINTENANT : pendant le freinage, _offset avance
 	# encore, on capture donc la distance restante une seule fois.
 	var depart := _offset
-	var distance := _distance_prochain_centre()
+	var distance := _distance_cible()
 	_tween_calage = create_tween()
 	# Freinage : décélération jusqu'à dépasser légèrement le symbole cible…
 	# (via _fixer_offset : la valeur interpolée du tween EST l'offset, on
@@ -155,6 +204,24 @@ func symbole_central() -> int:
 			meilleure = absf(y)
 			meilleur = i
 	return meilleur
+
+
+## Distance (toujours >= 0) à faire défiler avant que la cible du calage
+## soit exactement au centre de la vitrine : le symbole forcé s'il y en
+## a un, sinon le prochain cran du rouleau.
+func _distance_cible() -> float:
+	if _cible_forcee >= 0:
+		return _distance_vers_symbole(_cible_forcee)
+	return _distance_prochain_centre()
+
+
+## Distance (toujours >= 0) à faire défiler avant que le centre du
+## symbole d'index `index` soit exactement au centre de la vitrine.
+## Position d'un centre : y = wrapf(i*PITCH + offset, 0, total)
+## - total/2 ; y = 0 ⇔ offset ≡ total/2 - i*PITCH (mod total).
+func _distance_vers_symbole(index: int) -> float:
+	var total := float(_symboles.size()) * PITCH
+	return fposmod(total * 0.5 - index * PITCH - _offset, total)
 
 
 ## Distance (toujours >= 0) à faire défiler avant qu'un symbole soit

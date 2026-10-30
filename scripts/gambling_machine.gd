@@ -17,8 +17,10 @@ extends Area2D
 ##    n'importe quel ordre ; plaques one-shot ; lumières en parallèle (Q3) ;
 ##  - n'importe quelle attaque dans n'importe quel tube, remplacement pur,
 ##    pas de recharge de munitions, tier recalculé à l'arrivée (Q2/Q4) ;
-##  - le résultat dépend du TIMING du joueur (Q1) : le symbole sous lequel
-##    le rouleau se cale est celui qui est au centre à la fin de la lumière.
+##  - TIRAGE OPTIMISÉ (grillé) : le résultat ne dépend plus du timing —
+##    la combinaison (sorcier / tube / objet) est tirée au premier
+##    verrouillage de plaque et les 3 rouleaux sont forcés dessus (cf.
+##    _tirer_combinaison). 3 % de chance de tirage totalement aléatoire.
 
 signal livraison_terminee
 
@@ -36,6 +38,11 @@ const POSITION_LIVRAISON := Vector2(0, -180)
 ## avant que la récompense ne prenne le relais (comportement des vraies
 ## machines à sous).
 const PAUSE_LIVRAISON := 0.6
+## Chance (grillée Q : 3 %) que la machine parte en vrille et fasse un
+## tirage TOTALEMENT aléatoire — sorcier, tube et objet tirés au hasard,
+## sans tenir compte de l'état des sacs. Un vrai parfum de casino :
+## la machine peut « se tromper » même quand elle sait quoi donner.
+const CHANCE_ALEATOIRE := 0.03
 
 ## Frame 1 de l'animation idle du sorcier (Q5) : la même image pour tous
 ## les joueurs, teintée par la palette de leur couleur (WizardPalette) —
@@ -96,6 +103,13 @@ var _rouleaux: Array[GamblingReel] = []
 ## modulo de l'index rouleau retombe sur cette liste, cf. GamblingReel).
 var _couleurs_rouleau: Array[GlobalEnum.SorcererColor] = []
 var _livraison_faite := false
+## Combinaison tirée (décision grillée : tirage optimisé, forçage des
+## rouleaux) : calculée au PREMIER verrouillage de plaque, puis les 3
+## rouleaux sont forcés dessus. L'ordre d'arrêt des rouleaux, choisi par
+## les joueurs, ne change donc rien au résultat ; le timing ne décide
+## plus rien — la présentation (plaques, lumières, backspin) reste
+## identique. Vide = combinaison pas encore tirée.
+var _combinaison: Dictionary = {}
 
 
 func _ready() -> void:
@@ -292,6 +306,12 @@ func _verrouiller_plaque(slot: int) -> void:
 	var plaque := _plaques[slot]
 	plaque["verrouillee"] = true
 	plaque["profondeur"] = PLAQUE_TRAVEL
+	# Premier verrouillage : la machine tire la combinaison livrée et
+	# force les 3 rouleaux dessus (n'importe laquelle des plaques peut
+	# être la première, l'ordre ne compte pas)
+	if _combinaison.is_empty():
+		_combinaison = _tirer_combinaison()
+		_forcer_rouleaux()
 	var lumiere := _lumieres()[slot]
 	lumiere.frame = 0
 	lumiere.play(&"default")
@@ -315,6 +335,131 @@ func _on_rouleau_cale(_rouleau: GamblingReel) -> void:
 	_livrer()
 
 
+## Tirage de la combinaison livrée (grillées : option forçage, 3 %
+## aléatoire, replis simplifiés). Sans la part de chance : 3 tirages
+## indépendants au hasard —
+##  - sorcier : parmi ceux qui ont un tube vide (sinon tous les sorciers) ;
+##  - tube : parmi les tubes vides du sorcier tiré (sinon ses 3 tubes,
+##    remplacement pur — règle déjà en place, Q2/Q4) ;
+##  - objet : parmi les objets que PERSONNE ne possède (sinon ceux que
+##    le sorcier tiré ne possède pas — il y en a toujours : 3 tubes max,
+##    12 objets). « Possédé » = état courant des sacs, rien de persistant.
+## Sans joueur (tests headless) : équivalent aléatoire total.
+func _tirer_combinaison() -> Dictionary:
+	var sorciers := _sorciers_actifs()
+	if sorciers.is_empty() or randf() < CHANCE_ALEATOIRE:
+		return _tirer_aleatoire()
+	var sorcier := _tirer_sorcier(sorciers)
+	return {
+		"couleur": sorcier.sorcerer_color,
+		"tube": _tirer_tube(sorcier),
+		"type_index": _tirer_type_index(sorcier, sorciers),
+	}
+
+
+## Tirage totalement aléatoire (3 % de CHANCE_ALEATOIRE, ou sans joueur) :
+## exactement le comportement d'avant — aucun des tirages optimisés.
+func _tirer_aleatoire() -> Dictionary:
+	return {
+		"couleur": _couleurs_rouleau[randi() % _couleurs_rouleau.size()],
+		"tube": randi() % TUYAUX.size(),
+		"type_index": randi() % TYPES_OBJETS.size(),
+	}
+
+
+## Sorciers en jeu, valides (lecture non typée : cf. _entrees_sorciers).
+func _sorciers_actifs() -> Array[Sorcerer]:
+	var sorciers: Array[Sorcerer] = []
+	for controller_id in PlayerManager.active_player_ids():
+		var player = PlayerManager.players.get(controller_id)
+		if player != null and is_instance_valid(player):
+			sorciers.append(player)
+	return sorciers
+
+
+## Tube vide = pas d'attaque dans le tube (état courant des sacs).
+func _tube_est_vide(sorcier: Sorcerer, tube: int) -> bool:
+	var spell = sorcier.spells.get(tube, {})
+	return (spell as Dictionary).is_empty()
+
+
+func _tubes_vides(sorcier: Sorcerer) -> Array[int]:
+	var vides: Array[int] = []
+	for i in TUYAUX.size():
+		if _tube_est_vide(sorcier, i):
+			vides.append(i)
+	return vides
+
+
+## Types d'attaque possédés par un sorcier (set de GlobalEnum.AttackType).
+func _types_possedes(sorcier: Sorcerer) -> Dictionary:
+	var possedes := {}
+	for i in TUYAUX.size():
+		if not _tube_est_vide(sorcier, i):
+			possedes[sorcier.spells[i]["attack_type"]] = true
+	return possedes
+
+
+## Sorcier tiré : parmi ceux qui ont un tube vide (pour que l'objet
+## puisse être reçu sans remplacement) ; si tous les sacs sont pleins,
+## parmi tous les sorciers.
+func _tirer_sorcier(sorciers: Array[Sorcerer]) -> Sorcerer:
+	var eligibles: Array[Sorcerer] = []
+	for s in sorciers:
+		if not _tubes_vides(s).is_empty():
+			eligibles.append(s)
+	if eligibles.is_empty():
+		eligibles = sorciers
+	return eligibles[randi() % eligibles.size()]
+
+
+## Tube du sorcier tiré : parmi ses tubes vides ; s'il n'en a plus,
+## parmi ses 3 tubes (l'objet remplacera le contenu du tube).
+func _tirer_tube(sorcier: Sorcerer) -> int:
+	var vides := _tubes_vides(sorcier)
+	if vides.is_empty():
+		for i in TUYAUX.size():
+			vides.append(i)
+	return vides[randi() % vides.size()]
+
+
+## Objet livré : parmi les objets que personne ne possède (priorité
+## globale) ; si tout est possédé (cas limite 4×3=12), parmi les objets
+## que le sorcier tiré ne possède pas — il y en a toujours (3 tubes max).
+func _tirer_type_index(sorcier: Sorcerer, sorciers: Array[Sorcerer]) -> int:
+	var possedes_tous := {}
+	for s in sorciers:
+		for type in _types_possedes(s):
+			possedes_tous[type] = true
+	var disponibles: Array[int] = []
+	for i in TYPES_OBJETS.size():
+		if not possedes_tous.has(TYPES_OBJETS[i]):
+			disponibles.append(i)
+	if disponibles.is_empty():
+		var possedes_sien := _types_possedes(sorcier)
+		for i in TYPES_OBJETS.size():
+			if not possedes_sien.has(TYPES_OBJETS[i]):
+				disponibles.append(i)
+	return disponibles[randi() % disponibles.size()]
+
+
+## Force les 3 rouleaux sur la combinaison tirée : chaque rouleau se
+## calera sur le symbole cible au lieu du « prochain cran » du timing.
+## Index de base : l'index du rouleau forcé est l'index dans la liste de
+## base (configurer duplique la liste en ordre, donc _symboles[i] ==
+## base[i] pour i < taille de base) — le même joueur apparaît plusieurs
+## fois sur le rouleau, n'importe quelle occurrence est valable.
+func _forcer_rouleaux() -> void:
+	var idx_sorcier := 0
+	for i in _couleurs_rouleau.size():
+		if _couleurs_rouleau[i] == _combinaison["couleur"]:
+			idx_sorcier = i
+			break
+	_rouleaux[Slot.GAUCHE].forcer_cible(idx_sorcier)
+	_rouleaux[Slot.CENTRE].forcer_cible(int(_combinaison["tube"]))
+	_rouleaux[Slot.DROITE].forcer_cible(int(_combinaison["type_index"]))
+
+
 ## Livraison (Q4) : l'objet-attaque du rouleau 3 apparaît au-dessus de la
 ## machine puis vole vers le tube du rouleau 2 du sorcier du rouleau 1.
 ## Pas de recharge de munitions (set_attack n'y touche pas) ; le tier est
@@ -324,6 +469,10 @@ func _livrer() -> void:
 	if _livraison_faite:
 		return
 	_livraison_faite = true
+	# La machine devient inerte (Q19) : plaques toutes verrouillées, plus
+	# rien à animer ici — on coupe le processing (AttackObject gère le
+	# vol d'absorption de son côté)
+	set_process(false)
 	var cible := resultat()
 	var sorcier := _sorcier_par_couleur(cible["couleur"])
 	if sorcier == null:

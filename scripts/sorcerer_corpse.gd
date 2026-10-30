@@ -51,10 +51,14 @@ static func from_sorcerer(sorcerer: Sorcerer, p_respawn_delay: float = -1.0) -> 
 	corpse.controller_id = sorcerer.controller_id
 	corpse.respawn_delay = p_respawn_delay
 	# La config du joueur mort est restituée au respawn (homepage :
-	# attaques activées, tubes sélectables)
+	# attaques activées, tubes non sélectables, ET le flag in_homepage —
+	# sans lui, le sorcier respawné est traité comme un sorcier de
+	# magasin : sa mort suivante ne re-spawn JAMAIS, et s'il est le
+	# dernier en vie, il déclenche un reset de run depuis la homepage)
 	corpse._respawn_config = {
 		"can_fire": sorcerer.can_fire,
 		"tubes_selectable": sorcerer.tubes_selectable,
+		"in_homepage": sorcerer.in_homepage,
 	}
 	corpse.position = sorcerer.position
 	corpse.scale = sorcerer.scale

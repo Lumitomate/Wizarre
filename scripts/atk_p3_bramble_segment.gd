@@ -96,7 +96,9 @@ func _on_body_entered(body: Node2D) -> void:
 	if _decomposing:
 		return
 	# Le lanceur peut avoir été libéré entre-temps (mort, changement de scène)
-	var reprisal_caster: Node2D = caster if caster != null and is_instance_valid(caster) else null
+	# Représaille : l'attaque remonte à son sorcier d'origine — validé, le
+	# caster peut être libéré (morte pendant le vol de la ronce)
+	var reprisal_caster: Node2D = EntityFinder.attaquant_valide(caster)
 	if body.is_in_group("enemy_group"):
 		# Origine = le tronçon de ronce : l'ennemi est éjecté depuis la plante
 		body.hit(damage, reprisal_caster, self)

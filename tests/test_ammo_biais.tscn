@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://test_ammo_biais"]
+
+[ext_resource type="Script" path="res://tests/test_ammo_biais.gd" id="1_biais"]
+
+[node name="TestAmmoBiais" type="Node2D"]
+script = ExtResource("1_biais")

@@ -156,8 +156,9 @@ func _on_bite_frame_changed():
 			head.play("atk_p1_idle")
 			return
 		if target_enemy is EnemyFlying:
-			# Origine = la graine (stem_origin) : la proie est éjectée depuis la plante
-			target_enemy.die(caster, stem_origin)
+			# Origine = la graine (stem_origin) : la proie est éjectée depuis la
+			# plante. Attaquant validé : le caster peut être libéré (morte)
+			target_enemy.die(EntityFinder.attaquant_valide(caster), stem_origin)
 			# Proie réellement mangée : la tête est consommée
 		elif target_enemy.is_in_group("player_group"):
 			target_enemy.hit(1)

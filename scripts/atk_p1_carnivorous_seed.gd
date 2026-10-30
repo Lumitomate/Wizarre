@@ -152,7 +152,10 @@ func _setup_tier(tier: int):
 	for i in range(head_count):
 		var head_instance: CarnivorousHead = head_scene.instantiate()
 		add_child(head_instance)
-		head_instance.caster = caster
+		# Caster validé : il peut mourir pendant que la plante vit (têtes
+		# recréées périodiquement) — l'assignation d'une instance freed sur
+		# une propriété typée Node2D plante la machine
+		head_instance.caster = EntityFinder.attaquant_valide(caster)
 		var time_offset = i * 0.7
 		head_instance.setup(stem_origin, rest_positions[i], time_offset, tier)
 		head_instance.head_finished.connect(_on_head_finished)

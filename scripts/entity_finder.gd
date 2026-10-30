@@ -5,6 +5,19 @@ class_name EntityFinder
 ## (entité la plus proche pour l'œil) et le knockback du sorcier
 ## (ennemi le plus proche) : un seul endroit désormais.
 
+## Attaquant utilisable pour la représaille : le sorcier peut MOURIR
+## pendant que son attaque vole encore (homepage surtout, où les tirs
+## sont actifs) — passer l'instance freed à hit()/die() plante la machine
+## ("The object-derived class of argument 2 is not a subclass...").
+## Retourne le caster s'il est encore vivant, sinon null. Paramètre NON
+## typé : une instance freed ne passe même pas le contrôle de type d'un
+## paramètre Node2D — la validation doit se faire ici, avec Variant.
+static func attaquant_valide(caster) -> Node2D:
+	if is_instance_valid(caster):
+		return caster as Node2D
+	return null
+
+
 ## Nœud Node2D le plus proche du point `depuis` parmi les groupes donnés
 ## (scannés dans l'ordre). `context` : n'importe quel nœud dans l'arbre
 ## (sert uniquement à accéder à l'arbre depuis une fonction static).

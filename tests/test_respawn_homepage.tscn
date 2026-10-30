@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://test_respawn_homepage"]
+
+[ext_resource type="Script" path="res://tests/test_respawn_homepage.gd" id="1_respawn"]
+
+[node name="TestRespawnHomepage" type="Node2D"]
+script = ExtResource("1_respawn")

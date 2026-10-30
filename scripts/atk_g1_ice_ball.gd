@@ -21,7 +21,8 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	if body.is_in_group("enemy_group"):
 		# Origine = la boule de glace : l'ennemi éclate dans le sens de son vol
-		body.hit(1, caster, self)
+		# Attaquant validé : le caster peut être libéré (morte pendant le vol)
+		body.hit(1, EntityFinder.attaquant_valide(caster), self)
 	elif body.is_in_group("player_group"):
 		body.hit(1)
 

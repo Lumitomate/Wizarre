@@ -131,7 +131,8 @@ func _on_body_entered(body: Node2D) -> void:
 	elif body.is_in_group("enemy_group"):
 		if can_damage(body):
 			# Origine = le projectile : l'ennemi éclate dans le sens de son vol
-			body.hit(damage, caster, self)
+			# Attaquant validé : le caster peut être libéré (morte pendant le vol)
+			body.hit(damage, EntityFinder.attaquant_valide(caster), self)
 			_marquer_touche(body)
 
 

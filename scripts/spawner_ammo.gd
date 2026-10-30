@@ -112,10 +112,14 @@ func _draw() -> void:
 
 # Fait apparaître et projeter une munition immédiatement.
 # Appelé par l'AmmoSpawnDirector, qui choisit quels spawners tirent
-# (2 au hasard parmi ceux visibles à l'écran, à chaque cycle).
-func spawn_now() -> void:
+# (2 au hasard parmi ceux visibles à l'écran, à chaque cycle) et passe
+# les poids du cycle pour le choix du type (grillé : tirage pondéré par
+# le manque — cf. _poids_du_cycle dans ammo_spawn_director.gd).
+# `poids` vide (ou de taille != 3) → tirage uniforme 1/3 (repli tests,
+# homepage, et tout appel sans ordre du directeur).
+func spawn_now(poids: Array[float] = []) -> void:
 	var ammo: Ammo = ammo_scene.instantiate()
-	ammo.ammo_type = _pick_ammo_type()
+	ammo.ammo_type = _pick_ammo_type(poids)
 	ammo.position = position
 	get_parent().add_child(ammo)
 
@@ -132,7 +136,9 @@ func spawn_now() -> void:
 	$Smoke.restart()
 
 
-func _pick_ammo_type() -> GlobalEnum.EnergyType:
+# Type projeté : type fixé (Coal/Pure/Tainted) ou tirage pondéré par les
+# poids du cycle (Array[float] de 3 poids, Fossil/Pure/Tainted).
+func _pick_ammo_type(poids: Array[float]) -> GlobalEnum.EnergyType:
 	match ammo_choice:
 		AmmoChoice.Coal:
 			return GlobalEnum.EnergyType.Fossil
@@ -140,5 +146,18 @@ func _pick_ammo_type() -> GlobalEnum.EnergyType:
 			return GlobalEnum.EnergyType.Pure
 		AmmoChoice.Tainted:
 			return GlobalEnum.EnergyType.Tainted
-		_:
-			return [GlobalEnum.EnergyType.Fossil, GlobalEnum.EnergyType.Pure, GlobalEnum.EnergyType.Tainted][randi() % 3]
+	# Poids valides → tirage pondéré (somme des poids cumulés) ; sinon
+	# (liste vide ou tronquée) → uniforme 1/3.
+	if poids.size() == 3:
+		var total := 0.0
+		for p in poids:
+			total += maxf(p, 0.0)
+		if total > 0.0:
+			var roue := randf() * total
+			for i in 3:
+				roue -= maxf(poids[i], 0.0)
+				if roue < 0.0:
+					return [GlobalEnum.EnergyType.Fossil, GlobalEnum.EnergyType.Pure, GlobalEnum.EnergyType.Tainted][i]
+			# Reliquat d'arrondi : dernier type
+			return GlobalEnum.EnergyType.Tainted
+	return [GlobalEnum.EnergyType.Fossil, GlobalEnum.EnergyType.Pure, GlobalEnum.EnergyType.Tainted][randi() % 3]

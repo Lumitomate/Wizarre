@@ -999,11 +999,22 @@ texture_filter = 1
 position = Vector2(-128, 0)
 sprite_frames = SubResource("SpriteFrames_xty43")
 
-; Piliers de pression : StaticBody2D solides (le joueur se tient DESSUS,
-; cf. pressureplate_2players) + zone de détection enfant couvrant le corps
-; du joueur debout sur le pilier (y machine 165..223) sans rattraper
-; celui qui marche sur les tours voisines (pieds à y=163).
-[node name="PlaquePressionGauche" type="StaticBody2D" parent="." unique_id=566617617]
+; Piliers de pression : AnimatableBody2D solides (le joueur se tient
+; DESSUS, cf. pressureplate_2players) + zone de détection enfant couvrant
+; le corps du joueur debout sur le pilier (y machine 165..223) sans
+; rattraper celui qui marche sur les tours voisines (pieds à y=163).
+;
+; AnimatableBody2D et non StaticBody2D : ces piliers S'ENFONCENT de 16 px
+; pendant que le joueur est dessus. Un StaticBody2D déplacé ne porte pas
+; le CharacterBody2D — il ne tient que grâce à floor_snap_length (1 px par
+; pas de physique, cf. sorcerer.tscn). Or 16 px / 0,3 s = 1,78 px par pas
+; dès que le jeu descend à 30 fps : le sorcier perd le sol, passe en
+; set_state(FALL) et un appui sur A ne déclenche plus de saut.
+; AnimatableBody2D (sync_to_physics, défaut) déplace le corps DANS le pas
+; de physique et le CharacterBody2D hérite de sa vitesse : le joueur
+; descend AVEC la plaque, à n'importe quel framerate. Même montage que
+; l'ascenseur de la homepage (map1_elevator.tscn).
+[node name="PlaquePressionGauche" type="AnimatableBody2D" parent="." unique_id=566617617]
 position = Vector2(-96, 194)
 
 [node name="Sprite" type="Sprite2D" parent="PlaquePressionGauche"]
@@ -1018,7 +1029,7 @@ shape = SubResource("RectangleShape2D_pilier")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlaquePressionGauche/ZoneDetection"]
 shape = SubResource("RectangleShape2D_zone")
 
-[node name="PlaquePressionCentre" type="StaticBody2D" parent="." unique_id=1299214386]
+[node name="PlaquePressionCentre" type="AnimatableBody2D" parent="." unique_id=1299214386]
 position = Vector2(0, 194)
 
 [node name="Sprite" type="Sprite2D" parent="PlaquePressionCentre"]
@@ -1033,7 +1044,7 @@ shape = SubResource("RectangleShape2D_pilier")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlaquePressionCentre/ZoneDetection"]
 shape = SubResource("RectangleShape2D_zone")
 
-[node name="PlaquePressionDroite" type="StaticBody2D" parent="." unique_id=1768475443]
+[node name="PlaquePressionDroite" type="AnimatableBody2D" parent="." unique_id=1768475443]
 position = Vector2(96, 194)
 
 [node name="Sprite" type="Sprite2D" parent="PlaquePressionDroite"]

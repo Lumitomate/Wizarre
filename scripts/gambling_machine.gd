@@ -3,7 +3,8 @@ extends Area2D
 
 ## La machine à sous du magasin casino (shop_gambling) : 3 rouleaux —
 ## sorcier ciblé / tube de livraison / attaque livrée — tournent en
-## continu. Chaque plaque de pression, enfoncée à fond (16 px, ~0,3 s),
+## continu. Chaque plaque de pression, enfoncée à fond (16 px, ~0,48 s à
+## la vitesse commune — cf. PressurePlateMotion),
 ## verrouille et lance l'animation lumière correspondante ; le rouleau
 ## continue de tourner PENDANT la lumière, puis se cale à sa fin (Q3/Q11).
 ## Quand les 3 rouleaux sont calés, l'objet-attaque apparaît au-dessus de
@@ -26,9 +27,14 @@ signal livraison_terminee
 
 enum Slot { GAUCHE, CENTRE, DROITE }
 
-## Vitesse d'enfoncement des plaques : 16 px en 0,3 s (Q14).
-const VITESSE_ENFONCEMENT := 16.0 / 0.3
-## Enfoncement total déclenchant la lumière (px, Q14).
+## Vitesse d'enfoncement des piliers : celle des plaques du shop reflex,
+## commune à TOUTES les plaques du jeu (cf. PressurePlateMotion). Chaque
+## pilier garde sa COURSE (PLAQUE_TRAVEL) : 16 px à 33,3 px/s = 0,48 s
+## pour s'enfoncer à fond. La durée n'est jamais codée en dur.
+const VITESSE_ENFONCEMENT := PressurePlateMotion.VITESSE
+## Enfoncement total déclenchant la lumière (px, Q14). Course du pilier :
+## plus longue que les 4 px d'un bouton, donc plus longue à parcourir —
+## mais à la MÊME vitesse.
 const PLAQUE_TRAVEL := 16.0
 ## Position (locale machine) d'apparition de l'objet livré : au-dessus de
 ## la machine.
@@ -102,6 +108,18 @@ const FAMILLES_OBJETS: Array[GlobalEnum.AttackFamily] = [
 
 ## État de chaque plaque : sprite mobile, profondeur d'enfoncement,
 ## nombre de corps dessus, verrouillage one-shot (Q3/Q14).
+##
+## Les piliers sont des AnimatableBody2D (et non des StaticBody2D) : ils
+## S'ENFONCENT de 16 px pendant que le joueur est debout dessus. Un
+## StaticBody2D déplacé ne PORTE PAS le CharacterBody2D qui le chevauche —
+## le sorcier ne tenait que grâce à floor_snap_length (1 px par pas de
+## physique, cf. sorcerer.tscn), or 16 px / 0,3 s = 1,78 px par pas dès que
+## le jeu descendait à 30 fps : il perdait le sol, passait en set_state(FALL)
+## (animation de chute parasite) et un appui sur A ne déclenchait plus de
+## saut. AnimatableBody2D (sync_to_physics, défaut) déplace le corps DANS
+## le pas de physique et le CharacterBody2D hérite de sa vitesse : le
+## joueur descend AVEC la plaque, à n'importe quel framerate. Même montage
+## que l'ascenseur de la homepage (map1_elevator.tscn).
 var _plaques: Array[Dictionary] = []
 var _rouleaux: Array[GamblingReel] = []
 ## Couleurs affichées sur le rouleau 1, dans l'ordre des symboles de la
@@ -211,7 +229,7 @@ func _entrees_objets() -> Array[Dictionary]:
 
 
 func _preparer_plaques() -> void:
-	var piliers: Array[StaticBody2D] = [
+	var piliers: Array[AnimatableBody2D] = [
 		$PlaquePressionGauche, $PlaquePressionCentre, $PlaquePressionDroite,
 	]
 	_plaques.clear()
@@ -249,7 +267,19 @@ func _lumieres() -> Array[AnimatedSprite2D]:
 	return [$LumiereGauche, $LumiereCentre, $LumiereDroite]
 
 
-func _process(delta: float) -> void:
+## Le mouvement se fait au PAS DE PHYSIQUE, pas au rythme des images :
+## c'est ce qui a causé le bug. Les piliers sont des AnimatableBody2D
+## (corps cinématiques qui PORTENT le CharacterBody2D debout dessus), et
+## la transform d'un AnimatableBody2D (sync_to_physics) est celle de
+## l'état physique : elle n'est écrite qu'au pas de physique. Déplacer le
+## pilier depuis _process donnait deux fautes :
+##  - à 30 fps la plaque avançait de 1,78 px par pas de physique, au-delà
+##    de floor_snap_length (1 px) — le sorcier perdait le sol, passait en
+##    set_state(FALL) (animation de chute parasite) et ne pouvait plus
+##    sauter ;
+##  - la position lue sur le nœud ne correspondait plus à la position
+##    écrite (décalage d'un pas).
+func _physics_process(delta: float) -> void:
 	for i in _plaques.size():
 		var plaque := _plaques[i]
 		if bool(plaque["verrouillee"]):
@@ -267,7 +297,7 @@ func _process(delta: float) -> void:
 		plaque["profondeur"] = clampf(
 			float(plaque["profondeur"]) + direction * VITESSE_ENFONCEMENT * delta,
 			0.0, PLAQUE_TRAVEL)
-		var corps := plaque["corps"] as StaticBody2D
+		var corps := plaque["corps"] as AnimatableBody2D
 		corps.position.y = float(plaque["base_y"]) + float(plaque["profondeur"])
 		if float(plaque["profondeur"]) >= PLAQUE_TRAVEL:
 			_verrouiller_plaque(i)
@@ -507,8 +537,9 @@ func _livrer() -> void:
 	_livraison_faite = true
 	# La machine devient inerte (Q19) : plaques toutes verrouillées, plus
 	# rien à animer ici — on coupe le processing (AttackObject gère le
-	# vol d'absorption de son côté)
-	set_process(false)
+	# vol d'absorption de son côté). La boucle des plaques tourne en
+	# _physics_process : c'est CE processing qu'il faut couper.
+	set_physics_process(false)
 	var cible := resultat()
 	var sorcier := _sorcier_par_couleur(cible["couleur"])
 	if sorcier == null:

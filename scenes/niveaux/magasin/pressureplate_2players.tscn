@@ -401,7 +401,7 @@ animation = &"energie_right"
 [node name="CollisionPolygon2D_base" type="CollisionPolygon2D" parent="." unique_id=2074421752]
 polygon = PackedVector2Array(0, 0, -85, 0, -85, -9, -81, -9, -81, -3, -47, -3, -47, -9, -30, -9, -26, -5, 26, -5, 30, -9, 47, -9, 47, -3, 81, -3, 81, -9, 85, -9, 85, 0)
 
-[node name="PlateLeft" type="StaticBody2D" parent="." unique_id=1013487360]
+[node name="PlateLeft" type="AnimatableBody2D" parent="." unique_id=1013487360]
 position = Vector2(-64, -3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlateLeft" unique_id=2051582584]
@@ -418,7 +418,7 @@ shape = SubResource("RectangleShape2D_detect")
 texture_filter = 1
 texture = ExtResource("67_m2j4p")
 
-[node name="PlateRight" type="StaticBody2D" parent="." unique_id=2018251916]
+[node name="PlateRight" type="AnimatableBody2D" parent="." unique_id=2018251916]
 position = Vector2(64, -3)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlateRight" unique_id=957470742]

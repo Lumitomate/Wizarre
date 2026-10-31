@@ -7,12 +7,27 @@ extends Area2D
 ## - si les 2 plaques sont maintenues ET que les 2 animations sont à la
 ##   dernière frame en même temps → la bulle s'ouvre (cassure de verre) et
 ##   sa hitbox saute, libérant l'objet qu'elle bloquait.
+##
+## Le mouvement (vitesse, courbe, durée de remontée) vient de
+## PressurePlateMotion — la loi commune aux plaques du jeu, dont CES
+## plaques sont la référence. Ici, seule la COURSE (PLATE_DESCENT) est
+## propre à la plaque : c'est elle qui fixe la durée, via
+## PressurePlateMotion.duree(). Ne jamais coder une durée en dur ici.
+##
+## Les 2 plaques sont des AnimatableBody2D (et non des StaticBody2D) : un
+## StaticBody2D déplacé ne PORTE PAS le CharacterBody2D debout dessus, il
+## ne tient que grâce à floor_snap_length (1 px par pas de physique, cf.
+## sorcerer.tscn). AnimatableBody2D (sync_to_physics, défaut) déplace le
+## corps DANS le pas de physique et le CharacterBody2D hérite de sa
+## vitesse : le joueur descend et remonte AVEC la plaque, quel que soit
+## le framerate (sinon : set_state(FALL) parasite + saut bloqué).
+## Même montage que l'ascenseur (map1_elevator.tscn).
 
 signal bubble_opened
 
-# Descente maximale de la plaque pressée (4 px) et durée de la descente
+## Course de l'enfoncement (px) : seul réglage propre à ces plaques.
+## La durée s'en déduit (cf. PressurePlateMotion.duree).
 const PLATE_DESCENT := 4.0
-const PLATE_PRESS_DURATION := 0.12
 # Frame à partir de laquelle la hitbox de la bulle saute (comme bubble.gd)
 const BUBBLE_OPEN_FRAME := 15
 
@@ -85,12 +100,11 @@ func _on_plate_body_exited(body: Node2D, side: String) -> void:
 ## (en reprenant depuis la frame courante si elle était en train de se vider).
 func _press_plate(side: String) -> void:
 	var plate: Dictionary = _plates[side]
-	var body: StaticBody2D = plate["body"]
+	var body: AnimatableBody2D = plate["body"]
 	_plate_kill_tween(plate)
-	var tween := create_tween()
-	plate["tween"] = tween
-	tween.tween_property(body, "position:y", float(plate["base_y"]) + PLATE_DESCENT, PLATE_PRESS_DURATION)
-	tween.tween_callback(func():
+	plate["tween"] = PressurePlateMotion.animer(
+		self, body, float(plate["base_y"]) + PLATE_DESCENT, PLATE_DESCENT)
+	(plate["tween"] as Tween).tween_callback(func():
 		if plate["count"] > 0:
 			(plate["energy"] as AnimatedSprite2D).play()
 	)
@@ -98,13 +112,13 @@ func _press_plate(side: String) -> void:
 
 ## Le joueur a quitté : la plaque entière (sprite + hitbox) remonte et
 ## l'animation d'énergie repart dans l'autre sens depuis la frame courante.
+## Même course donc même durée que la descente (cf. PressurePlateMotion).
 func _release_plate(side: String) -> void:
 	var plate: Dictionary = _plates[side]
 	_plate_kill_tween(plate)
-	var body: StaticBody2D = plate["body"]
-	var tween := create_tween()
-	plate["tween"] = tween
-	tween.tween_property(body, "position:y", float(plate["base_y"]), PLATE_PRESS_DURATION)
+	var body: AnimatableBody2D = plate["body"]
+	plate["tween"] = PressurePlateMotion.animer(
+		self, body, float(plate["base_y"]), PLATE_DESCENT)
 	var energy: AnimatedSprite2D = plate["energy"]
 	if energy.frame > 0:
 		energy.play_backwards()

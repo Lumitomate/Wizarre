@@ -1,15 +1,32 @@
 extends Node2D
 class_name PressurePlate
 
+## Plaque de pression à bouton : le joueur se tient DESSUS, la plaque
+## s'enfonce de press_depth px sous son poids.
+##
+## Le mouvement (vitesse, courbe, durée de remontée) vient de
+## PressurePlateMotion — la loi commune aux plaques du jeu, dont la
+## référence est celle du shop reflex. Ici, seule la COURSE est propre à
+## la plaque : press_depth. Ne jamais coder une durée en dur ici.
+##
+## Le corps mobile est un AnimatableBody2D (et non un StaticBody2D) : un
+## StaticBody2D déplacé ne PORTE PAS le CharacterBody2D qui le chevauche.
+## Le sorcier ne tenait dessus que grâce à floor_snap_length (1 px par pas
+## de physique, cf. sorcerer.tscn) : dès que la plaque descend plus vite
+## que ça, il perd le sol, passe en set_state(FALL) et un appui sur A ne
+## déclenche plus de saut. AnimatableBody2D (sync_to_physics, défaut)
+## déplace le corps DANS le pas de physique et le CharacterBody2D hérite
+## de sa vitesse : le joueur descend AVEC la plaque, quel que soit le
+## framerate. Même montage que l'ascenseur (map1_elevator.tscn).
+
 signal activated
 signal deactivated
 
 @export var target_path: NodePath
+## Course de l'enfoncement (px). Seul réglage propre à cette plaque.
 @export var press_depth: float = 4.0
-@export var press_duration: float = 0.12
-@export var release_duration: float = 0.2
 
-@onready var plate_body: StaticBody2D = $StaticBody2D
+@onready var plate_body: AnimatableBody2D = $StaticBody2D
 @onready var trigger_area: Area2D = $TriggerArea
 
 var target: Node
@@ -45,20 +62,19 @@ func _activate() -> void:
 	emit_signal("activated")
 	if target and target.has_method("activate"):
 		target.activate()
-	_animate_plate(rest_position + Vector2(0, press_depth), press_duration)
+	_animate_plate(rest_position.y + press_depth)
 
 func _deactivate() -> void:
 	emit_signal("deactivated")
 	if target and target.has_method("deactivate"):
 		target.deactivate()
-	_animate_plate(rest_position, release_duration)
+	_animate_plate(rest_position.y)
 
-func _animate_plate(target_pos: Vector2, duration: float) -> void:
+## Descente et remontée : même course, donc même durée (cf.
+## PressurePlateMotion). Seule la cible change.
+func _animate_plate(cible_y: float) -> void:
 	if press_tween:
 		press_tween.kill()
-	press_tween = create_tween()
-	press_tween.set_ease(Tween.EASE_OUT)
-	press_tween.set_trans(Tween.TRANS_QUAD)
-	press_tween.tween_property(plate_body, "position", target_pos, duration)
+	press_tween = PressurePlateMotion.animer(self, plate_body, cible_y, press_depth)
 	
 	

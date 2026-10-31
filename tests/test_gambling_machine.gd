@@ -140,6 +140,12 @@ func _test_plaques() -> void:
 	# Descente progressive
 	machine.appuyer_plaque(0)
 	await _frames(8)
+	# La transform d'un AnimatableBody2D est celle de l'ÉTAT PHYSIQUE : elle
+	# n'est écrite qu'au pas de physique. On relit profondeur ET position au
+	# même instant du cycle, sinon on compare deux pas différents (la
+	# profondeur avance dès _physics_process, la transform suit au pas
+	# suivant).
+	await get_tree().physics_frame
 	var profondeur := float(machine._plaques[0]["profondeur"])
 	_check(profondeur > 0.0 and profondeur < 16.0,
 		"plaque : enfoncement progressif (~%.1f px après 8 frames)" % profondeur)
@@ -160,6 +166,9 @@ func _test_plaques() -> void:
 	var arrivee := await _attendre(func() -> bool:
 		return bool(machine._plaques[0]["verrouillee"]), 2.0)
 	_check(arrivee, "plaque : verrouillée une fois enfoncée à fond (16 px)")
+	# La plaque est verrouillée (elle ne bouge plus) : sa transform physique
+	# a rattrapé la position finale au pas de physique suivant.
+	await get_tree().physics_frame
 	_check(pilier.position.y == base_y + 16.0,
 		"plaque : pilier descendu de 16 px exactement")
 	_check(machine._lumieres()[0].is_playing(),
@@ -236,4 +245,7 @@ func _test_sequence() -> void:
 		return recues.size() > 0, 3.0)
 	_check(signal_recu, "livraison : signal livraison_terminee émis")
 	_check(recues.size() == 1, "livraison : émis une seule fois")
+	# Machine inerte après livraison (Q19) : la boucle des plaques tourne en
+	# _physics_process, c'est ce processing-là qui doit être coupé.
+	_check(not machine.is_physics_processing(), "livraison : machine inerte (processing des plaques coupé)")
 	machine.free()

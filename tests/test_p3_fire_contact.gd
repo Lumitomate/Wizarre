@@ -13,6 +13,13 @@ var _failures := 0
 var _planted_frame := -1
 
 
+## Tier I = UNE seule tige : les tronçons de la ronce sont ceux de cette
+## tige. La ronce est multi-tiges depuis la refonte (`_tiges`, chaque tige
+## portant sa propre chaîne + son bulbe) : `_segments` n'existe plus.
+func _troncons() -> Array[AttackPlantBrambleSegment]:
+	return _bramble._tiges[0].segments
+
+
 func _check(cond: bool, label: String) -> void:
 	if cond:
 		print("OK: " + label)
@@ -25,10 +32,14 @@ func _make_entity(group: String, pos: Vector2) -> Node2D:
 	var body := StaticBody2D.new()
 	body.add_to_group(group)
 	var script := GDScript.new()
+	# Même signature que le VRAI hit() des ennemis (enemy_flying.gd) :
+	# (damage, attacker, origin). Avec 2 paramètres, le tronçon de ronce
+	# qui appelle body.hit(damage, caster, self) échouait — le mock était
+	# resté en arrière quand l'origine du coup a été ajoutée.
 	script.source_code = """
 extends StaticBody2D
 var lives := 3
-func hit(damage: int, _caster: Node2D = null) -> void:
+func hit(damage: int, _attacker: Node2D = null, _origin: Node2D = null) -> void:
 	lives -= damage
 """
 	script.reload()
@@ -92,15 +103,20 @@ func _physics_process(_delta: float) -> void:
 	var t := _frames - _planted_frame
 	match t:
 		45:
-			_check(_bramble._segments.size() >= 2, "tronçon 1 poussé")
+			_check(_troncons().size() >= 2, "tronçon 1 poussé")
 			# L'ennemi chevauche la hitbox du tronçon 1 (active dès le Grow)
 			_check(_enemy.lives == 2, "contact tronçon 1 → 1 dégât (vies: %d)" % _enemy.lives)
 			_check(_player.lives == 2, "contact sorcier tronçon 0 → 1 dégât (vies: %d)" % _player.lives)
-			_check(_bramble.phase == AttackPlantBramble.Phase.DECOMPOSING,
-				"contact → décomposition immédiate (croissance stoppée)")
-			_check(_bramble._segments[1]._decomposing, "cascade démarre au tronçon touché")
+			# La ronce est MULTI-TIGES depuis la refonte : un contact ennemi ne
+			# met plus la ronce entière en DECOMPOSING — SEULE la tige touchée
+			# se décompose, les autres continuent de pousser (cf. l'en-tête de
+			# atk_p3_plant_bramble.gd). Ce qui doit être vrai ici, c'est que la
+			# tige touchée a lancé sa cascade et ne pousse plus.
+			_check(_bramble._tiges[0].cascade_started,
+				"contact → la tige touchée cesse de pousser (cascade lancée)")
+			_check(_troncons()[1]._decomposing, "cascade démarre au tronçon touché")
 		70:
-			_check(_bramble._segments[0]._decomposing, "propagation vers la base")
+			_check(_troncons()[0]._decomposing, "propagation vers la base")
 			_check(not _bramble.get_node("BaseBack").visible, "base disparue")
 		110:
 			if _failures == 0:

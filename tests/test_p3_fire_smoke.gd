@@ -10,6 +10,18 @@ var _failures := 0
 var _planted_frame := -1
 
 
+## Tier I = UNE seule tige : les tronçons de la ronce sont ceux de cette
+## tige, et son bulbe de tête est le seul. La ronce est multi-tiges depuis
+## la refonte (`_tiges`, chaque tige portant sa chaîne + son bulbe) :
+## `_segments` et `_tip_bulb` n'existent plus.
+func _troncons() -> Array[AttackPlantBrambleSegment]:
+	return _bramble._tiges[0].segments
+
+
+func _bulbe() -> Sprite2D:
+	return _bramble._tiges[0].bulb
+
+
 func _check(cond: bool, label: String) -> void:
 	if cond:
 		print("OK: " + label)
@@ -73,23 +85,34 @@ func _physics_process(_delta: float) -> void:
 				"BaseFront visible avec ses propres frames")
 			_check(bb.scale.length() > 0.5, "base scale > 0 (apparition tween)")
 			_check(not _bramble.get_node("SeedSprite").visible, "graine cachée après plantation")
-		35:
-			_check(_bramble._segments.size() >= 2, "2e tronçon à ~0,2 s")
-			var bulb: Sprite2D = _bramble._tip_bulb
+		20:
+			# Croissance ENCORE en cours (5 tronçons × 0,1 s = 0,5 s) : c'est ici
+			# qu'on peut voir le bulbe animer. À 35, la pousse est déjà finie
+			# (SEGMENT_INTERVAL a été divisé par 2 : le test avait gardé le
+			# découpage d'avant et regardait un bulbe déjà figé sur Bite21).
+			_check(_troncons().size() >= 2, "2e tronçon à ~0,2 s")
+			var bulb: Sprite2D = _bulbe()
 			_check(bulb != null and is_instance_valid(bulb) and bulb.get_parent() == _bramble,
 				"bulbe enfant du conteneur (glisse, pas de téléportation)")
 			var frame_idx: int = AttackPlantBramble.TIP_BULB_FRAMES.find(bulb.texture)
-			_check(frame_idx >= 0 and frame_idx < 20,
+			_check(frame_idx > 0 and frame_idx < 20,
 				"bulbe en cours d'anim Bite (frame %d)" % frame_idx)
+		35:
+			_check(_troncons().size() >= 3, "3e tronçon à ~0,6 s")
 		95:
-			_check(_bramble._segments.size() >= 6, "6 tronçons à ~1,5 s")
+			_check(_troncons().size() >= 6, "6 tronçons à ~1,5 s")
 		120:
-			_check(_bramble._segments.size() == 6, "tier I = 5 tiges + 1 tronçon de liaison")
+			_check(_troncons().size() == 6, "tier I = 5 tiges + 1 tronçon de liaison")
 			_check(not _bramble.is_growing(), "fin de croissance → WAITING")
-			var bulb: Sprite2D = _bramble._tip_bulb
+			var bulb: Sprite2D = _bulbe()
 			_check(bulb != null and is_instance_valid(bulb) and bulb.get_parent() == _bramble,
 				"bulbe sur le dernier tronçon")
-			var expected_y := -(_bramble._segment_spacing() * 6.0 + (32.0 - 8.0) * 4.0)
+			# Constantes LUES sur la classe : ce chiffre était recopié en dur
+			# (32 - 8) × 4, et le test s'est désynchronisé quand TIP_BULB_SCALE
+			# est passé de 4 à 1.
+			var expected_y := -(_bramble._segment_spacing() * 6.0
+				+ (AttackPlantBramble.TIP_BULB_CANVAS_BOTTOM - AttackPlantBramble.TIP_BULB_SINK)
+					* AttackPlantBramble.TIP_BULB_SCALE)
 			_check(abs(bulb.position.y - expected_y) < 1.0,
 				"bulbe calé en haut du dernier sprite (y=%.0f, attendu %.0f)" % [bulb.position.y, expected_y])
 			_check(bulb.texture == AttackPlantBramble.TIP_BULB_FRAMES[20],
@@ -97,10 +120,10 @@ func _physics_process(_delta: float) -> void:
 		240:
 			_check(_bramble.phase == AttackPlantBramble.Phase.DECOMPOSING,
 				"decomposition apres gel de 2 s")
-			_check(not is_instance_valid(_bramble._tip_bulb),
+			_check(not is_instance_valid(_bulbe()),
 				"cascade depuis le bout : bulbe libéré avec son tronçon")
 		260:
-			var seg0: AttackPlantBrambleSegment = _bramble._segments[0]
+			var seg0: AttackPlantBrambleSegment = _troncons()[0]
 			_check((is_instance_valid(seg0) and seg0._decomposing)
 				or not _bramble.get_node("BaseBack").visible,
 				"cascade atteint la base")

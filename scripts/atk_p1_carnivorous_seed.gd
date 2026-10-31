@@ -19,15 +19,15 @@ extends RigidBody2D
 ## : sinon une graine retombe pile sur la tête de son lanceur et y
 ## rebondit indéfiniment sans jamais s'écarter.
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_direction: Vector2, _spawn_screen_size: Vector2, spawn_level_scale: Vector2, spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_p1_carnivorous_seed.tscn")
 	var carnivorous: AttackCarnivorousSeed = _SCENE.instantiate()
-	carnivorous.transform = carnivorous.transform.rotated(direction.angle())
-	carnivorous.apply_level_scale(2 * level_scale)
-	carnivorous.position = position + 60 * direction.normalized()
-	carnivorous.linear_velocity = 200 * AttackSpawner._direction_sans_vertical(direction, caster)
-	carnivorous.attack_tier = attack_tier
+	carnivorous.transform = carnivorous.transform.rotated(spawn_direction.angle())
+	carnivorous.apply_level_scale(2 * spawn_level_scale)
+	carnivorous.position = spawn_position + 60 * spawn_direction.normalized()
+	carnivorous.linear_velocity = 200 * AttackSpawner._direction_sans_vertical(spawn_direction, spawn_caster)
+	carnivorous.attack_tier = spawn_tier
 	return [carnivorous]
 
 @export var grow_animation: String = "Grow"

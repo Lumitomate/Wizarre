@@ -19,7 +19,6 @@ const SCENE_SHOP := "res://scenes/niveaux/magasin/magasin_don/shop_hands.tscn"
 const SCENE_DECIDER := "res://scenes/niveaux/magasin/magasin_don/shop_hands_decider.tscn"
 
 var _failures := 0
-var _directions_recues: Array[Vector2] = []
 
 
 func _check(ok: bool, label: String) -> void:

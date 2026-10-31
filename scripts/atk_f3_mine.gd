@@ -17,13 +17,13 @@ class_name AttackFireMine extends AttackProjectile
 ## on décale d'autant, sinon la mine visible apparaîtrait au niveau des
 ## pieds, voire dans le sol.
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, _direction: Vector2, _screen_size: Vector2, _level_scale: Vector2, caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, _spawn_direction: Vector2, _spawn_screen_size: Vector2, _spawn_level_scale: Vector2, spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_f3_mine.tscn")
 	var mine: AttackFireMine = _SCENE.instantiate()
-	mine.position = position + Vector2(0, -12 - IDLE_CONTENT_DROP)
-	mine.setup_tier(attack_tier)
-	mine.caster = caster
+	mine.position = spawn_position + Vector2(0, -12 - IDLE_CONTENT_DROP)
+	mine.setup_tier(spawn_tier)
+	mine.caster = spawn_caster
 	return [mine]
 
 # Mine de Feu (tier 3) — 3 phases :

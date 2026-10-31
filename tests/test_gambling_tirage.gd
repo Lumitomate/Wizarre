@@ -78,7 +78,7 @@ func _test_tirage_optimise() -> void:
 	var echecs := 0
 	for i in 1000:
 		var sorcier := machine._tirer_sorcier(sorciers)
-		var tube := machine._tirer_tube(sorcier)
+		var _tube := machine._tirer_tube(sorcier)
 		var type = machine.TYPES_OBJETS[machine._tirer_type_index(sorcier, sorciers)]
 		if machine._types_possedes(sorcier).has(type):
 			echecs += 1
@@ -127,7 +127,7 @@ func _test_repli() -> void:
 	var echecs := 0
 	for i in 500:
 		var sorcier := machine._tirer_sorcier(tous)
-		var tube := machine._tirer_tube(sorcier)
+		var _tube := machine._tirer_tube(sorcier)
 		var type = machine.TYPES_OBJETS[machine._tirer_type_index(sorcier, tous)]
 		if machine._types_possedes(sorcier).has(type):
 			echecs += 1

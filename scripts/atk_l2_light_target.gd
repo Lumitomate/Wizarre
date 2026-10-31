@@ -14,14 +14,14 @@ class_name AttackLightTarget extends AttackProjectile
 ## Contrat de spawn (cf. AttackSpawner) : cible lumineuse posée à la
 ## position du sorcier, grossie selon le tier (×1/×4/×7).
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, _direction: Vector2, _screen_size: Vector2, _level_scale: Vector2, caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, _spawn_direction: Vector2, _spawn_screen_size: Vector2, _spawn_level_scale: Vector2, spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_l2_light_target.tscn")
 	var light_target: AttackLightTarget = _SCENE.instantiate()
-	light_target.position = position
-	light_target.tier_scale = 1.0 + (attack_tier - 1) * 3.0
+	light_target.position = spawn_position
+	light_target.tier_scale = 1.0 + (spawn_tier - 1) * 3.0
 	light_target.scale = Vector2(light_target.tier_scale, light_target.tier_scale)
-	light_target.caster = caster
+	light_target.caster = spawn_caster
 	return [light_target]
 
 enum Phase {

@@ -1220,7 +1220,6 @@ func set_attack(tube_index: int, attack_type: int, attack_tier: int) -> void:
 	# on re-normalise pour que TOUTES les attaques de cet élément montent
 	# au bon tier (collecter un 2e feu passe aussi le 1er feu en tier II)
 	SpellRules.normalize_spell_tiers(spells)
-	var t: int = spells[tube_index]["attack_tier"]
 	# Notifie le sac visuel pour mettre à jour l'icône du sort du tube
 	spell_changed.emit(tube_index, spells[tube_index])
 	# En boutique : un échange vient de charger un sort → le tube se

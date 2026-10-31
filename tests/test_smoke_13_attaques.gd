@@ -37,7 +37,14 @@ func _test_registre_complet() -> void:
 	for type in GlobalEnum.AttackType.values():
 		_check(AttackSpawner.REGISTRE.has(type),
 			"registre : type %d présent" % type)
-	_check(AttackSpawner.spawn_attack(999, GlobalEnum.AttackTier.I, Vector2.ZERO,
+	# Type volontairement hors registre (999) : le spawner doit renvoyer un
+	# tableau vide sans planter. Le cast explicite dit à GDScript que
+	# l'entier est bien un AttackType — et @warning_ignore couvre le second
+	# avertissement, « aucun membre de l'enum ne vaut 999 », qui est
+	# justement ce qu'on teste.
+	@warning_ignore("int_as_enum_without_match")
+	var type_inconnu := 999 as GlobalEnum.AttackType
+	_check(AttackSpawner.spawn_attack(type_inconnu, GlobalEnum.AttackTier.I, Vector2.ZERO,
 		Vector2.RIGHT, Vector2(1152, 648), Vector2.ONE, null).is_empty(),
 		"spawn_attack : type inconnu → tableau vide (pas de crash)")
 
@@ -59,7 +66,7 @@ func _test_spawn_13_attaques() -> void:
 	add_child(sorcer)
 	await get_tree().physics_frame
 
-	var position: Vector2 = Vector2(576, 324)  # centre écran (F1 borne ses colonnes à l'écran)
+	var position_tir: Vector2 = Vector2(576, 324)  # centre écran (F1 borne ses colonnes à l'écran)
 	var direction: Vector2 = Vector2.RIGHT
 	var screen_size: Vector2 = Vector2(1152, 648)
 	var level_scale: Vector2 = Vector2.ONE
@@ -71,7 +78,7 @@ func _test_spawn_13_attaques() -> void:
 			var etiqueta: String = "%s tier %s" % [nom, nom_tier]
 
 			var noeuds: Array[Node] = AttackSpawner.spawn_attack(
-				type, tier, position, direction, screen_size, level_scale, sorcer)
+				type, tier, position_tir, direction, screen_size, level_scale, sorcer)
 
 			_check(noeuds.size() > 0, "%s : au moins un nœud" % etiqueta)
 			for i in noeuds.size():

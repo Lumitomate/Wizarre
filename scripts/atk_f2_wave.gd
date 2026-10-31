@@ -17,15 +17,15 @@ var player_immunity: bool = true
 ## Contrat de spawn (cf. AttackSpawner) : une vague lancée devant le
 ## sorcier, orientée selon la visée, taille/tier via setup_tier.
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, _level_scale: Vector2, caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_direction: Vector2, _spawn_screen_size: Vector2, _spawn_level_scale: Vector2, spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_f2_wave.tscn")
 	var fire_wave: AttackFireWave = _SCENE.instantiate()
-	fire_wave.caster = caster
-	fire_wave.direction = direction.normalized()
-	fire_wave.position = position + 60 * direction.normalized()
-	fire_wave.setup_tier(attack_tier)
-	fire_wave.rotation = direction.angle()
+	fire_wave.caster = spawn_caster
+	fire_wave.direction = spawn_direction.normalized()
+	fire_wave.position = spawn_position + 60 * spawn_direction.normalized()
+	fire_wave.setup_tier(spawn_tier)
+	fire_wave.rotation = spawn_direction.angle()
 	return [fire_wave]
 
 const FRAME_HEIGHTS = {

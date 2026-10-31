@@ -18,21 +18,21 @@ var player_immunity: bool = true # le lanceur ne peut pas se toucher juste aprè
 ## Contrat de spawn (cf. AttackSpawner) : une boule de glace lancée
 ## devant le sorcier — taille et vitesse de lancement selon le tier.
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_direction: Vector2, _spawn_screen_size: Vector2, spawn_level_scale: Vector2, spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_g1_ice_ball.tscn")
 	var ice_ball: AttackIceBall = _SCENE.instantiate()
-	ice_ball.caster = caster
-	ice_ball.transform = ice_ball.transform.rotated(direction.angle())
+	ice_ball.caster = spawn_caster
+	ice_ball.transform = ice_ball.transform.rotated(spawn_direction.angle())
 	# Taille par tier : le tier 3 garde la taille actuelle (facteur 1),
 	# tier 2 = 75 %, tier 1 = 50 %
-	var g1_tier_scale := 0.5 + 0.25 * (attack_tier - 1)
-	ice_ball.apply_level_scale(2 * level_scale * g1_tier_scale)
-	ice_ball.position = position + 60 * direction.normalized()
+	var g1_tier_scale := 0.5 + 0.25 * (spawn_tier - 1)
+	ice_ball.apply_level_scale(2 * spawn_level_scale * g1_tier_scale)
+	ice_ball.position = spawn_position + 60 * spawn_direction.normalized()
 	# Vitesse de lancement par tier : le tier 1 part moins fort
 	# (200 au lieu de 300), les tiers suivants gardent leur vitesse
 	const G1_LAUNCH_SPEEDS := [200.0, 600.0, 900.0]
-	ice_ball.linear_velocity = Vector2(G1_LAUNCH_SPEEDS[attack_tier - 1], 0).rotated(direction.angle())
+	ice_ball.linear_velocity = Vector2(G1_LAUNCH_SPEEDS[spawn_tier - 1], 0).rotated(spawn_direction.angle())
 	return [ice_ball]
 
 

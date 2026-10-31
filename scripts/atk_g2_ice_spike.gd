@@ -19,21 +19,21 @@ var player_immunity: bool = true
 ## Contrat de spawn (cf. AttackSpawner) : anneau de piques de glace
 ## autour du point de tir (4 + 2×(tier-1) piques, décalés de 45°).
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, _caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_direction: Vector2, _spawn_screen_size: Vector2, spawn_level_scale: Vector2, _spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_g2_ice_spike.tscn")
 	var spawn_list: Array[Node] = []
-	var spike_count = 4 + (attack_tier - 1) * 2
+	var spike_count = 4 + (spawn_tier - 1) * 2
 	var angle_step = TAU / spike_count
-	var start_angle = direction.angle() + PI / 4  # décalage de 45°
+	var start_angle = spawn_direction.angle() + PI / 4  # décalage de 45°
 	for i in range(spike_count):
 		var ice_spike: AttackIceSpike = _SCENE.instantiate()
 		var spike_angle = start_angle + (i * angle_step)
 		ice_spike.rotation = spike_angle
 		ice_spike.direction = Vector2.RIGHT.rotated(spike_angle)
-		ice_spike.position = position + 60 * Vector2.RIGHT.rotated(spike_angle)
-		ice_spike.apply_level_scale(level_scale)
-		ice_spike.setup_tier(attack_tier)
+		ice_spike.position = spawn_position + 60 * Vector2.RIGHT.rotated(spike_angle)
+		ice_spike.apply_level_scale(spawn_level_scale)
+		ice_spike.setup_tier(spawn_tier)
 		spawn_list.append(ice_spike)
 	return spawn_list
 

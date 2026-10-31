@@ -16,18 +16,27 @@ class_name AttackSpawner
 ##
 ##  CONTRAT setup_spawn — exposé par CHAQUE script d'attaque (atk_*.gd) :
 ##    static func setup_spawn(
-##        attack_tier: int,      # 1-based : I = 1, II = 2, III = 3
-##        position: Vector2,     # position du sorcier (coords locales Level)
-##        direction: Vector2,    # direction de visée
-##        screen_size: Vector2,  # taille de l'écran (attaques plein écran)
-##        level_scale: Vector2,  # échelle du niveau (taille des sprites)
-##        caster: Node2D,        # sorcier lanceur (représailles, immunité…)
-##    ) -> Array[Node]           # les nœuds à ajouter à l'arbre
+##        spawn_tier: int,          # 1-based : I = 1, II = 2, III = 3
+##        spawn_position: Vector2,  # position du sorcier (coords locales Level)
+##        spawn_direction: Vector2, # direction de visée
+##        spawn_screen_size: Vector2,  # taille de l'écran (attaques plein écran)
+##        spawn_level_scale: Vector2,  # échelle du niveau (taille des sprites)
+##        spawn_caster: Node2D,        # sorcier lanceur (représailles, immunité…)
+##    ) -> Array[Node]               # les nœuds à ajouter à l'arbre
+##
+##  POURQUOI le préfixe spawn_ : ces six paramètres sont des ENTRÉES, et
+##  leurs noms naturels (position, direction, caster, attack_tier,
+##  level_scale) sont aussi des membres des nœuds créés — position est même
+##  une propriété de Node2D. Sans préfixe, GDScript signale un masquage
+##  (SHADOWED_VARIABLE_BASE_CLASS) sur chaque attaque, et le lecteur ne
+##  sait plus si `caster` désigne l'entrée ou le membre de l'objet. Les
+##  paramètres INUTILISÉS gardent le préfixe souligné : _spawn_screen_size.
 ##
 ##  CONVENTIONS :
 ##    • setup_spawn N'AJOUTE JAMAIS les nœuds à l'arbre (c'est à l'appelant)
-##    • position : l'attaque multiplie elle-même par level_scale si besoin
-##    • direction : normalisée par l'attaque avant usage
+##    • spawn_position : l'attaque multiplie elle-même par spawn_level_scale
+##      si besoin
+##    • spawn_direction : normalisée par l'attaque avant usage
 ##    • tier 1-based (I/II/III) : PAS de conversion dans le spawner — chaque
 ##      attaque reçoit directement int(AttackTier) + 1
 ##    • ajouter une attaque = nouveau script avec setup_spawn

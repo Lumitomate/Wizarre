@@ -105,17 +105,23 @@ Chaque script d'attaque expose :
 
 ```gdscript
 static func setup_spawn(
-    attack_tier: int,      # 1-based : I = 1, II = 2, III = 3
-    position: Vector2,     # position du sorcier (coords locales Level)
-    direction: Vector2,    # direction de visée
-    screen_size: Vector2,  # taille de l'écran (attaques plein écran)
-    level_scale: Vector2,  # échelle du niveau (taille des sprites)
-    caster: Node2D,        # sorcier lanceur (représailles, immunité…)
-) -> Array[Node]           # les nœuds à ajouter à l'arbre
+    spawn_tier: int,          # 1-based : I = 1, II = 2, III = 3
+    spawn_position: Vector2,  # position du sorcier (coords locales Level)
+    spawn_direction: Vector2, # direction de visée
+    spawn_screen_size: Vector2,  # taille de l'écran (attaques plein écran)
+    spawn_level_scale: Vector2,  # échelle du niveau (taille des sprites)
+    spawn_caster: Node2D,        # sorcier lanceur (représailles, immunité…)
+) -> Array[Node]                 # les nœuds à ajouter à l'arbre
 ```
 
+Le préfixe `spawn_` n'est pas décoratif : les noms naturels (`position`,
+`direction`, `caster`, `attack_tier`, `level_scale`) sont aussi des membres des
+nœuds créés — `position` est même une propriété de `Node2D`. Sans préfixe,
+GDScript signale un masquage sur chaque attaque. Un paramètre inutilisé garde
+en plus le préfixe souligné : `_spawn_screen_size`.
+
 - `setup_spawn` N'AJOUTE JAMAIS les nœuds à l'arbre (c'est à l'appelant).
-- L'attaque multiplie elle-même `position` par `level_scale` si besoin.
+- L'attaque multiplie elle-même `spawn_position` par `spawn_level_scale` si besoin.
 - La direction est normalisée par l'attaque avant usage.
 - Ajouter une attaque = nouveau script avec `setup_spawn` + une entrée dans
   `GlobalEnum.AttackType` + une ligne dans `REGISTRE`.

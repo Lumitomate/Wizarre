@@ -15,15 +15,15 @@ var caster: Node2D = null
 ## Contrat de spawn (cf. AttackSpawner) : boule de plante lancée devant
 ## le sorcier, taille selon le tier via setup_tier.
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, _caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_direction: Vector2, _spawn_screen_size: Vector2, spawn_level_scale: Vector2, _spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_p2_explo.tscn")
 	var plant_ball: AttackPlantBall = _SCENE.instantiate()
-	plant_ball.transform = plant_ball.transform.rotated(direction.angle())
-	plant_ball.apply_level_scale(level_scale)
-	plant_ball.position = position + 60 * direction.normalized()
-	plant_ball.linear_velocity = 300 * direction.normalized()
-	plant_ball.setup_tier(attack_tier)
+	plant_ball.transform = plant_ball.transform.rotated(spawn_direction.angle())
+	plant_ball.apply_level_scale(spawn_level_scale)
+	plant_ball.position = spawn_position + 60 * spawn_direction.normalized()
+	plant_ball.linear_velocity = 300 * spawn_direction.normalized()
+	plant_ball.setup_tier(spawn_tier)
 	return [plant_ball]
 
 @onready var sprite = $AnimatedSprite2D

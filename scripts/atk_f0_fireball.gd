@@ -17,17 +17,17 @@ var direction: Vector2 = Vector2.LEFT
 ## en éventail autour de la visée (même convention que les autres
 ## attaques, cf. G1 : tier 1 = I). Retourne les nœuds à ajouter à l'arbre.
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, _caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_direction: Vector2, _spawn_screen_size: Vector2, spawn_level_scale: Vector2, _spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_f0_fireball.tscn")
 	var spawn_list: Array[Node] = []
-	var pos := position * level_scale
+	var pos := spawn_position * spawn_level_scale
 	var spread = PI / 4
-	for i in range(attack_tier):
+	for i in range(spawn_tier):
 		var fireball: AttackFireBall = _SCENE.instantiate()
-		fireball.transform = fireball.transform.rotated(direction.angle() + (i * spread) - (attack_tier - 1) * spread / 2)
-		fireball.position = pos + 60 * direction.normalized()
-		fireball.direction = direction.normalized()
+		fireball.transform = fireball.transform.rotated(spawn_direction.angle() + (i * spread) - (spawn_tier - 1) * spread / 2)
+		fireball.position = pos + 60 * spawn_direction.normalized()
+		fireball.direction = spawn_direction.normalized()
 		spawn_list.append(fireball)
 	return spawn_list
 

@@ -15,13 +15,13 @@ class_name AttackLightBow extends AttackProjectile
 ## (coordonnées locales au Level, pas de scale à appliquer sur la
 ## position). Le tier détermine le nombre de flèches de l'éventail.
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, _direction: Vector2, _screen_size: Vector2, _level_scale: Vector2, caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, _spawn_direction: Vector2, _spawn_screen_size: Vector2, _spawn_level_scale: Vector2, spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_l3_light_bow.tscn")
 	var light_bow: AttackLightBow = _SCENE.instantiate()
-	light_bow.position = position
-	light_bow.attack_tier = attack_tier
-	light_bow.caster = caster
+	light_bow.position = spawn_position
+	light_bow.attack_tier = spawn_tier
+	light_bow.caster = spawn_caster
 	return [light_bow]
 
 # Arc Lumineux (L3) — 2 phases :

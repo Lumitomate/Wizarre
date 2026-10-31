@@ -15,23 +15,23 @@ extends AttackProjectile
 ## Contrat de spawn (cf. AttackSpawner) : 2 lames orbitantes autour du
 ## caster, sens de rotation selon la direction de visée.
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, _position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, _spawn_position: Vector2, spawn_direction: Vector2, _spawn_screen_size: Vector2, spawn_level_scale: Vector2, spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_g3_blade.tscn")
 	var spawn_list: Array[Node] = []
 	var ice_blade_count = 2
 	var angle_step = TAU / ice_blade_count
-	var rot_dir = 1.0 if direction.x >= 0.0 else -1.0
-	var start_angle = -PI / 2.0  # démarre à la verticale (haut)
+	var rot_dir = 1.0 if spawn_direction.x >= 0.0 else -1.0
+	var angle_depart = -PI / 2.0  # démarre à la verticale (haut)
 	for i in range(ice_blade_count):
 		var ice_blade: AttackIceBlade = _SCENE.instantiate()
-		var ice_blade_angle = start_angle + i * angle_step
+		var ice_blade_angle = angle_depart + i * angle_step
 		ice_blade.setup(
-			caster,
+			spawn_caster,
 			ice_blade_angle,
 			rot_dir,
-			attack_tier,
-			level_scale
+			spawn_tier,
+			spawn_level_scale
 		)
 		spawn_list.append(ice_blade)
 	return spawn_list

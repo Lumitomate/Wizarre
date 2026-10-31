@@ -21,18 +21,18 @@ var is_last = false
 ## long de la visée à rebours (la plus proche démarre en premier et
 ## déclenche la suivante via previous_pre_spawn_done).
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, screen_size: Vector2, level_scale: Vector2, _caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_direction: Vector2, spawn_screen_size: Vector2, spawn_level_scale: Vector2, _spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_f1_fire_column.tscn")
 	var spawn_list: Array[Node] = []
 	const SPRITE_SIZE = 64
-	var pos := position * level_scale
+	var pos := spawn_position * spawn_level_scale
 	var previous_column: AttackFireColumn = null
-	for i in range(-(screen_size.length() / SPRITE_SIZE), (screen_size.length() / SPRITE_SIZE) + 1):
-		var attack_position = -(i + 1) * SPRITE_SIZE * direction.normalized() + pos
-		if attack_position.x > -SPRITE_SIZE and attack_position.x < screen_size.x + SPRITE_SIZE and attack_position.y > -SPRITE_SIZE and attack_position.y < screen_size.y + SPRITE_SIZE:
+	for i in range(-(spawn_screen_size.length() / SPRITE_SIZE), (spawn_screen_size.length() / SPRITE_SIZE) + 1):
+		var attack_position = -(i + 1) * SPRITE_SIZE * spawn_direction.normalized() + pos
+		if attack_position.x > -SPRITE_SIZE and attack_position.x < spawn_screen_size.x + SPRITE_SIZE and attack_position.y > -SPRITE_SIZE and attack_position.y < spawn_screen_size.y + SPRITE_SIZE:
 			var firecolumn: AttackFireColumn = _SCENE.instantiate()
-			firecolumn.transform = firecolumn.transform.scaled(Vector2(float(attack_tier) * 1.0/3.0, 1)).rotated(direction.angle() + PI/2)
+			firecolumn.transform = firecolumn.transform.scaled(Vector2(float(spawn_tier) * 1.0/3.0, 1)).rotated(spawn_direction.angle() + PI/2)
 			firecolumn.position = attack_position
 			if previous_column != null:
 				firecolumn.previous_pre_spawn_done.connect(previous_column._on_previous_pre_spawn_done)

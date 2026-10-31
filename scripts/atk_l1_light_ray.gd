@@ -12,20 +12,20 @@ class_name AttackLightRay extends AttackProjectile
 ## Contrat de spawn (cf. AttackSpawner) : rideau de rayons parallèles
 ## (ray_nb selon le tier) couvrant l'écran dans la direction de visée.
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, screen_size: Vector2, _level_scale: Vector2, caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_direction: Vector2, spawn_screen_size: Vector2, _spawn_level_scale: Vector2, spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_l1_light_ray.tscn")
 	var spawn_list: Array[Node] = []
 	const SPRITE_SIZE = 64
-	var pos := position * _level_scale
-	var ray_nb = attack_tier
+	var pos := spawn_position * _spawn_level_scale
+	var ray_nb = spawn_tier
 	for n in range(ray_nb):
-		for i in range(-(screen_size.length() / SPRITE_SIZE), (screen_size.length() / SPRITE_SIZE) + 1):
-			var attack_position = (i + 1) * SPRITE_SIZE * direction.normalized().rotated(n * PI / ray_nb) + pos
-			if attack_position.x > -SPRITE_SIZE and attack_position.x < screen_size.x + SPRITE_SIZE and attack_position.y > -SPRITE_SIZE and attack_position.y < screen_size.y + SPRITE_SIZE:
+		for i in range(-(spawn_screen_size.length() / SPRITE_SIZE), (spawn_screen_size.length() / SPRITE_SIZE) + 1):
+			var attack_position = (i + 1) * SPRITE_SIZE * spawn_direction.normalized().rotated(n * PI / ray_nb) + pos
+			if attack_position.x > -SPRITE_SIZE and attack_position.x < spawn_screen_size.x + SPRITE_SIZE and attack_position.y > -SPRITE_SIZE and attack_position.y < spawn_screen_size.y + SPRITE_SIZE:
 				var lightray: AttackLightRay = _SCENE.instantiate()
-				lightray.caster = caster
-				lightray.transform = lightray.transform.rotated(direction.angle() + n * PI / ray_nb)
+				lightray.caster = spawn_caster
+				lightray.transform = lightray.transform.rotated(spawn_direction.angle() + n * PI / ray_nb)
 				lightray.position = attack_position
 				spawn_list.append(lightray)
 	return spawn_list

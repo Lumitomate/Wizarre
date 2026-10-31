@@ -44,16 +44,16 @@ const SEGMENT_SCENE: PackedScene = preload("res://scenes/atk/atk_p3_bramble_segm
 ## plante que sur un emplacement libre). La ronce pousse verticalement
 ## par défaut (le stick la dirige, ±60° par tronçon).
 static var _SCENE: PackedScene = null
-static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
+static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_direction: Vector2, _spawn_screen_size: Vector2, spawn_level_scale: Vector2, spawn_caster: Node2D) -> Array[Node]:
 	if _SCENE == null:
 		_SCENE = load("res://scenes/atk/atk_p3_plant_bramble.tscn")
 	var bramble: AttackPlantBramble = _SCENE.instantiate()
-	bramble.attack_tier = attack_tier
-	bramble.caster = caster
+	bramble.attack_tier = spawn_tier
+	bramble.caster = spawn_caster
 	bramble.direction = Vector2.UP
-	bramble.level_scale = level_scale
-	bramble.launch_velocity = 350 * AttackSpawner._direction_sans_vertical(direction, caster)
-	bramble.position = position + 60 * direction.normalized()
+	bramble.level_scale = spawn_level_scale
+	bramble.launch_velocity = 350 * AttackSpawner._direction_sans_vertical(spawn_direction, spawn_caster)
+	bramble.position = spawn_position + 60 * spawn_direction.normalized()
 	return [bramble]
 
 # Bulbe de pointe : coiffe le tronçon en cours de pousse pendant TOUTE la

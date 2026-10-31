@@ -1350,6 +1350,15 @@ func select_tube(tube_index: int) -> void:
 	# descendu (la règle d'attrapage en boutique teste selected_tube)
 	$SorcererSac.select_tube(tube_index)
 	selected_tube = $SorcererSac.selected_tube
+	# Si un tube vient de s'OUVRIR, relance l'attrapage des objets déjà
+	# en contact : le sorcier peut être immobile sur un objet depuis
+	# avant l'ouverture, et aucun body_entered ne repartira — sans cette
+	# relance, l'objet n'est attrapé qu'après un déplacement du sorcier.
+	if in_shop and selected_tube != -1:
+		for node in get_tree().get_nodes_in_group("attack_object_group"):
+			var objet := node as AttackObject
+			if objet != null:
+				objet.essayer_attraper(self)
 
 # Cherche une mine posée par CE joueur encore en phase idle.
 # Caches : ces recherches sont appelées chaque frame physique (cible

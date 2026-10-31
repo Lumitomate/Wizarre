@@ -38,11 +38,11 @@ func _configurer_rouleaux(machine: GamblingMachine) -> void:
 		machine.get_node("SlotCentre/Vitrine/Rouleau") as GamblingReel,
 		machine.get_node("SlotDroite/Vitrine/Rouleau") as GamblingReel,
 	]
+	var entrees_tuyaux: Array[Dictionary] = machine._entrees_tuyaux()
 	for i in machine._rouleaux.size():
-		var entrees: Array[Dictionary] = []
-		for j in 3:
-			entrees.append({"texture": machine.TUYAUX[j]})
-		machine._rouleaux[i].configurer(entrees)
+		# Même source de vérité que la machine : les entrées tuyaux
+		# construites par _entrees_tuyaux (frame 1 des anims pleines)
+		machine._rouleaux[i].configurer(entrees_tuyaux.duplicate(true))
 	machine._couleurs_rouleau = [GlobalEnum.SorcererColor.Red, GlobalEnum.SorcererColor.Green]
 
 

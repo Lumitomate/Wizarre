@@ -78,6 +78,11 @@ static var _onde_texture: ImageTexture = null
 
 func _ready() -> void:
 	_phase_levitation = randf() * TAU
+	# Groupe permettant au sorcier de retrouver les objets qui le
+	# chevauchent : quand il ouvre un tube alors que le contact date
+	# d'avant la sélection, aucun body_entered ne repartira (il est déjà
+	# immobile sur l'objet) — c'est lui qui relance la tentative.
+	add_to_group("attack_object_group")
 	match item_attack_tier:
 		GlobalEnum.AttackTier.III:
 			animation_name = "Or"
@@ -105,21 +110,32 @@ func donner_a(sorcier: Sorcerer, tube_index: int) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if _attrapee_deja:
-		return
 	if body.is_in_group("player_group"):
-		var sorcerer: Sorcerer = body
-		
-		# En boutique : le remplacement n'a lieu que si un tube est activé.
-		# Sinon l'objet reste en place MAIS réagit : il est bousculé
-		# légèrement et revient élastiquement à sa place (règle du titre
-		# Wezarb vivant, cf. _ebranler).
-		if sorcerer.in_shop and sorcerer.selected_tube == -1:
-			_ebranler(sorcerer)
-			return
-		
-		_lancer_vol(sorcerer)
-		attrapee.emit(sorcerer)
+		essayer_attraper(body as Sorcerer)
+
+## Tente d'attraper l'objet au nom d'un sorcier — logique partagée entre
+## le contact initial (body_entered) et la relance à l'ouverture d'un
+## tube (cf. Sorcerer.select_tube) : si le sorcier est déjà immobile sur
+## l'objet quand il ouvre son tube, aucun body_entered ne repartira, il
+## faut donc retenter depuis l'extérieur. Retourne true si le vol de
+## capture a été lancé.
+func essayer_attraper(sorcier: Sorcerer) -> bool:
+	if _attrapee_deja or sorcier == null:
+		return false
+	if not overlaps_body(sorcier):
+		return false
+	
+	# En boutique : le remplacement n'a lieu que si un tube est activé.
+	# Sinon l'objet reste en place MAIS réagit : il est bousculé
+	# légèrement et revient élastiquement à sa place (règle du titre
+	# Wezarb vivant, cf. _ebranler).
+	if sorcier.in_shop and sorcier.selected_tube == -1:
+		_ebranler(sorcier)
+		return false
+	
+	_lancer_vol(sorcier)
+	attrapee.emit(sorcier)
+	return true
 
 ## Démarre le vol d'absorption : collision coupée (l'objet n'est plus
 ## attrapable), rétrécissement + fondu vers la sphère blanche sur la

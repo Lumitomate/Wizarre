@@ -53,12 +53,12 @@ const SHADER_SORCIER: Shader = preload("res://assets/shaders/wizard_color.gdshad
 
 ## Rouleau 2 (Q6) : tubes au niveau de munitions 4 (plein), frame 1 du
 ## soulèvement — l'ordre Charbon / Énergie / Tainted correspond aux tubes
-## 0 / 1 / 2 du sac (cf. sorcerer_sac.gd).
-const TUYAUX: Array[Texture2D] = [
-	preload("res://assets/sprites/Sorciers/Sac/TuyauSac/TuyauSac_Charbon/TuyauSac_Charbon_4/TuyauSac_Charbon4_1.png"),
-	preload("res://assets/sprites/Sorciers/Sac/TuyauSac/TuyauSac_Energie/TuyauSac_Energie_4/TuyauSac_Energie4_1.png"),
-	preload("res://assets/sprites/Sorciers/Sac/TuyauSac/TuyauSac_Tainted/TuyauSac_Tainted_4/TuyauSac_Tainted4_1.png"),
-]
+## 0 / 1 / 2 du sac (cf. scenes/entities/players/sac/sorcerer_sac.gd).
+## Les visuels viennent de la ressource PARTAGÉE pipe_animations.tres :
+## plus aucun chemin de PNG dupliqué ici, la machine affiche exactement
+## les mêmes sprites que les tuyaux du sac.
+const PIPE_ANIMATIONS: SpriteFrames = preload("res://scenes/entities/players/sac/tuyau/pipe_animations.tres")
+const ANIMS_TUYAUX: Array[StringName] = [&"Pipe_Coal_4", &"Pipe_Energy_4", &"Pipe_Tainted_4"]
 
 ## Rouleau 3 (Q7/Q8) : les 12 objets du spawner du magasin (F0 exclu,
 ## attaque de test), dans l'ordre de AttackType — extraits des scènes
@@ -188,8 +188,8 @@ func _entrees_sorciers() -> Array[Dictionary]:
 
 func _entrees_tuyaux() -> Array[Dictionary]:
 	var entrees: Array[Dictionary] = []
-	for texture in TUYAUX:
-		entrees.append({"texture": texture})
+	for anim in ANIMS_TUYAUX:
+		entrees.append({"texture": PIPE_ANIMATIONS.get_frame_texture(anim, 1)})
 	return entrees
 
 
@@ -362,7 +362,7 @@ func _tirer_combinaison() -> Dictionary:
 func _tirer_aleatoire() -> Dictionary:
 	return {
 		"couleur": _couleurs_rouleau[randi() % _couleurs_rouleau.size()],
-		"tube": randi() % TUYAUX.size(),
+		"tube": randi() % ANIMS_TUYAUX.size(),
 		"type_index": randi() % TYPES_OBJETS.size(),
 	}
 
@@ -385,7 +385,7 @@ func _tube_est_vide(sorcier: Sorcerer, tube: int) -> bool:
 
 func _tubes_vides(sorcier: Sorcerer) -> Array[int]:
 	var vides: Array[int] = []
-	for i in TUYAUX.size():
+	for i in ANIMS_TUYAUX.size():
 		if _tube_est_vide(sorcier, i):
 			vides.append(i)
 	return vides
@@ -394,7 +394,7 @@ func _tubes_vides(sorcier: Sorcerer) -> Array[int]:
 ## Types d'attaque possédés par un sorcier (set de GlobalEnum.AttackType).
 func _types_possedes(sorcier: Sorcerer) -> Dictionary:
 	var possedes := {}
-	for i in TUYAUX.size():
+	for i in ANIMS_TUYAUX.size():
 		if not _tube_est_vide(sorcier, i):
 			possedes[sorcier.spells[i]["attack_type"]] = true
 	return possedes
@@ -418,7 +418,7 @@ func _tirer_sorcier(sorciers: Array[Sorcerer]) -> Sorcerer:
 func _tirer_tube(sorcier: Sorcerer) -> int:
 	var vides := _tubes_vides(sorcier)
 	if vides.is_empty():
-		for i in TUYAUX.size():
+		for i in ANIMS_TUYAUX.size():
 			vides.append(i)
 	return vides[randi() % vides.size()]
 
@@ -501,7 +501,7 @@ func _livrer() -> void:
 func resultat() -> Dictionary:
 	var couleur: GlobalEnum.SorcererColor = _couleurs_rouleau[
 		posmod(_rouleaux[Slot.GAUCHE].symbole_central(), _couleurs_rouleau.size())]
-	var tube: int = _rouleaux[Slot.CENTRE].symbole_central() % TUYAUX.size()
+	var tube: int = _rouleaux[Slot.CENTRE].symbole_central() % ANIMS_TUYAUX.size()
 	var type_index: int = _rouleaux[Slot.DROITE].symbole_central() % TYPES_OBJETS.size()
 	return {
 		"couleur": couleur,

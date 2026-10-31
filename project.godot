@@ -42,15 +42,4 @@ version_control/autoload_on_startup=true
 
 [rendering]
 
-; Renderer gl_compatibility : OpenGL 3.3 / WebGL 2 — le seul renderer qui
-; fonctionne dans les navigateurs (export Web) et le plus compatible en
-; général (MoltenVK sur Mac plantait sur les compute pipelines des
-; GPUParticles2D avec le renderer mobile). Projet 100 % 2D.
-;
-; ATTENTION : Godot ne reconnaît que « ; » comme commentaire. Un « # »
-; n'en est PAS un : le parseur avale les lignes dans la CLÉ du réglage,
-; qui n'est alors JAMAIS appliqué — silencieusement. C'est arrivé : le
-; commit 10f6303 croyait passer en gl_compatibility et le projet est
-; retombé sur forward_plus. Godot efface aussi les commentaires à chaque
-; sauvegarde du projet : le réglage ci-dessous est la source de vérité.
 renderer/rendering_method="gl_compatibility"

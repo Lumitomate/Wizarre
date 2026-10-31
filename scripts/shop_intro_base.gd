@@ -135,8 +135,8 @@ func _sceller_zone(debut: Vector2i, fin: Vector2i) -> void:
 func _vider_tubes(player: Sorcerer) -> void:
 	player.spells = {0: {}, 1: {}, 2: {}}
 	player.selected_tube = -1
-	if player.has_node("SorcererSac"):
-		player.get_node("SorcererSac").refresh_all()
+	if player.has_node("PipeManager"):
+		player.get_node("PipeManager").refresh_all()
 
 
 ## Un objet (AttackObject) vient d'entrer dans l'arbre sous une bulle :

@@ -38,11 +38,17 @@ const POSITION_LIVRAISON := Vector2(0, -180)
 ## avant que la récompense ne prenne le relais (comportement des vraies
 ## machines à sous).
 const PAUSE_LIVRAISON := 0.6
-## Chance (grillée Q : 3 %) que la machine parte en vrille et fasse un
-## tirage TOTALEMENT aléatoire — sorcier, tube et objet tirés au hasard,
-## sans tenir compte de l'état des sacs. Un vrai parfum de casino :
-## la machine peut « se tromper » même quand elle sait quoi donner.
+## Chance que la machine parte en vrille et fasse un tirage TOTALEMENT
+## aléatoire — sorcier, tube et objet tirés au hasard, sans tenir compte
+## de l'état des sacs. Un vrai parfum de casino : la machine peut « se
+## tromper » même quand elle sait quoi donner.
+## La chance DÉMARRE à CHANCE_ALEATOIRE (3 %) et monte en courbe
+## exponentielle (x²) avec le nombre de tubes occupés de tous les
+## sorciers : lente au début, brutale à la fin, jusqu'à
+## CHANCE_ALEATOIRE_MAX quand il ne reste qu'UN tube libre sur tous
+## les sacs (cf. _chance_aleatoire_dynamique).
 const CHANCE_ALEATOIRE := 0.03
+const CHANCE_ALEATOIRE_MAX := 0.80
 
 ## Frame 1 de l'animation idle du sorcier (Q5) : la même image pour tous
 ## les joueurs, teintée par la palette de leur couleur (WizardPalette) —
@@ -53,7 +59,7 @@ const SHADER_SORCIER: Shader = preload("res://assets/shaders/wizard_color.gdshad
 
 ## Rouleau 2 (Q6) : tubes au niveau de munitions 4 (plein), frame 1 du
 ## soulèvement — l'ordre Charbon / Énergie / Tainted correspond aux tubes
-## 0 / 1 / 2 du sac (cf. scenes/entities/players/sac/sorcerer_sac.gd).
+## 0 / 1 / 2 du sac (cf. res://scripts/pipe_manager.gd).
 ## Les visuels viennent de la ressource PARTAGÉE pipe_animations.tres :
 ## plus aucun chemin de PNG dupliqué ici, la machine affiche exactement
 ## les mêmes sprites que les tuyaux du sac.
@@ -347,7 +353,7 @@ func _on_rouleau_cale(_rouleau: GamblingReel) -> void:
 ## Sans joueur (tests headless) : équivalent aléatoire total.
 func _tirer_combinaison() -> Dictionary:
 	var sorciers := _sorciers_actifs()
-	if sorciers.is_empty() or randf() < CHANCE_ALEATOIRE:
+	if sorciers.is_empty() or randf() < _chance_aleatoire_dynamique(sorciers):
 		return _tirer_aleatoire()
 	var sorcier := _tirer_sorcier(sorciers)
 	return {
@@ -366,6 +372,36 @@ func _tirer_aleatoire() -> Dictionary:
 		"type_index": randi() % TYPES_OBJETS.size(),
 	}
 
+
+## Chance dynamique de tirage aléatoire, proportionnelle à l'occupation
+## des sacs : la chance de « partir en vrille » augmente quand les tubes
+## se remplissent — la machine lâche de plus en plus les tirages
+## optimisés en fin de partie.
+##
+## Courbe exponentielle (x²) : lente au début (une poignée de tubes
+## occupés n'y change presque rien), brutale à la fin. L'axe de
+## normalisation est « 1 tube libre sur tous les sorciers » — à ce
+## moment, la chance vaut CHANCE_ALEATOIRE_MAX (80 %). Au-delà (tous les
+## tubes occupés), elle est plafonnée à cette même valeur : la vrille
+## devient dominante mais le tirage optimisé (remplacement pur) garde
+## toujours une chance de passer.
+##
+## Exemples à 4 joueurs (12 tubes) :
+##   1 occupé  → 3.6 %  · 6 occupés → 26 %  · 9 → 55 %  · 11 → 80 % (cap)
+##   1 joueur (3 tubes) : 2 occupés → 80 % (cap)
+func _chance_aleatoire_dynamique(sorciers: Array[Sorcerer]) -> float:
+	# Total de tubes tous sorciers confondus (3 tubes par sac)
+	var total := 0
+	var occupes := 0
+	for s in sorciers:
+		total += 3
+		occupes += 3 - _tubes_vides(s).size()
+	# Sans tube occupé (ou cas dégénéré) : la chance de base
+	if total <= 1 or occupes == 0:
+		return CHANCE_ALEATOIRE
+	# Normalisation : 1 tube LIBRE (occupés = total − 1) → x = 1 → MAX
+	var x := minf(float(occupes) / float(total - 1), 1.0)
+	return CHANCE_ALEATOIRE + (CHANCE_ALEATOIRE_MAX - CHANCE_ALEATOIRE) * x * x
 
 ## Sorciers en jeu, valides (lecture non typée : cf. _entrees_sorciers).
 func _sorciers_actifs() -> Array[Sorcerer]:

@@ -7,7 +7,7 @@ extends Node
 
 var step := 0
 var sorcier: Sorcerer
-var sac: SorcererSac
+var sac: PipeManager
 
 
 func _ready() -> void:
@@ -16,7 +16,7 @@ func _ready() -> void:
 	sorcier.controller_id = 0
 	sorcier.load_data()
 	add_child(sorcier)
-	sac = sorcier.get_node("SorcererSac")
+	sac = sorcier.get_node("PipeManager")
 
 
 func _flash_color(tube_idx: int) -> Color:
@@ -29,28 +29,28 @@ func _physics_process(_delta: float) -> void:
 	if step == 3:
 		# Tube 0 = feu (F1) → flash rouge attendu
 		sorcier.spells[0] = {"attack_type": GlobalEnum.AttackType.F1, "attack_tier": 0}
-		sac.select_tube(0)
+		sorcier.select_tube(0)
 		var c := _flash_color(0)
 		print("flash tube feu: ", c, " (rouge ~#ff5544 attendu)")
 	if step == 5:
 		# Changement de tube : tube 1 VIDÉ explicitement (load_data le remplit
 		# avec les sorts par défaut) → flash blanc, et le rayon est réutilisé
 		sorcier.spells[1] = {}
-		sac.select_tube(1)
+		sorcier.select_tube(1)
 		print("flash tube vide: ", _flash_color(1), " (blanc 1,1,1,1 attendu)")
 		print("rayon unique (réutilisé): ", sac.get_tube_node(1)._flash != null, " (true attendu)")
 	if step == 7:
 		# Refermeture (ré-appui sur le tube sorti) : PAS de nouveau flash —
 		# vérifié structurellement : le tween du flash n'est PAS recréé
 		var tween_avant: Tween = sac.get_tube_node(1)._flash_tween
-		sac.select_tube(1)  # ré-appui → refermeture
+		sorcier.select_tube(1)  # ré-appui → refermeture
 		print("refermeture sans re-flash (tween inchangé): ",
 			sac.get_tube_node(1)._flash_tween == tween_avant, " (true attendu)")
 	if step == 9:
 		# Sorcier d'affichage du pause (frozen) : aucun flash
 		sorcier.frozen = true
 		var avant := _flash_color(1).a
-		sac.select_tube(2)
+		sorcier.select_tube(2)
 		print("flash en pause (frozen) bloqué: ", _flash_color(1).a == avant,
 			" (true attendu; rayon tube 2 non créé: ", sac.get_tube_node(2)._flash == null, ")")
 	if step == 11:

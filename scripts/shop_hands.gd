@@ -135,8 +135,8 @@ func _representer_receveurs() -> void:
 		receveur._door_cine = null
 		receveur.collision_layer = receveur._collision_layer_origin
 		receveur.dash_shader_material.set_shader_parameter("arrival_fade", 1.0)
-		if receveur.has_node("SorcererSac"):
-			receveur.get_node("SorcererSac").modulate.a = 1.0
+		if receveur.has_node("PipeManager"):
+			receveur.get_node("PipeManager").modulate.a = 1.0
 
 
 ## Scelle l'espace du bas (variante 3 joueurs, règle validée) : la rangée

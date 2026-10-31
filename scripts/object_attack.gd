@@ -193,7 +193,7 @@ func _vol_etape(t: float) -> void:
 func _position_tube() -> Vector2:
 	if _sorcier_cible == null or not is_instance_valid(_sorcier_cible):
 		return _depart
-	var sac := _sorcier_cible.get_node_or_null("SorcererSac") as SorcererSac
+	var sac := _sorcier_cible.get_node_or_null("PipeManager") as PipeManager
 	if sac == null:
 		return _sorcier_cible.global_position
 	var tube := sac.get_tube_node(_tube_cible(_sorcier_cible))
@@ -233,13 +233,13 @@ func _absorption() -> void:
 	fondu.tween_callback(_finaliser)
 
 ## Onde d'arrivée : anneau radial coloré par la famille de l'objet,
-## géré par le SorcererSac (même langage visuel que le flash de
+## géré par le PipeManager (même langage visuel que le flash de
 ## sélection). Déclenchée au début de l'absorption — l'instant où la
 ## sphère touche le tube.
 func _lancer_onde_arrivee() -> void:
 	if _sorcier_cible == null or not is_instance_valid(_sorcier_cible):
 		return
-	var sac := _sorcier_cible.get_node_or_null("SorcererSac") as SorcererSac
+	var sac := _sorcier_cible.get_node_or_null("PipeManager") as PipeManager
 	if sac == null:
 		return
 	sac.flasher_onde(_tube_cible(_sorcier_cible), item_attack_type)

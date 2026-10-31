@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://fq0kkjjmxkuf"]
 
-[ext_resource type="Script" uid="uid://cft8lvaiov11f" path="res://scenes/entities/players/sac/sorcerer_sac.gd" id="0_sac_script"]
 [ext_resource type="Texture2D" uid="uid://bbh8jhph5ygd4" path="res://assets/sprites/Sorciers/Sac/Sac_V1/Sac_V1.png" id="1_gq50q"]
 [ext_resource type="PackedScene" uid="uid://dudn21tws6os" path="res://scenes/entities/players/sac/tuyau/pipe.tscn" id="2_pipe"]
+[ext_resource type="Script" uid="uid://cft8lvaiov11f" path="res://scripts/pipe_manager.gd" id="0_sac_script"]
 
-[node name="SorcererSac" type="Area2D" unique_id=94794997]
+[node name="PipeManager" type="Node2D" unique_id=94794997]
 script = ExtResource("0_sac_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=372495353]

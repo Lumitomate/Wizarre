@@ -1,19 +1,19 @@
 [gd_scene format=3 uid="uid://dudn21tws6os"]
 
-[ext_resource type="Script" uid="uid://xg0e0n03pccl" path="res://scenes/entities/players/sac/tuyau/pipe.gd" id="1_script"]
-[ext_resource type="SpriteFrames" uid="uid://wpedg5wj1rwa" path="res://scenes/entities/players/sac/tuyau/pipe_animations.tres" id="2_pipeframes"]
-[ext_resource type="SpriteFrames" uid="uid://8uk7loemon06" path="res://scenes/entities/players/sac/tuyau/spell_icons.tres" id="3_iconframes"]
+[ext_resource type="Script" uid="uid://xg0e0n03pccl" path="res://scripts/pipe.gd" id="1_03yx5"]
+[ext_resource type="SpriteFrames" uid="uid://wpedg5wj1rwa" path="res://scenes/entities/players/sac/tuyau/pipe_animations.tres" id="2_pkfqg"]
+[ext_resource type="SpriteFrames" uid="uid://8uk7loemon06" path="res://scenes/entities/players/sac/tuyau/spell_icons.tres" id="3_1oig5"]
 
 [node name="Pipe" type="Node2D" unique_id=1720044893]
-script = ExtResource("1_script")
+script = ExtResource("1_03yx5")
 
 [node name="AnimSprite" type="AnimatedSprite2D" parent="." unique_id=1736953510]
 texture_filter = 1
-sprite_frames = ExtResource("2_pipeframes")
+sprite_frames = ExtResource("2_pkfqg")
 animation = &"Pipe_Coal_0"
 
 [node name="Icone" type="AnimatedSprite2D" parent="." unique_id=1486176897]
 texture_filter = 1
 position = Vector2(0, 18)
-sprite_frames = ExtResource("3_iconframes")
+sprite_frames = ExtResource("3_1oig5")
 animation = &"Icone_AtkP3"

@@ -8,7 +8,7 @@ extends Node
 
 var step := 0
 var sorcier: Sorcerer
-var sac: SorcererSac
+var sac: PipeManager
 var objet: AttackObject
 
 
@@ -18,7 +18,7 @@ func _ready() -> void:
 	sorcier.controller_id = 0
 	sorcier.load_data()
 	add_child(sorcier)
-	sac = sorcier.get_node("SorcererSac")
+	sac = sorcier.get_node("PipeManager")
 	var obj_scene: PackedScene = load("res://scenes/objets/obj_p1_seeds.tscn")
 	objet = obj_scene.instantiate()
 	add_child(objet)
@@ -74,7 +74,7 @@ func _physics_process(_delta: float) -> void:
 		sorcier2.load_data()
 		add_child(sorcier2)
 		sorcier2.frozen = true
-		var sac2: SorcererSac = sorcier2.get_node("SorcererSac")
+		var sac2: PipeManager = sorcier2.get_node("PipeManager")
 		sac2.flasher_onde(0, GlobalEnum.AttackType.F1)
 		print("onde en pause (frozen) bloquée: ", sac2.get_tube_node(0)._onde_arrivee == null, " (true attendu)")
 		print("=== TEST TERMINÉ ===")

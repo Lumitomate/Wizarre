@@ -3,7 +3,12 @@ extends CharacterBody2D
 
 const SPRITE_SIZE = 64
 
-signal ammo_changed
+## Munitions d'un tube mises à jour (tube_index, nouveau montant) :
+## le HUD et le PipeManager rafraîchissent l'affichage du compteur.
+signal ammo_changed(tube_index: int, ammo_amount: int)
+## Sort chargé dans un tube (tube_index, dictionnaire du sort) : le
+## PipeManager met à jour l'icône du tuyau correspondant.
+signal spell_changed(tube_index: int, spell: Dictionary)
 signal life_changed
 ## Émis à la fin de la sortie de porte (fade + décalage terminés) : la
 ## porte chaîne la sortie du sorcier suivant dessus
@@ -93,17 +98,17 @@ func start_door_exit(target: Vector2, dernier: bool) -> void:
 	# sprite de porte peut être enfoncé sous le sol selon les décors)
 	_door_exit_snap_to_ground()
 	# Sac invisible au départ : son fade démarre à la MOITIÉ du fade du corps
-	if has_node("SorcererSac"):
-		$SorcererSac.modulate.a = 0.0
+	if has_node("PipeManager"):
+		$PipeManager.modulate.a = 0.0
 	# Fade bas → haut en DOOR_EXIT_FADE_DURATION (tween sur le paramètre shader)
 	var tween := create_tween()
 	tween.tween_method(_set_arrival_fade, 0.0, 1.0, DOOR_EXIT_FADE_DURATION)
 	tween.tween_callback(_on_door_exit_fade_done)
 	# Sac : fade 0 → 1 sur la 2e moitié du fade du corps (démarre à 50 %)
-	if has_node("SorcererSac"):
+	if has_node("PipeManager"):
 		var tween_sac := create_tween()
 		tween_sac.tween_interval(DOOR_EXIT_FADE_DURATION * 0.5)
-		tween_sac.tween_property($SorcererSac, "modulate:a", 1.0, DOOR_EXIT_FADE_DURATION * 0.5)
+		tween_sac.tween_property($PipeManager, "modulate:a", 1.0, DOOR_EXIT_FADE_DURATION * 0.5)
 
 
 func _set_arrival_fade(v: float) -> void:
@@ -116,8 +121,8 @@ func _on_door_exit_fade_done() -> void:
 	_set_arrival_fade(1.0)
 	# Sécurité : le sac est bien entièrement visible (son tween couvre la
 	# 2e moitié du fade du corps, donc il vient de se terminer)
-	if has_node("SorcererSac"):
-		$SorcererSac.modulate.a = 1.0
+	if has_node("PipeManager"):
+		$PipeManager.modulate.a = 1.0
 	if _door_exit_decalage == 0:
 		# Rang centre (ou porte à un seul sorcier) : pas de décalage, la
 		# sortie est déjà terminée
@@ -209,8 +214,8 @@ func start_exit_fade(on_done: Callable) -> void:
 	_exit_fade_tween = create_tween()
 	_exit_fade_tween.set_parallel(true)
 	_exit_fade_tween.tween_method(_set_arrival_fade, depart, 0.0, EXIT_FADE_DURATION)
-	if has_node("SorcererSac"):
-		_exit_fade_tween.tween_property($SorcererSac, "modulate:a", 0.0, EXIT_FADE_DURATION)
+	if has_node("PipeManager"):
+		_exit_fade_tween.tween_property($PipeManager, "modulate:a", 0.0, EXIT_FADE_DURATION)
 	_exit_fade_tween.chain().tween_callback(_finish_exit_fade.bind(on_done))
 
 ## Annule le fondu en cours (joueur sorti de la zone de la porte) :
@@ -230,8 +235,8 @@ func cancel_exit_fade() -> void:
 	var tween := create_tween()
 	tween.set_parallel(true)
 	tween.tween_method(_set_arrival_fade, depart, 1.0, EXIT_FADE_RETURN_DURATION)
-	if has_node("SorcererSac"):
-		tween.tween_property($SorcererSac, "modulate:a", 1.0, EXIT_FADE_RETURN_DURATION)
+	if has_node("PipeManager"):
+		tween.tween_property($PipeManager, "modulate:a", 1.0, EXIT_FADE_RETURN_DURATION)
 
 ## Fin du fondu : plus rien à annuler, la téléportation est lancée.
 func _finish_exit_fade(on_done: Callable) -> void:
@@ -447,6 +452,11 @@ func _ready() -> void:
 		position += Vector2(0, SPRITE_SIZE * slot)
 	if input_device == -1:
 		input_device = controller_id
+	# Le PipeManager (sac visuel) reçoit la référence au sorcier AVANT
+	# load_data() : le refresh_all final de load_data se branchera sur
+	# l'état réellement chargé
+	if has_node("PipeManager"):
+		$PipeManager.setup(self)
 	load_data()
 	lives = 3
 
@@ -462,8 +472,8 @@ func _ready() -> void:
 		frozen = true
 		$AnimatedSprite2D.play("idle")
 		# Sac invisible tant que la cinématique ne l'a pas révélé
-		if has_node("SorcererSac"):
-			$SorcererSac.modulate.a = 0.0
+		if has_node("PipeManager"):
+			$PipeManager.modulate.a = 0.0
 		# Fantôme pendant l'attente et le fade : les sorciers attendent tous
 		# au même point (le centre de la porte), sans se bloquer mutuellement
 		_collision_layer_origin = collision_layer
@@ -1211,9 +1221,30 @@ func set_attack(tube_index: int, attack_type: int, attack_tier: int) -> void:
 	# au bon tier (collecter un 2e feu passe aussi le 1er feu en tier II)
 	SpellRules.normalize_spell_tiers(spells)
 	var t: int = spells[tube_index]["attack_tier"]
-	# Notifie le sac pour mettre à jour l'icône du sort dans le tube
-	if has_node("SorcererSac"):
-		$SorcererSac.set_spell(tube_index, attack_type, t)
+	# Notifie le sac visuel pour mettre à jour l'icône du sort du tube
+	spell_changed.emit(tube_index, spells[tube_index])
+	# En boutique : un échange vient de charger un sort → le tube se
+	# referme seul après un court délai (le sort est déjà chargé, le
+	# tube relevé n'a plus d'utilité)
+	if in_shop:
+		get_tree().create_timer(TUBE_CLOSE_DELAY).timeout.connect(
+			_close_tube_after_swap.bind(tube_index))
+
+## Délai (s) avant refermeture automatique du tube après un échange en
+## boutique (objet attrapé et converti en sort)
+const TUBE_CLOSE_DELAY := 0.8
+
+## Fermeture automatique du tube après échange en boutique : rabaisse le
+## tube (anim reverse) et désélectionne (selected_tube = -1). Ne ferme que
+## si le tube rempli est toujours celui sélectionné (si le joueur a déjà
+## sélectionné un autre tube entre-temps, on ne touche à rien).
+func _close_tube_after_swap(tube_index: int) -> void:
+	if not is_inside_tree() or selected_tube != tube_index:
+		return
+	var previous := selected_tube
+	selected_tube = -1
+	if has_node("PipeManager"):
+		$PipeManager.apply_selection(-1, previous)
 
 func fire_attack(tube_index: int) -> void:
 	if tube_index < 0 or tube_index >= 3:
@@ -1280,11 +1311,9 @@ func fire_attack(tube_index: int) -> void:
 			fire_wait_release[tube_index] = true
 			return
 	
-	# Consomme l'énergie du tube
-	if energy_counts[tube_index] <= 0:
+	# Consomme l'énergie du tube (un seul geste : décrément + signal)
+	if not consume_energy(tube_index, 1):
 		return
-	energy_counts[tube_index] -= 1
-	ammo_changed.emit(tube_index, energy_counts[tube_index])
 	$AttackCooldown.start()
 	can_fire = false
 	_play_attack_animation()
@@ -1343,13 +1372,15 @@ func _tube_button(tube_index: int) -> PlayerInput.Action:
 func select_tube(tube_index: int) -> void:
 	if tube_index < 0 or tube_index >= 3:
 		return
-	# Délègue l'animation au sac (noms de nœuds et animations gérés par
-	# SorcererSac), PUIS se synchronise : le sac peut RABAISSER le tube
-	# (ré-appui sur le tube sorti) — selected_tube doit refléter l'état
-	# visuel réel, sinon un objet pourrait être attrapé dans un tube
-	# descendu (la règle d'attrapage en boutique teste selected_tube)
-	$SorcererSac.select_tube(tube_index)
-	selected_tube = $SorcererSac.selected_tube
+	# Le Sorcerer DÉCIDE (source de vérité) : ré-appui sur le tube sorti
+	# → refermeture (désélection), sinon bascule vers le nouveau tube.
+	# selected_tube doit refléter l'état réel, sinon un objet pourrait
+	# être attrapé dans un tube descendu (la règle d'attrapage en
+	# boutique teste selected_tube)
+	var previous := selected_tube
+	selected_tube = -1 if selected_tube == tube_index else tube_index
+	if has_node("PipeManager"):
+		$PipeManager.apply_selection(selected_tube, previous)
 	# Si un tube vient de s'OUVRIR, relance l'attrapage des objets déjà
 	# en contact : le sorcier peut être immobile sur un objet depuis
 	# avant l'ouverture, et aucun body_entered ne repartira — sans cette
@@ -1461,7 +1492,20 @@ func _cancel_light_target() -> void:
 func add_energy(tube_index: int, amount: int) -> void:
 	energy_counts[tube_index] = min(energy_counts[tube_index] + amount, MAX_ENERGY)
 	ammo_changed.emit(tube_index, energy_counts[tube_index])
-	
+
+
+## Consomme des munitions d'un tube en UN seul geste : décrémente la
+## source de vérité ET émet le signal de mise à jour (le sac rafraîchit
+## alors le tuyau). Utiliser TOUJOURS cette fonction pour consommer —
+## jamais un décrément direct suivi d'une émission manuelle.
+func consume_energy(tube_index: int, amount: int) -> bool:
+	if tube_index < 0 or tube_index >= 3:
+		return false
+	if energy_counts[tube_index] < amount:
+		return false
+	energy_counts[tube_index] -= amount
+	ammo_changed.emit(tube_index, energy_counts[tube_index])
+	return true
 
 
 ## Vrai tant que ce sorcier ne peut pas être blessé : dash (pendant et
@@ -1601,10 +1645,10 @@ func load_data() -> void:
 	spells = data_to_load["spells"]
 	SpellRules.normalize_spell_tiers(spells)
 	
-	# Le sac s'initialise avant le sorcier : on rafraîchit ses animations
-	# avec les valeurs réellement chargées
-	if has_node("SorcererSac"):
-		$SorcererSac.refresh_all()
+	# Le PipeManager (déjà branché via setup()) se resynchronise avec les
+	# valeurs réellement chargées (munitions + sorts + icônes)
+	if has_node("PipeManager"):
+		$PipeManager.refresh_all()
 
 func _on_attack_cooldown_timeout() -> void:
 	can_fire = true

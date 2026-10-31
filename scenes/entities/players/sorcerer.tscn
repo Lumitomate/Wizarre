@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bgd2bh1dj4h4s"]
 
 [ext_resource type="Script" uid="uid://b7cwfl6277f1o" path="res://scripts/sorcerer.gd" id="1_oqr0g"]
-[ext_resource type="PackedScene" uid="uid://fq0kkjjmxkuf" path="res://scenes/entities/players/sac/sorcerer_sac.tscn" id="2_vuix5"]
+[ext_resource type="PackedScene" uid="uid://fq0kkjjmxkuf" path="res://scenes/entities/players/sac/pipe_manager.tscn" id="2_vuix5"]
 [ext_resource type="Shader" uid="uid://dylx6il08tpoj" path="res://assets/shaders/wizard_color.gdshader" id="3_jonpg"]
 [ext_resource type="Texture2D" uid="uid://bw7lv5n4v0ux8" path="res://assets/sprites/Sorciers/sorcier_v2/SorcierV2_AtkFeu_/Sorciers_v2_Atk_1.png" id="4_k8hdi"]
 [ext_resource type="Texture2D" uid="uid://b8omwin2eksx4" path="res://assets/sprites/Sorciers/sorcier_v2/SorcierV2_AtkFeu_/Sorciers_v2_Atk_2.png" id="5_ev8mx"]
@@ -275,7 +275,7 @@ collision_mask = 5
 script = ExtResource("1_oqr0g")
 sorcerer_color = 3
 
-[node name="SorcererSac" parent="." unique_id=545034358 instance=ExtResource("2_vuix5")]
+[node name="PipeManager" parent="." unique_id=545034358 instance=ExtResource("2_vuix5")]
 position = Vector2(-0.5, 2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=92979516]

@@ -8,7 +8,7 @@ class_name Pipe extends Node2D
 ## Aucune dépendance à son parent : l'état est poussé de l'extérieur
 ## (set_ammo / set_spell) et les effets déclenchés explicitement
 ## (flash_select / flasher_onde). Les vérifications de contexte
-## (pause, boutique) restent à la charge de l'orchestrateur (SorcererSac).
+## (pause, boutique) restent à la charge de l'orchestrateur (PipeManager).
 
 @export var energy_type: GlobalEnum.EnergyType = GlobalEnum.EnergyType.Fossil
 

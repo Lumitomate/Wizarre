@@ -164,7 +164,17 @@ func _test_shop(nb_joueurs: int) -> void:
 
 	var shop: Node2D = load("res://scenes/niveaux/magasin/magasin_don/shop_hands.tscn").instantiate()
 	add_child(shop)
-	await _frames(5)
+
+	# Le décideur sort de la porte d'entrée par une CINÉMATIQUE (fade, puis
+	# marche latérale vers sa position finale) : sa position n'est stable
+	# qu'une fois la cinématique terminée. Un délai fixe laissait passer le
+	# test environ 5 fois sur 6, mais il échouait quand la cinématique
+	# n'était pas finie — on attend donc son signal, pas un nombre de
+	# frames.
+	var cine_finie := await _attendre(func() -> bool:
+		return not shop._decideur._door_exit_active, 5.0)
+	_check(cine_finie, "%d joueurs : cinématique d'arrivée du décideur terminée" % nb_joueurs)
+	await _frames(2)
 
 	var _porte: Node2D = shop.get_node("Terrain1PortesEntree")  # existence seule
 	var marqueurs: Array[Marker2D] = [

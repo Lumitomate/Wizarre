@@ -1,3 +1,10 @@
+## ═══════════════════════════════════════════════════════════════════════
+##  F2 · VAGUE DE FEU — famille Feu — atk_f2_wave.tscn
+## ═══════════════════════════════════════════════════════════════════════
+##  JEU   : une vague de feu part devant le sorcier en grandissant.
+##  TIER  : hauteur maximale atteinte par la vague (cf. FRAME_HEIGHTS).
+##  SPAWN : lancée à 60 px devant le sorcier, orientée selon la visée.
+##  CORPS : AttackProjectile (Area2D — dégâts de contact + anti double-coup)
 class_name AttackFireWave
 extends AttackProjectile
 
@@ -6,6 +13,20 @@ extends AttackProjectile
 
 var direction: Vector2 = Vector2.LEFT
 var player_immunity: bool = true
+
+## Contrat de spawn (cf. AttackSpawner) : une vague lancée devant le
+## sorcier, orientée selon la visée, taille/tier via setup_tier.
+static var _SCENE: PackedScene = null
+static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, _level_scale: Vector2, caster: Node2D) -> Array[Node]:
+	if _SCENE == null:
+		_SCENE = load("res://scenes/atk/atk_f2_wave.tscn")
+	var fire_wave: AttackFireWave = _SCENE.instantiate()
+	fire_wave.caster = caster
+	fire_wave.direction = direction.normalized()
+	fire_wave.position = position + 60 * direction.normalized()
+	fire_wave.setup_tier(attack_tier)
+	fire_wave.rotation = direction.angle()
+	return [fire_wave]
 
 const FRAME_HEIGHTS = {
 	0: 0,

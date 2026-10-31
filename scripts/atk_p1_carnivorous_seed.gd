@@ -1,7 +1,35 @@
+## ═══════════════════════════════════════════════════════════════════════
+##  P1 · TÊTE CARNIVORE — famille Plante — atk_p1_carnivorous_seed.tscn
+## ═══════════════════════════════════════════════════════════════════════
+##  JEU   : graine lancée en cloche qui plante au premier emplacement
+##          libre — une tête carnivore pousse puis mord la proie la plus
+##          proche (la tête vit dans atk_p1_carnivorous_head.gd).
+##  TIER  : hauteur et nombre de têtes (tier1/2/3_height, tier_spread).
+##  SPAWN : lancée à 60 px devant le sorcier ; direction JAMAIS exactement
+##          verticale (cf. AttackSpawner._direction_sans_vertical) sinon
+##          la graine retombe pile sur la tête de son lanceur.
+##  CORPS : RigidBody2D — physique libre (vol en cloche, rebonds).
 class_name AttackCarnivorousSeed
 extends RigidBody2D
 
 @export var head_scene: PackedScene = preload("res://scenes/atk/atk_p1_carnivorous_head.tscn")
+
+## Contrat de spawn (cf. AttackSpawner) : graine lancée devant le sorcier.
+## Direction JAMAIS exactement verticale (cf. AttackSpawner._direction_sans_vertical)
+## : sinon une graine retombe pile sur la tête de son lanceur et y
+## rebondit indéfiniment sans jamais s'écarter.
+static var _SCENE: PackedScene = null
+static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
+	if _SCENE == null:
+		_SCENE = load("res://scenes/atk/atk_p1_carnivorous_seed.tscn")
+	var carnivorous: AttackCarnivorousSeed = _SCENE.instantiate()
+	carnivorous.transform = carnivorous.transform.rotated(direction.angle())
+	carnivorous.apply_level_scale(2 * level_scale)
+	carnivorous.position = position + 60 * direction.normalized()
+	carnivorous.linear_velocity = 200 * AttackSpawner._direction_sans_vertical(direction, caster)
+	carnivorous.attack_tier = attack_tier
+	return [carnivorous]
+
 @export var grow_animation: String = "Grow"
 @export var idle_animation: String = "Idle"
 @export var idle_tier3_animation: String = "idle_tier3"

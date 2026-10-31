@@ -1,22 +1,58 @@
 class_name AttackSpawner
 
-const SPRITE_SIZE = 64
-
-
-
-static var fireball_scene: PackedScene = preload("res://scenes/atk/atk_f0_fireball.tscn")
-static var lightray_scene: PackedScene = preload("res://scenes/atk/atk_l1_light_ray.tscn")
-static var firecolumn_scene: PackedScene = preload("res://scenes/atk/atk_f1_fire_column.tscn")
-static var ice_ball_scene: PackedScene = preload("res://scenes/atk/atk_g1_ice_ball.tscn")
-static var carnivorous_scene: PackedScene = preload("res://scenes/atk/atk_p1_carnivorous_seed.tscn")
-static var plantball_scene: PackedScene = preload("res://scenes/atk/atk_p2_explo.tscn")
-static var fire_wave_scene: PackedScene = preload("res://scenes/atk/atk_f2_wave.tscn")
-static var ice_spike_scene: PackedScene = preload("res://scenes/atk/atk_g2_ice_spike.tscn")
-static var ice_blade_scene: PackedScene = preload("res://scenes/atk/atk_g3_blade.tscn")
-static var mine_scene: PackedScene = preload("res://scenes/atk/atk_f3_mine.tscn")
-static var lighttarget_scene: PackedScene = preload("res://scenes/atk/atk_l2_light_target.tscn")
-static var lightbow_scene: PackedScene = preload("res://scenes/atk/atk_l3_light_bow.tscn")
-static var bramble_scene: PackedScene = preload("res://scenes/atk/atk_p3_plant_bramble.tscn")
+## ═══════════════════════════════════════════════════════════════════════
+##  FABRIQUE D'ATTAQUES — point d'entrée unique de tout projectile de jeu
+## ═══════════════════════════════════════════════════════════════════════
+##
+##  FLUX D'UN TIR (de bout en bout) :
+##    1. le Sorcerer décide de tirer (scripts/sorcerer.gd — tube sélectionné)
+##    2. il appelle AttackSpawner.spawn_attack(type, tier, position,
+##       direction, screen_size, level_scale, self)
+##    3. spawn_attack résout REGISTRE[type] → le script de l'attaque
+##    4. le script exécute son contrat statique setup_spawn(...) :
+##       instanciation, positionnement, configuration des nœuds
+##    5. spawn_attack retourne Array[Node] ; l'appelant les ajoute à l'arbre
+##    6. chaque attaque gère sa propre fin de vie (queue_free)
+##
+##  CONTRAT setup_spawn — exposé par CHAQUE script d'attaque (atk_*.gd) :
+##    static func setup_spawn(
+##        attack_tier: int,      # 1-based : I = 1, II = 2, III = 3
+##        position: Vector2,     # position du sorcier (coords locales Level)
+##        direction: Vector2,    # direction de visée
+##        screen_size: Vector2,  # taille de l'écran (attaques plein écran)
+##        level_scale: Vector2,  # échelle du niveau (taille des sprites)
+##        caster: Node2D,        # sorcier lanceur (représailles, immunité…)
+##    ) -> Array[Node]           # les nœuds à ajouter à l'arbre
+##
+##  CONVENTIONS :
+##    • setup_spawn N'AJOUTE JAMAIS les nœuds à l'arbre (c'est à l'appelant)
+##    • position : l'attaque multiplie elle-même par level_scale si besoin
+##    • direction : normalisée par l'attaque avant usage
+##    • tier 1-based (I/II/III) : PAS de conversion dans le spawner — chaque
+##      attaque reçoit directement int(AttackTier) + 1
+##    • ajouter une attaque = nouveau script avec setup_spawn
+##      + entrée dans GlobalEnum.AttackType + une ligne dans REGISTRE
+##
+##  LES 13 ATTAQUES (GlobalEnum.AttackType), par famille :
+##    Feu     : F0 boule de feu · F1 colonne de feu · F2 vague · F3 mine
+##    Glace   : G1 boule de glace · G2 anneau de piques · G3 lames orbitantes
+##    Lumière : L1 rideau de rayons · L2 cible lumineuse · L3 arc chargé
+##    Plante  : P1 graine carnivore · P2 boule de plante · P3 ronce (stick)
+static var REGISTRE: Dictionary = {
+	GlobalEnum.AttackType.F0: AttackFireBall,        # éventail de boules de feu
+	GlobalEnum.AttackType.F1: AttackFireColumn,      # chaîne de colonnes de feu
+	GlobalEnum.AttackType.F2: AttackFireWave,        # vague de feu grandissante
+	GlobalEnum.AttackType.F3: AttackFireMine,        # mine posable IDLE → FALL → EXPLODE
+	GlobalEnum.AttackType.G1: AttackIceBall,         # boule de glace physique (rebonds)
+	GlobalEnum.AttackType.G2: AttackIceSpike,        # anneau de piques de glace
+	GlobalEnum.AttackType.G3: AttackIceBlade,        # lames orbitantes autour du lanceur
+	GlobalEnum.AttackType.L1: AttackLightRay,        # rideau de rayons de lumière
+	GlobalEnum.AttackType.L2: AttackLightTarget,     # cible lumineuse posée (TARGETING → EXPLODING)
+	GlobalEnum.AttackType.L3: AttackLightBow,        # arc chargé à distance
+	GlobalEnum.AttackType.P1: AttackCarnivorousSeed, # graine → tête carnivore qui mord
+	GlobalEnum.AttackType.P2: AttackPlantBall,       # boule de plante roulante qui explose
+	GlobalEnum.AttackType.P3: AttackPlantBramble,    # ronce de tiges pilotée au stick
+}
 
 
 ## Direction de lancer JAMAIS exactement verticale : si la visée est pile
@@ -31,169 +67,14 @@ static func _direction_sans_vertical(direction: Vector2, caster: Node2D) -> Vect
 			cote = -1.0 if caster.get_node("AnimatedSprite2D").flip_h else 1.0
 		dir = dir.rotated(cote * deg_to_rad(10.0))
 	return dir
+
+
+## Instancie et configure l'attaque de type donné via le registre.
+## Retourne les nœuds à ajouter à l'arbre par l'appelant.
 static func spawn_attack(attack_type: GlobalEnum.AttackType, attack_tier: GlobalEnum.AttackTier, player_position: Vector2, player_direction: Vector2, screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
-	
-	var spawn_list: Array[Node]
-	
+	# Tier 1-based : 0 → I, 1 → II, 2 → III
 	var int_attack_tier: int = int(attack_tier) + 1
-	
-	match attack_type:
-		GlobalEnum.AttackType.F0:
-			player_position *= level_scale
-			var spread = PI / 4
-			# Tier 0-based (0 = I) : int_attack_tier = nombre de boules (1 à
-			# 3), réparties en éventail autour de la visée (même convention
-			# que les autres attaques, cf. G1 : tier 1 = I)
-			for i in range(int_attack_tier):
-				var fireball: AttackFireBall = fireball_scene.instantiate()
-				fireball.transform = fireball.transform.rotated(player_direction.angle() + (i * spread) - (int_attack_tier - 1) * spread / 2 )
-				fireball.position = player_position + 60 * player_direction.normalized()
-				fireball.direction = player_direction.normalized()
-				spawn_list.append(fireball)
-			
-		GlobalEnum.AttackType.L1:
-			player_position *= level_scale
-			var ray_nb = int_attack_tier
-			for n in range(ray_nb):
-				for i in range(-(screen_size.length() / SPRITE_SIZE), (screen_size.length() / SPRITE_SIZE) + 1):
-					var attack_position = (i + 1) * SPRITE_SIZE * player_direction.normalized().rotated(n * PI / ray_nb) + player_position
-					if attack_position.x > -SPRITE_SIZE and attack_position.x < screen_size.x + SPRITE_SIZE and attack_position.y > -SPRITE_SIZE and attack_position.y < screen_size.y + SPRITE_SIZE:
-						var lightray:AttackLightRay = lightray_scene.instantiate()
-						lightray.caster = caster
-						lightray.transform = lightray.transform.rotated(player_direction.angle() + n * PI / ray_nb)
-						lightray.position = attack_position
-						spawn_list.append(lightray)
-				
-		GlobalEnum.AttackType.F1:
-			player_position *= level_scale
-			var previous_column: AttackFireColumn = null
-			#player_direction = player_direction.rotated(PI / 2)
-			for i in range(-(screen_size.length() / SPRITE_SIZE), (screen_size.length() / SPRITE_SIZE) + 1):
-				var attack_position = -(i + 1) * SPRITE_SIZE * player_direction.normalized() + player_position
-				if attack_position.x > -SPRITE_SIZE and attack_position.x < screen_size.x + SPRITE_SIZE and attack_position.y > -SPRITE_SIZE and attack_position.y < screen_size.y + SPRITE_SIZE:
-					var firecolumn: AttackFireColumn = firecolumn_scene.instantiate()
-					firecolumn.transform = firecolumn.transform.scaled(Vector2(float(int_attack_tier) * 1/3, 1)).rotated(player_direction.angle() + PI/2)
-					firecolumn.position = attack_position
-					if previous_column != null:
-						firecolumn.previous_pre_spawn_done.connect(previous_column._on_previous_pre_spawn_done)
-					spawn_list.append(firecolumn)
-					previous_column = firecolumn
-			previous_column.is_last = true
-		
-		GlobalEnum.AttackType.G1:
-			var ice_ball: AttackIceBall = ice_ball_scene.instantiate()
-			ice_ball.caster = caster
-			ice_ball.transform = ice_ball.transform.rotated(player_direction.angle())
-			# Taille par tier : le tier 3 garde la taille actuelle (facteur 1),
-			# tier 2 = 75 %, tier 1 = 50 %
-			var g1_tier_scale := 0.5 + 0.25 * (int_attack_tier - 1)
-			ice_ball.apply_level_scale(2 * level_scale * g1_tier_scale)
-			ice_ball.position = player_position + 60 * player_direction.normalized()
-			# Vitesse de lancement par tier : le tier 1 part moins fort
-			# (200 au lieu de 300), les tiers suivants gardent leur vitesse
-			const G1_LAUNCH_SPEEDS := [200.0, 600.0, 900.0]
-			ice_ball.linear_velocity = Vector2(G1_LAUNCH_SPEEDS[int_attack_tier - 1], 0).rotated(player_direction.angle())
-			spawn_list.append(ice_ball)
-			
-		GlobalEnum.AttackType.P1:
-			var carnivorous: AttackCarnivorousSeed = carnivorous_scene.instantiate()
-			carnivorous.transform = carnivorous.transform.rotated(player_direction.angle())
-			carnivorous.apply_level_scale(2 * level_scale)
-			carnivorous.position = player_position + 60 * player_direction.normalized()
-			carnivorous.linear_velocity = 200 * _direction_sans_vertical(player_direction, caster)
-			carnivorous.attack_tier = int_attack_tier
-			spawn_list.append(carnivorous)
-
-		GlobalEnum.AttackType.P2:
-			var plant_ball: AttackPlantBall = plantball_scene.instantiate()
-			plant_ball.transform = plant_ball.transform.rotated(player_direction.angle())
-			plant_ball.apply_level_scale(level_scale)
-			plant_ball.position = player_position + 60 * player_direction.normalized()
-			plant_ball.linear_velocity = 300 * player_direction.normalized()
-			plant_ball.setup_tier(int_attack_tier)
-			spawn_list.append(plant_ball)
-			
-		GlobalEnum.AttackType.P3:
-			# Conteneur de la ronce : base au point de tir, tronçons poussés
-			# en chaîne par le conteneur lui-même (pilotage stick, cf. L2)
-			var bramble: AttackPlantBramble = bramble_scene.instantiate()
-			bramble.attack_tier = int_attack_tier
-			bramble.caster = caster
-			# La ronce pousse verticalement par défaut (le stick la dirige,
-			# ±60° par tronçon). Comme la graine P1 : lancée devant le sorcier,
-			# elle vole, retombe et ne plante que sur un emplacement libre
-			bramble.direction = Vector2.UP
-			bramble.level_scale = level_scale
-			bramble.launch_velocity = 350 * _direction_sans_vertical(player_direction, caster)
-			bramble.position = player_position + 60 * player_direction.normalized()
-			spawn_list.append(bramble)
-
-		GlobalEnum.AttackType.F2:
-			var fire_wave: AttackFireWave = fire_wave_scene.instantiate()
-			fire_wave.caster = caster
-			fire_wave.direction = player_direction.normalized()
-			fire_wave.position = player_position + 60 * player_direction.normalized()
-			fire_wave.setup_tier(int_attack_tier)
-			fire_wave.rotation = player_direction.angle()
-			spawn_list.append(fire_wave)
-
-		GlobalEnum.AttackType.G2:
-			var spike_count = 4 + (int_attack_tier - 1) * 2
-			var angle_step = TAU / spike_count
-			var start_angle = player_direction.angle() + PI / 4  # décalage de 45°
-			for i in range(spike_count):
-				var ice_spike: AttackIceSpike = ice_spike_scene.instantiate()
-				var spike_angle = start_angle + (i * angle_step)
-				ice_spike.rotation = spike_angle
-				ice_spike.direction = Vector2.RIGHT.rotated(spike_angle)
-				ice_spike.position = player_position + 60 * Vector2.RIGHT.rotated(spike_angle)
-				ice_spike.apply_level_scale(level_scale)
-				ice_spike.setup_tier(int_attack_tier)
-				spawn_list.append(ice_spike)
-
-		GlobalEnum.AttackType.G3:
-			var ice_blade_count = 2
-			var angle_step = TAU / ice_blade_count
-			var rot_dir = 1.0 if player_direction.x >= 0 else -1.0
-			var start_angle = -PI / 2.0  # démarre à la verticale (haut)
-			for i in range(ice_blade_count):
-				var ice_blade: AttackIceBlade = ice_blade_scene.instantiate()
-				var ice_blade_angle = start_angle + i * angle_step
-				ice_blade.setup(
-					caster,
-					ice_blade_angle,
-					rot_dir,
-					int_attack_tier,
-					level_scale
-				)
-				spawn_list.append(ice_blade)
-
-		GlobalEnum.AttackType.F3:
-			# La mine est posée au-dessus du sorcier. Le canvas du sprite
-			# (64×152) affiche la mine VISIBLE ~92-100 px SOUS le centre du
-			# nœud (contenu en bas du canvas, scale idle ×2) : on décale donc
-			# le nœud d'autant, sinon la mine visible apparaîtrait au niveau
-			# des pieds, voire dans le sol (et son centre au-dessus des blocs,
-			# ce qui faisait exploser la mine sur leur dessus)
-			var mine: AttackFireMine = mine_scene.instantiate()
-			mine.position = player_position + Vector2(0, -12 - AttackFireMine.IDLE_CONTENT_DROP)
-			mine.setup_tier(int_attack_tier)
-			mine.caster = caster
-			spawn_list.append(mine)
-		GlobalEnum.AttackType.L2:
-			var light_target: AttackLightTarget = lighttarget_scene.instantiate()
-			light_target.position = player_position
-			light_target.tier_scale = 1.0 + (int_attack_tier - 1) * 3.0
-			light_target.scale = Vector2(light_target.tier_scale, light_target.tier_scale)
-			light_target.caster = caster
-			spawn_list.append(light_target)
-		GlobalEnum.AttackType.L3:
-			# L'arc est planté sur le sorcier (comme la mine : coordonnées
-			# locales au Level, pas de scale à appliquer sur la position)
-			var light_bow: AttackLightBow = lightbow_scene.instantiate()
-			light_bow.position = player_position
-			# Le tier détermine le nombre de flèches de l'éventail (0/1/2 → 1/2/3)
-			light_bow.attack_tier = int_attack_tier
-			light_bow.caster = caster
-			spawn_list.append(light_bow)
-	return spawn_list
+	var script: GDScript = REGISTRE.get(attack_type)
+	if script == null:
+		return []
+	return script.setup_spawn(int_attack_tier, player_position, player_direction, screen_size, level_scale, caster)

@@ -1,3 +1,10 @@
+## ═══════════════════════════════════════════════════════════════════════
+##  G2 · PIQUES DE GLACE — famille Glace — atk_g2_ice_spike.tscn
+## ═══════════════════════════════════════════════════════════════════════
+##  JEU   : un anneau de piques de glace jaillit autour du point de tir.
+##  TIER  : I = 4 piques · II = 6 · III = 8.
+##  SPAWN : anneau décalé de 45° par rapport à la visée, réparti sur TAU.
+##  CORPS : AttackProjectile (Area2D — dégâts de contact + anti double-coup)
 class_name AttackIceSpike
 extends AttackProjectile
 
@@ -8,6 +15,27 @@ var direction: Vector2 = Vector2.RIGHT
 var _level_scale: Vector2 = Vector2.ONE
 var tier_scale: float = 1.0
 var player_immunity: bool = true
+
+## Contrat de spawn (cf. AttackSpawner) : anneau de piques de glace
+## autour du point de tir (4 + 2×(tier-1) piques, décalés de 45°).
+static var _SCENE: PackedScene = null
+static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, _caster: Node2D) -> Array[Node]:
+	if _SCENE == null:
+		_SCENE = load("res://scenes/atk/atk_g2_ice_spike.tscn")
+	var spawn_list: Array[Node] = []
+	var spike_count = 4 + (attack_tier - 1) * 2
+	var angle_step = TAU / spike_count
+	var start_angle = direction.angle() + PI / 4  # décalage de 45°
+	for i in range(spike_count):
+		var ice_spike: AttackIceSpike = _SCENE.instantiate()
+		var spike_angle = start_angle + (i * angle_step)
+		ice_spike.rotation = spike_angle
+		ice_spike.direction = Vector2.RIGHT.rotated(spike_angle)
+		ice_spike.position = position + 60 * Vector2.RIGHT.rotated(spike_angle)
+		ice_spike.apply_level_scale(level_scale)
+		ice_spike.setup_tier(attack_tier)
+		spawn_list.append(ice_spike)
+	return spawn_list
 
 
 func apply_level_scale(level_scale: Vector2) -> void:

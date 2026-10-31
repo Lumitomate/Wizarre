@@ -1,4 +1,30 @@
+## ═══════════════════════════════════════════════════════════════════════
+##  F3 · MINE DE FEU — famille Feu — atk_f3_mine.tscn
+## ═══════════════════════════════════════════════════════════════════════
+##  JEU   : mine posable — IDLE (posée au-dessus du sorcier, lévitation
+##          vers le sol) → FALL (au 2e appui, chute animée) → EXPLODE
+##          (au contact du sol). Description détaillée ci-dessous.
+##  TIER  : réglé par setup_tier.
+##  SPAWN : posée au-dessus du sorcier ; le canvas du sprite (64×152)
+##          affiche la mine en bas du canvas, d'où le décalage
+##          IDLE_CONTENT_DROP (sinon la mine apparaît dans le sol).
+##  CORPS : AttackProjectile (Area2D — dégâts de contact + anti double-coup)
 class_name AttackFireMine extends AttackProjectile
+
+## Contrat de spawn (cf. AttackSpawner) : la mine est posée au-dessus du
+## sorcier. Le canvas du sprite (64×152) affiche la mine VISIBLE ~92-100
+## px SOUS le centre du nœud (contenu en bas du canvas, scale idle ×2) :
+## on décale d'autant, sinon la mine visible apparaîtrait au niveau des
+## pieds, voire dans le sol.
+static var _SCENE: PackedScene = null
+static func setup_spawn(attack_tier: int, position: Vector2, _direction: Vector2, _screen_size: Vector2, _level_scale: Vector2, caster: Node2D) -> Array[Node]:
+	if _SCENE == null:
+		_SCENE = load("res://scenes/atk/atk_f3_mine.tscn")
+	var mine: AttackFireMine = _SCENE.instantiate()
+	mine.position = position + Vector2(0, -12 - IDLE_CONTENT_DROP)
+	mine.setup_tier(attack_tier)
+	mine.caster = caster
+	return [mine]
 
 # Mine de Feu (tier 3) — 3 phases :
 # 1. IDLE     : posée au-dessus du sorcier, animation "idle" en boucle.

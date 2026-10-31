@@ -1,7 +1,30 @@
+## ═══════════════════════════════════════════════════════════════════════
+##  P2 · BOULE DE PLANTE — famille Plante — atk_p2_explo.tscn
+## ═══════════════════════════════════════════════════════════════════════
+##  JEU   : boule de plante qui roule puis explose en zone.
+##  TIER  : taille de l'explosion (explosion_max_scale via setup_tier).
+##  SPAWN : lancée à 60 px devant le sorcier, vitesse 300, taille via
+##          apply_level_scale.
+##  CORPS : RigidBody2D — physique libre (roule au sol), HORS contrat anti
+##          double-coup d'AttackProjectile.
 class_name AttackPlantBall
 extends RigidBody2D
 
 var caster: Node2D = null
+
+## Contrat de spawn (cf. AttackSpawner) : boule de plante lancée devant
+## le sorcier, taille selon le tier via setup_tier.
+static var _SCENE: PackedScene = null
+static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, _caster: Node2D) -> Array[Node]:
+	if _SCENE == null:
+		_SCENE = load("res://scenes/atk/atk_p2_explo.tscn")
+	var plant_ball: AttackPlantBall = _SCENE.instantiate()
+	plant_ball.transform = plant_ball.transform.rotated(direction.angle())
+	plant_ball.apply_level_scale(level_scale)
+	plant_ball.position = position + 60 * direction.normalized()
+	plant_ball.linear_velocity = 300 * direction.normalized()
+	plant_ball.setup_tier(attack_tier)
+	return [plant_ball]
 
 @onready var sprite = $AnimatedSprite2D
 #@onready var push_area = $PushArea

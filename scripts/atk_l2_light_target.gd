@@ -1,7 +1,28 @@
+## ═══════════════════════════════════════════════════════════════════════
+##  L2 · CIBLE LUMINEUSE — famille Lumière — atk_l2_light_target.tscn
+## ═══════════════════════════════════════════════════════════════════════
+##  JEU   : cible lumineuse posée à l'endroit du sorcier — TARGETING puis
+##          EXPLODING (au 2e appui).
+##  TIER  : taille de la cible ×1 / ×4 / ×7.
+##  SPAWN : posée sur la position du sorcier, scale = tier_scale.
+##  CORPS : AttackProjectile (Area2D — dégâts de contact + anti double-coup)
 class_name AttackLightTarget extends AttackProjectile
 
 @export var speed: int = 500
 @export var tier_scale: float = 1.0
+
+## Contrat de spawn (cf. AttackSpawner) : cible lumineuse posée à la
+## position du sorcier, grossie selon le tier (×1/×4/×7).
+static var _SCENE: PackedScene = null
+static func setup_spawn(attack_tier: int, position: Vector2, _direction: Vector2, _screen_size: Vector2, _level_scale: Vector2, caster: Node2D) -> Array[Node]:
+	if _SCENE == null:
+		_SCENE = load("res://scenes/atk/atk_l2_light_target.tscn")
+	var light_target: AttackLightTarget = _SCENE.instantiate()
+	light_target.position = position
+	light_target.tier_scale = 1.0 + (attack_tier - 1) * 3.0
+	light_target.scale = Vector2(light_target.tier_scale, light_target.tier_scale)
+	light_target.caster = caster
+	return [light_target]
 
 enum Phase {
 	TARGETING,

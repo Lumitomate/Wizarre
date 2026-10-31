@@ -1,8 +1,40 @@
+## ═══════════════════════════════════════════════════════════════════════
+##  G3 · LAME DE GLACE — famille Glace — atk_g3_blade.tscn
+## ═══════════════════════════════════════════════════════════════════════
+##  JEU   : 2 lames de glace orbitant autour du lanceur (il les rase).
+##  TIER  : réglé par setup (taille et durée de rotation).
+##  SPAWN : sens de rotation selon la visée (x ≥ 0 → horaire), départ à
+##          la verticale, lames opposées sur le cercle.
+##  CORPS : AttackProjectile (Area2D — dégâts de contact + anti double-coup)
 class_name AttackIceBlade
 extends AttackProjectile
 
 @export var rotation_duration: float = 1.0
 @export var orbit_radius: float = 80.0
+
+## Contrat de spawn (cf. AttackSpawner) : 2 lames orbitantes autour du
+## caster, sens de rotation selon la direction de visée.
+static var _SCENE: PackedScene = null
+static func setup_spawn(attack_tier: int, _position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
+	if _SCENE == null:
+		_SCENE = load("res://scenes/atk/atk_g3_blade.tscn")
+	var spawn_list: Array[Node] = []
+	var ice_blade_count = 2
+	var angle_step = TAU / ice_blade_count
+	var rot_dir = 1.0 if direction.x >= 0.0 else -1.0
+	var start_angle = -PI / 2.0  # démarre à la verticale (haut)
+	for i in range(ice_blade_count):
+		var ice_blade: AttackIceBlade = _SCENE.instantiate()
+		var ice_blade_angle = start_angle + i * angle_step
+		ice_blade.setup(
+			caster,
+			ice_blade_angle,
+			rot_dir,
+			attack_tier,
+			level_scale
+		)
+		spawn_list.append(ice_blade)
+	return spawn_list
 
 const FRAME_HEIGHTS = {
 	0: 0,

@@ -1,8 +1,35 @@
+## ═══════════════════════════════════════════════════════════════════════
+##  F0 · BOULE DE FEU — famille Feu — atk_f0_fireball.tscn
+## ═══════════════════════════════════════════════════════════════════════
+##  JEU   : 1 à 3 boules de feu partent en éventail vers la visée.
+##  TIER  : I = 1 boule · II = 2 · III = 3.
+##  SPAWN : éventail autour de la direction de visée (spread π/4),
+##          lancées à 60 px devant le sorcier.
+##  CORPS : AttackProjectile (Area2D — dégâts de contact + anti double-coup)
 class_name AttackFireBall extends AttackProjectile
 
 @export var speed: int = 2000
 
 var direction: Vector2 = Vector2.LEFT
+
+
+## Contrat de spawn (cf. AttackSpawner) : 1 à 3 boules de feu réparties
+## en éventail autour de la visée (même convention que les autres
+## attaques, cf. G1 : tier 1 = I). Retourne les nœuds à ajouter à l'arbre.
+static var _SCENE: PackedScene = null
+static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, _caster: Node2D) -> Array[Node]:
+	if _SCENE == null:
+		_SCENE = load("res://scenes/atk/atk_f0_fireball.tscn")
+	var spawn_list: Array[Node] = []
+	var pos := position * level_scale
+	var spread = PI / 4
+	for i in range(attack_tier):
+		var fireball: AttackFireBall = _SCENE.instantiate()
+		fireball.transform = fireball.transform.rotated(direction.angle() + (i * spread) - (attack_tier - 1) * spread / 2)
+		fireball.position = pos + 60 * direction.normalized()
+		fireball.direction = direction.normalized()
+		spawn_list.append(fireball)
+	return spawn_list
 
 
 func _enter_tree() -> void:

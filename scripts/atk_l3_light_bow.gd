@@ -1,4 +1,28 @@
+## ═══════════════════════════════════════════════════════════════════════
+##  L3 · ARC LUMINEUX — famille Lumière — atk_l3_light_bow.tscn
+## ═══════════════════════════════════════════════════════════════════════
+##  JEU   : arc planté sur le sorcier — s'éloigner le charge (la distance
+##          arc ↔ sorcier règle la bande de l'arc et la puissance), le 2e
+##          appui tire les flèches du sorcier vers l'arc (règles détaillées
+##          ci-dessous ; annulation : sorcerer.gd).
+##  TIER  : nombre de flèches — I = centre · II = extrémités · III = les 3.
+##          (Le tier ne change PAS la taille.)
+##  SPAWN : planté sur le sorcier (coordonnées locales au Level).
+##  CORPS : AttackProjectile (Area2D — dégâts de contact + anti double-coup)
 class_name AttackLightBow extends AttackProjectile
+
+## Contrat de spawn (cf. AttackSpawner) : l'arc est planté sur le sorcier
+## (coordonnées locales au Level, pas de scale à appliquer sur la
+## position). Le tier détermine le nombre de flèches de l'éventail.
+static var _SCENE: PackedScene = null
+static func setup_spawn(attack_tier: int, position: Vector2, _direction: Vector2, _screen_size: Vector2, _level_scale: Vector2, caster: Node2D) -> Array[Node]:
+	if _SCENE == null:
+		_SCENE = load("res://scenes/atk/atk_l3_light_bow.tscn")
+	var light_bow: AttackLightBow = _SCENE.instantiate()
+	light_bow.position = position
+	light_bow.attack_tier = attack_tier
+	light_bow.caster = caster
+	return [light_bow]
 
 # Arc Lumineux (L3) — 2 phases :
 # 1. TARGETING : l'arc est planté à l'endroit du sorcier (1er appui).

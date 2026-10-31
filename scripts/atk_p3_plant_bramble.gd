@@ -1,3 +1,13 @@
+## ═══════════════════════════════════════════════════════════════════════
+##  P3 · RONCE DIRIGEABLE (PlantBrush) — famille Plante — atk_p3_plant_bramble.tscn
+## ═══════════════════════════════════════════════════════════════════════
+##  JEU   : cf. description détaillée ci-dessous.
+##  TIER  : nombre de tiges I = 1 · II = 2 · III = 3 ; budget tronçons
+##          TOTAL 5 / 9 / 13.
+##  SPAWN : conteneur lancé devant le sorcier (vole, retombe, plante sur
+##          emplacement libre) ; direction JAMAIS exactement verticale
+##          (cf. AttackSpawner._direction_sans_vertical).
+##  CORPS : RigidBody2D — la graine vole en cloche avant plantation.
 class_name AttackPlantBramble
 extends RigidBody2D
 
@@ -28,6 +38,23 @@ extends RigidBody2D
 # à toutes les tiges) disparaît quand TOUTES les tiges ont été décomposées.
 
 const SEGMENT_SCENE: PackedScene = preload("res://scenes/atk/atk_p3_bramble_segment.tscn")
+
+## Contrat de spawn (cf. AttackSpawner) : le conteneur de la ronce est
+## lancé devant le sorcier (comme la graine P1 : elle vole, retombe et ne
+## plante que sur un emplacement libre). La ronce pousse verticalement
+## par défaut (le stick la dirige, ±60° par tronçon).
+static var _SCENE: PackedScene = null
+static func setup_spawn(attack_tier: int, position: Vector2, direction: Vector2, _screen_size: Vector2, level_scale: Vector2, caster: Node2D) -> Array[Node]:
+	if _SCENE == null:
+		_SCENE = load("res://scenes/atk/atk_p3_plant_bramble.tscn")
+	var bramble: AttackPlantBramble = _SCENE.instantiate()
+	bramble.attack_tier = attack_tier
+	bramble.caster = caster
+	bramble.direction = Vector2.UP
+	bramble.level_scale = level_scale
+	bramble.launch_velocity = 350 * AttackSpawner._direction_sans_vertical(direction, caster)
+	bramble.position = position + 60 * direction.normalized()
+	return [bramble]
 
 # Bulbe de pointe : coiffe le tronçon en cours de pousse pendant TOUTE la
 # croissance (déplacé de tronçon en tronçon), puis reste sur le dernier.

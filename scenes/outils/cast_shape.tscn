@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/cast_shape.gd" id="1_cast"]
+[ext_resource type="Shader" path="res://assets/shaders/cast_shape.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cast"]
+resource_local_to_scene = true
+shader = ExtResource("2_shader")
+shader_parameter/core_color = Color(1, 0.58, 0, 1)
+shader_parameter/glow_color = Color(1, 0.3, 0, 1)
+shader_parameter/flash = 0
+shader_parameter/opacity = 0.85
+
+[node name="CastShape" type="Node2D"]
+script = ExtResource("1_cast")
+
+[node name="Shape" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_cast")
+scale = Vector2(0.5, 0.5)

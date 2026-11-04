@@ -3,6 +3,10 @@ extends CharacterBody2D
 
 const SPRITE_SIZE = 64
 
+## Effet cosmétique de lancement de sort : forme lumineuse derrière le
+## sorcier (carré/triangle/rond selon le tube, couleur de l'élément)
+const CAST_SHAPE := preload("res://scenes/outils/cast_shape.tscn")
+
 ## Munitions d'un tube mises à jour (tube_index, nouveau montant) :
 ## le HUD et le PipeManager rafraîchissent l'affichage du compteur.
 signal ammo_changed(tube_index: int, ammo_amount: int)
@@ -1251,6 +1255,9 @@ func fire_attack(tube_index: int) -> void:
 	# Impossible de tirer pendant la phase de magasin
 	if in_shop:
 		return
+	# Ni enfermé dans une cabine (défense en profondeur)
+	if cabin_lock:
+		return
 	var spell = spells[tube_index]
 	if spell.is_empty():
 		return
@@ -1337,6 +1344,39 @@ func fire_attack(tube_index: int) -> void:
 	var attack_list := AttackSpawner.spawn_attack(attack_type, attack_tier, position, shoot_direction, screen_size, level_scale, self)
 	for attack in attack_list:
 		self.get_parent().add_child(attack)
+	_spawn_cast_shape(tube_index, attack_type)
+
+
+## Forme lumineuse de lancement, derrière le sorcier. Forme = tube
+## (carré Fossil / triangle Pure / rond Tainted), couleur = élément du
+## sort. Appelée après _play_attack_animation : les 2es appuis L2/L3/mine
+## sont déjà repartis plus haut, l'effet ne joue que sur un vrai tir.
+func _spawn_cast_shape(tube_index: int, attack_type: int) -> void:
+	var shape: CastShape = CAST_SHAPE.instantiate()
+	shape.shape_kind = [
+		CastShape.Shape.Square,
+		CastShape.Shape.Triangle,
+		CastShape.Shape.Circle,
+	][tube_index]
+	shape.element = _cast_element(attack_type)
+	add_child(shape)
+
+
+## Élément d'un type d'attaque : la première lettre du nom (F/G/L/P)
+## donne la famille (Feu, Glace, Lumière, Plante)
+func _cast_element(attack_type: int) -> CastShape.Element:
+	match attack_type:
+		GlobalEnum.AttackType.F0, GlobalEnum.AttackType.F1, \
+		GlobalEnum.AttackType.F2, GlobalEnum.AttackType.F3:
+			return CastShape.Element.Feu
+		GlobalEnum.AttackType.G1, GlobalEnum.AttackType.G2, \
+		GlobalEnum.AttackType.G3:
+			return CastShape.Element.Glace
+		GlobalEnum.AttackType.L1, GlobalEnum.AttackType.L2, \
+		GlobalEnum.AttackType.L3:
+			return CastShape.Element.Lumiere
+		_:
+			return CastShape.Element.Plante
 
 # Lit le bouton d'attaque du tube : renvoie true seulement si
 # le bouton est pressé ET que le verrou de relâchement n'est pas actif.

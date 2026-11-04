@@ -292,6 +292,10 @@ var energy_counts: Array = [3, 3, 3]  # Fossil, Pure, Tainted
 # Maximum de munitions par tube (0 à 4 : le HUD ne couvre que cet intervalle)
 const MAX_ENERGY := 4
 var in_shop: bool = false
+## Vrai tant que le sorcier est enfermé dans une cabine : ses boutons
+## d'attaque alimentent la cabine (via Cabin.appui_bouton) et ne doivent
+## ni sélectionner un tube du sac, ni tirer. Posé/levé par la cabine.
+var cabin_lock: bool = false
 ## Sur la homepage : les attaques sont utilisables et la mort déclenche un
 ## respawn après 1,5 s (géré par le cadavre), jamais le game over.
 var in_homepage: bool = false
@@ -579,7 +583,7 @@ func _process(_delta: float) -> void:
 	elif direction.x > 0.2:
 		$AnimatedSprite2D.flip_h = false
 
-	if can_fire and not is_dashing:
+	if can_fire and not is_dashing and not cabin_lock:
 		if jx:
 			if in_shop:
 				select_tube(0)
@@ -595,7 +599,7 @@ func _process(_delta: float) -> void:
 				select_tube(2)
 			else:
 				fire_attack(2)
-	elif tubes_selectable and not is_dashing:
+	elif tubes_selectable and not is_dashing and not cabin_lock:
 		# Écran home (et autres écrans sans tir) : les tuyaux se soulèvent
 		# comme en boutique, sans déclencher d'attaque
 		if jx:
@@ -1694,6 +1698,15 @@ func _on_attack_cooldown_timeout() -> void:
 
 
 func _on_damage_cooldown_timeout() -> void:
+	# Ne lève PAS l'invincibilité si une protection de dash est encore
+	# active (dash en cours, ou fenêtre de 0,5 s après le dash). Sinon un
+	# dégât reçu juste avant un dash annulerait l'invincibilité du dash en
+	# cours de route (ex. : mort en dashant à travers une colonne de feu
+	# parce que le cooldown du coup précédent expirait pendant le dash).
+	# C'est _on_dash_invicibiliy_after_timeout qui lèvera l'invincibilité
+	# à la fin de la protection du dash.
+	if is_dashing or not $DashInvicibiliyAfter.is_stopped():
+		return
 	can_take_damage = true
 	# --- Fin du feedback de dégât ---
 

@@ -61,14 +61,15 @@ func _on_life_changed(amount: int) -> void:
 ## Fait voler une copie de la munition ramassée jusqu'à la gemme du tube
 ## correspondant (0,2 s, ease-out), puis pulse la gemme. La copie part de
 ## la position/taille de la munition dans le monde et rétrécit jusqu'à la
-## taille de la gemme. Cosmétique : appelée APRÈS add_energy, jamais
+## taille de la gemme, avec la texture de la munition ramassée passée en
+## paramètre. Cosmétique : appelée APRÈS add_energy, jamais
 ## bloquante, et sans effet si le tube est inconnu.
-func fly_ammo_in(tube_index: int, from_position: Vector2, from_scale: Vector2) -> void:
+func fly_ammo_in(tube_index: int, from_position: Vector2, from_scale: Vector2, ammo_texture: Texture2D) -> void:
 	if tube_index < 0 or tube_index >= GEM_NODES.size():
 		return
 	var gem: AnimatedSprite2D = get_node(GEM_NODES[tube_index])
 	var ghost := Sprite2D.new()
-	ghost.texture = Ammo.TEXTURES[tube_index as GlobalEnum.EnergyType]
+	ghost.texture = ammo_texture
 	ghost.texture_filter = TEXTURE_FILTER_NEAREST
 	ghost.z_index = 100  # passe devant le décor et le panneau HUD
 	add_child(ghost)

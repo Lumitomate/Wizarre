@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+# Check de compilation Godot avant chaque commit.
+# `godot --headless --quit` charge le projet complet (autoloads inclus) et
+# signale toute erreur de compilation. Cf. docs/agents/checks.md.
+#
+# Installé via : git config core.hooksPath hooks
+
+sortie=$(mktemp)
+trap 'rm -f "$sortie"' EXIT
+
+timeout 60 godot --headless --quit > "$sortie" 2>&1
+status=$?
+
+if [ "$status" -ne 0 ]; then
+	echo "pre-commit : godot --headless --quit a échoué (code $status) :"
+	tail -20 "$sortie"
+	exit 1
+fi
+
+erreurs=$(grep -iE "SCRIPT ERROR|ERROR:|Parse Error" "$sortie")
+if [ -n "$erreurs" ]; then
+	echo "pre-commit : erreurs de compilation détectées :"
+	echo "$erreurs" | head -20
+	exit 1
+fi
+
+exit 0

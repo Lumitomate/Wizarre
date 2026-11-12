@@ -52,8 +52,11 @@ func _eliminer_objet_bulle2(child: Node) -> void:
 ## la racine, et le spawner du bas ne voit pas le haut : parents
 ## différents). Si les deux types coïncident : le type du bas est re-tiré,
 ## l'objet en file (déjà instancié avec l'ANCIEN type et son sprite) est
-## éliminé à son entrée dans l'arbre, et un objet neuf est respawné avec
-## le bon type (spawn_object relit chosen_object_type).
+## éliminé à son entrée dans la CABINE, et un objet neuf est respawné avec
+## le bon type (spawn_object relit chosen_object_type). ATTENTION : les
+## objets sont ajoutés au PARENT du spawner (la cabine), pas au spawner —
+## c'est le signal de la CABINE qui les voit (brancher sur le spawner ne
+## déclenche jamais rien).
 func _coordonner_types_objets() -> void:
 	# La cabine s'appelle "Bubble2" dans la scène (instance de
 	# bubble_cabine.tscn ; "BubbleCabine" est le nom de sa racine interne).
@@ -68,20 +71,29 @@ func _coordonner_types_objets() -> void:
 		func(t: int) -> bool: return t != spawner_haut.chosen_object_type
 	)
 	spawner_bas.chosen_object_type = autres[randi() % autres.size()]
-	# Premier objet entrant sous la bulle 2 = l'ancien : éliminé, remplacé.
+	# Premier objet entrant dans la cabine 2 = l'ancien : éliminé, remplacé.
 	_remplacement_bas_en_cours = true
-	if not spawner_bas.child_entered_tree.is_connected(_on_objet_bas_remplacement):
-		spawner_bas.child_entered_tree.connect(_on_objet_bas_remplacement.bind(spawner_bas))
+	var cabine_bas: Cabin = $Bubble3
+	if not cabine_bas.child_entered_tree.is_connected(
+			_on_objet_bas_remplacement.bind(spawner_bas)):
+		cabine_bas.child_entered_tree.connect(
+			_on_objet_bas_remplacement.bind(spawner_bas))
 
 
-## Le premier objet entrant sous la cabine 2 pendant un remplacement est
+## Le premier objet entrant dans la cabine 2 pendant un remplacement est
 ## l'ancien (type doublon, déjà instancié avec son mauvais sprite) :
-## éliminé, et un objet neuf est respawné avec le type re-tiré.
+## éliminé (la cabine doit réadopter le suivant, d'où objet = null), et
+## un objet neuf est respawné avec le type re-tiré.
 func _on_objet_bas_remplacement(child: Node, spawner_bas: Node) -> void:
 	if not _remplacement_bas_en_cours or not (child is AttackObject):
 		return
 	_remplacement_bas_en_cours = false
-	spawner_bas.child_entered_tree.disconnect(_on_objet_bas_remplacement)
+	var cabine_bas: Cabin = $Bubble3
+	var callable: Callable = _on_objet_bas_remplacement.bind(spawner_bas)
+	if cabine_bas.child_entered_tree.is_connected(callable):
+		cabine_bas.child_entered_tree.disconnect(callable)
+	if cabine_bas.objet == child:
+		cabine_bas.objet = null
 	child.queue_free()
 	spawner_bas.spawn_object()
 

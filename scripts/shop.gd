@@ -70,14 +70,18 @@ func _on_cabine_entree(_sorcier: Sorcerer, source: Cabin) -> void:
 ## Règle « jamais deux fois le même type » entre les 3 cabines : la
 ## cabine 0 garde son type, les suivantes re-tirent parmi les types
 ## restants. Un spawner re-tiré voit son objet déjà instancié (avec
-## l'ANCIEN type et son sprite) éliminé à son entrée dans l'arbre, et un
-## objet neuf respawné (spawn_object relit chosen_object_type) — même
-## mécanique que les magasins intro.
+## l'ANCIEN type et son sprite) éliminé à son entrée dans la CABINE, et
+## un objet neuf respawné (spawn_object relit chosen_object_type) — même
+## mécanique que les magasins intro. ATTENTION : les objets sont ajoutés
+## au PARENT du spawner (la cabine), pas au spawner — c'est donc le
+## signal de la CABINE qui les voit (brancher sur le spawner ne
+## déclenche jamais rien).
 func _coordonner_types_objets() -> void:
 	var cabines := _cabines()
 	var pris: Array = []
 	for i in cabines.size():
-		var spawner: Node = cabines[i].get_node("SpawnerObjet")
+		var cabine: Cabin = cabines[i]
+		var spawner: Node = cabine.get_node("SpawnerObjet")
 		if "chosen_object_type" not in spawner:
 			return
 		var type_courant: int = spawner.chosen_object_type
@@ -85,18 +89,21 @@ func _coordonner_types_objets() -> void:
 			var libres: Array = spawner.PROPOSABLE_TYPES.filter(
 				func(t: int) -> bool: return t not in pris)
 			spawner.chosen_object_type = libres[randi() % libres.size()]
-			var callable: Callable = _on_objet_remplace.bind(spawner)
-			spawner.child_entered_tree.connect(callable)
+			cabine.child_entered_tree.connect(_on_objet_remplace.bind(cabine, spawner))
 		pris.append(spawner.chosen_object_type)
 
 
-## Le premier objet entrant sous un spawner re-tiré est l'ancien (type
-## doublon) : éliminé, remplacé par un objet au type re-tiré.
-func _on_objet_remplace(child: Node, spawner: Node) -> void:
+## Le premier objet entrant dans une cabine re-tirée est l'ancien (type
+## doublon) : éliminé, remplacé par un objet au type re-tiré. La cabine
+## doit réadopter le suivant (objet pointait sur l'éliminé) : remis à
+## null.
+func _on_objet_remplace(child: Node, cabine: Cabin, spawner: Node) -> void:
 	if not (child is AttackObject):
 		return
-	var callable: Callable = _on_objet_remplace.bind(spawner)
-	if spawner.child_entered_tree.is_connected(callable):
-		spawner.child_entered_tree.disconnect(callable)
+	var callable: Callable = _on_objet_remplace.bind(cabine, spawner)
+	if cabine.child_entered_tree.is_connected(callable):
+		cabine.child_entered_tree.disconnect(callable)
+	if cabine.objet == child:
+		cabine.objet = null
 	child.queue_free()
 	spawner.spawn_object()

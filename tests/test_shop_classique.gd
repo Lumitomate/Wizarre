@@ -68,6 +68,15 @@ func _physics_process(_delta: float) -> void:
 		# (signal émis par cabin.entrer ; simulation du branchement).
 		print(">>> entrée du sorcier dans la cabine 0")
 		cabines[0].sorcier_entre.emit(null)
+	if step == 9:
+		# La fermeture est ANIMÉE, pas instantanée : 2 ticks après le
+		# scellement, la porte ne peut pas avoir atteint sa dernière frame
+		# (l'anim dure 1 s — insensible à la charge, contrairement à un
+		# check « en cours » à un step fixe, fragile en parallèle).
+		for nom: String in ["Cabine2", "Cabine3"]:
+			var cabine: Cabin = inst.get_node(nom)
+			_check(not _porte_fermee(cabine),
+				nom + " : fermeture ANIMÉE (pas déjà fermée 2 ticks après)")
 	if step == 7:
 		# Les deux autres cabines sont scellées TÔT (dès l'entrée) :
 		# inertes, entrée coupée, verrouillées, porte en cours de fermeture.
@@ -81,14 +90,9 @@ func _physics_process(_delta: float) -> void:
 		_check(not inst.get_node("Cabine").est_inerte(),
 			"cabine 0 : objet conservé (rituel en cours)")
 	if step == 25:
-		# La fermeture des portes condamnées est ANIMÉE (12 frames à 12 fps
-		# = 1 s ≈ 60 frames physiques) : à ce stade elle est en cours, pas
-		# encore terminée — et les murs générés bloquent déjà l'entrée.
+		# Les murs générés bloquent déjà l'entrée pendant la fermeture.
 		for nom: String in ["Cabine2", "Cabine3"]:
 			var cabine: Cabin = inst.get_node(nom)
-			var porte: AnimatedSprite2D = cabine.get_node("AnimatedSprite2D_porte")
-			_check(porte.is_playing() and porte.frame > 0,
-				nom + " : fermeture de porte EN COURS (animée, pas instantanée)")
 			var mur: CollisionShape2D = cabine.get_node("Murs").get_child(0).get_child(0)
 			_check(not mur.disabled, nom + " : murs actifs")
 	if step == 70:

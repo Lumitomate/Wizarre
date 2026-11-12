@@ -57,6 +57,21 @@ func _physics_process(_delta: float) -> void:
 				if types[i] == types[j]:
 					distincts = false
 		_check(distincts, "3 types distincts : " + str(types))
+		# Les OBJETS réels aussi (la coordination ne sert à rien si un objet
+		# garde l'ancien type sous sa cabine — bug déjà vu : les signaux
+		# branchés sur le spawner ne voyaient pas les objets, ajoutés à la
+		# cabine).
+		var objets: Array = []
+		for couloir: int in inst._couloirs_actifs:
+			for c: Node in inst._cabine(couloir).get_children():
+				if c is AttackObject:
+					objets.append(c.item_attack_type)
+		var objets_distincts: bool = objets.size() == 3
+		for i in objets.size():
+			for j in range(i + 1, objets.size()):
+				if objets[i] == objets[j]:
+					objets_distincts = false
+		_check(objets_distincts, "3 objets réels distincts : " + str(objets))
 	if step == 5:
 		# Fin du rituel de la cabine du couloir 0 SEULE : la shop ne doit
 		# pas s'ouvrir.

@@ -76,6 +76,20 @@ func _physics_process(_delta: float) -> void:
 			if c is AttackObject:
 				objets_bulle4 += 1
 		_check(objets_bulle4 == 1, "objet sous la cabine 4 (1 attendu)")
+		# Les OBJETS réels sont distincts aussi (cf. le bug des signaux
+		# branchés sur le spawner, qui ne voyaient pas les objets).
+		var objets: Array = []
+		for couloir: int in inst._couloirs_actifs:
+			for c: Node in inst._cabine(couloir).get_children():
+				if c is AttackObject:
+					objets.append(c.item_attack_type)
+		var objets_distincts := true
+		for i in objets.size():
+			for j in range(i + 1, objets.size()):
+				if objets[i] == objets[j]:
+					objets_distincts = false
+		_check(objets_distincts and objets.size() == 4,
+			"4 objets réels distincts : " + str(objets))
 	if step == 7:
 		# Fins de rituel des cabines des couloirs 0 et 1 : la shop ne doit
 		# pas s'ouvrir.

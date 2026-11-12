@@ -26,7 +26,7 @@ const SCELLEMENT_DEBUT := Vector2i(18, 10)
 const SCELLEMENT_FIN := Vector2i(27, 15)
 
 ## {couloir: Callable} remplacements anti-doublon en cours : le prochain
-## objet entrant sous la bulle du couloir est l'ancien (type modifié),
+## objet entrant dans la cabine du couloir est l'ancien (type modifié),
 ## à éliminer et respawné. Le Callable stocké est celui à déconnecter.
 var _remplacements_en_cours: Dictionary = {}
 
@@ -65,8 +65,11 @@ func _eliminer_objet_bulle4(child: Node) -> void:
 ## d'un coup autant de types DISTINCTS qu'il y a de couloirs actifs
 ## (12 types proposables, marge large) et les assigne aux spawners. Un
 ## spawner dont le type change voit son objet déjà instancié (avec
-## l'ANCIEN type et son sprite) éliminé à son entrée dans l'arbre, et
+## l'ANCIEN type et son sprite) éliminé à son entrée dans la CABINE, et
 ## un objet neuf respawné (spawn_object relit chosen_object_type).
+## ATTENTION : les objets sont ajoutés au PARENT du spawner (la cabine),
+## pas au spawner — c'est le signal de la CABINE qui les voit (brancher
+## sur le spawner ne déclenche jamais rien).
 func _coordonner_types_objets() -> void:
 	if _couloirs_actifs.is_empty():
 		return
@@ -83,23 +86,28 @@ func _coordonner_types_objets() -> void:
 		if spawner.chosen_object_type == type_cible:
 			continue
 		spawner.chosen_object_type = type_cible
-		# Premier objet entrant sous cette bulle = l'ancien : éliminé,
+		# Premier objet entrant dans cette cabine = l'ancien : éliminé,
 		# remplacé. Le Callable est stocké pour être déconnecté proprement
 		# (connect() avec un callable bindé, disconnect() avec le même).
-		var callable: Callable = _on_objet_remplace.bind(spawner, couloir)
+		var cabine: Cabin = _cabine(couloir)
+		var callable: Callable = _on_objet_remplace.bind(cabine, spawner, couloir)
 		_remplacements_en_cours[couloir] = callable
-		spawner.child_entered_tree.connect(callable)
+		cabine.child_entered_tree.connect(callable)
 
 
-## Le premier objet entrant sous une bulle en remplacement est l'ancien
-## (type doublon, déjà instancié avec son mauvais sprite) : éliminé, et
-## un objet neuf est respawné avec le type re-assigné.
-func _on_objet_remplace(child: Node, spawner: Node, couloir: int) -> void:
+## Le premier objet entrant dans une cabine en remplacement est l'ancien
+## (type doublon, déjà instancié avec son mauvais sprite) : éliminé (la
+## cabine doit réadopter le suivant, d'où objet = null), et un objet
+## neuf est respawné avec le type re-assigné.
+func _on_objet_remplace(child: Node, cabine: Cabin, spawner: Node,
+		couloir: int) -> void:
 	if not _remplacements_en_cours.has(couloir) or not (child is AttackObject):
 		return
 	var callable: Callable = _remplacements_en_cours[couloir]
 	_remplacements_en_cours.erase(couloir)
-	spawner.child_entered_tree.disconnect(callable)
+	cabine.child_entered_tree.disconnect(callable)
+	if cabine.objet == child:
+		cabine.objet = null
 	child.queue_free()
 	spawner.spawn_object()
 

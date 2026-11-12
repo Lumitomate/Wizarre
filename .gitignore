@@ -8,3 +8,13 @@ build/
 # macOS / divers
 .DS_Store
 debug.log
+
+# Config locale de l'agent pi
+.pi/
+
+# Sauvegardes manuelles
+*.bak
+
+# Captures d'écran des vérifications visuelles (outils _check_*)
+tests/_capture_*.png
+tests/_capture_*.import

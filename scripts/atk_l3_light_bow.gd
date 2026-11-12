@@ -44,9 +44,9 @@ static func setup_spawn(spawn_tier: int, spawn_position: Vector2, _spawn_directi
 enum Phase { TARGETING, SHOT, DONE }
 
 # Nombre de flèches de l'éventail : le tier est reçu en base 1 depuis
-# spawner_attack (1/2/3 flèches pour tier I/II/III)
-@export var attack_tier: int = 1
-
+# spawner_attack (1/2/3 flèches pour tier I/II/III). Stocké dans la
+# propriété attack_tier de la BASE AttackProjectile (partagée avec la
+# transmission du tier aux débris des ennemis tués)
 var phase: Phase = Phase.TARGETING
 
 const ARROW_ANIM := &"AtkL3_LightBow_arrow"
@@ -85,6 +85,9 @@ var _flying_arrows: Array[Dictionary] = []
 
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	add_to_group("light_bow_group")
 	# La hitbox est redimensionnée à la volée : chaque arc possède SA
 	# propre ressource de forme (sinon les 4 joueurs partageraient la même)

@@ -67,6 +67,9 @@ const TIER_MAX_FRAMES = {
 var max_frame: int = 62
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	sprite.play("atk_f2_grow")
 	collision_shape.disabled = true
 	body_entered.connect(_on_body_entered)
@@ -77,6 +80,7 @@ func _ready() -> void:
 
 func setup_tier(tier: int) -> void:
 	max_frame = TIER_MAX_FRAMES.get(tier, 62)
+	attack_tier = tier
 
 func _physics_process(delta: float) -> void:
 	position += speed * direction * delta

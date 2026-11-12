@@ -20,6 +20,7 @@ static func setup_spawn(spawn_tier: int, spawn_position: Vector2, _spawn_directi
 	var light_target: AttackLightTarget = _SCENE.instantiate()
 	light_target.position = spawn_position
 	light_target.tier_scale = 1.0 + (spawn_tier - 1) * 3.0
+	light_target.attack_tier = spawn_tier
 	light_target.scale = Vector2(light_target.tier_scale, light_target.tier_scale)
 	light_target.caster = spawn_caster
 	return [light_target]
@@ -43,6 +44,9 @@ const EXPLOSION_START_FRAME = 11
 
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	add_to_group("light_target_group")
 	collision.disabled = true
 	body_entered.connect(_on_body_entered)

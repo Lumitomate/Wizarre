@@ -46,6 +46,9 @@ func setup(origin: Node2D, rest_pos: Vector2, t_offset: float, tier: int = 1):
 	head.position = head_rest_position
 
 func _ready():
+	# Le parser .tscn ne tolère pas l'attribut groups sur le root (règle du
+	# projet) : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	plant_parent = get_parent()
 	detection_zone.body_entered.connect(_on_area_2d_body_entered)
 	detection_zone.body_exited.connect(_on_area_2d_body_exited)
@@ -53,6 +56,11 @@ func _ready():
 	head.play("atk_p1_idle")
 
 func _process(delta):
+	# Garde : la tête n'est fonctionnelle que rattachée à sa graine
+	# (plant_parent/stem_origin). Un chargement autonome de la scène sans
+	# parent n'a rien à faire — on évite tout accès nul dans la boucle.
+	if plant_parent == null or stem_origin == null:
+		return
 	time += delta
 	if is_retracting:
 		_retract_head(delta)
@@ -96,17 +104,18 @@ func _chase_enemy(delta):
 
 ## Une cible peut-elle être mangée ? Présente, vivante et pas
 ## intouchable (dash, délai post-dégât). Les ennemis ne sont jamais
-## intouchables ; les sorciers se vérifient via est_intouchable().
+## intouchables ; les sorciers se vérifient via is_untouchable()
+## (façade du module Protection).
 func _cible_mangeable(cible: Node2D) -> bool:
 	if cible == null or not is_instance_valid(cible):
 		return false
 	if cible is EnemyFlying:
 		return true
 	if cible is Sorcerer:
-		return not cible.est_intouchable()
+		return not cible.is_untouchable()
 	return not cible.is_in_group("player_group") \
-			or not cible.has_method("est_intouchable") \
-			or not cible.est_intouchable()
+			or not cible.has_method("is_untouchable") \
+			or not cible.is_untouchable()
 
 func _start_eating():
 	if is_eating:
@@ -158,17 +167,25 @@ func _on_bite_frame_changed():
 		if target_enemy is EnemyFlying:
 			# Origine = la graine (stem_origin) : la proie est éjectée depuis la
 			# plante. Attaquant validé : le caster peut être libéré (morte)
-			target_enemy.die(EntityFinder.attaquant_valide(caster), stem_origin)
+			# La tête mange sa proie d'un coup : die() court-circuite hit(),
+			# l'explosion d'impact est donc spawnée ici explicitement (sinon
+			# une mise à mort par P1 ne déclenche rien du tout).
+			ImpactExplosion.spawn(target_enemy.get_parent(), target_enemy.position,
+				ImpactExplosion.rampe_pour_type(GlobalEnum.AttackType.P1))
+			target_enemy.die(EntityFinder.attaquant_valide(caster), stem_origin, attack_tier)
 			# Proie réellement mangée : la tête est consommée
 		elif target_enemy.is_in_group("player_group"):
 			target_enemy.hit(1)
 			# Proie réellement mangée : la tête est consommée
 
 ## Décrochage sans morsure : cible libérée, retour à l'anim idle sur
-## place (la tête reste disponible pour la prochaine proie).
+## place (la tête reste disponible pour la prochaine proie). Une autre
+## proie a pu entrer dans la zone PENDANT l'engagement — body_entered ne
+## se redéclenchera pas, d'où le rescan.
 func _abandonner_cible() -> void:
 	target_enemy = null
 	head.play("atk_p1_idle")
+	_reacquerir_cible.call_deferred()
 
 func _retract_head(delta):
 	var target_local = head.position + (to_local(stem_origin.global_position) - to_local(stem_anchor.global_position))
@@ -201,28 +218,57 @@ func _update_stem():
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if target_enemy == null and not is_eating and not is_retracting:
-		if body is EnemyFlying:
-			if plant_parent and plant_parent.has_method("is_closest_head_for_enemy"):
-				if not plant_parent.is_closest_head_for_enemy(self, body):
-					return
-			target_enemy = body
-			head.play("atk_p1_open")
-		elif body.is_in_group("player_group") and attack_tier < 3:
-			# Un sorcier intouchable (dash) n'est pas mangeable : pas de
-			# ciblage, la tête reste disponible (le dash traverse — et
-			# l'exploit « dash gratuit qui consomme la tête » est fermé)
-			if body is Sorcerer and body.est_intouchable():
-				return
-			if plant_parent and plant_parent.has_method("is_closest_head_for_enemy"):
-				if not plant_parent.is_closest_head_for_enemy(self, body):
-					return
-			target_enemy = body
-			head.play("atk_p1_open")
+		_tenter_ciblage(body)
+
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body == target_enemy and not is_eating:
 		target_enemy = null
 		head.play("atk_p1_idle")
+		# La tête redevient libre alors que d'autres proies sont peut-être
+		# déjà dans la zone : rescan différé (body_exited arrive pendant le
+		# flush des requêtes physiques — on lit les chevauchements plus
+		# tard, hors flush).
+		_reacquerir_cible.call_deferred()
+
+
+## Tente de cibler un corps présent dans la zone. Mutualisé entre
+## l'entrée dans la zone et le rescan de ré-acquisition. Retourne vrai si
+## la tête a pris la cible.
+func _tenter_ciblage(body: Node2D) -> bool:
+	if target_enemy != null or is_eating or is_retracting:
+		return false
+	if body is EnemyFlying:
+		if plant_parent and plant_parent.has_method("is_closest_head_for_enemy"):
+			if not plant_parent.is_closest_head_for_enemy(self, body):
+				return false
+		target_enemy = body
+		head.play("atk_p1_open")
+		return true
+	if body.is_in_group("player_group") and attack_tier < 3:
+		# Un sorcier intouchable (dash) n'est pas mangeable : pas de
+		# ciblage, la tête reste disponible (le dash traverse — et
+		# l'exploit « dash gratuit qui consomme la tête » est fermé)
+		if body is Sorcerer and body.is_untouchable():
+			return false
+		if plant_parent and plant_parent.has_method("is_closest_head_for_enemy"):
+			if not plant_parent.is_closest_head_for_enemy(self, body):
+				return false
+		target_enemy = body
+		head.play("atk_p1_open")
+		return true
+	return false
+
+
+## La tête redevient disponible (morsure ratée, cible sortie de la zone)
+## : une proie peut être DÉJÀ dans la zone de détection — body_entered ne
+## se redéclenchera pas (événement au bord, pas à l'état), donc on
+## rescanne les corps présents. Différé : l'abandon peut venir de
+## body_exited, pendant le flush des requêtes physiques.
+func _reacquerir_cible() -> void:
+	for body in detection_zone.get_overlapping_bodies():
+		if _tenter_ciblage(body):
+			return
 
 
 ## Rétracte la tête immédiatement, sans mordre (appelée quand tous les

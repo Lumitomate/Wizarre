@@ -11,6 +11,9 @@ signal grow_finished
 signal enemy_touched(segment)
 
 var caster: Node2D = null
+## Tier de la ronce (fixé par le conteneur) : transmis aux ennemis touchés
+## pour la force d'éjection de leurs débris (défaut 2 = force historique)
+var attack_tier: int = 2
 var index: int = 0
 var level_scale := Vector2.ONE
 var damage: int = 1
@@ -26,6 +29,9 @@ var _decomposing := false
 
 
 func _ready() -> void:
+	# Le parser .tscn ne tolère pas l'attribut groups sur le root (règle du
+	# projet) : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	collision_mask = 5
 	sprite.scale = level_scale
 	# La hitbox suit le grossissement des sprites : le scale du nœud
@@ -101,7 +107,7 @@ func _on_body_entered(body: Node2D) -> void:
 	var reprisal_caster: Node2D = EntityFinder.attaquant_valide(caster)
 	if body.is_in_group("enemy_group"):
 		# Origine = le tronçon de ronce : l'ennemi est éjecté depuis la plante
-		body.hit(damage, reprisal_caster, self)
+		body.hit(damage, reprisal_caster, self, -1, attack_tier)
 		enemy_touched.emit(self)
 	elif body.is_in_group("player_group"):
 		# Tout sorcier au contact est blessé (y compris le lanceur)

@@ -174,6 +174,9 @@ var _rebond: RebondSorciers = null
 
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	add_to_group("plant_bramble_group")
 	# Graine en vol : même échelle que la graine P1 (2 × level_scale)
 	var e := level_scale.x * 2.0
@@ -439,6 +442,7 @@ func _segment_spacing() -> float:
 func _spawn_segment(tige: Tige) -> void:
 	var seg: AttackPlantBrambleSegment = SEGMENT_SCENE.instantiate()
 	seg.index = tige.segments.size()
+	seg.attack_tier = attack_tier
 	seg.level_scale = level_scale * sprite_scale_multiplier
 	seg.position = tige.next_position
 	var seg_direction: Vector2
@@ -539,6 +543,7 @@ func _spawn_connector_segment(tige: Tige) -> void:
 	var last := tige.segments[tige.segments.size() - 1]
 	var seg: AttackPlantBrambleSegment = SEGMENT_SCENE.instantiate()
 	seg.index = tige.segments.size()
+	seg.attack_tier = attack_tier
 	seg.level_scale = level_scale * sprite_scale_multiplier
 	seg.position = last.position + Vector2.UP.rotated(last.rotation) * _segment_spacing()
 	seg.rotation = last.rotation

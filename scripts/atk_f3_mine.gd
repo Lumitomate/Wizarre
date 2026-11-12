@@ -99,6 +99,9 @@ const TIER_SCALE = {
 
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	add_to_group("fire_mine_group")
 	collision_shape.disabled = true
 	body_entered.connect(_on_body_entered)
@@ -112,6 +115,7 @@ func _ready() -> void:
 
 func setup_tier(tier: int) -> void:
 	tier_scale = TIER_SCALE.get(tier, 1.0)
+	attack_tier = tier
 	# Le tier n'affecte NI la mine posée NI la chute : seul le scale est
 	# mémorisé ici et appliqué au moment de l'explosion (_start_explosion)
 	# setup_tier est appelée par le spawner AVANT l'entrée dans l'arbre :

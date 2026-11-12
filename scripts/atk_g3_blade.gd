@@ -67,10 +67,14 @@ func setup(p: Node2D, angle: float, rot_dir: float, tier: int, level_scale: Vect
 	current_angle = angle
 	rotation_direction = rot_dir
 	tier_scale = float(tier)
+	attack_tier = tier
 	_level_scale = level_scale
 	orbit_radius = orbit_radius * (tier_scale + 0.5) / 1.5
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	base_polygon_points = collision_polygon.polygon
 	body_entered.connect(_on_body_entered)
 	sprite.scale = _level_scale * tier_scale
@@ -126,8 +130,10 @@ func _physics_process(delta: float) -> void:
 				if body.is_in_group("player_group") or body.is_in_group("enemy_group"):
 					hit_bodies.append(body)
 					if body.is_in_group("enemy_group"):
-						# Origine = le sorcier : les lames gravitent autour de lui
-						body.hit(1, player, player)
+						# Origine = le sorcier : les lames gravitent autour de lui.
+						# L'élément ne peut pas être déduit de l'origine (cf.
+						# ImpactExplosion.couleur_impact) : type passé explicitement.
+						body.hit(1, player, player, GlobalEnum.AttackType.G3, attack_tier)
 					else:
 						body.hit(1)
 

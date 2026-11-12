@@ -11,6 +11,11 @@ class_name AttackProjectile extends Area2D
 # aux ennemis touchés pour la représaille
 var caster: Node2D = null
 
+## Tier de l'attaque (1/2/3), fixé par chaque attaque au spawn : transmis
+## aux ennemis touchés pour régler la force d'éjection de leurs débris à
+## la mort (défaut 2 = force historique, cf. EnemyDeathBurst.TIER_FORCE_MULT)
+@export var attack_tier: int = 2
+
 # --- Garde anti double-coup « dans la zone » (règle validée) ---
 # Ex. colonne de feu F1 : une CHAÎNE de colonnes le long de la visée —
 # traverser le feu dure plus que le cooldown de dégâts, le corps était
@@ -70,6 +75,13 @@ func _surveiller_sortie(body: Node2D) -> void:
 	entree["zones"] -= 1
 	if entree["zones"] <= 0:
 		par_corps.erase(id)
+	# Purge de la liste de surveillance de CE projectile : sans ça, le
+	# nettoyage à sa destruction (_nettoyer_surveillance) redécrémenterait
+	# une entrée déjà soldée par body_exited — et ferait tomber à zéro le
+	# compteur d'une AUTRE zone du même type encore chevauchée (ex : corps
+	# sorti de la colonne A mais encore dans la colonne B, A détruit →
+	# protection levée trop tôt → double-coup possible via B).
+	_corps_surveilles.erase(body)
 
 
 ## Un coup sur ce corps est-il bloqué par la règle « dans la zone » ?
@@ -132,7 +144,7 @@ func _on_body_entered(body: Node2D) -> void:
 		if can_damage(body):
 			# Origine = le projectile : l'ennemi éclate dans le sens de son vol
 			# Attaquant validé : le caster peut être libéré (morte pendant le vol)
-			body.hit(damage, EntityFinder.attaquant_valide(caster), self)
+			body.hit(damage, EntityFinder.attaquant_valide(caster), self, -1, attack_tier)
 			_marquer_touche(body)
 
 

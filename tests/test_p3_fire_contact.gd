@@ -33,13 +33,16 @@ func _make_entity(group: String, pos: Vector2) -> Node2D:
 	body.add_to_group(group)
 	var script := GDScript.new()
 	# Même signature que le VRAI hit() des ennemis (enemy_flying.gd) :
-	# (damage, attacker, origin). Avec 2 paramètres, le tronçon de ronce
-	# qui appelle body.hit(damage, caster, self) échouait — le mock était
-	# resté en arrière quand l'origine du coup a été ajoutée.
+	# (damage, attacker, origin, attack_type, attack_tier). Avec 2
+	# paramètres, le tronçon de ronce qui appelle body.hit(damage, caster,
+	# self) échouait — le mock était resté en arrière quand l'origine du
+	# coup a été ajoutée. Même histoire avec le tier (force des débris) :
+	# le tronçon transmet désormais attack_type et attack_tier.
 	script.source_code = """
 extends StaticBody2D
 var lives := 3
-func hit(damage: int, _attacker: Node2D = null, _origin: Node2D = null) -> void:
+func hit(damage: int, _attacker: Node2D = null, _origin: Node2D = null,
+		_attack_type: int = -1, _attack_tier: int = 2) -> void:
 	lives -= damage
 """
 	script.reload()

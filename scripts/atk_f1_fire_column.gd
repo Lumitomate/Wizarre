@@ -34,15 +34,25 @@ static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_directio
 			var firecolumn: AttackFireColumn = _SCENE.instantiate()
 			firecolumn.transform = firecolumn.transform.scaled(Vector2(float(spawn_tier) * 1.0/3.0, 1)).rotated(spawn_direction.angle() + PI/2)
 			firecolumn.position = attack_position
+			firecolumn.attack_tier = spawn_tier
 			if previous_column != null:
 				firecolumn.previous_pre_spawn_done.connect(previous_column._on_previous_pre_spawn_done)
 			spawn_list.append(firecolumn)
 			previous_column = firecolumn
+	# Garde : aucune colonne ne rentre dans l'écran (position d'origine
+	# hors bornes après level_scale, ex : tir depuis le bord d'une salle)
+	# → pas d'attaque plutôt qu'un crash sur previous_column null, dans
+	# l'esprit du contrat du spawner (« type inconnu → tableau vide »).
+	if spawn_list.is_empty():
+		return []
 	previous_column.is_last = true
 	return spawn_list
 
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	super._ready()
 	visible = is_last
 	$CollisionShape2D.disabled = true

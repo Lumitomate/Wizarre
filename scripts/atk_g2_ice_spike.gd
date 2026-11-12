@@ -45,10 +45,14 @@ func apply_level_scale(level_scale: Vector2) -> void:
 
 func setup_tier(tier: int) -> void:
 	tier_scale = float(tier)
+	attack_tier = tier
 	$AnimatedSprite2D.scale = _level_scale * tier_scale
 	$CollisionPolygon2D.scale = _level_scale * tier_scale
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	$AnimatedSprite2D.play("idle")
 	body_entered.connect(_on_body_entered)
 	await get_tree().create_timer(spawn_immunity_time).timeout

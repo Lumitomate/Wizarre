@@ -13,6 +13,9 @@ class_name AttackIceBall extends RigidBody2D
 @export var spawn_immunity_time: float = 1.0 # durée d'immunité du lanceur après le spawn
 
 var caster: Node2D = null
+## Tier de l'attaque (fixé au spawn) : transmis aux ennemis touchés pour
+## la force d'éjection de leurs débris (défaut 2 = force historique)
+var attack_tier: int = 2
 var player_immunity: bool = true # le lanceur ne peut pas se toucher juste après le tir
 
 ## Contrat de spawn (cf. AttackSpawner) : une boule de glace lancée
@@ -23,6 +26,7 @@ static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_directio
 		_SCENE = load("res://scenes/atk/atk_g1_ice_ball.tscn")
 	var ice_ball: AttackIceBall = _SCENE.instantiate()
 	ice_ball.caster = spawn_caster
+	ice_ball.attack_tier = spawn_tier
 	ice_ball.transform = ice_ball.transform.rotated(spawn_direction.angle())
 	# Taille par tier : le tier 3 garde la taille actuelle (facteur 1),
 	# tier 2 = 75 %, tier 1 = 50 %
@@ -37,6 +41,9 @@ static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_directio
 
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	$AnimatedSprite2D.play("default")
 	# Immunité du lanceur pendant spawn_immunity_time après le tir
 	await get_tree().create_timer(spawn_immunity_time).timeout
@@ -52,7 +59,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy_group"):
 		# Origine = la boule de glace : l'ennemi éclate dans le sens de son vol
 		# Attaquant validé : le caster peut être libéré (morte pendant le vol)
-		body.hit(1, EntityFinder.attaquant_valide(caster), self)
+		body.hit(1, EntityFinder.attaquant_valide(caster), self, -1, attack_tier)
 	elif body.is_in_group("player_group"):
 		body.hit(1)
 

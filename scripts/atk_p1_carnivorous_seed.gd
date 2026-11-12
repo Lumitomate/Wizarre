@@ -57,6 +57,9 @@ var base_plante_initial_scale: Vector2 = Vector2.ONE
 var _rebond: RebondSorciers = null
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	add_to_group("atk_p1")
 	# Rebond sur les sorciers : composant réutilisable (détection du corps
 	# visible, normale calculée contre la capsule élargie jusqu'aux pieds,
@@ -225,6 +228,16 @@ func is_closest_head_for_enemy(requester: CarnivorousHead, enemy: Node2D) -> boo
 	var min_distance = requester.head.global_position.distance_to(enemy.global_position)
 	for h in heads:
 		if h == requester or not is_instance_valid(h):
+			continue
+		# Une tête qui ne peut PAS prendre cet ennemi ne le bloque pas :
+		# occupée à manger, rétractée, ou déjà ciblée sur une autre proie.
+		# Sinon, dès que la tête la plus proche est prise, un ennemi qui
+		# passe entre deux têtes n'est ciblé par aucune (cf.
+		# tests/test_p1_ciblage.gd, scénario A). Une tête déjà ciblée sur
+		# CET ennemi reste prioritaire (elle va le manger).
+		if h.is_eating or h.is_retracting:
+			continue
+		if h.target_enemy != null and h.target_enemy != enemy:
 			continue
 		var d = h.head.global_position.distance_to(enemy.global_position)
 		if d < min_distance:

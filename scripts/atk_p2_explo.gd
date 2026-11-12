@@ -63,6 +63,9 @@ func setup_tier(tier: int) -> void:
 	explosion_max_scale = tier_scale_multiplier + attack_tier * tier_scale_multiplier
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	explosion_shape.scale = Vector2.ZERO
 	explosion_area.monitoring = false
 	explosion_area.body_entered.connect(_on_explosion_body_entered)
@@ -122,7 +125,7 @@ func _on_explosion_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy_group"):
 		# Origine = le point d'explosion : l'ennemi est éjecté depuis la boule
 		# Attaquant validé : le caster peut être libéré (morte pendant l'explosion)
-		body.hit(explosion_damage, EntityFinder.attaquant_valide(caster), self)
+		body.hit(explosion_damage, EntityFinder.attaquant_valide(caster), self, -1, attack_tier)
 	elif body.is_in_group("player_group"):
 		body.hit(1)
 

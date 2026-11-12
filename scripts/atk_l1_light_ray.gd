@@ -25,6 +25,7 @@ static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_directio
 			if attack_position.x > -SPRITE_SIZE and attack_position.x < spawn_screen_size.x + SPRITE_SIZE and attack_position.y > -SPRITE_SIZE and attack_position.y < spawn_screen_size.y + SPRITE_SIZE:
 				var lightray: AttackLightRay = _SCENE.instantiate()
 				lightray.caster = spawn_caster
+				lightray.attack_tier = spawn_tier
 				lightray.transform = lightray.transform.rotated(spawn_direction.angle() + n * PI / ray_nb)
 				lightray.position = attack_position
 				spawn_list.append(lightray)
@@ -32,6 +33,9 @@ static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_directio
 
 
 func _ready() -> void:
+	# Le parser .tscn du projet ne tolère pas l'attribut groups sur le
+	# nœud racine : l'attaque déclare son groupe ici, au chargement.
+	add_to_group("attack_group")
 	super._ready()
 	# Garde anti double-coup : suivre les sorties de zone (l'entrée est
 	# gérée par le _on_body_entered de la base, déjà câblé dans la scène)

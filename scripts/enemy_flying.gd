@@ -124,13 +124,21 @@ func bounce_on(collider: CollisionObject2D) -> void:
 	is_bouncing = true
 
 
-func hit(damage: int, attacker: Node2D = null, origin: Node2D = null) -> void:
+func hit(damage: int, attacker: Node2D = null, origin: Node2D = null,
+		attack_type: int = -1, attack_tier: int = 2) -> void:
 	var damage_label = damage_label_scene.instantiate()
 	damage_label.position = level_scale * (position - Vector2(0, 64))
 	damage_label.amount = damage
 	get_parent().add_child(damage_label)
 	if can_take_damage:
 		lives -= damage
+		# Explosion d'impact (feedback visuel, cf. ImpactExplosion) : uniquement
+		# quand le coup fait réellement mal — un contact sans dégâts (ex : une
+		# graine qui touche un monstre sans le blesser) ne déclenche rien.
+		# Couleur : type explicite si fourni (attaques dont l'origine du coup
+		# n'est pas le nœud d'attaque), sinon déduit de l'attaque à l'origine.
+		ImpactExplosion.spawn(get_parent(), position,
+			ImpactExplosion.couleur_impact(origin, attack_type))
 		# Représaille : un ennemi sans cible fonce sur le sorcier qui l'a touché
 		if attacker != null and is_instance_valid(attacker) and attacker.is_in_group("player_group"):
 			last_attacker = attacker
@@ -151,16 +159,16 @@ func hit(damage: int, attacker: Node2D = null, origin: Node2D = null) -> void:
 		is_bouncing = true
 		# --- Fin ---
 		if lives == 0:
-			die(attacker, origin)
+			die(attacker, origin, attack_tier)
 		$DamageCooldown.start()
 		can_take_damage = false
 
 
-func die(attacker: Node2D = null, origin: Node2D = null) -> void:
+func die(attacker: Node2D = null, origin: Node2D = null, attack_tier: int = 2) -> void:
 	if attacker != null:
 		last_attacker = attacker
 	# Éclatement en morceaux + sang, orienté par le sens de l'attaque fatale
-	_spawn_death_burst(origin)
+	_spawn_death_burst(origin, attack_tier)
 	# queue_free AVANT l'émission du signal : les auditeurs qui vérifient
 	# l'état d'un groupe (ex : essaim de mouches) voient bien cet ennemi
 	# comme mort au moment du handler
@@ -171,7 +179,7 @@ func die(attacker: Node2D = null, origin: Node2D = null) -> void:
 ## Fait éclater l'ennemi en débris à sa position. Direction = opposée à
 ## l'origine du coup fatal (projectile, graine, ronce…), avec repli sur le
 ## sorcier attaquant puis vers le haut si rien n'est disponible.
-func _spawn_death_burst(origin: Node2D = null) -> void:
+func _spawn_death_burst(origin: Node2D = null, attack_tier: int = 2) -> void:
 	var source := origin
 	if source == null or not is_instance_valid(source):
 		source = last_attacker
@@ -185,6 +193,7 @@ func _spawn_death_burst(origin: Node2D = null) -> void:
 	var burst: EnemyDeathBurst = death_burst_scene.instantiate()
 	burst.position = position
 	burst.direction = burst_direction
+	burst.attack_tier = attack_tier
 	burst.chunk_count_min = burst_chunks_min
 	burst.chunk_count_max = burst_chunks_max
 	burst.blood_count_min = burst_blood_min

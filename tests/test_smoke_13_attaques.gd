@@ -19,9 +19,37 @@ func _check(ok: bool, label: String) -> void:
 		_failures += 1
 
 
+# --- 3. Sweep positions/échelles limites --------------------------------
+## Chaque type × tier aux BORDS de l'écran et à échelles variées : la
+## factory de chaque attaque doit tenir (retourner au pire un tableau
+## vide, cf. le garde de atk_f1_fire_column) — jamais de crash.
+func _test_positions_limites() -> void:
+	var positions := [
+		Vector2(576, 324),   # centre
+		Vector2(2, 2),       # coin haut-gauche
+		Vector2(1150, 646),  # coin bas-droit
+		Vector2(576, 1),     # bord haut
+		Vector2(1, 324),     # bord gauche
+	]
+	var echelles := [Vector2.ONE, Vector2(2, 2), Vector2(0.7, 0.7)]
+	var screen_size := Vector2(1152, 648)
+	for type in GlobalEnum.AttackType.values():
+		for echelle in echelles:
+			for position in positions:
+				var noeuds := AttackSpawner.spawn_attack(
+					type, GlobalEnum.AttackTier.I, position, Vector2.RIGHT,
+					screen_size, echelle, null)
+				for n in noeuds:
+					if n != null:
+						n.free()
+		_check(true, "sweep %s : spawn sans crash aux bords (5 positions × 3 échelles)"
+			% GlobalEnum.AttackType.keys()[type])
+
+
 func _ready() -> void:
 	await _test_registre_complet()
 	await _test_spawn_13_attaques()
+	await _test_positions_limites()
 	if _failures == 0:
 		print("RESULT: PASS")
 		get_tree().quit(0)

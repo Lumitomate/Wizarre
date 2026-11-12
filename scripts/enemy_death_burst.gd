@@ -46,6 +46,12 @@ const BLOOD_SPEED_MIN := 200.0
 const BLOOD_SPEED_MAX := 450.0
 
 # Disparition
+## Multiplicateurs par tier de l'attaque fatale (cf. GlobalEnum.AttackTier) :
+## force d'éjection et quantités de débris. Le tier 2 reproduit exactement
+## les valeurs historiques (seuil de référence, règle du projet).
+const TIER_FORCE_MULT := {1: 0.7, 2: 1.0, 3: 1.4}
+const TIER_COUNT_MULT := {1: 0.75, 2: 1.0, 3: 1.25}
+
 const CHUNK_REST_MIN := 0.8      # temps au sol avant le fondu (aléatoire : décalé)
 const CHUNK_REST_MAX := 1.5
 const CHUNK_FADE_DURATION := 0.3
@@ -58,7 +64,14 @@ const BLOOD_MAX_LIFETIME := 1.2
 ## Direction de l'attaque fatale (unitaire), fixée par EnemyFlying.die()
 var direction: Vector2 = Vector2.UP
 
-## Quantités de débris (la mouche les réduit : 1-3 morceaux, 8-12 gouttes)
+## Tier de l'attaque fatale (1/2/3), fixé par EnemyFlying.die() : règle la
+## force d'éjection (TIER_FORCE_MULT) et les quantités de débris
+## (TIER_COUNT_MULT). Défaut 2 : les morts sans tier connu (boss, contact…)
+## gardent le comportement historique.
+var attack_tier: int = 2
+
+## Quantités de débris (la mouche les réduit : 1-3 morceaux, 8-12 gouttes),
+## multipliées par le tier de l'attaque fatale
 @export var chunk_count_min := 4
 @export var chunk_count_max := 8
 @export var blood_count_min := 50
@@ -143,7 +156,9 @@ func _start_fade(piece: Piece, duration: float) -> void:
 
 
 func _spawn_chunks() -> void:
-	for i in randi_range(chunk_count_min, chunk_count_max):
+	var force := _tier_force()
+	var count_mult := _tier_count_mult()
+	for i in randi_range(roundi(chunk_count_min * count_mult), roundi(chunk_count_max * count_mult)):
 		var piece := Piece.new()
 		piece.is_chunk = true
 		piece.body = _make_body(4.0)
@@ -159,12 +174,14 @@ func _spawn_chunks() -> void:
 		piece.body.rotation = randf_range(0.0, TAU)
 		piece.angular_speed = randf_range(-10.0, 10.0)
 		piece.rest_duration = randf_range(CHUNK_REST_MIN, CHUNK_REST_MAX)
-		piece.body.velocity = _ejection_velocity(CHUNK_CONE_DEG, CHUNK_SPEED_MIN, CHUNK_SPEED_MAX)
+		piece.body.velocity = _ejection_velocity(CHUNK_CONE_DEG, CHUNK_SPEED_MIN * force, CHUNK_SPEED_MAX * force)
 		_pieces.append(piece)
 
 
 func _spawn_blood() -> void:
-	for i in randi_range(blood_count_min, blood_count_max):
+	var force := _tier_force()
+	var count_mult := _tier_count_mult()
+	for i in randi_range(roundi(blood_count_min * count_mult), roundi(blood_count_max * count_mult)):
 		var piece := Piece.new()
 		piece.is_chunk = false
 		piece.body = _make_body(2.0)
@@ -177,7 +194,7 @@ func _spawn_blood() -> void:
 		sprite.scale = Vector2.ONE * randf_range(1.0, 2.0)
 		piece.body.add_child(sprite)
 
-		piece.body.velocity = _ejection_velocity(BLOOD_CONE_DEG, BLOOD_SPEED_MIN, BLOOD_SPEED_MAX)
+		piece.body.velocity = _ejection_velocity(BLOOD_CONE_DEG, BLOOD_SPEED_MIN * force, BLOOD_SPEED_MAX * force)
 		_pieces.append(piece)
 
 
@@ -203,6 +220,17 @@ func _ejection_velocity(half_angle_deg: float, speed_min: float, speed_max: floa
 	# de l'attaque (la gravité ne les fait s'incurver que sur la fin du vol)
 	return direction.rotated(deg_to_rad(randf_range(-half_angle_deg, half_angle_deg))) \
 			* randf_range(speed_min, speed_max)
+
+
+## Multiplicateur de force du tier courant (1.0 hors table = comportement
+## historique, ex : un tier hors 1-3 transmis par un appel imprévu)
+func _tier_force() -> float:
+	return TIER_FORCE_MULT.get(attack_tier, 1.0)
+
+
+## Multiplicateur de quantités du tier courant
+func _tier_count_mult() -> float:
+	return TIER_COUNT_MULT.get(attack_tier, 1.0)
 
 
 ## Texture 2x2 blanche du sang, créée une seule fois pour toutes les morts

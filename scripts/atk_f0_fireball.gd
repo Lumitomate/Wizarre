@@ -28,6 +28,7 @@ static func setup_spawn(spawn_tier: int, spawn_position: Vector2, spawn_directio
 		fireball.transform = fireball.transform.rotated(spawn_direction.angle() + (i * spread) - (spawn_tier - 1) * spread / 2)
 		fireball.position = pos + 60 * spawn_direction.normalized()
 		fireball.direction = spawn_direction.normalized()
+		fireball.attack_tier = spawn_tier
 		spawn_list.append(fireball)
 	return spawn_list
 

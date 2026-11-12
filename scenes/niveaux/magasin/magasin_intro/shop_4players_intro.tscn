@@ -35,7 +35,7 @@
 [ext_resource type="Texture2D" uid="uid://by6iihxgjv4ul" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé16.png" id="33_u1frr"]
 [ext_resource type="Texture2D" uid="uid://dhc3naivp2b1b" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé17.png" id="34_dkdh4"]
 [ext_resource type="Texture2D" uid="uid://c0onvqsvtxc5o" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé18.png" id="35_elee4"]
-[ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_object.tscn" id="36_kkymn"]
+[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble_cabine.tscn" id="40_cabine"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/niveaux/magasin/shop_trial_door.tscn" id="37_dyiki"]
 [ext_resource type="Script" uid="uid://bgcrj8t7j2h7a" path="res://scripts/trial_door_intro.gd" id="38_28g2q"]
 [ext_resource type="Script" uid="uid://b7k2naq4xvn8c" path="res://scripts/shop_4players_intro.gd" id="39_host"]
@@ -352,89 +352,21 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_qtsd2")
 script = ExtResource("16_hp1uf")
 
-[node name="Bubble" type="StaticBody2D" parent="." unique_id=334711522]
+[node name="Bubble" parent="." unique_id=334711522 instance=ExtResource("40_cabine")]
 position = Vector2(365, 449)
 scale = Vector2(2, 2)
 
-[node name="AnimatedSprite2D_Bulle" type="AnimatedSprite2D" parent="Bubble" unique_id=1798061450]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_g3yoy")
-animation = &"Idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubble" unique_id=2071102918]
-position = Vector2(0, -2)
-shape = SubResource("CapsuleShape2D_edp2x")
-
-[node name="ZoneContact" type="Area2D" parent="Bubble" unique_id=191272851]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubble/ZoneContact" unique_id=357258791]
-position = Vector2(0, -2)
-shape = SubResource("CapsuleShape2D_sl8pl")
-
-[node name="SpawnerObjet" parent="Bubble" unique_id=1685397250 instance=ExtResource("36_kkymn")]
-
-[node name="Bubble2" type="StaticBody2D" parent="." unique_id=650628461]
+[node name="Bubble2" parent="." unique_id=650628461 instance=ExtResource("40_cabine")]
 position = Vector2(365, 897)
 scale = Vector2(2, 2)
 
-[node name="AnimatedSprite2D_Bulle" type="AnimatedSprite2D" parent="Bubble2" unique_id=1479253475]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_g3yoy")
-animation = &"Idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubble2" unique_id=572368738]
-position = Vector2(0, -2)
-shape = SubResource("CapsuleShape2D_edp2x")
-
-[node name="ZoneContact" type="Area2D" parent="Bubble2" unique_id=980272841]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubble2/ZoneContact" unique_id=1450569629]
-position = Vector2(0, -2)
-shape = SubResource("CapsuleShape2D_sl8pl")
-
-[node name="SpawnerObjet" parent="Bubble2" unique_id=1867216759 instance=ExtResource("36_kkymn")]
-
-[node name="Bubble3" type="StaticBody2D" parent="." unique_id=1995541527]
+[node name="Bubble3" parent="." unique_id=1995541527 instance=ExtResource("40_cabine")]
 position = Vector2(1450, 449)
 scale = Vector2(2, 2)
 
-[node name="AnimatedSprite2D_Bulle" type="AnimatedSprite2D" parent="Bubble3" unique_id=180660615]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_g3yoy")
-animation = &"Idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubble3" unique_id=11910445]
-position = Vector2(0, -2)
-shape = SubResource("CapsuleShape2D_edp2x")
-
-[node name="ZoneContact" type="Area2D" parent="Bubble3" unique_id=1830547237]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubble3/ZoneContact" unique_id=1296541145]
-position = Vector2(0, -2)
-shape = SubResource("CapsuleShape2D_sl8pl")
-
-[node name="SpawnerObjet" parent="Bubble3" unique_id=598996822 instance=ExtResource("36_kkymn")]
-
-[node name="Bubble4" type="StaticBody2D" parent="." unique_id=944646981]
+[node name="Bubble4" parent="." unique_id=944646981 instance=ExtResource("40_cabine")]
 position = Vector2(1450, 897)
 scale = Vector2(2, 2)
-
-[node name="AnimatedSprite2D_Bulle" type="AnimatedSprite2D" parent="Bubble4" unique_id=1116284738]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_g3yoy")
-animation = &"Idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubble4" unique_id=2101286533]
-position = Vector2(0, -2)
-shape = SubResource("CapsuleShape2D_edp2x")
-
-[node name="ZoneContact" type="Area2D" parent="Bubble4" unique_id=338589770]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubble4/ZoneContact" unique_id=695714409]
-position = Vector2(0, -2)
-shape = SubResource("CapsuleShape2D_sl8pl")
-
-[node name="SpawnerObjet" parent="Bubble4" unique_id=1014773911 instance=ExtResource("36_kkymn")]
 
 [node name="PorteMagasinEpreuve" parent="." unique_id=1860909474 instance=ExtResource("37_dyiki")]
 position = Vector2(587.5718, 448.71436)

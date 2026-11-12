@@ -8,8 +8,8 @@ extends ShopIntroBase
 ##    d'entrée (cf. sorcerer.gd), couloir inactif = toujours le dernier.
 ##  - À 3 joueurs (et tout < 4 : garde-fou des tests headless) : le
 ##    couloir bas-droite est SCELLÉ de blocs 1:1 — cases (18,10) →
-##    (27,15) : porte d'entrée, bulle 4 et porte dieu 4 enterrées ;
-##    l'objet de la bulle 4 n'existe pas (éliminé dès son entrée dans
+##    (27,15) : porte d'entrée, cabine 4 et porte dieu 4 enterrées ;
+##    l'objet de la cabine 4 n'existe pas (éliminé dès son entrée dans
 ##    l'arbre, règle « salle repliée, pas d'objet perdu »).
 
 ## Couloirs, dans l'ordre du tri (y, puis x) des portes d'entrée.
@@ -53,7 +53,7 @@ func _configurer_couloirs(nb_joueurs: int) -> void:
 		$Bubble4.child_entered_tree.connect(_eliminer_objet_bulle4)
 
 
-## À 3 joueurs, tout objet qui entre sous la bulle 4 est éliminé : la
+## À 3 joueurs, tout objet qui entre sous la cabine 4 est éliminé : la
 ## salle scellée ne propose rien (règle validée : salle repliée, pas
 ## d'objet perdu).
 func _eliminer_objet_bulle4(child: Node) -> void:
@@ -61,7 +61,7 @@ func _eliminer_objet_bulle4(child: Node) -> void:
 		child.queue_free()
 
 
-## Règle « jamais deux fois le même type » à 3-4 bulles : l'hôte tire
+## Règle « jamais deux fois le même type » à 3-4 cabines : l'hôte tire
 ## d'un coup autant de types DISTINCTS qu'il y a de couloirs actifs
 ## (12 types proposables, marge large) et les assigne aux spawners. Un
 ## spawner dont le type change voit son objet déjà instancié (avec
@@ -118,11 +118,12 @@ func _porte_dieu(couloir: int) -> Node:
 			return $PorteMagasinEpreuve4
 
 
-## Bulle d'un couloir (même ordre que _porte_dieu).
-## La scène 4 joueurs utilise encore les bulles de verre (Bubble,
-## Bubble2, Bubble3, Bubble4) : la base gère les deux cas (Cabin →
-## rituel cabine, sinon → contact ZoneContact). La migration complète
-## vers les cabines est suivie dans tickets/002.
+## Cabine d'un couloir (même ordre que _porte_dieu).
+## Comme dans l'intro 2 joueurs, les 4 fixtures sont des instances de
+## bubble_cabine.tscn NOMMÉES Bubble, Bubble2, Bubble3, Bubble4 (cf.
+## CONTEXT.md : ne pas chercher "BubbleCabine" depuis la racine). La
+## base sait aussi gérer une bulle de verre (contact ZoneContact), cas
+## encore utilisé par le don 2 joueurs.
 func _bulle(couloir: int) -> Node2D:
 	match couloir:
 		COULOIR_HAUT_GAUCHE:
@@ -135,6 +136,6 @@ func _bulle(couloir: int) -> Node2D:
 			return $Bubble4
 
 
-## Spawner d'une bulle (même ordre que _porte_dieu).
+## Spawner d'une cabine (même ordre que _porte_dieu).
 func _spawner(couloir: int) -> Node:
 	return _bulle(couloir).get_node("SpawnerObjet")

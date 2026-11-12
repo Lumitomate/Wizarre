@@ -1,12 +1,23 @@
 extends Node
-## Test de la règle « bulle fermée jusqu'au contact » : la bulle reste
-## Idle (fermée, collision active) même après les cinématiques ; le
-## contact d'un sorcier la casse (une seule fois). Lancé :
-## godot --headless res://tests/test_shop_intro_bulle_contact.tscn
+## Test de migration du magasin intro 4 joueurs : les 4 fixtures des
+## couloirs (Bubble, Bubble2, Bubble3, Bubble4) sont des CABINES
+## (instances de bubble_cabine.tscn, script cabin.gd) — plus de bulle de
+## verre inline dans cette scène (migration cabine, cf. tickets/002).
+## Chaque cabine active contient bien son objet spawné, et la cabine du
+## couloir scellé (3 joueurs headless) n'en contient pas.
+## Lancé : godot --headless res://tests/test_shop_intro_bulle_contact.tscn
 
 var inst: Node
 var step := 0
-var sorcier_test: Sorcerer
+var failures := 0
+
+
+func _check(ok: bool, label: String) -> void:
+	if ok:
+		print("OK: " + label)
+	else:
+		print("FAIL: " + label)
+		failures += 1
 
 
 func _ready() -> void:
@@ -15,53 +26,38 @@ func _ready() -> void:
 	var holder := Node2D.new()
 	add_child(holder)
 	holder.add_child(inst)
-	var sorc_scene: PackedScene = load("res://scenes/entities/players/sorcerer.tscn")
-	sorcier_test = sorc_scene.instantiate()
-	sorcier_test.controller_id = 0
-	sorcier_test.load_data()
-	holder.add_child(sorcier_test)
 
 
 func _physics_process(_delta: float) -> void:
 	step += 1
 	if step == 5:
-		# Fin des cinématiques simulée (0 joueurs headless) : la bulle ne
-		# doit PAS avoir cassé (nouvelle règle : contact requis)
-		var bulle: Node2D = inst.get_node("Bubble")
-		var sprite: AnimatedSprite2D = bulle.get_node("AnimatedSprite2D_Bulle")
-		print("après cinématiques: bulle ", sprite.animation, " (Idle = fermée attendu)",
-			" | collision disabled: ", bulle.get_node("CollisionShape2D").disabled, " (false attendu)")
-		# Un corps non-joueur ne doit rien déclencher
-		inst._on_bulle_contactee(null, 0)
-		print("contact non-joueur: cassée=", inst._bulles_cassees, " ({} attendu)")
-		# Contact joueur → casse
-		inst._on_bulle_contactee(sorcier_test, 0)
-		print(">>> contact joueur simulé")
+		# Les 4 fixtures sont des cabines (class_name Cabin).
+		var fixtures := ["Bubble", "Bubble2", "Bubble3", "Bubble4"]
+		for nom: String in fixtures:
+			var fixture: Node2D = inst.get_node(nom)
+			_check(fixture is Cabin, nom + " est une cabine (Cabin)")
+			_check(fixture.get_node_or_null("SpawnerObjet") != null,
+				nom + " contient son SpawnerObjet")
+			_check(fixture.get_node_or_null("ZoneContact") == null,
+				nom + " n'a plus de ZoneContact (bulle de verre retirée)")
+		# Chaque cabine de couloir ACTIF contient son objet spawné ;
+		# la cabine du couloir scellé (3 joueurs headless) n'en a pas.
+		for couloir: int in inst._couloirs_actifs:
+			var objet_trouve := false
+			for c: Node in inst._bulle(couloir).get_children():
+				if c is AttackObject:
+					objet_trouve = true
+			_check(objet_trouve,
+				"cabine du couloir %d : objet spawné" % couloir)
+		var objet_bulle4 := false
+		for c: Node in inst.get_node("Bubble4").get_children():
+			if c is AttackObject:
+				objet_bulle4 = true
+		_check(not objet_bulle4, "cabine 4 scellée : aucun objet")
 	if step == 7:
-		var bulle: Node2D = inst.get_node("Bubble")
-		var sprite: AnimatedSprite2D = bulle.get_node("AnimatedSprite2D_Bulle")
-		print("après contact: anim=", sprite.animation, " playing=", sprite.is_playing(), " (default attendu)",
-			" | cassée=", inst._bulles_cassees.get(0, false), " (true attendu)")
-		# Re-contact : ne doit pas rejouer l'anim (une seule fois)
-		inst._on_bulle_contactee(sorcier_test, 0)
-		sprite.stop()
-		print(">>> re-contact simulé (ignoré attendu)")
-	if step == 9:
-		var sprite: AnimatedSprite2D = inst.get_node("Bubble/AnimatedSprite2D_Bulle")
-		print("état final: playing=", sprite.is_playing(), " (false attendu: pas de re-casse)")
-		# Test PHYSIQUE réel : le sorcier avancé près de la bulle doit
-		# déclencher body_entered de la ZoneContact (detection area vs body).
-		# Nouvelle bulle (jamais cassée) : Bubble2 est scellée à 1 joueur...
-		# on re-utilise Bubble2 dont on force la bulle en mode testable.
-		var bulle2: Node2D = inst.get_node("Bubble2")
-		bulle2.position = inst.get_node("Bubble").position + Vector2(200, 0)
-		var fired := {"value": false}
-		bulle2.get_node("ZoneContact").body_entered.connect(func(_b: Node2D) -> void:
-			fired.value = true)
-		sorcier_test.global_position = bulle2.global_position + Vector2(30, 0)
-		print(">>> sorcier placé à 30px du centre de la bulle 2 (zone 34px)")
-	if step == 11:
-		var fired: bool = inst.get_node("Bubble2/ZoneContact").overlaps_body(sorcier_test)
-		print("overlap physique zone/sorcier: ", fired, " (true attendu: capsule contact 34 > corps solide 25)")
-		print("=== TEST TERMINÉ ===")
-		get_tree().quit()
+		if failures == 0:
+			print("RESULT: PASS")
+			get_tree().quit(0)
+		else:
+			print("RESULT: FAIL (%d)" % failures)
+			get_tree().quit(1)

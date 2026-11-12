@@ -9,8 +9,8 @@
 - **Bug corrigé** : `shop_2players_race.gd` et `shop_2players_intro.gd` cherchaient le nœud `"BubbleCabine"` (nom de la racine INTERNE de bubble2.tscn) au lieu de `"Bubble2"` (nom du nœud instance dans les scènes) → la porte de sortie s'ouvrait sans attendre la libération du caisson.
 
 ## Reste à faire
-1. **Migration cabine du magasin intro 3-4 joueurs (INCOMPLÈTE, jeu fonctionnel)** : le crash en jeu (`Node not found: BubbleCabine` à l'entrée du magasin 3-4 joueurs) a été corrigé en re-pointant `_bulle(COULOIR_BAS_GAUCHE)` vers `$Bubble2` — la scène garde ses 4 bulles de verre et la base gère les deux cas (`is Cabin` → rituel cabine, sinon → contact ZoneContact). Reste à faire : remplacer les 4 bulles de verre de `shop_4players_intro.tscn` par des instances de `bubble2.tscn` (comme déjà fait pour le magasin intro 2 joueurs), + vérification visuelle fenêtrée.
-2. **Contrats de test manquants** : `tests/test_poussiere.gd` et `tests/test_shop_intro_bulle_contact.gd` n'impriment pas `RESULT: PASS/FAIL` et masquaient des erreurs de script (exit 0 malgré tout) — à mettre au contrat de `docs/agents/checks.md`.
+1. **Migration cabine du magasin intro 3-4 joueurs (SCÈNE FAITE, visuel à vérifier)** : les 4 bulles de verre inline de `shop_4players_intro.tscn` sont remplacées par des instances de `bubble_cabine.tscn` (mêmes noms Bubble/Bubble2/Bubble3/Bubble4, mêmes positions, échelle 2), comme dans l'intro 2 joueurs. `test_shop_intro_bulle_contact.gd` est réécrit en test de migration (fixtures = Cabin, plus de ZoneContact, objets spawnés) avec contrat RESULT. **Reste à faire : vérification visuelle fenêtrée** (placement des cabines dans les couloirs — elles sont plus larges que les bulles).
+2. **Contrats de test manquants** : `tests/test_poussiere.gd` n'imprime pas `RESULT: PASS/FAIL` et masquait des erreurs de script (exit 0 malgré tout) — à mettre au contrat de `docs/agents/checks.md`. (`test_shop_intro_bulle_contact.gd` est au contrat depuis sa réécriture ; `test_shop_intro_4players_4joueurs.gd` aussi, avec en plus la coordination du type de la cabine 4 qui re-spawne — un doublon de type pouvait passer par hasard.)
 
 ## Priorité : haute
 

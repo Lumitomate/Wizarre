@@ -10,6 +10,8 @@
 
 ## Reste à faire
 1. **Migration cabine du magasin intro 3-4 joueurs (SCÈNE FAITE, visuel à vérifier)** : les 4 bulles de verre inline de `shop_4players_intro.tscn` sont remplacées par des instances de `bubble_cabine.tscn` (mêmes noms Bubble/Bubble2/Bubble3/Bubble4, mêmes positions, échelle 2), comme dans l'intro 2 joueurs. `test_shop_intro_bulle_contact.gd` est réécrit en test de migration (fixtures = Cabin, plus de ZoneContact, objets spawnés) avec contrat RESULT. **Reste à faire : vérification visuelle fenêtrée** (placement des cabines dans les couloirs — elles sont plus larges que les bulles).
+
+   Le **magasin classique** (`shop.tscn`) est aussi converti (règle validée avec le propriétaire : UN SEUL OBJET PAR VISITE — dès qu'un sorcier entre dans une cabine, `sorcier_entre` et les 2 autres sont scellées via `Cabin.sceller()` : objet retiré, entrée bloquée, porte refermée AVEC SON ANIMATION). Types coordonnés par l'hôte (`shop.gd::_coordonner_types_objets`, les spawners internes ne se voient plus). Test : `tests/test_shop_classique.gd`. Les 3 nœuds sont renommés Bulle→Cabine (glossaire). `bubble.tscn`/`bubble.gd` sont désormais INUTILISÉS (la bulle du don 2 joueurs est inline dans sa scène) — à supprimer quand le don sera converti.
 2. **Contrats de test manquants** : `tests/test_poussiere.gd` n'imprime pas `RESULT: PASS/FAIL` et masquait des erreurs de script (exit 0 malgré tout) — à mettre au contrat de `docs/agents/checks.md`. (`test_shop_intro_bulle_contact.gd` est au contrat depuis sa réécriture ; `test_shop_intro_4players_4joueurs.gd` aussi, avec en plus la coordination du type de la cabine 4 qui re-spawne — un doublon de type pouvait passer par hasard.)
 
 ## Priorité : haute

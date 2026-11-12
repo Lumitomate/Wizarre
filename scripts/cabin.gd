@@ -22,6 +22,11 @@ class_name Cabin extends Node2D
 ## tout de suite et restent ouvertes jusqu'à ce qu'un sorcier entre.
 
 signal sort_installe(sorcier: Sorcerer, tube_index: int, attack_type: int, attack_tier: int)
+## Émis dès qu'un sorcier est enfermé (début du rituel) — pas à la fin
+## de l'installation : l'hôte (magasin classique) s'en sert pour sceller
+## les autres cabines AU MOMENT DU CHOIX, l'équivalent cabine de l'ancien
+## contact bulle.
+signal sorcier_entre(sorcier: Sorcerer)
 
 enum Etat { ACTIVE, OCCUPIED, CONFIRMING, INSTALLING, RETRACTING, DONE, INERT }
 
@@ -91,7 +96,8 @@ var lit_entree: bool = true
 ## Cabine fermée de base (ex. épreuve des plaques de pression) : porte
 ## fermée, entrée refusée et murs bloqués jusqu'à ouvrir(). Faux par
 ## défaut : les cabines du magasin intro restent ouvertes tant qu'un
-## sorcier n'est pas entré.
+## sorcier n'est pas entré. Posée aussi par sceller() (magasin classique :
+## une seule cabine par visite) — là, la fermeture est ANIMÉE.
 var verrouillee := false
 
 var _appuye: Array[bool] = [false, false, false]
@@ -184,6 +190,24 @@ func ouvrir() -> void:
 	_ouvrir_portes()
 
 
+## Scelle la cabine pour toute la visite (règle « un seul objet par
+## visite » du magasin classique) : l'objet restant est retiré, l'entrée
+## est bloquée (murs + détection coupée) et la porte SE FERME AVEC SON
+## ANIMATION — feedback visible pour le joueur, la cabine est morte.
+## Sans effet sur une cabine occupée (un rituel en cours se termine
+## normalement) ou déjà scellée.
+func sceller() -> void:
+	if etat != Etat.ACTIVE or verrouillee:
+		return
+	verrouillee = true
+	if objet != null and is_instance_valid(objet):
+		objet.queue_free()
+	objet = null
+	_zone_entree.monitoring = false
+	_activer_murs()
+	_fermer_portes()
+
+
 ## Le sorcier entre : la cabine se verrouille autour de lui et démarre le
 ## rituel de choix. Appelée par la détection physique.
 func entrer(s: Sorcerer) -> void:
@@ -205,6 +229,9 @@ func entrer(s: Sorcerer) -> void:
 	_porte.z_index = Z_PORTE_DEVANT
 	_activer_murs()
 	_fermer_portes()
+	# L'hôte (magasin classique) scelle les autres cabines dès CE moment
+	# (l'équivalent du contact qui cassait la première bulle de verre).
+	sorcier_entre.emit(s)
 
 
 ## Appui/relâchement d'un bouton d'attaque (0/1/2). En jeu, _process lit

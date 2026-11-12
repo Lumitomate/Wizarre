@@ -1,4 +1,13 @@
 extends Node2D
+## Magasin classique (1-2 joueurs, tiré par ShopRouter) : 3 cabines
+## (bubble_cabine.tscn, cf. CONTEXT.md — ne pas appeler ça « bulles »),
+## une par couloir, chacune tenant son power-up.
+##
+## Règle validée « UN SEUL OBJET PAR VISITE » : dès qu'un sorcier ENTRE
+## dans une cabine (début du rituel, signal sorcier_entre), les deux
+## autres sont SCELLÉES (sceller()) — objet retiré, entrée bloquée et
+## porte refermée avec son animation. L'équivalent cabine de l'ancienne
+## règle des bulles de verre (premier contact, autres condamnées).
 
 signal save_data
 
@@ -18,6 +27,13 @@ func _ready() -> void:
 	var porte := _find_entry_door()
 	if porte != null:
 		porte.lancer_cinematique()
+	# Les spawners internes des cabines ne se voient pas entre eux
+	# (parents différents) : l'hôte fait respecter la règle « jamais deux
+	# fois le même type » (cf. magasins intro).
+	_coordonner_types_objets()
+	# Règle « un seul objet par visite » : première entrée → autres scellées.
+	for cabine: Cabin in _cabines():
+		cabine.sorcier_entre.connect(_on_cabine_entree.bind(cabine))
 
 
 ## Porte d'entrée cinématique de cette scène (une seule : 1 porte/couloir)
@@ -36,10 +52,51 @@ func _on_shop_door_shop_entered() -> void:
 	goto_level()
 
 
-func _on_bubble_sorcerer_contact_bubble() -> void:
-	$Bulle.can_open = false
-	$Bulle2.can_open = false
-	$Bulle3.can_open = false
-	# Pas de désélection des tubes ici : le contact d'une bulle ne doit pas
-	# annuler le tube activé pendant la prise d'objets. Le changement de scène
-	# (niveau suivant) recrée des sorciers neufs de toute façon.
+## Les 3 cabines de la scène (noms Cabine, Cabine2, Cabine3).
+func _cabines() -> Array[Cabin]:
+	return [$Cabine, $Cabine2, $Cabine3]
+
+
+## Un sorcier est entré dans `source` : les autres cabines (non occupées)
+## sont scellées pour toute la visite.
+func _on_cabine_entree(_sorcier: Sorcerer, source: Cabin) -> void:
+	for cabine: Cabin in _cabines():
+		if cabine != source:
+			cabine.sceller()
+	# Pas de désélection des tubes ici : le changement de scène (niveau
+	# suivant) recrée des sorciers neufs de toute façon.
+
+
+## Règle « jamais deux fois le même type » entre les 3 cabines : la
+## cabine 0 garde son type, les suivantes re-tirent parmi les types
+## restants. Un spawner re-tiré voit son objet déjà instancié (avec
+## l'ANCIEN type et son sprite) éliminé à son entrée dans l'arbre, et un
+## objet neuf respawné (spawn_object relit chosen_object_type) — même
+## mécanique que les magasins intro.
+func _coordonner_types_objets() -> void:
+	var cabines := _cabines()
+	var pris: Array = []
+	for i in cabines.size():
+		var spawner: Node = cabines[i].get_node("SpawnerObjet")
+		if "chosen_object_type" not in spawner:
+			return
+		var type_courant: int = spawner.chosen_object_type
+		if type_courant in pris:
+			var libres: Array = spawner.PROPOSABLE_TYPES.filter(
+				func(t: int) -> bool: return t not in pris)
+			spawner.chosen_object_type = libres[randi() % libres.size()]
+			var callable: Callable = _on_objet_remplace.bind(spawner)
+			spawner.child_entered_tree.connect(callable)
+		pris.append(spawner.chosen_object_type)
+
+
+## Le premier objet entrant sous un spawner re-tiré est l'ancien (type
+## doublon) : éliminé, remplacé par un objet au type re-tiré.
+func _on_objet_remplace(child: Node, spawner: Node) -> void:
+	if not (child is AttackObject):
+		return
+	var callable: Callable = _on_objet_remplace.bind(spawner)
+	if spawner.child_entered_tree.is_connected(callable):
+		spawner.child_entered_tree.disconnect(callable)
+	child.queue_free()
+	spawner.spawn_object()

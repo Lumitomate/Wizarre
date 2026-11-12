@@ -77,6 +77,11 @@ func _physics_process(_delta: float) -> void:
 			var cabine: Cabin = inst.get_node(nom)
 			_check(not _porte_fermee(cabine),
 				nom + " : fermeture ANIMÉE (pas déjà fermée 2 ticks après)")
+		# Règle de sortie : rituel en cours → la sortie se referme.
+		var sortie: Node = inst.get_node("ShopDoor")
+		var zone_sortie: CollisionShape2D = sortie.get_node("CollisionShape2D")
+		_check(zone_sortie.disabled and not sortie.is_playing(),
+			"la sortie est FERMÉE pendant le rituel")
 	if step == 7:
 		# Les deux autres cabines sont scellées TÔT (dès l'entrée) :
 		# inertes, entrée coupée, verrouillées, porte en cours de fermeture.
@@ -100,6 +105,13 @@ func _physics_process(_delta: float) -> void:
 		for nom: String in ["Cabine2", "Cabine3"]:
 			var cabine: Cabin = inst.get_node(nom)
 			_check(_porte_fermee(cabine), nom + " : porte fermée (fin d'animation)")
+		# Le sorcier a fini son rituel et ressorti : la sortie se rouvre.
+		inst._cabines()[0].sorcier_sorti.emit(null)
+		print(">>> sorcier ressorti")
+	if step == 72:
+		var sortie: Node = inst.get_node("ShopDoor")
+		_check(sortie.is_playing(),
+			"la sortie se ROUVRE dès que le sorcier ressort")
 	if step == 72:
 		if failures == 0:
 			print("RESULT: PASS")

@@ -8,6 +8,11 @@ extends Node2D
 ## autres sont SCELLÉES (sceller()) — objet retiré, entrée bloquée et
 ## porte refermée avec son animation. L'équivalent cabine de l'ancienne
 ## règle des bulles de verre (premier contact, autres condamnées).
+##
+## Règle globale de sortie : ON NE QUITTE PAS LA PIÈCE PENDANT UN
+## RITUEL. La sortie est ouverte à l'arrivée (partir sans rien prendre
+## reste permis), REFERMÉE dès qu'un rituel démarre, ROUVERTE quand le
+## sorcier ressort (signal sorcier_sorti).
 
 signal save_data
 
@@ -32,8 +37,11 @@ func _ready() -> void:
 	# fois le même type » (cf. magasins intro).
 	_coordonner_types_objets()
 	# Règle « un seul objet par visite » : première entrée → autres scellées.
+	# Règle de sortie : rituel en cours → sortie refermée ; sorcier ressorti
+	# → sortie rouverte (une cabine scellée ne peut plus rien émettre).
 	for cabine: Cabin in _cabines():
 		cabine.sorcier_entre.connect(_on_cabine_entree.bind(cabine))
+		cabine.sorcier_sorti.connect(_on_sorcier_sorti)
 
 
 ## Porte d'entrée cinématique de cette scène (une seule : 1 porte/couloir)
@@ -58,13 +66,20 @@ func _cabines() -> Array[Cabin]:
 
 
 ## Un sorcier est entré dans `source` : les autres cabines (non occupées)
-## sont scellées pour toute la visite.
+## sont scellées pour toute la visite, et la sortie se referme (règle :
+## on ne quitte pas la pièce pendant un rituel).
 func _on_cabine_entree(_sorcier: Sorcerer, source: Cabin) -> void:
 	for cabine: Cabin in _cabines():
 		if cabine != source:
 			cabine.sceller()
+	$ShopDoor.fermer()
 	# Pas de désélection des tubes ici : le changement de scène (niveau
 	# suivant) recrée des sorciers neufs de toute façon.
+
+
+## Le sorcier a fini son rituel et ressorti : la sortie se rouvre.
+func _on_sorcier_sorti(_sorcier: Sorcerer) -> void:
+	$ShopDoor.play()
 
 
 ## Règle « jamais deux fois le même type » entre les 3 cabines : la

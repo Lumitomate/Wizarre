@@ -25,8 +25,13 @@ signal sort_installe(sorcier: Sorcerer, tube_index: int, attack_type: int, attac
 ## Émis dès qu'un sorcier est enfermé (début du rituel) — pas à la fin
 ## de l'installation : l'hôte (magasin classique) s'en sert pour sceller
 ## les autres cabines AU MOMENT DU CHOIX, l'équivalent cabine de l'ancien
-## contact bulle.
+## contact bulle. Les magasins qui referment leur sortie pendant un
+## rituel s'en servent aussi pour la FERMER.
 signal sorcier_entre(sorcier: Sorcerer)
+## Émis quand le rituel est fini ET que le sorcier a physiquement
+## ressorti (la cabine redevient libre) : les magasins qui referment
+## leur sortie pendant un rituel la ROUVRENT à cet instant.
+signal sorcier_sorti(sorcier: Sorcerer)
 
 enum Etat { ACTIVE, OCCUPIED, CONFIRMING, INSTALLING, RETRACTING, DONE, INERT }
 
@@ -585,6 +590,7 @@ func _on_body_exited(body: Node2D) -> void:
 		etat = Etat.INERT
 		# Le sorcier est sorti : la porte retrouve son z_index de base.
 		_porte.z_index = _z_porte_base
+		sorcier_sorti.emit(body as Sorcerer)
 
 
 func _on_enfant(child: Node) -> void:

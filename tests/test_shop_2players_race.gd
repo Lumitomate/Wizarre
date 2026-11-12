@@ -59,8 +59,10 @@ func _physics_process(_delta: float) -> void:
 		3: _scenario_dash()
 
 
-## Scénario 1 : descente normale — personne ne passe, la porte défi
-## touche le sol et la sortie s'ouvre (rituel en cours ou pas).
+## Scénario 1 : descente normale PENDANT un rituel en cours — l'échéance
+## (fermeture totale de la porte défi) est atteinte mais la sortie reste
+## FERMÉE tant que le rituel tourne (règle : on ne quitte pas la pièce
+## pendant un rituel) ; elle s'ouvre quand le sorcier ressort.
 func _scenario_descente() -> void:
 	if step == 3:
 		_check(caisson != null and not caisson.est_occupee(),
@@ -73,12 +75,21 @@ func _scenario_descente() -> void:
 		inst.get_node("Sablier").ecoulement_termine.emit()
 		print(">>> fin du sablier : la porte défi commence sa descente")
 	if step == 8:
-		_check(_porte_fermee(), "la sortie attend la descente complète")
+		_check(_porte_fermee(), "la sortie attend (descente + rituel en cours)")
 	if step == 120:
 		# Descente de la porte défi : ~20 frames à 12 fps ≈ 1,7 s ≈ 100
-		# frames physiques — la porte a touché le sol.
+		# frames physiques — l'échéance est atteinte, MAIS le rituel tourne
+		# toujours : la sortie doit rester fermée.
+		_check(_porte_fermee(),
+			"la sortie ne s'ouvre PAS pendant le rituel (échéance atteinte ou pas)")
+		# Fin du rituel + sortie du sorcier : la sortie s'ouvre.
+		caisson.sort_installe.emit(sorcier, 0, GlobalEnum.AttackType.L1, 0)
+		caisson.etat = Cabin.Etat.DONE
+		caisson._on_body_exited(sorcier)
+		print(">>> rituel fini + sorcier ressorti")
+	if step == 124:
 		_check(inst.get_node("ShopDoor").is_playing(),
-			"la sortie s'ouvre à la fermeture TOTALE de la porte défi")
+			"la sortie s'ouvre dès que le rituel est fini et le sorcier ressorti")
 		_fin_scenario()
 
 

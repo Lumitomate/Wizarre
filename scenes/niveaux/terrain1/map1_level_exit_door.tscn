@@ -98,7 +98,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("12_lhi6k")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 6.0
 }]
@@ -106,6 +106,9 @@ animations = [{
 [sub_resource type="SpriteFrames" id="SpriteFrames_1rv7g"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": null
+}, {
 "duration": 1.0,
 "texture": ExtResource("14_5cteu")
 }, {

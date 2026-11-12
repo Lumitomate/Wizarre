@@ -5,6 +5,12 @@ const NUMBER_OF_FRAME_ELEVATOR : int = 76
 ## ce délai après la descente (personne n'a traversé la zone de
 ## téléportation), l'ascenseur remonte.
 const DELAI_GRACE_BAS : float = 1.5
+## Délai de grâce en haut : après une remontée, si la jauge est encore
+## pleine (personne n'a quitté la zone de détection, qui est plus large
+## que la cabine), on laisse ce délai pour sortir avant de redescendre
+## quand même — sinon l'ascenseur reste bloqué en haut pour toujours
+## (la règle du front montant ne verra jamais la jauge redescendre).
+const DELAI_GRACE_HAUT : float = 1.5
 
 ## Détection d'écrasement pendant la remontée : rectangle juste au-dessus
 ## du toit (Toit : 98 px de large, sommet à y = -88 en local), large
@@ -14,6 +20,15 @@ const ZONE_ECRASEMENT_TAILLE := Vector2(110, 20)
 const ZONE_ECRASEMENT_OFFSET := Vector2(0, -98)
 ## Micro-pause « se bloque » avant la descente de secours (s)
 const ARRET_BLOQUE_DUREE := 0.25
+
+## ANIMATION D'ATTENTE (« waiting energy ») — signal visuel d'appel :
+## cabine vide, une petite animation d'énergie clignote périodiquement
+## (toutes les 5 s) pour attirer l'œil des joueurs. Sans elle, personne
+## ne comprend que la SUITE DU NIVEAU passe par l'ascenseur : c'est le
+## seul indice « montez ici ». Elle n'a AUCUN rôle mécanique : ni jauge,
+## ni départ — la logique de départ (jauge classique + front montant)
+## vit entièrement dans l'autre sprite (AnimatedSprite2D).
+const DELAI_WAITING_ENERGY : float = 5.0
 
 ## États de l'ascenseur : EN_HAUT = préparation normale (jauge), DESCENTE
 ## = départ lancé, AU_BAS = délai de grâce en bas, REMONTEE = remontée
@@ -39,6 +54,8 @@ var _requete_ecrasement := PhysicsShapeQueryParameters2D.new()
 
 var number_of_players_in_the_elevator: int = 0
 var animated_sprite_2D: AnimatedSprite2D
+var _waiting_energy_sprite: AnimatedSprite2D
+var _waiting_energy_timer: Timer
 
 func _ready() -> void:
 	animated_sprite_2D = $AnimatableBody2D/AnimatedSprite2D
@@ -47,6 +64,11 @@ func _ready() -> void:
 	timer.wait_time = DELAI_GRACE_BAS
 	timer.one_shot = true
 	timer.timeout.connect(_on_delai_grace_timeout)
+	# Timer de grâce en haut (présent dans la scène, non connecté).
+	var timer_haut: Timer = $AnimatableBody2D/TimerHaut
+	timer_haut.wait_time = DELAI_GRACE_HAUT
+	timer_haut.one_shot = true
+	timer_haut.timeout.connect(_on_delai_grace_haut_timeout)
 	# Fin du mouvement PHYSIQUE (descente ET remontée, cf. _etat) : c'est
 	# la position du corps qui décide, pas l'anim du sprite.
 	$AnimatableBody2D/AnimationPlayer.animation_finished.connect(_on_mouvement_termine)
@@ -57,18 +79,76 @@ func _ready() -> void:
 	_requete_ecrasement.shape = forme
 	_requete_ecrasement.collision_mask = 1
 	_requete_ecrasement.exclude = [$AnimatableBody2D.get_rid()]
+	# Animation d'attente : sprite + timer de 5 s (créé en code).
+	# Le sprite est caché par défaut : dessiné APRÈS le sprite classique
+	# (la jauge) dans l'arbre, il la recouvrirait en permanence s'il
+	# restait visible hors de ses cycles de lecture.
+	_waiting_energy_sprite = $AnimatableBody2D/AnimatedSprite2DWaintingEnergy
+	_waiting_energy_sprite.visible = false
+	_waiting_energy_sprite.animation_finished.connect(_on_waiting_energy_finished)
+	_waiting_energy_timer = Timer.new()
+	_waiting_energy_timer.wait_time = DELAI_WAITING_ENERGY
+	_waiting_energy_timer.one_shot = false
+	_waiting_energy_timer.autostart = true
+	_waiting_energy_timer.timeout.connect(_on_waiting_energy_timeout)
+	add_child(_waiting_energy_timer)
+	# L'ascenseur vit sur la Home : les joueurs peuvent REJOINDRE la
+	# partie pendant que la jauge d'un autre se remplit (player_added).
+	# Leur arrivée augmente l'exigence de jauge — la cible redescend
+	# (ex. 76/1 → 76/2), ce qui retarde d'autant le lancement du niveau.
+	# Mais rien d'autre ne recalcule la cible : les entrées/sorties de la
+	# zone ne suffisent pas (une manette qui rejoint n'est pas un
+	# body_entered). Sans ce branchement, une jauge déjà en lecture
+	# poursuit jusqu'à son ANCIENNE cible et y reste coincée.
+	# Les trois signaux sont écoutés pour couvrir tous les cas (arrivée,
+	# remplacement, déconnexion) ; le recalcul ne prend effet qu'à l'état
+	# EN_HAUT (garde interne), y compris quand le signal arrive pendant
+	# la pause qu'une déconnexion impose en cours de partie.
+	PlayerManager.player_added.connect(_on_effectif_joueurs_change)
+	PlayerManager.player_reconnected.connect(_on_effectif_joueurs_change)
+	PlayerManager.player_disconnected.connect(_on_effectif_joueurs_change)
+
+
+## Reconnexion OU déconnexion d'un joueur : la cible de jauge a changé,
+## on recalcule. Si la nouvelle cible est sous la frame courante, la
+## lecture en cours est relancée À L'ENVERS (play_backwards) et se
+## re-pausera à la nouvelle cible via _on_animated_sprite_2d_frame_changed.
+func _on_effectif_joueurs_change(_controller_id: int) -> void:
+	animate_elevator_preparation()
+
+func _on_waiting_energy_timeout() -> void:
+	if number_of_players_in_the_elevator == 0:
+		_waiting_energy_sprite.visible = true
+		_waiting_energy_sprite.play(&"default")
+
+## Fin d'un cycle de l'animation d'attente (l'anim « default » doit
+## rester NON bouclée dans la scène, sinon ce signal n'arrive jamais).
+## - Un joueur est entré pendant la lecture : on la laisse se terminer
+##   (demande explicite), puis on la stoppe et on la cache pour rendre
+##   la jauge (sprite classique) visible.
+## - Personne n'est entré : on garde la dernière frame affichée jusqu'au
+##   prochain cycle (pas de clignotement entre deux lectures).
+func _on_waiting_energy_finished() -> void:
+	if number_of_players_in_the_elevator > 0:
+		_waiting_energy_sprite.stop()
+		_waiting_energy_sprite.visible = false
 
 # 2 - Avoir le nombre de joueurs dans l'ascenseur
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player_group"):
 		number_of_players_in_the_elevator += 1
-		
+		# On coupe le timer (plus de nouveau cycle). Une lecture en cours
+		# se termine toute seule : cf. _on_waiting_energy_finished.
+		_waiting_energy_timer.stop()
+	
 	animate_elevator_preparation()
 	
-	
+
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player_group"):
 		number_of_players_in_the_elevator -= 1
+		if number_of_players_in_the_elevator == 0:
+			_waiting_energy_timer.start()
 
 	animate_elevator_preparation()
 	
@@ -135,6 +215,7 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 #5 - Lancement de la descente
 func start_the_movement():
 		_etat = Etat.DESCENTE
+		$AnimatableBody2D/TimerHaut.stop()
 		animated_sprite_2D.play("ascenseur_descente")
 		$AnimatableBody2D/AnimationPlayer.play("ascenseur_mouv_descente")
 		
@@ -145,7 +226,11 @@ func start_the_movement():
 ##   le timeout ne peut donc arriver que si personne n'est parti.
 ## - fin de REMONTEE → retour à l'état normal ; la jauge se re-remplit
 ##   selon les joueurs présents à bord (le front montant exige qu'elle
-##   soit d'abord redescendue avant un nouveau départ).
+##   soit d'abord redescendue avant un nouveau départ). MAIS si la jauge
+##   cible est déjà pleine à l'arrivée (joueur resté dans la zone, plus
+##   large que la cabine), le front montant ne se produira jamais : on
+##   démarre le délai de grâce en haut pour redescendre quand même
+##   (cf. DELAI_GRACE_HAUT).
 func _on_mouvement_termine(_anim: StringName) -> void:
 	match _etat:
 		Etat.DESCENTE:
@@ -162,6 +247,20 @@ func _on_mouvement_termine(_anim: StringName) -> void:
 			else:
 				_etat = Etat.EN_HAUT
 				animate_elevator_preparation()
+				if get_frame_to_reach() >= NUMBER_OF_FRAME_ELEVATOR:
+					$AnimatableBody2D/TimerHaut.start()
+
+
+## Délai de grâce EN HAUT écoulé : si la jauge est toujours pleine
+## (personne n'a quitté la zone), on redescend — sans ça l'ascenseur
+## reste bloqué en haut. Si la jauge a baissé entre-temps, le front
+## montant classique reprendra la main au prochain embarquement.
+func _on_delai_grace_haut_timeout() -> void:
+	if _etat != Etat.EN_HAUT:
+		return
+	if get_frame_to_reach() < NUMBER_OF_FRAME_ELEVATOR:
+		return
+	start_the_movement()
 
 
 ## Délai de grâce écoulé sans lancement du niveau : remontée = les mêmes

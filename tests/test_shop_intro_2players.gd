@@ -1,33 +1,41 @@
 extends Node
-## Test headless du magasin intro à 2 joueurs : deux objets de types
-## différents, prises des deux couloirs, passages, ouverture de la
-## ShopDoor seulement au DERNIER passage. Lancé comme scène :
+## Test headless du magasin intro à 2 joueurs : deux cabines de types
+## différents, et NOUVELLE RÈGLE de sortie — la ShopDoor s'ouvre quand
+## les DEUX portes de cabines se sont fermées (sorciers enfermés), pas
+## au passage dans les portes défi ; les portes dieu ne s'ouvrent qu'à
+## la fin des rituels (sorts installés). Lancé comme scène :
 ## godot --headless res://tests/test_shop_intro_2players.tscn
 
 var inst: Node
 var step := 0
-var sorcier_test: Sorcerer
+var failures := 0
+
+
+func _check(ok: bool, label: String) -> void:
+	if ok:
+		print("OK: " + label)
+	else:
+		print("FAIL: " + label)
+		failures += 1
 
 
 func _ready() -> void:
 	var scene: PackedScene = load("res://scenes/niveaux/magasin/magasin_intro/shop_2players_intro.tscn")
 	inst = scene.instantiate()
+	# Le spawner remonte l'arbre vers un Node2D (racine de scène) : le
+	# conteneur de test doit en être un.
 	var holder := Node2D.new()
 	add_child(holder)
 	holder.add_child(inst)
-	var sorc_scene: PackedScene = load("res://scenes/entities/players/sorcerer.tscn")
-	sorcier_test = sorc_scene.instantiate()
-	sorcier_test.controller_id = 0
-	sorcier_test.load_data()
-	holder.add_child(sorcier_test)
 	# Force le mode 2 joueurs (aucune manette en headless : la scène a
 	# démarré en mode 1 joueur). On défait ce que le mode 1 joueur avait
-	# branché : plus d'élimination de l'objet bas, association au couloir.
+	# branché : plus d'élimination de l'objet bas. Le couloir bas n'était
+	# pas actif au _ready : sa cabine n'a reçu aucun branchement, on
+	# refait ici ceux de la base (porte_fermee → ShopDoor, sort_installe
+	# → porte dieu).
 	inst._couloirs_actifs.assign([0, 1])
 	inst.get_node("Bubble3").child_entered_tree.disconnect(inst._eliminer_objet_bulle2)
-	inst.get_node("Bubble3").child_entered_tree.connect(inst._on_objet_spawned.bind(1))
-	# Le couloir bas n'était pas actif au _ready (0 joueur en headless) :
-	# sa cabine n'a pas reçu le branchement du signal. On le refait ici.
+	inst.get_node("Bubble3").porte_fermee.connect(inst._on_cabine_porte_fermee.bind(1))
 	inst.get_node("Bubble3").sort_installe.connect(inst._on_cabine_installee.bind(1))
 	# L'objet du bas a été éliminé au démarrage : re-spawn avec son type
 	# coordonné (≠ type du haut, règle anti-doublon).
@@ -38,32 +46,36 @@ func _physics_process(_delta: float) -> void:
 	step += 1
 	if step == 3:
 		var type_haut: int = inst.get_node("Bubble2/SpawnerObjet").chosen_object_type
-		var objets_bas: Array = []
-		for c: Node in inst.get_node("Bubble3").get_children():
-			if c is AttackObject:
-				objets_bas.append(c.item_attack_type)
-		print("types: haut=", type_haut, " bas=", objets_bas, " (≠ attendus: anti-doublon)")
+		var type_bas: int = inst.get_node("Bubble3/SpawnerObjet").chosen_object_type
+		_check(type_haut != type_bas,
+			"types distincts (anti-doublon) : haut=%d bas=%d" % [type_haut, type_bas])
 	if step == 5:
-		# Installation du sort par la cabine du haut SEULEMENT : la shop ne
-		# doit pas s'ouvrir.
-		inst.get_node("Bubble2").sort_installe.emit(
-			sorcier_test, 0, GlobalEnum.AttackType.F1, 0)
-		print(">>> sort installé (cabine haut)")
+		# La porte de la cabine du haut se referme SEULE : la shop ne doit
+		# pas s'ouvrir.
+		inst.get_node("Bubble2").porte_fermee.emit()
+		print(">>> porte cabine haut fermée (1/2)")
 	if step == 7:
-		print("porte dieu haut: ", inst.get_node("PorteMagasinEpreuve").opened, " (true)",
-			" | dieu bas: ", inst.get_node("PorteMagasinEpreuve2").opened, " (false)")
-		inst._on_zone_passage(sorcier_test, 0)
-		print(">>> passage couloir haut (1/2)")
+		_check(not inst._shop_ouverte, "shop fermée après 1 fermeture/2")
+		_check(not inst.get_node("PorteMagasinEpreuve").opened,
+			"porte dieu haut encore fermée (le rituel n'est pas fini)")
 	if step == 9:
-		print("shop après 1 passage/2: ", inst._shop_ouverte, " (false attendu)")
+		# La porte de la cabine du bas se referme : 2/2 → shop ouverte.
+		inst.get_node("Bubble3").porte_fermee.emit()
+		print(">>> porte cabine bas fermée (2/2)")
 	if step == 11:
-		# Installation par la cabine du bas + passage
-		inst.get_node("Bubble3").sort_installe.emit(
-			sorcier_test, 0, GlobalEnum.AttackType.G1, 0)
-		inst._on_zone_passage(sorcier_test, 1)
-		print(">>> sort installé (cabine bas) + passage couloir bas (2/2)")
+		_check(inst._shop_ouverte, "shop OUVERTE par les 2 fermetures")
 	if step == 13:
-		print("porte dieu bas: ", inst.get_node("PorteMagasinEpreuve2").opened, " (true)")
-		print("shop après les 2 passages: ", inst._shop_ouverte, " (true attendu)")
+		# Les portes dieu s'ouvrent à la FIN des rituels, pas avant.
+		inst.get_node("Bubble2").sort_installe.emit(null, 0, GlobalEnum.AttackType.F1, 0)
+		inst.get_node("Bubble3").sort_installe.emit(null, 0, GlobalEnum.AttackType.G1, 0)
+		print(">>> sorts installés (fin des rituels)")
+	if step == 15:
+		_check(inst.get_node("PorteMagasinEpreuve").opened, "porte dieu haut ouverte")
+		_check(inst.get_node("PorteMagasinEpreuve2").opened, "porte dieu bas ouverte")
 		print("=== TEST TERMINÉ ===")
-		get_tree().quit()
+		if failures == 0:
+			print("RESULT: PASS")
+			get_tree().quit(0)
+		else:
+			print("RESULT: FAIL (%d)" % failures)
+			get_tree().quit(1)

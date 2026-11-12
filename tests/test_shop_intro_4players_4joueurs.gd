@@ -1,13 +1,13 @@
 extends Node
 ## Test headless du magasin intro à 4 joueurs, cas 4 JOUEURS (mode forcé,
 ## aucune manette en headless) : les 4 couloirs actifs, 4 types distincts
-## (aucun doublon), et ouverture de la ShopDoor seulement au QUATRIÈME
-## passage. Lancé comme scène :
+## (aucun doublon), et NOUVELLE RÈGLE de sortie — la ShopDoor s'ouvre
+## quand les QUATRE portes de cabines se sont fermées (sorciers
+## enfermés), pas au passage dans les portes défi. Lancé comme scène :
 ## godot --headless res://tests/test_shop_intro_4players_4joueurs.tscn
 
 var inst: Node
 var step := 0
-var sorcier_test: Sorcerer
 var failures := 0
 
 
@@ -25,15 +25,10 @@ func _ready() -> void:
 	var holder := Node2D.new()
 	add_child(holder)
 	holder.add_child(inst)
-	var sorc_scene: PackedScene = load("res://scenes/entities/players/sorcerer.tscn")
-	sorcier_test = sorc_scene.instantiate()
-	sorcier_test.controller_id = 0
-	sorcier_test.load_data()
-	holder.add_child(sorcier_test)
 	# Le mode 4 joueurs est forcé PLUS TARD (step 3) : laissé ici, un
 	# switch immédiat débrancherait l'éliminateur AVANT que l'objet
 	# d'origine (spawn différé du spawner) ne le traverse — le doublon
-	# resterait sous la bulle. En step 3, l'objet a déjà été éliminé.
+	# resterait sous la cabine. En step 3, l'objet a déjà été éliminé.
 
 
 func _physics_process(_delta: float) -> void:
@@ -47,7 +42,11 @@ func _physics_process(_delta: float) -> void:
 		# (≠ les 3 autres, règle anti-doublon).
 		inst._couloirs_actifs.assign([0, 1, 2, 3])
 		inst.get_node("Bubble4").child_entered_tree.disconnect(inst._eliminer_objet_bulle4)
-		inst.get_node("Bubble4").child_entered_tree.connect(inst._on_objet_spawned.bind(3))
+		# Le couloir 3 n'était pas actif au _ready : sa cabine n'a reçu
+		# aucun branchement, on refait ici ceux de la base (porte_fermee →
+		# ShopDoor, sort_installe → porte dieu).
+		inst.get_node("Bubble4").porte_fermee.connect(inst._on_cabine_porte_fermee.bind(3))
+		inst.get_node("Bubble4").sort_installe.connect(inst._on_cabine_installee.bind(3))
 		# Le spawner de la cabine 4 n'a pas été coordonné au _ready (couloir
 		# alors inactif) : on lui assigne ici un type ≠ des 3 autres, comme
 		# le ferait _coordonner_types_objets si les 4 couloirs avaient été
@@ -79,24 +78,19 @@ func _physics_process(_delta: float) -> void:
 				objets_bulle4 += 1
 		_check(objets_bulle4 == 1, "objet sous la cabine 4 (1 attendu)")
 	if step == 7:
-		# Prise + passages des couloirs 0 et 1 : la shop ne doit pas s'ouvrir
+		# Fermetures des portes des cabines des couloirs 0 et 1 : la shop
+		# ne doit pas s'ouvrir.
 		for couloir: int in [0, 1]:
-			for c: Node in inst._bulle(couloir).get_children():
-				if c is AttackObject:
-					c.attrapee.emit(sorcier_test)
-			inst._on_zone_passage(sorcier_test, couloir)
-		print(">>> couloirs 0 et 1 pris + passés (2/4)")
+			inst._cabine(couloir).porte_fermee.emit()
+		print(">>> portes cabines couloirs 0 et 1 fermées (2/4)")
 	if step == 9:
-		_check(not inst._shop_ouverte, "shop fermée après 2 passages/4")
-		# Prise + passages des couloirs 2 et 3 (dernier actif)
+		_check(not inst._shop_ouverte, "shop fermée après 2 fermetures/4")
+		# Fermetures des couloirs 2 et 3 (dernier actif)
 		for couloir: int in [2, 3]:
-			for c: Node in inst._bulle(couloir).get_children():
-				if c is AttackObject:
-					c.attrapee.emit(sorcier_test)
-			inst._on_zone_passage(sorcier_test, couloir)
-		print(">>> couloirs 2 et 3 pris + passés (4/4)")
+			inst._cabine(couloir).porte_fermee.emit()
+		print(">>> portes cabines couloirs 2 et 3 fermées (4/4)")
 	if step == 11:
-		_check(inst._shop_ouverte, "shop ouverte après les 4 passages")
+		_check(inst._shop_ouverte, "shop ouverte après les 4 fermetures")
 		print("=== TEST TERMINÉ ===")
 		if failures == 0:
 			print("RESULT: PASS")

@@ -8,19 +8,23 @@ extends Node2D
 ##    entry_door_cinematic.gd) dans son couloir.
 ##  - À l'entrée, les tubes de chaque joueur sont VIDÉS (aucun sort,
 ##    aucune icône), à CHAQUE passage.
-##  - Face à lui, une bulle de verre contenant un objet visible dès
-##    l'arrivée. La bulle casse au CONTACT du joueur (règle du magasin
-##    classique) et l'objet devient prenable.
-##  - Les bulles actives ne proposent JAMAIS deux fois le même type
+##  - Face à lui, une CABINE (bubble_cabine.tscn, cf. CONTEXT.md) tenant
+##    un objet visible dès l'arrivée. Le sorcier y entre : la porte se
+##    referme derrière lui et le rituel de choix du tube démarre
+##    (cf. cabin.gd).
+##  - LA FERMETURE DE LA PORTE DE LA CABINE (sorcier enfermé, rituel
+##    lancé — signal porte_fermee) valide le couloir. Tous les couloirs
+##    ACTIFS validés → la ShopDoor s'ouvre. Ce n'est PAS le passage dans
+##    la porte défi qui conditionne la sortie (règle remplacée, validée
+##    avec le propriétaire) : la sortie est prête dès que tout le monde
+##    est engagé dans sa cabine.
+##  - La fin du rituel (sort_installe) ouvre la porte dieu du couloir :
+##    le sorcier peut alors la franchir pour rejoindre la sortie.
+##  - Les cabines actives ne proposent JAMAIS deux fois le même type
 ##    d'attaque (coordination par la sous-classe, cf.
 ##    _coordonner_types_objets).
-##  - La prise de l'objet ouvre la porte dieu du couloir ; la
-##    ZonePassage de la porte dieu OUVERTE signe le passage du couloir
-##    (garde-fou : le passage ne compte qu'après la prise de l'objet).
-##  - Tous les couloirs ACTIFS passés → la ShopDoor s'ouvre ; la
-##    traversée emmène tout le monde au niveau 1.
 ##  - Selon le nombre de joueurs, les couloirs en trop sont SCELLÉS de
-##    blocs 1:1 (portes d'entrée, bulles et portes dieu enterrées,
+##    blocs 1:1 (portes d'entrée, cabines et portes dieu enterrées,
 ##    objets éliminés) — disposition propre à chaque sous-classe, cf.
 ##    _configurer_couloirs.
 
@@ -30,24 +34,16 @@ signal save_data
 const SOURCE_ID := 0
 ## Coordonnées d'atlas du bloc plein de scellement.
 const BLOC_SCELLEMENT := Vector2i(1, 1)
-## Frame de l'anim de cassure de la bulle où sa collision saute
-## (convention du magasin course).
-const BULLE_FRAME_CASSURE := 15
 
 ## Nombre de portes d'entrée dont la cinématique n'est pas encore finie.
 var _portes_entree_actives := 0
-## {objet: couloir} association objet ↔ couloir (posée au spawn).
-var _objet_par_couloir: Dictionary = {}
-## {couloir: bool} l'objet du couloir a été pris.
-var _objets_pris: Dictionary = {}
-## {couloir: bool} la ZonePassage de la porte dieu a été franchie.
-var _passages: Dictionary = {}
+## {couloir: bool} la porte de la cabine du couloir s'est fermée
+## (sorcier enfermé, rituel lancé).
+var _fermetures: Dictionary = {}
 ## Couloirs actifs selon le nombre de joueurs (défini par la sous-classe).
 var _couloirs_actifs: Array[int] = []
 ## La porte Shop a été ouverte (une fois pour toutes).
 var _shop_ouverte := false
-## {couloir: bool} la bulle du couloir a été cassée au contact.
-var _bulles_cassees: Dictionary = {}
 
 
 func _ready() -> void:
@@ -67,28 +63,18 @@ func _ready() -> void:
 	# Repli selon le nombre de joueurs : couloirs actifs, scellement des
 	# couloirs en trop, élimination de leurs objets (sous-classe).
 	_configurer_couloirs(ids.size())
-	# Association objets ↔ couloirs dès leur spawn (ajout différé du
-	# spawner : les objets entrent dans l'arbre après ce _ready).
-	for couloir: int in _couloirs_actifs:
-		_bulle(couloir).child_entered_tree.connect(_on_objet_spawned.bind(couloir))
-	# Règle « jamais deux fois le même type » entre les bulles actives
+	# Règle « jamais deux fois le même type » entre les cabines actives
 	# (sous-classe : les spawners ne se voient pas entre eux).
 	_coordonner_types_objets()
-	# Passage des portes dieu : la ZonePassage de chaque porte signe le
-	# passage du couloir (mécanique ZonePassage de la salle race).
+	# Cabines des couloirs ACTIFS seulement (les cabines des couloirs
+	# scellés restent muettes) :
+	#  - porte_fermee (sorcier enfermé) → valide le couloir pour la
+	#    ShopDoor ;
+	#  - sort_installe (rituel terminé) → ouvre la porte dieu du couloir.
 	for couloir: int in _couloirs_actifs:
-		_porte_dieu(couloir).get_node("ZonePassage").body_entered.connect(
-			_on_zone_passage.bind(couloir))
-	# Bulles : la casse ne démarre qu'au CONTACT du joueur (règle
-	# validée : l'objet flotte derrière la bulle fermée jusqu'à ce qu'on
-	# la touche). Seuls les couloirs actifs sont écoutés.
-	for couloir: int in _couloirs_actifs:
-		var cible := _bulle(couloir)
-		if cible is Cabin:
-			(cible as Cabin).sort_installe.connect(_on_cabine_installee.bind(couloir))
-		else:
-			cible.get_node("ZoneContact").body_entered.connect(
-				_on_bulle_contactee.bind(couloir))
+		var cabine := _cabine(couloir) as Cabin
+		cabine.porte_fermee.connect(_on_cabine_porte_fermee.bind(couloir))
+		cabine.sort_installe.connect(_on_cabine_installee.bind(couloir))
 	# Porte de sortie : la traversée emmène tout le monde au niveau 1.
 	if not $ShopDoor.shop_entered.is_connected(_on_shop_door_shop_entered):
 		$ShopDoor.shop_entered.connect(_on_shop_door_shop_entered)
@@ -103,21 +89,21 @@ func _ready() -> void:
 
 ## SOUS-CLASSE : définit _couloirs_actifs selon nb_joueurs, scelle les
 ## couloirs inactifs (_sceller_zone) et branche l'élimination des objets
-## des bulles scellées.
+## des cabines scellées.
 func _configurer_couloirs(_nb_joueurs: int) -> void:
 	pass
 
 
 ## SOUS-CLASSE : règle « jamais deux fois le même type d'attaque » entre
-## les bulles actives. Les spawners ont déjà choisi et mis en file leurs
+## les cabines actives. Les spawners ont déjà choisi et mis en file leurs
 ## objets (leur _ready précède celui de la racine, et chaque spawner ne
 ## voit que ses frères) : c'est l'hôte qui fait respecter la règle.
 func _coordonner_types_objets() -> void:
 	pass
 
 
-## SOUS-CLASSE : bulle d'un couloir.
-func _bulle(_couloir: int) -> Node2D:
+## SOUS-CLASSE : cabine d'un couloir.
+func _cabine(_couloir: int) -> Node2D:
 	return null
 
 
@@ -143,91 +129,35 @@ func _vider_tubes(player: Sorcerer) -> void:
 		player.get_node("PipeManager").refresh_all()
 
 
-## Un objet (AttackObject) vient d'entrer dans l'arbre sous une bulle :
-## mémorisé pour son couloir, sa prise ouvrira la porte dieu du couloir.
-func _on_objet_spawned(child: Node, couloir: int) -> void:
-	if child is AttackObject:
-		_objet_par_couloir[child] = couloir
-		if not child.attrapee.is_connected(_on_objet_attrape):
-			child.attrapee.connect(_on_objet_attrape.bind(couloir))
+## La porte d'une cabine vient de se fermer (sorcier enfermé, rituel
+## lancé) : le couloir est validé ; tous les couloirs actifs validés
+## ouvrent la ShopDoor.
+func _on_cabine_porte_fermee(couloir: int) -> void:
+	_fermetures[couloir] = true
+	_verifier_ouverture_shop()
 
 
-## Contact d'un joueur avec une bulle d'un couloir actif : la bulle casse
-## (une seule fois), sa collision sautera à la frame de cassure (cf.
-## _process) et l'objet flottant derrière devient prenable.
-func _on_bulle_contactee(body: Node2D, couloir: int) -> void:
-	if _est_cabine(couloir):
-		return
-	if not (body is Sorcerer):
-		return
-	if couloir not in _couloirs_actifs or _bulles_cassees.get(couloir, false):
-		return
-	_bulles_cassees[couloir] = true
-	_bulle(couloir).get_node("AnimatedSprite2D_Bulle").play(&"default")
-
-
-func _process(_delta: float) -> void:
-	# Collision des bulles cassées : saute à la frame de cassure
-	# (pattern du magasin course). Une bulle intacte (Idle, frame 0) garde
-	# sa collision : elle bloque le passage jusqu'à son ouverture.
-	for couloir: int in _couloirs_actifs:
-		if _bulles_cassees.get(couloir, false) and not _est_cabine(couloir):
-			_collision_bulle_si_cassee(_bulle(couloir))
-
-
-func _collision_bulle_si_cassee(bulle: Node2D) -> void:
-	var collision: CollisionShape2D = bulle.get_node("CollisionShape2D")
-	if not collision.disabled and bulle.get_node("AnimatedSprite2D_Bulle").frame >= BULLE_FRAME_CASSURE:
-		collision.set_deferred("disabled", true)
-
-
-## Prise d'un objet : l'objet du couloir est marqué pris et la porte dieu
-## du couloir s'ouvre (anim dieu). Le passage dans la ZonePassage ouvrira
-## ensuite la ShopDoor (cf. _on_zone_passage).
-func _on_objet_attrape(_sorcier: Sorcerer, couloir: int) -> void:
-	_ouvrir_porte_couloir(couloir)
-
-
-## Cabine d'un couloir : le sort est installé (juste avant la réouverture
-## des portes de la cabine) → même effet que la prise d'objet.
+## Fin du rituel d'une cabine (sort installé, juste avant la réouverture
+## de ses portes) : la porte dieu du couloir s'ouvre, le sorcier pourra
+## rejoindre la sortie.
 func _on_cabine_installee(_sorcier: Sorcerer, _tube: int, _type: int, _tier: int,
 		couloir: int) -> void:
 	_ouvrir_porte_couloir(couloir)
 
 
-## Marque l'objet du couloir comme pris et ouvre sa porte dieu.
+## Ouvre la porte dieu du couloir.
 func _ouvrir_porte_couloir(couloir: int) -> void:
-	_objets_pris[couloir] = true
 	var porte: Node = _porte_dieu(couloir)
 	if porte != null:
 		porte.ouvrir()
 
 
-## Une cabine remplace-t-elle la bulle de ce couloir ?
-func _est_cabine(couloir: int) -> bool:
-	return _bulle(couloir) is Cabin
-
-
-## Passage franchi via ZonePassage : le bind place le couloir APRÈS le
-## corps (signal body_entered → (body, couloir)). Ne compte que si
-## l'objet du couloir a été pris (garde-fou validé). Tous les couloirs
-## actifs passés → la ShopDoor s'ouvre.
-func _on_zone_passage(body: Node2D, couloir: int) -> void:
-	if not (body is Sorcerer):
-		return
-	if couloir not in _couloirs_actifs:
-		return
-	if not _objets_pris.get(couloir, false):
-		return
-	_passages[couloir] = true
-	_verifier_ouverture_shop()
-
-
+## Tous les couloirs actifs ont leur cabine engagée → la ShopDoor s'ouvre.
 func _verifier_ouverture_shop() -> void:
 	if _shop_ouverte:
 		return
 	for couloir: int in _couloirs_actifs:
-		if not _passages.get(couloir, false):
+		if not _fermetures.get(couloir, false):
 			return
 	_shop_ouverte = true
 	$ShopDoor.play()
@@ -243,6 +173,6 @@ func _on_shop_door_shop_entered() -> void:
 
 
 ## Une porte d'entrée a fini sa cinématique (joueur libéré). Le joueur
-## court vers sa bulle : le contact la cassera (cf. _on_bulle_contactee).
+## court vers sa cabine : son entrée refermera la porte (cf. cabin.gd).
 func _on_porte_entree_terminee() -> void:
 	_portes_entree_actives -= 1

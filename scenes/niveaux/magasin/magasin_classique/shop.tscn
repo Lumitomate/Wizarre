@@ -229,15 +229,15 @@ rendering_quadrant_size = 32
 physics_quadrant_size = 32
 
 [node name="Cabine" parent="." unique_id=347004238 instance=ExtResource("4_m4ofw")]
-position = Vector2(1687.1425, 319.99997)
+position = Vector2(1687.1423, 272.85724)
 scale = Vector2(1.9999999, 1.9999999)
 
 [node name="Cabine2" parent="." unique_id=2044158822 instance=ExtResource("4_m4ofw")]
-position = Vector2(1687.1425, 577.14276)
+position = Vector2(1687.1423, 528.57153)
 scale = Vector2(1.9999999, 1.9999999)
 
 [node name="Cabine3" parent="." unique_id=1883371933 instance=ExtResource("4_m4ofw")]
-position = Vector2(1687.1425, 897.14264)
+position = Vector2(1687.1423, 848.5713)
 scale = Vector2(1.9999999, 1.9999999)
 
 [node name="PorteMagasinTemps" parent="." unique_id=1860909474 instance=ExtResource("7_ajxib")]

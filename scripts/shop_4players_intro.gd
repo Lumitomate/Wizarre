@@ -121,10 +121,8 @@ func _porte_dieu(couloir: int) -> Node:
 ## Cabine d'un couloir (même ordre que _porte_dieu).
 ## Comme dans l'intro 2 joueurs, les 4 fixtures sont des instances de
 ## bubble_cabine.tscn NOMMÉES Bubble, Bubble2, Bubble3, Bubble4 (cf.
-## CONTEXT.md : ne pas chercher "BubbleCabine" depuis la racine). La
-## base sait aussi gérer une bulle de verre (contact ZoneContact), cas
-## encore utilisé par le don 2 joueurs.
-func _bulle(couloir: int) -> Node2D:
+## CONTEXT.md : ne pas chercher "BubbleCabine" depuis la racine).
+func _cabine(couloir: int) -> Node2D:
 	match couloir:
 		COULOIR_HAUT_GAUCHE:
 			return $Bubble
@@ -138,4 +136,4 @@ func _bulle(couloir: int) -> Node2D:
 
 ## Spawner d'une cabine (même ordre que _porte_dieu).
 func _spawner(couloir: int) -> Node:
-	return _bulle(couloir).get_node("SpawnerObjet")
+	return _cabine(couloir).get_node("SpawnerObjet")

@@ -44,7 +44,7 @@ func _physics_process(_delta: float) -> void:
 		# la cabine du couloir scellé (3 joueurs headless) n'en a pas.
 		for couloir: int in inst._couloirs_actifs:
 			var objet_trouve := false
-			for c: Node in inst._bulle(couloir).get_children():
+			for c: Node in inst._cabine(couloir).get_children():
 				if c is AttackObject:
 					objet_trouve = true
 			_check(objet_trouve,

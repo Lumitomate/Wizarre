@@ -6,8 +6,8 @@ extends ShopIntroBase
 ##  - Couloir haut = joueur 1, couloir bas = joueur 2 (tri par y des
 ##    portes, puis x — cf. sorcerer.gd).
 ##  - À 1 joueur : les cases (0,9)→(15,15) de la tilemap sont remplies de
-##    blocs 1:1 (scellement du couloir bas : entrée, bulle 2, porte dieu 2
-##    enterrées) ; l'objet de la bulle 2 n'existe pas ; le joueur seul
+##    blocs 1:1 (scellement du couloir bas : entrée, cabine 2, porte dieu 2
+##    enterrées) ; l'objet de la cabine 2 n'existe pas ; le joueur seul
 ##    contourne le scellement par la droite et atteint la ShopDoor.
 
 ## Couloirs de la salle : 0 = haut, 1 = bas (disposition fixe des portes).
@@ -17,7 +17,7 @@ const COULOIR_BAS := 1
 const SCELLEMENT_DEBUT := Vector2i(0, 9)
 const SCELLEMENT_FIN := Vector2i(15, 15)
 
-## Remplacement anti-doublon en cours : le prochain objet sous la bulle 2
+## Remplacement anti-doublon en cours : le prochain objet sous la cabine 2
 ## est l'ancien (type doublon), il sera éliminé et respawné.
 var _remplacement_bas_en_cours := false
 
@@ -34,20 +34,20 @@ func _configurer_couloirs(nb_joueurs: int) -> void:
 	else:
 		_couloirs_actifs = [COULOIR_HAUT]
 		_sceller_zone(SCELLEMENT_DEBUT, SCELLEMENT_FIN)
-		# L'objet de la bulle 2 a déjà été demandé (spawner exécuté avant
+		# L'objet de la cabine 2 a déjà été demandé (spawner exécuté avant
 		# ce _ready, ajout différé) : il est éliminé dès son entrée dans
 		# l'arbre — il resterait sinon prisonnier sous les blocs.
 		$Bubble3.child_entered_tree.connect(_eliminer_objet_bulle2)
 
 
-## À 1 joueur, tout objet qui entre sous la bulle 2 est éliminé : la salle
+## À 1 joueur, tout objet qui entre sous la cabine 2 est éliminé : la salle
 ## scellée ne propose rien (règle validée : salle repliée, pas d'objet perdu).
 func _eliminer_objet_bulle2(child: Node) -> void:
 	if child is AttackObject:
 		child.queue_free()
 
 
-## Force la règle « pas de doublon » entre les 2 bulles : les spawners ont
+## Force la règle « pas de doublon » entre les 2 cabines : les spawners ont
 ## déjà choisi et mis en file leurs objets (leur _ready précède celui de
 ## la racine, et le spawner du bas ne voit pas le haut : parents
 ## différents). Si les deux types coïncident : le type du bas est re-tiré,
@@ -74,7 +74,7 @@ func _coordonner_types_objets() -> void:
 		spawner_bas.child_entered_tree.connect(_on_objet_bas_remplacement.bind(spawner_bas))
 
 
-## Le premier objet entrant sous la bulle 2 pendant un remplacement est
+## Le premier objet entrant sous la cabine 2 pendant un remplacement est
 ## l'ancien (type doublon, déjà instancié avec son mauvais sprite) :
 ## éliminé, et un objet neuf est respawné avec le type re-tiré.
 func _on_objet_bas_remplacement(child: Node, spawner_bas: Node) -> void:
@@ -86,8 +86,8 @@ func _on_objet_bas_remplacement(child: Node, spawner_bas: Node) -> void:
 	spawner_bas.spawn_object()
 
 
-## Bulle d'un couloir (0 = haut, 1 = bas).
-func _bulle(couloir: int) -> Node2D:
+## Cabine d'un couloir (0 = haut, 1 = bas).
+func _cabine(couloir: int) -> Node2D:
 	match couloir:
 		COULOIR_HAUT:
 			return $Bubble2

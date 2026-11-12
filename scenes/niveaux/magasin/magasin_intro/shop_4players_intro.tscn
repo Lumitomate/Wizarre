@@ -16,29 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://b2lv6btvjuwb0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes11.png" id="14_foeea"]
 [ext_resource type="Texture2D" uid="uid://cw60wnkydyxuy" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes12.png" id="15_ju356"]
 [ext_resource type="Script" uid="uid://bexngqe2x1hd0" path="res://scripts/entry_door_cinematic.gd" id="16_hp1uf"]
-[ext_resource type="Texture2D" uid="uid://ci4ksrxtd1ovq" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreBase.png" id="17_468h2"]
-[ext_resource type="Texture2D" uid="uid://dyjo7chhbyq1q" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé1.png" id="18_rq448"]
-[ext_resource type="Texture2D" uid="uid://6rpiahc8fgoj" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé2.png" id="19_j72t4"]
-[ext_resource type="Texture2D" uid="uid://ch5iotc66uxan" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé3.png" id="20_1hj2s"]
-[ext_resource type="Texture2D" uid="uid://beokmydpouhdr" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé4.png" id="21_4gye6"]
-[ext_resource type="Texture2D" uid="uid://d1m7yxucd2vps" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé5.png" id="22_wf3jd"]
-[ext_resource type="Texture2D" uid="uid://rqlu5tkfmr7t" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé6.png" id="23_8pwrv"]
-[ext_resource type="Texture2D" uid="uid://do2whdngpwv3s" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé7.png" id="24_vhrhv"]
-[ext_resource type="Texture2D" uid="uid://d2i3bs7l6v8l4" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé8.png" id="25_j8lio"]
-[ext_resource type="Texture2D" uid="uid://ck0nhlg42ei0s" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé9.png" id="26_61tvs"]
-[ext_resource type="Texture2D" uid="uid://cru32wxiv4mei" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé10.png" id="27_o4jhq"]
-[ext_resource type="Texture2D" uid="uid://77ajpq4hj870" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé11.png" id="28_qtntn"]
-[ext_resource type="Texture2D" uid="uid://dw0uup17ankao" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé12.png" id="29_utwn4"]
-[ext_resource type="Texture2D" uid="uid://bdyo1ttbpied2" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé13.png" id="30_al7hp"]
-[ext_resource type="Texture2D" uid="uid://u4w73l3nt626" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé14.png" id="31_vn57c"]
-[ext_resource type="Texture2D" uid="uid://ccfgyulou77um" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé15.png" id="32_rj4dd"]
-[ext_resource type="Texture2D" uid="uid://by6iihxgjv4ul" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé16.png" id="33_u1frr"]
-[ext_resource type="Texture2D" uid="uid://dhc3naivp2b1b" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé17.png" id="34_dkdh4"]
-[ext_resource type="Texture2D" uid="uid://c0onvqsvtxc5o" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé18.png" id="35_elee4"]
-[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble_cabine.tscn" id="40_cabine"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/niveaux/magasin/shop_trial_door.tscn" id="37_dyiki"]
 [ext_resource type="Script" uid="uid://bgcrj8t7j2h7a" path="res://scripts/trial_door_intro.gd" id="38_28g2q"]
 [ext_resource type="Script" uid="uid://b7k2naq4xvn8c" path="res://scripts/shop_4players_intro.gd" id="39_host"]
+[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble_cabine.tscn" id="40_cabine"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lh3co"]
 texture = ExtResource("2_tlhd4")
@@ -217,84 +198,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_g3yoy"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("17_468h2")
-}],
-"loop": 0,
-"name": &"Idle",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("18_rq448")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_j72t4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_1hj2s")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_4gye6")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22_wf3jd")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_8pwrv")
-}, {
-"duration": 1.0,
-"texture": ExtResource("24_vhrhv")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_j8lio")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_61tvs")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27_o4jhq")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28_qtntn")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_utwn4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("30_al7hp")
-}, {
-"duration": 1.0,
-"texture": ExtResource("31_vn57c")
-}, {
-"duration": 1.0,
-"texture": ExtResource("32_rj4dd")
-}, {
-"duration": 1.0,
-"texture": ExtResource("33_u1frr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("34_dkdh4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("35_elee4")
-}],
-"loop": 0,
-"name": &"default",
-"speed": 12.0
-}]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_edp2x"]
-radius = 25.0
-height = 58.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sl8pl"]
-radius = 34.0
-height = 75.0
-
 [node name="Shop4PlayersIntro" type="Node2D" unique_id=2143159549]
 scale = Vector2(0.7, 0.7)
 script = ExtResource("39_host")
@@ -310,7 +213,7 @@ texture = ExtResource("1_dtfqn")
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=812638348]
 z_index = 50
 texture_filter = 1
-position = Vector2(11, 1)
+position = Vector2(11, 1.000001)
 scale = Vector2(2, 2)
 tile_map_data = PackedByteArray("AAD//wAAAAABAAEAAAD//wEAAAABAAEAAAD//wIAAAABAAEAAAD//wMAAAACAAEAAAD//wQAAAACAAEAAAD//wUAAAACAAEAAAD//wYAAAACAAEAAAD//wcAAAABAAEAAAD//wgAAAABAAEAAAD//wkAAAABAAEAAAD//woAAAABAAEAAAD//wsAAAABAAEAAAATAAAAAAABAAEAAAAAAAAAAAABAAEAAAABAAAAAAABAAIAAAACAAAAAAABAAIAAAADAAAAAAABAAIAAAAEAAAAAAABAAIAAAAFAAAAAAABAAIAAAAGAAAAAAABAAIAAAAHAAAAAAABAAIAAAAIAAAAAAABAAIAAAAJAAAAAAABAAIAAAAKAAAAAAABAAIAAAALAAAAAAABAAIAAAAMAAAAAAAEAAIAAAANAAAAAAAEAAIAAAAOAAAAAAAEAAIAAAAPAAAAAAAEAAIAAAAQAAAAAAABAAEAAAARAAAAAAABAAEAAAASAAAAAAABAAEAAAAAAA8AAAABAAAAAAABAA8AAAABAAAAAAACAA8AAAABAAAAAAADAA8AAAABAAAAAAAEAA8AAAABAAAAAAAFAA8AAAABAAAAAAAGAA8AAAABAAAAAAAHAA8AAAABAAAAAAAIAA8AAAABAAAAAAAJAA8AAAABAAAAAAAKAA8AAAABAAAAAAALAA8AAAABAAAAAAAMAA8AAAABAAEAAAANAA8AAAABAAEAAAAOAA8AAAABAAEAAAAPAA8AAAABAAEAAAAQAA8AAAABAAAAAAARAA8AAAABAAAAAAASAA8AAAABAAAAAAATAA8AAAABAAAAAAAUAA8AAAABAAAAAAAVAA8AAAABAAAAAAAZAA8AAAAAAAAAAAAaAA8AAAABAAAAAAAbAA8AAAABAAAAAAAUAAAAAAABAAEAAAAVAAAAAAABAAEAAAAWAAAAAAABAAEAAAAXAAAAAAABAAEAAAAYAAAAAAABAAEAAAAZAAAAAAABAAEAAAAaAAAAAAABAAIAAAAbAAAAAAABAAIAAAAcAA8AAAABAAEAAAAcAAAAAAABAAEAAAD//w8AAAABAAEAAAAAAAEAAAAEAAIAAAABAAEAAAAEAAIAAAACAAEAAAAEAAIAAAADAAEAAAAEAAIAAAAEAAEAAAABAAEAAAAFAAEAAAABAAEAAAAGAAEAAAAEAAIAAAAHAAEAAAAEAAIAAAALAAEAAAABAAEAAAAMAAEAAAAEAAIAAAANAAEAAAAEAAIAAAAOAAEAAAAEAAIAAAAPAAEAAAAEAAIAAAAQAAEAAAABAAEAAAARAAEAAAABAAEAAAAIAAEAAAAEAAIAAAAJAAEAAAAEAAIAAAAKAAEAAAABAAEAAAAUAAEAAAAEAAIAAAATAAEAAAAEAAIAAAASAAEAAAAEAAIAAAAVAAEAAAAEAAIAAAAWAAEAAAABAAEAAAAXAAEAAAABAAEAAAAYAAEAAAAEAAIAAAAZAAEAAAAEAAIAAAAaAAEAAAAEAAIAAAAbAAEAAAAEAAIAAAAcAAEAAAABAAEAAAAcAAIAAAABAAEAAAD//wwAAAABAAEAAAD//w0AAAACAAEAAAD//w4AAAACAAEAAAAcAAMAAAABAAEAAAAcAAQAAAABAAEAAAAcAAUAAAABAAEAAAAcAAYAAAABAAEAAAAcAAcAAAAAAAEAAAAcAAgAAAAAAAEAAAAcAAkAAAAAAAEAAAAcAAoAAAAAAAEAAAAcAAwAAAADAAEAAAAcAA0AAAAAAAEAAAAcAA4AAAAAAAEAAAAAAAIAAAABAAIAAAABAAIAAAABAAIAAAACAAIAAAABAAIAAAADAAIAAAABAAIAAAAEAAIAAAABAAIAAAAFAAIAAAABAAIAAAAGAAIAAAABAAIAAAAHAAIAAAABAAIAAAAIAAIAAAABAAIAAAAJAAIAAAABAAIAAAAKAAIAAAABAAIAAAALAAIAAAABAAIAAAAMAAIAAAABAAIAAAANAAIAAAABAAIAAAAOAAIAAAABAAIAAAAPAAIAAAABAAIAAAAQAAIAAAABAAIAAAARAAIAAAABAAIAAAASAAIAAAABAAIAAAATAAIAAAABAAIAAAAUAAIAAAABAAIAAAAVAAIAAAABAAIAAAAWAAIAAAABAAIAAAAXAAIAAAABAAEAAAAYAAIAAAABAAEAAAAZAAIAAAABAAEAAAAaAAIAAAABAAEAAAAbAAIAAAABAAEAAAAAAAkAAAABAAIAAAABAAkAAAABAAIAAAACAAkAAAABAAIAAAADAAkAAAABAAIAAAAEAAkAAAABAAIAAAAFAAkAAAABAAIAAAAGAAkAAAABAAIAAAAHAAkAAAABAAIAAAAIAAkAAAABAAIAAAAJAAkAAAACAAIAAAAAAAgAAAABAAAAAAABAAgAAAABAAAAAAACAAgAAAABAAAAAAADAAgAAAABAAAAAAAEAAgAAAABAAAAAAAFAAgAAAABAAAAAAAGAAgAAAABAAAAAAAHAAgAAAABAAAAAAAIAAgAAAABAAAAAAAJAAgAAAACAAAAAAAWAA8AAAABAAMAAAAXAA8AAAABAAMAAAAYAA8AAAABAAMAAAAcAAsAAAAAAAEAAAASAAkAAAAAAAIAAAATAAkAAAABAAIAAAAUAAkAAAABAAIAAAASAAgAAAAAAAAAAAATAAgAAAABAAAAAAAUAAgAAAABAAAAAAAVAAgAAAABAAAAAAAVAAkAAAABAAIAAAAWAAgAAAABAAAAAAAWAAkAAAABAAIAAAAXAAgAAAABAAAAAAAXAAkAAAABAAIAAAAYAAgAAAABAAAAAAAYAAkAAAABAAIAAAAZAAgAAAABAAAAAAAZAAkAAAABAAIAAAAaAAgAAAABAAAAAAAaAAkAAAABAAIAAAAbAAgAAAABAAAAAAAbAAkAAAABAAIAAAAPAA4AAAACAAAAAAAMAA4AAAAAAAAAAAANAA4AAAABAAAAAAAOAA4AAAABAAAAAAAIAAoAAAAAAAEAAAAIAAsAAAAAAAEAAAAIAAMAAAAAAAEAAAAIAAQAAAAAAAEAAAASAAMAAAAAAAEAAAASAAQAAAAAAAEAAAASAAoAAAAAAAEAAAASAAsAAAAAAAEAAAATAAsAAAACAAEAAAATAAoAAAACAAEAAAATAAQAAAACAAEAAAATAAMAAAACAAEAAAAJAAMAAAACAAEAAAAJAAQAAAACAAEAAAAJAAoAAAACAAEAAAAJAAsAAAACAAEAAAAIAAwAAAAAAAIAAAAIAAUAAAAAAAIAAAASAAUAAAAAAAIAAAASAAwAAAAAAAIAAAATAAwAAAACAAIAAAATAAUAAAACAAIAAAAJAAUAAAACAAIAAAAJAAwAAAACAAIAAAANAAkAAAAEAAAAAAAOAAkAAAAEAAAAAAA=")
 tile_set = SubResource("TileSet_vgpd0")
@@ -353,19 +256,19 @@ sprite_frames = SubResource("SpriteFrames_qtsd2")
 script = ExtResource("16_hp1uf")
 
 [node name="Bubble" parent="." unique_id=334711522 instance=ExtResource("40_cabine")]
-position = Vector2(365, 449)
+position = Vector2(365, 400.42877)
 scale = Vector2(2, 2)
 
 [node name="Bubble2" parent="." unique_id=650628461 instance=ExtResource("40_cabine")]
-position = Vector2(365, 897)
+position = Vector2(365, 849.85754)
 scale = Vector2(2, 2)
 
 [node name="Bubble3" parent="." unique_id=1995541527 instance=ExtResource("40_cabine")]
-position = Vector2(1450, 449)
+position = Vector2(1450, 400.42877)
 scale = Vector2(2, 2)
 
 [node name="Bubble4" parent="." unique_id=944646981 instance=ExtResource("40_cabine")]
-position = Vector2(1450, 897)
+position = Vector2(1450, 848.42896)
 scale = Vector2(2, 2)
 
 [node name="PorteMagasinEpreuve" parent="." unique_id=1860909474 instance=ExtResource("37_dyiki")]

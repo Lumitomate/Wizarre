@@ -27,6 +27,11 @@ signal sort_installe(sorcier: Sorcerer, tube_index: int, attack_type: int, attac
 ## les autres cabines AU MOMENT DU CHOIX, l'équivalent cabine de l'ancien
 ## contact bulle.
 signal sorcier_entre(sorcier: Sorcerer)
+## Émis quand la porte a fini de SE FERMER derrière le sorcier (rituel
+## lancé, choix du tube ouvert) : les magasins intro conditionnent
+## l'ouverture de leur porte de sortie à CET événement (et pas au
+## passage dans la porte défi).
+signal porte_fermee
 
 enum Etat { ACTIVE, OCCUPIED, CONFIRMING, INSTALLING, RETRACTING, DONE, INERT }
 
@@ -333,6 +338,8 @@ func _on_porte_finie() -> void:
 	if etat != Etat.OCCUPIED:
 		return
 	_porte_fermee = true
+	# La porte vient de se refermer sur le sorcier : le rituel est lancé.
+	porte_fermee.emit()
 	_sortir_tuyaux()
 	_afficher_icones_panneau()
 

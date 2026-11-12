@@ -24,7 +24,7 @@ Une note de quelques lignes dans `CONTEXT.md` (le glossaire du projet),
 
 > **Cabine (Bubble2 / BubbleCabine)** — le nœud instancié dans les
 > scènes de shop s'appelle `Bubble2` ; sa racine interne (scène
-> `bubble2.tscn`, script `cabin.gd`) s'appelle `BubbleCabine`. Un script
+> `bubble_cabine.tscn`, script `cabin.gd`) s'appelle `BubbleCabine`. Un script
 > de shop qui cherche `BubbleCabine` depuis la racine retourne `null` :
 > chercher `Bubble2`.
 

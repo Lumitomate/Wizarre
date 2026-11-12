@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://b2lv6btvjuwb0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes11.png" id="14_mwsue"]
 [ext_resource type="Texture2D" uid="uid://cw60wnkydyxuy" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes12.png" id="15_ctjw5"]
 [ext_resource type="Script" uid="uid://bexngqe2x1hd0" path="res://scripts/entry_door_cinematic.gd" id="16_2f1d1"]
-[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble2.tscn" id="21_ri45k"]
+[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble_cabine.tscn" id="21_ri45k"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/niveaux/magasin/shop_trial_door.tscn" id="37_l8c5n"]
 [ext_resource type="Script" uid="uid://d1fs3iipk82ph" path="res://scripts/trial_door_closing.gd" id="38_pms0d"]
 [ext_resource type="PackedScene" uid="uid://cdyq6i8q65yee" path="res://scenes/outils/sablier.tscn" id="39_5tt24"]

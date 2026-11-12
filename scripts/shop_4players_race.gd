@@ -118,7 +118,7 @@ func _essayer_ouvrir_sortie() -> void:
 	if _sortie_ouverte or _sabliers_finis < _sabliers().size():
 		return
 	# Le nœud de la cabine s'appelle "Bubble2" dans la scène (instance de
-	# bubble2.tscn, dont la racine interne s'appelle BubbleCabine) :
+	# bubble_cabine.tscn, dont la racine interne s'appelle BubbleCabine) :
 	# chercher "BubbleCabine" ici retournait null et la porte s'ouvrait
 	# sans attendre la libération du caisson.
 	var caisson := get_node_or_null("Bubble2")

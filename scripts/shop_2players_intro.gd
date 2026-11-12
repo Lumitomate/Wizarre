@@ -56,7 +56,7 @@ func _eliminer_objet_bulle2(child: Node) -> void:
 ## le bon type (spawn_object relit chosen_object_type).
 func _coordonner_types_objets() -> void:
 	# La cabine s'appelle "Bubble2" dans la scène (instance de
-	# bubble2.tscn ; "BubbleCabine" est le nom de sa racine interne).
+	# bubble_cabine.tscn ; "BubbleCabine" est le nom de sa racine interne).
 	var spawner_haut: Node = $Bubble2/SpawnerObjet
 	var spawner_bas: Node = $Bubble3/SpawnerObjet
 	if "chosen_object_type" not in spawner_haut or "chosen_object_type" not in spawner_bas:

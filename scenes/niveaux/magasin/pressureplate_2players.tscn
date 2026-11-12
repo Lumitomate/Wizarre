@@ -67,7 +67,7 @@
 [ext_resource type="Texture2D" uid="uid://dbe6w4cgot74l" path="res://assets/sprites/Magasin/Shop_reflex/PressurePlate2Players_Right/PressurePlate2Players_right_V2_32.png" id="66_3dagy"]
 [ext_resource type="Texture2D" uid="uid://b0xvgkxslhq55" path="res://assets/sprites/Magasin/Shop_reflex/PressurePlate2Players_Right/PressurePlate2Players_right_V2_33.png" id="67_kay10"]
 [ext_resource type="Texture2D" uid="uid://bf22gso0x7rx5" path="res://assets/sprites/Magasin/Shop_reflex/PresurePlate1Player.png" id="67_m2j4p"]
-[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble2.tscn" id="69_s7d1q"]
+[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble_cabine.tscn" id="69_s7d1q"]
 [ext_resource type="Script" uid="uid://bsw52mqydlqey" path="res://scripts/pressureplate_2players.gd" id="88_script"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_702tw"]

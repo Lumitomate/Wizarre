@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="1_cwiyp"]
 [ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="2_x73y1"]
 [ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/niveaux/terrain1/map1_level_exit_door.tscn" id="3_v7c2e"]
-[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble2.tscn" id="21_epcw0"]
+[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble_cabine.tscn" id="21_epcw0"]
 [ext_resource type="Script" uid="uid://xggpbvhulp2b" path="res://scripts/shop_2players_race.gd" id="24_script"]
 [ext_resource type="PackedScene" uid="uid://cdyq6i8q65yee" path="res://scenes/outils/sablier.tscn" id="38_287ww"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/niveaux/magasin/shop_trial_door.tscn" id="39_obxwj"]

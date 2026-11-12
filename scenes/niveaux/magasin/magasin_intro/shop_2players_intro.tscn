@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://b2lv6btvjuwb0" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes11.png" id="14_lcot0"]
 [ext_resource type="Texture2D" uid="uid://cw60wnkydyxuy" path="res://assets/sprites/Map1/porteEntreOuverture/Terrain1_Portes12.png" id="15_ya0v0"]
 [ext_resource type="Script" uid="uid://bexngqe2x1hd0" path="res://scripts/entry_door_cinematic.gd" id="16_syb54"]
-[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble2.tscn" id="20_map40"]
+[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble_cabine.tscn" id="20_map40"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/niveaux/magasin/shop_trial_door.tscn" id="37_0vila"]
 [ext_resource type="Script" uid="uid://bgcrj8t7j2h7a" path="res://scripts/trial_door_intro.gd" id="38_k35rd"]
 [ext_resource type="Script" uid="uid://dqgis37x7d7mh" path="res://scripts/shop_2players_intro.gd" id="39_host"]

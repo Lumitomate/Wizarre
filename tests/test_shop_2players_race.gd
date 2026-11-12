@@ -58,8 +58,8 @@ func _physics_process(_delta: float) -> void:
 
 
 ## Scénario 1 : le sablier expire pendant que le rituel est EN COURS —
-## la sortie s'ouvre quand même (première échéance, plus d'attente
-## « caisson libre »).
+## la sortie attend la descente COMPLÈTE de la porte défi (répit des
+## retardataires), puis s'ouvre ; le rituel en cours ne la bloque plus.
 func _scenario_sablier() -> void:
 	if step == 3:
 		_check(caisson != null and not caisson.est_occupee(),
@@ -72,8 +72,13 @@ func _scenario_sablier() -> void:
 		inst.get_node("Sablier").ecoulement_termine.emit()
 		print(">>> fin du sablier pendant le rituel")
 	if step == 8:
+		_check(_porte_fermee(),
+			"répit : la sortie attend la descente complète de la porte défi")
+	if step == 120:
+		# Descente de la porte défi : 20 frames à 12 fps ≈ 1,7 s ≈ 100 frames
+		# physiques — le répit est écoulé.
 		_check(inst.get_node("ShopDoor").is_playing(),
-			"la sortie s'ouvre à la fin du sablier, rituel en cours ou pas")
+			"la sortie s'ouvre à la fin de la descente, rituel en cours ou pas")
 		_fin_scenario()
 
 

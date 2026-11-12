@@ -6,7 +6,8 @@ extends Node2D
 ##
 ## PORTE DE SORTIE : fermée à l'arrivée ; elle s'ouvre à la PREMIÈRE de
 ## ces deux échéances — fin du rituel de la cabine (attaque installée)
-## ou fin du sablier (fermeture de la porte d'épreuve). Une fois
+## ou fin du sablier SUIVIE de la descente complète de la porte
+## d'épreuve (répit des retardataires, cf. _on_sablier_fini). Une fois
 ## ouverte, elle ne se referme jamais.
 ##
 ## Le layout est régénéré à CHAQUE arrivée dans la scène : faire un level et
@@ -47,11 +48,11 @@ func _ready() -> void:
 	# PREMIÈRE de ces deux échéances (règle validée avec le propriétaire) :
 	#  - la fin du rituel de la cabine (sort_installe — l'attaque est
 	#    installée, quelqu'un a gagné l'objet) ;
-	#  - la fin du sablier (l'instant où la porte d'épreuve se referme
-	#    quand elle le peut — un joueur qui a passé la hitbox l'a
-	#    déverrouillée pour de bon, et le rituel ouvrira la sortie à son
-	#    tour : aucun blocage possible).
-	$Sablier.ecoulement_termine.connect(_essayer_ouvrir_sortie)
+	#  - la fin du sablier SUIVIE de la descente COMPLÈTE de la porte
+	#    d'épreuve : répit égal à la durée de fermeture de la porte, pour
+	#    un retardataire qui a dashé sous elle au dernier moment (il garde
+	#    exactement ce temps pour atteindre la cabine).
+	$Sablier.ecoulement_termine.connect(_on_sablier_fini)
 	# Le nœud de la cabine s'appelle "Bubble2" dans la scène (instance de
 	# bubble_cabine.tscn, cf. CONTEXT.md : ne pas chercher "BubbleCabine").
 	(get_node("Bubble2") as Cabin).sort_installe.connect(_essayer_ouvrir_sortie)
@@ -82,10 +83,23 @@ func _on_porte_entree_terminee() -> void:
 		$Sablier.demarrer()
 
 
+## Fin du sablier : la porte d'épreuve commence sa descente (connexion
+## dans la scène). La sortie attend la fin TOTALE de cette fermeture :
+## le répit des retardataires — celui qui a dashé sous la porte pendant
+## qu'elle descendait a exactement le temps de la descente pour
+## atteindre la cabine (cf. trial_door_closing.duree_fermeture).
+func _on_sablier_fini() -> void:
+	if _sortie_ouverte:
+		return
+	get_tree().create_timer($PorteMagasinEpreuve.duree_fermeture()).timeout.connect(
+		_essayer_ouvrir_sortie)
+
+
 ## Ouvre la porte de sortie (première échéance : fin du rituel de la
-## cabine ou fin du sablier — les deux événements sont connectés ici).
-## Une fois ouverte, elle ne se referme pas. Les paramètres absorbent
-## les 4 arguments du signal sort_installe (inutilisés ici).
+## cabine, ou fin de la descente de la porte d'épreuve — les deux
+## événements sont connectés ici). Une fois ouverte, elle ne se referme
+## pas. Les paramètres absorbent les 4 arguments du signal sort_installe
+## (inutilisés ici).
 func _essayer_ouvrir_sortie(_s: Sorcerer = null, _t: int = 0, _ty: int = 0,
 		_ti: int = 0) -> void:
 	if _sortie_ouverte:

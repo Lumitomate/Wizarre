@@ -55,6 +55,17 @@ func _ready() -> void:
 		_zone_passage.body_entered.connect(_on_zone_passage_body_entered)
 
 
+## Durée (s) d'une fermeture COMPLÈTE : l'anim d'ouverture rejouée à
+## l'envers du dernier au premier frame — même durée que l'ouverture.
+## Sert de répit aux retardataires (magasins course : la sortie attend
+## la fin TOTALE de la descente, cf. les scripts race).
+func duree_fermeture() -> float:
+	var vitesse := _sprite.sprite_frames.get_animation_speed(_sprite.animation)
+	if vitesse <= 0.0:
+		return 0.0
+	return float(_sprite.sprite_frames.get_frame_count(_sprite.animation)) / vitesse
+
+
 ## Ferme la porte (appelé par la scène hôte à la fin du sablier). Ignoré
 ## si la porte est déjà verrouillée ouverte ou en cours d'animation.
 func fermer() -> void:

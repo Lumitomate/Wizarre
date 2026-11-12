@@ -59,8 +59,8 @@ func _physics_process(_delta: float) -> void:
 
 
 ## Scénario 1 : les DEUX sabliers expirent pendant que le rituel est EN
-## COURS — la sortie s'ouvre quand même (première échéance, plus
-## d'attente « caisson libre ») ; un seul sablier ne suffit pas.
+## COURS — la sortie attend la descente COMPLÈTE de la porte défi (répit
+## des retardataires), puis s'ouvre ; un seul sablier ne suffit pas.
 func _scenario_sabliers() -> void:
 	if step == 3:
 		_check(caisson != null and not caisson.est_occupee(),
@@ -75,9 +75,14 @@ func _scenario_sabliers() -> void:
 		_check(_porte_fermee(), "un seul sablier fini ne suffit pas")
 		inst.get_node("Sablier2").ecoulement_termine.emit()
 		print(">>> fin des deux sabliers pendant le rituel")
-	if step == 9:
+	if step == 10:
+		_check(_porte_fermee(),
+			"répit : la sortie attend la descente complète de la porte défi")
+	if step == 120:
+		# Descente de la porte défi : 20 frames à 12 fps ≈ 1,7 s ≈ 100 frames
+		# physiques — le répit est écoulé.
 		_check(inst.get_node("ShopDoor").is_playing(),
-			"la sortie s'ouvre à la fin des 2 sabliers, rituel en cours ou pas")
+			"la sortie s'ouvre à la fin de la descente, rituel en cours ou pas")
 		_fin_scenario()
 
 

@@ -12,14 +12,12 @@ extends Node2D
 ##    un objet visible dès l'arrivée. Le sorcier y entre : la porte se
 ##    referme derrière lui et le rituel de choix du tube démarre
 ##    (cf. cabin.gd).
-##  - LA FERMETURE DE LA PORTE DE LA CABINE (sorcier enfermé, rituel
-##    lancé — signal porte_fermee) valide le couloir. Tous les couloirs
-##    ACTIFS validés → la ShopDoor s'ouvre. Ce n'est PAS le passage dans
-##    la porte défi qui conditionne la sortie (règle remplacée, validée
-##    avec le propriétaire) : la sortie est prête dès que tout le monde
-##    est engagé dans sa cabine.
-##  - La fin du rituel (sort_installe) ouvre la porte dieu du couloir :
-##    le sorcier peut alors la franchir pour rejoindre la sortie.
+##  - LA FIN DU RITUEL (sort installé — signal sort_installe) fait les
+##    DEUX : elle valide le couloir (tous les couloirs ACTIFS validés →
+##    la ShopDoor s'ouvre) et elle ouvre la porte défi du couloir, pour
+##    laisser le sorcier rejoindre la sortie. Ni la fermeture de la
+##    porte de la cabine, ni le passage dans la porte défi ne
+##    conditionnent la sortie (règle validée avec le propriétaire).
 ##  - Les cabines actives ne proposent JAMAIS deux fois le même type
 ##    d'attaque (coordination par la sous-classe, cf.
 ##    _coordonner_types_objets).
@@ -37,9 +35,9 @@ const BLOC_SCELLEMENT := Vector2i(1, 1)
 
 ## Nombre de portes d'entrée dont la cinématique n'est pas encore finie.
 var _portes_entree_actives := 0
-## {couloir: bool} la porte de la cabine du couloir s'est fermée
-## (sorcier enfermé, rituel lancé).
-var _fermetures: Dictionary = {}
+## {couloir: bool} le rituel de la cabine du couloir est terminé
+## (attaque installée).
+var _rituels_finis: Dictionary = {}
 ## Couloirs actifs selon le nombre de joueurs (défini par la sous-classe).
 var _couloirs_actifs: Array[int] = []
 ## La porte Shop a été ouverte (une fois pour toutes).
@@ -67,13 +65,10 @@ func _ready() -> void:
 	# (sous-classe : les spawners ne se voient pas entre eux).
 	_coordonner_types_objets()
 	# Cabines des couloirs ACTIFS seulement (les cabines des couloirs
-	# scellés restent muettes) :
-	#  - porte_fermee (sorcier enfermé) → valide le couloir pour la
-	#    ShopDoor ;
-	#  - sort_installe (rituel terminé) → ouvre la porte dieu du couloir.
+	# scellés restent muettes) : la fin du rituel (sort_installe) ouvre la
+	# porte défi du couloir ET valide le couloir pour la ShopDoor.
 	for couloir: int in _couloirs_actifs:
 		var cabine := _cabine(couloir) as Cabin
-		cabine.porte_fermee.connect(_on_cabine_porte_fermee.bind(couloir))
 		cabine.sort_installe.connect(_on_cabine_installee.bind(couloir))
 	# Porte de sortie : la traversée emmène tout le monde au niveau 1.
 	if not $ShopDoor.shop_entered.is_connected(_on_shop_door_shop_entered):
@@ -129,20 +124,14 @@ func _vider_tubes(player: Sorcerer) -> void:
 		player.get_node("PipeManager").refresh_all()
 
 
-## La porte d'une cabine vient de se fermer (sorcier enfermé, rituel
-## lancé) : le couloir est validé ; tous les couloirs actifs validés
-## ouvrent la ShopDoor.
-func _on_cabine_porte_fermee(couloir: int) -> void:
-	_fermetures[couloir] = true
-	_verifier_ouverture_shop()
-
-
 ## Fin du rituel d'une cabine (sort installé, juste avant la réouverture
-## de ses portes) : la porte dieu du couloir s'ouvre, le sorcier pourra
-## rejoindre la sortie.
+## de ses portes) : la porte défi du couloir s'ouvre ET le couloir est
+## validé ; tous les couloirs actifs validés ouvrent la ShopDoor.
 func _on_cabine_installee(_sorcier: Sorcerer, _tube: int, _type: int, _tier: int,
 		couloir: int) -> void:
 	_ouvrir_porte_couloir(couloir)
+	_rituels_finis[couloir] = true
+	_verifier_ouverture_shop()
 
 
 ## Ouvre la porte dieu du couloir.
@@ -152,12 +141,12 @@ func _ouvrir_porte_couloir(couloir: int) -> void:
 		porte.ouvrir()
 
 
-## Tous les couloirs actifs ont leur cabine engagée → la ShopDoor s'ouvre.
+## Tous les couloirs actifs ont terminé leur rituel → la ShopDoor s'ouvre.
 func _verifier_ouverture_shop() -> void:
 	if _shop_ouverte:
 		return
 	for couloir: int in _couloirs_actifs:
-		if not _fermetures.get(couloir, false):
+		if not _rituels_finis.get(couloir, false):
 			return
 	_shop_ouverte = true
 	$ShopDoor.play()

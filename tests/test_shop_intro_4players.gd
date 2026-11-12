@@ -3,7 +3,7 @@ extends Node
 ## défaut en headless, aucune manette) : couloir bas-droite scellé en
 ## blocs 1:1 sur (18,10)→(27,15), objet de la cabine 4 éliminé, 3 types
 ## distincts, et NOUVELLE RÈGLE de sortie — la ShopDoor s'ouvre quand
-## les TROIS portes de cabines se sont fermées (sorciers enfermés), pas
+## les TROIS rituels de cabines sont TERMINÉS (attaques installées), pas
 ## au passage dans les portes défi. Lancé comme scène :
 ## godot --headless res://tests/test_shop_intro_4players.tscn
 
@@ -58,20 +58,20 @@ func _physics_process(_delta: float) -> void:
 					distincts = false
 		_check(distincts, "3 types distincts : " + str(types))
 	if step == 5:
-		# Fermeture de la porte de la cabine du couloir 0 SEULE : la shop
-		# ne doit pas s'ouvrir.
-		inst._cabine(0).porte_fermee.emit()
-		print(">>> porte cabine couloir 0 fermée (1/3)")
+		# Fin du rituel de la cabine du couloir 0 SEULE : la shop ne doit
+		# pas s'ouvrir.
+		inst._cabine(0).sort_installe.emit(null, 0, GlobalEnum.AttackType.F1, 0)
+		print(">>> rituel cabine couloir 0 terminé (1/3)")
 	if step == 7:
-		_check(not inst._shop_ouverte, "shop fermée après 1 fermeture/3")
-		inst._cabine(1).porte_fermee.emit()
-		print(">>> porte cabine couloir 1 fermée (2/3)")
+		_check(not inst._shop_ouverte, "shop fermée après 1 rituel/3")
+		inst._cabine(1).sort_installe.emit(null, 0, GlobalEnum.AttackType.G1, 0)
+		print(">>> rituel cabine couloir 1 terminé (2/3)")
 	if step == 9:
-		_check(not inst._shop_ouverte, "shop fermée après 2 fermetures/3")
-		inst._cabine(2).porte_fermee.emit()
-		print(">>> porte cabine couloir 2 fermée (3/3)")
+		_check(not inst._shop_ouverte, "shop fermée après 2 rituels/3")
+		inst._cabine(2).sort_installe.emit(null, 0, GlobalEnum.AttackType.L1, 0)
+		print(">>> rituel cabine couloir 2 terminé (3/3)")
 	if step == 11:
-		_check(inst._shop_ouverte, "shop OUVERTE par les 3 fermetures")
+		_check(inst._shop_ouverte, "shop OUVERTE par les 3 fins de rituel")
 		print("=== TEST TERMINÉ ===")
 		if failures == 0:
 			print("RESULT: PASS")

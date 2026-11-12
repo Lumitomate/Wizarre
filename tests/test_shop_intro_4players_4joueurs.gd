@@ -2,8 +2,8 @@ extends Node
 ## Test headless du magasin intro à 4 joueurs, cas 4 JOUEURS (mode forcé,
 ## aucune manette en headless) : les 4 couloirs actifs, 4 types distincts
 ## (aucun doublon), et NOUVELLE RÈGLE de sortie — la ShopDoor s'ouvre
-## quand les QUATRE portes de cabines se sont fermées (sorciers
-## enfermés), pas au passage dans les portes défi. Lancé comme scène :
+## quand les QUATRE rituels de cabines sont TERMINÉS (attaques
+## installées), pas au passage dans les portes défi. Lancé comme scène :
 ## godot --headless res://tests/test_shop_intro_4players_4joueurs.tscn
 
 var inst: Node
@@ -43,9 +43,8 @@ func _physics_process(_delta: float) -> void:
 		inst._couloirs_actifs.assign([0, 1, 2, 3])
 		inst.get_node("Bubble4").child_entered_tree.disconnect(inst._eliminer_objet_bulle4)
 		# Le couloir 3 n'était pas actif au _ready : sa cabine n'a reçu
-		# aucun branchement, on refait ici ceux de la base (porte_fermee →
-		# ShopDoor, sort_installe → porte dieu).
-		inst.get_node("Bubble4").porte_fermee.connect(inst._on_cabine_porte_fermee.bind(3))
+		# aucun branchement, on refait ici celui de la base (sort_installe
+		# → porte défi + ShopDoor).
 		inst.get_node("Bubble4").sort_installe.connect(inst._on_cabine_installee.bind(3))
 		# Le spawner de la cabine 4 n'a pas été coordonné au _ready (couloir
 		# alors inactif) : on lui assigne ici un type ≠ des 3 autres, comme
@@ -78,19 +77,19 @@ func _physics_process(_delta: float) -> void:
 				objets_bulle4 += 1
 		_check(objets_bulle4 == 1, "objet sous la cabine 4 (1 attendu)")
 	if step == 7:
-		# Fermetures des portes des cabines des couloirs 0 et 1 : la shop
-		# ne doit pas s'ouvrir.
+		# Fins de rituel des cabines des couloirs 0 et 1 : la shop ne doit
+		# pas s'ouvrir.
 		for couloir: int in [0, 1]:
-			inst._cabine(couloir).porte_fermee.emit()
-		print(">>> portes cabines couloirs 0 et 1 fermées (2/4)")
+			inst._cabine(couloir).sort_installe.emit(null, 0, GlobalEnum.AttackType.F1, 0)
+		print(">>> rituels cabines couloirs 0 et 1 terminés (2/4)")
 	if step == 9:
-		_check(not inst._shop_ouverte, "shop fermée après 2 fermetures/4")
-		# Fermetures des couloirs 2 et 3 (dernier actif)
+		_check(not inst._shop_ouverte, "shop fermée après 2 rituels/4")
+		# Fins de rituel des couloirs 2 et 3 (dernier actif)
 		for couloir: int in [2, 3]:
-			inst._cabine(couloir).porte_fermee.emit()
-		print(">>> portes cabines couloirs 2 et 3 fermées (4/4)")
+			inst._cabine(couloir).sort_installe.emit(null, 0, GlobalEnum.AttackType.G1, 0)
+		print(">>> rituels cabines couloirs 2 et 3 terminés (4/4)")
 	if step == 11:
-		_check(inst._shop_ouverte, "shop ouverte après les 4 fermetures")
+		_check(inst._shop_ouverte, "shop ouverte après les 4 fins de rituel")
 		print("=== TEST TERMINÉ ===")
 		if failures == 0:
 			print("RESULT: PASS")

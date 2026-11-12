@@ -1,9 +1,9 @@
 extends Node
 ## Test headless du magasin intro (2 joueurs, mode 1 joueur headless) :
-## scellement à 1 joueur, et NOUVELLE RÈGLE de sortie — c'est la
-## FERMETURE DE LA PORTE DE LA CABINE (sorcier enfermé, rituel lancé)
-## qui ouvre la ShopDoor, pas le passage dans la porte défi ; la porte
-## dieu du couloir ne s'ouvre qu'à la FIN du rituel (sort installé).
+## scellement à 1 joueur, et NOUVELLE RÈGLE de sortie — c'est la FIN DU
+## RITUEL de la cabine (attaque installée, signal sort_installe) qui
+## ouvre la ShopDoor (et la porte défi du couloir) ; ni la fermeture de
+## la porte de la cabine, ni le passage dans la porte défi ne comptent.
 ## Lancé comme scène : godot --headless res://tests/test_shop_intro.tscn
 
 var inst: Node
@@ -48,23 +48,18 @@ func _physics_process(_delta: float) -> void:
 		_check(objs == ["Bubble2"],
 			"objet sous la cabine haute seule (cabine basse scellée : rien)")
 		_check(not inst.get_node("PorteMagasinEpreuve").opened,
-			"porte dieu haute fermée au départ")
+			"porte défi haute fermée au départ")
+		_check(not inst._shop_ouverte, "shop fermée au départ")
 	if step == 6:
-		# La porte de la cabine haute se referme (sorcier enfermé, rituel
-		# lancé) — signal émis par cabin.gd à la fin de l'anim de fermeture.
-		inst.get_node("Bubble2").porte_fermee.emit()
-		print(">>> porte de la cabine haute fermée (sorcier enfermé)")
-	if step == 8:
-		_check(inst._shop_ouverte, "shop OUVERTE par la fermeture de la cabine")
-		_check(not inst.get_node("PorteMagasinEpreuve").opened,
-			"porte dieu ENCORE fermée : la fermeture de la cabine ne l'ouvre pas")
-	if step == 10:
-		# Fin du rituel (sort installé) : c'est ELLE qui ouvre la porte dieu.
+		# Fin du rituel de la cabine haute (attaque installée) — signal
+		# émis par cabin.gd juste avant la réouverture de ses portes.
 		inst.get_node("Bubble2").sort_installe.emit(null, 0, GlobalEnum.AttackType.F1, 0)
-		print(">>> sort installé (fin du rituel)")
-	if step == 12:
+		print(">>> sort installé (fin du rituel de la cabine haute)")
+	if step == 8:
+		_check(inst._shop_ouverte,
+			"shop OUVERTE par la fin du rituel (1 couloir actif)")
 		_check(inst.get_node("PorteMagasinEpreuve").opened,
-			"porte dieu ouverte par la fin du rituel")
+			"porte défi haute ouverte par la fin du rituel")
 		print("=== TEST TERMINÉ ===")
 		if failures == 0:
 			print("RESULT: PASS")

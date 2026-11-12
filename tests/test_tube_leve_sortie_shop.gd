@@ -55,7 +55,7 @@ func _ready() -> void:
 	sol.add_child(forme)
 	add_child(sol)
 
-	var scene: PackedScene = load("res://scenes/niveaux/magasin/bubble2.tscn")
+	var scene: PackedScene = load("res://scenes/niveaux/magasin/bubble_cabine.tscn")
 	cabine = scene.instantiate()
 	cabine.get_node("SpawnerObjet").chosen_object_type = GlobalEnum.AttackType.L2
 	cabine.lit_entree = false

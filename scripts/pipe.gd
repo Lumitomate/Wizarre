@@ -12,6 +12,11 @@ class_name Pipe extends Node2D
 
 @export var energy_type: GlobalEnum.EnergyType = GlobalEnum.EnergyType.Fossil
 
+## Émis à la fin de l'animation de sortie (le tube est complètement
+## levé). Utilisé par la cabine, qui attend la fin de cette anim ET de
+## l'explosion avant de lancer le bras.
+signal tube_sorti
+
 ## Montée de l'icône (px) synchronisée avec l'anim du tuyau
 const ICON_RISE := 15.0
 
@@ -88,18 +93,16 @@ func _on_grow_anim_finished() -> void:
 		# Reverse terminé → retour à l'affichage statique (frame 0)
 		grow_state = 0
 		_update_tube_anim()
+	elif grow_state == 1:
+		tube_sorti.emit()
 	# Fin du Grow avant : le tube reste sur la dernière frame (étendu)
 
 func _get_spell_icon_anim(attack_type: int) -> String:
 	# Les noms d'enum (F1, G3, L1...) correspondent aux animations de la
 	# ressource d'icônes : F1 → "Icone_AtkF1", G3 → "Icone_AtkG3"...
-	var type_name: String = GlobalEnum.AttackType.keys()[attack_type]
-	var anim_name = "Icone_Atk" + type_name
-	if icon.sprite_frames.has_animation(anim_name):
+	var anim_name := SpellIcons.anim_name(attack_type)
+	if anim_name != "" and icon.sprite_frames.has_animation(anim_name):
 		return anim_name
-	# F0 (Fireball) n'a pas d'icône dédiée : on utilise celle de F1
-	if type_name == "F0" and icon.sprite_frames.has_animation("Icone_AtkF1"):
-		return "Icone_AtkF1"
 	return ""
 
 func _update_spell_icon() -> void:

@@ -17,6 +17,11 @@ var item_attack_tier: GlobalEnum.AttackTier
 
 var animation_name: String
 
+## Un objet de cabine lévite mais ne s'attrape ni ne se bouscule : la
+## cabine le passe à false. Défaut true : les objets de boutique
+## existants ne changent pas de comportement.
+@export var capturable: bool = true
+
 # --- Vol d'absorption (prise de l'objet) ---
 # Au contact : collision coupée, signal attrapee émis (les portes des
 # hôtes s'ouvrent — inchangé), puis l'objet s'envole en arc de cloche
@@ -110,6 +115,8 @@ func donner_a(sorcier: Sorcerer, tube_index: int) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
+	if not capturable:
+		return
 	if body.is_in_group("player_group"):
 		essayer_attraper(body as Sorcerer)
 
@@ -120,6 +127,8 @@ func _on_body_entered(body: Node2D) -> void:
 ## faut donc retenter depuis l'extérieur. Retourne true si le vol de
 ## capture a été lancé.
 func essayer_attraper(sorcier: Sorcerer) -> bool:
+	if not capturable:
+		return false
 	if _attrapee_deja or sorcier == null:
 		return false
 	if not overlaps_body(sorcier):
@@ -202,8 +211,12 @@ func _position_tube() -> Vector2:
 	return tube.global_position
 
 ## Index du tube de destination : forcé si la livraison vient de la
-## machine à sous (donner_a), sinon règles d'origine : tube sélectionné
-## en boutique, sinon famille → tube.
+## machine à sous (donner_a), sinon le tube SÉLECTIONNÉ par le joueur en
+## boutique. Un objet porte un ÉLÉMENT (feu/glace/lumière/plante), jamais
+## une famille d'énergie : il peut aller dans n'importe lequel des 3 tubes
+## (cf. CONTEXT.md). Si aucun tube n'est sélectionné, on retombe sur un
+## tube par défaut — non pas « la famille de l'objet », mais le tube que
+## sa famille d'énergie a l'habitude d'occuper.
 func _tube_cible(sorcier: Sorcerer) -> int:
 	if _tube_force >= 0:
 		return _tube_force

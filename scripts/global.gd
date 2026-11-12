@@ -10,7 +10,7 @@ var _scene_change_in_progress: bool = false
 var scenes = {
 	GlobalEnum.Location.HOMEPAGE: "res://scenes/niveaux/terrain1/homepage.tscn",
 	GlobalEnum.Location.LEVEL: "res://scenes/niveaux/terrain1/level.tscn",
-	GlobalEnum.Location.SHOP: "res://scenes/niveaux/magasin/shop.tscn",
+	GlobalEnum.Location.SHOP: "res://scenes/niveaux/magasin/magasin_classique/shop.tscn",
 	GlobalEnum.Location.SHOP_2PLAYERS_REFLEX: "res://scenes/niveaux/magasin/magasin_reflex/shop_2players_reflex.tscn",
 	GlobalEnum.Location.SHOP_2PLAYERS_RACE: "res://scenes/niveaux/magasin/magasin_course/shop_2players_race.tscn",
 	GlobalEnum.Location.SHOP_4PLAYERS_RACE: "res://scenes/niveaux/magasin/magasin_course/shop_4players_race.tscn",

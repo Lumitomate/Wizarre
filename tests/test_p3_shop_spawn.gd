@@ -6,7 +6,7 @@ extends Node2D
 var _frames := 0
 
 func _ready() -> void:
-	var shop: Node = load("res://scenes/niveaux/magasin/shop.tscn").instantiate()
+	var shop: Node = load("res://scenes/niveaux/magasin/magasin_classique/shop.tscn").instantiate()
 	add_child(shop)
 
 func _process(_delta: float) -> void:

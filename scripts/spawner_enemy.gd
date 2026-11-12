@@ -33,7 +33,7 @@ func _ready() -> void:
 	add_to_group("enemy_spawner_group")
 	$AnimatedSprite2D.play("SpawnerApparition")
 	# Vague 0 (première vague) = vitesse de base, puis légère accélération
-	$SpawnCooldown.wait_time *= pow(SPAWN_TIME_FACTOR_PER_WAVE, GlobalInfo.run_info["level_number"])
+	$SpawnCooldown.wait_time *= pow(SPAWN_TIME_FACTOR_PER_WAVE, Run.wave_number())
 	$SpawnCooldown.wait_time += randf()
 	$SpawnCooldown.start()
 
@@ -94,7 +94,7 @@ func _on_block_spawn() -> void:
 ## linéaire de MIX_START_CHANCES à MIX_END_CHANCES entre MIX_START_WAVE
 ## et MIX_END_WAVE, puis palier au-delà.
 func _wave_chances() -> Dictionary:
-	var wave: int = GlobalInfo.run_info["level_number"]
+	var wave: int = Run.wave_number()
 	var t := clampf(float(wave - MIX_START_WAVE) / float(MIX_END_WAVE - MIX_START_WAVE), 0.0, 1.0)
 	var chances := {}
 	for key: String in MIX_START_CHANCES:

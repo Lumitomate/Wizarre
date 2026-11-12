@@ -78,7 +78,7 @@ func _ready() -> void:
 	PlayerManager.game_active = sauvegarde[0]
 	PlayerManager.game_players = sauvegarde[1]
 	PlayerManager.players = sauvegarde[2]
-	GlobalInfo.run_info["players_info"].erase(90)
+	Run.forget_player(90)
 	Engine.time_scale = 1.0
 
 	if _failures == 0:

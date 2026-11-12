@@ -45,7 +45,7 @@ func _creer_sorcier() -> Sorcerer:
 		sorcier.spells[i] = { "attack_type": GlobalEnum.AttackType.F0, "attack_tier": 0 }
 	add_child(sorcier)
 	# ... mais load_data() (dans _ready) écrase spells/energy depuis
-	# GlobalInfo : on reconfigure après coup
+	# Run : on reconfigure après coup
 	sorcier.input_device = PlayerInput.KEYBOARD_P1
 	sorcier.in_shop = false
 	sorcier.can_fire = true

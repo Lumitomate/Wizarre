@@ -20,16 +20,10 @@ var player_info_scene: PackedScene = preload("res://scenes/hud/hud_players_info.
 func _ready() -> void:
 
 	# Si on arrive depuis la homepage, reset les munitions et les vies
-	if GlobalInfo.run_info.get("from_homepage", false):
-		for controller_id in GlobalInfo.run_info["players_info"].keys():
-			if controller_id is String:
-				continue
-			if controller_id in GlobalInfo.run_info["players_info"]:
-				GlobalInfo.run_info["players_info"][controller_id]["energy_counts"] = [3, 3, 3]
-				GlobalInfo.run_info["players_info"][controller_id]["lives"] = 3
-	GlobalInfo.run_info["from_homepage"] = false
+	if Run.consume_from_homepage():
+		Run.reset_lives_and_energies()
 
-	enemies_to_kill += 3 * GlobalInfo.run_info["level_number"]
+	enemies_to_kill += 3 * Run.wave_number()
 	level_start_time = Time.get_ticks_msec()
 
 	# Spawn players via PlayerManager (joueurs figés au démarrage de la
@@ -107,10 +101,7 @@ func add_player_hud(controller_id):
 
 	player_info.set_bg_color(slot)
 
-	if controller_id in GlobalInfo.run_info["players_info"].keys():
-		player_info.load_data(GlobalInfo.run_info["players_info"][controller_id])
-	else:
-		player_info.load_data(GlobalInfo.run_info["players_info"]["default"])
+	player_info.load_data(Run.player_snapshot(controller_id))
 
 	var player = PlayerManager.players[controller_id]
 
@@ -136,7 +127,23 @@ func _on_enemy_killed() -> void:
 		for plant in get_tree().get_nodes_in_group("atk_p1"):
 			if plant.has_method("retract"):
 				plant.retract()
+		# Fin de vague : chaque spawner de munitions projette UNE
+		# munition (le sorcier doit survivre à vague en vue), puis
+		# son cycle de tir s'arrête (→ passage au shop).
+		_spawn_une_munition_par_spawner()
 
+
+
+
+## Fin de vague : chaque spawner de munitions projette UNE
+## munition, puis on arrête son cycle de tir (passage au shop).
+func _spawn_une_munition_par_spawner() -> void:
+	for spawner in get_tree().get_nodes_in_group("ammo_spawner_group"):
+		if spawner.has_method("spawn_now"):
+			spawner.spawn_now()
+	for director in get_tree().get_nodes_in_group("ammo_spawn_director_group"):
+		if director.has_method("stop_spawning"):
+			director.stop_spawning()
 
 
 func _on_enemy_spawned() -> void:
@@ -152,8 +159,8 @@ func go_to_shop() -> void:
 
 	save_data.emit()
 
-	GlobalInfo.run_info["run_duration"] = Time.get_ticks_msec() - level_start_time
-	GlobalInfo.run_info["level_number"] += 1
+	Run.set_run_duration(Time.get_ticks_msec() - level_start_time)
+	Run.advance_wave()
 
 	Global.goto_scene(GlobalEnum.Location.SHOP)
 

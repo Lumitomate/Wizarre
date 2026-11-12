@@ -9,7 +9,7 @@ extends Node2D
 ##     dans l'éditeur (en jeu, c'est le numéro de vague réel qui s'affiche).
 ##
 ## Au lancement du jeu, le numéro affiché est la vague en cours
-## (run_info["level_number"] + 1, car la première vague vaut 0 en interne).
+## (Run.wave_number() + 1, car la première vague vaut 0 en interne).
 ##
 ## Les lettres sont construites dynamiquement : chaque lettre est posée à la
 ## suite de la précédente avec le chevauchement défini dans OVERLAP_PX, et un
@@ -59,8 +59,8 @@ func _ready() -> void:
 		set_wave_number(preview_wave_number)
 	else:
 		# Accès à l'autoload par son chemin (compatibilité mode éditeur/tests)
-		var global_info := get_node("/root/GlobalInfo")
-		set_wave_number(global_info.run_info["level_number"] + 1)
+		var run := get_node("/root/Run")
+		set_wave_number(run.wave_number() + 1)
 
 
 func set_wave_number(wave: int) -> void:

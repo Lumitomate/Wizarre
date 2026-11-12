@@ -118,6 +118,18 @@ func _draw() -> void:
 # `poids` vide (ou de taille != 3) → tirage uniforme 1/3 (repli tests,
 # homepage, et tout appel sans ordre du directeur).
 func spawn_now(poids: Array[float] = []) -> void:
+	# Appel différé : spawn_now peut être déclenché depuis un callback
+	# physique — la fin de vague part de la mort d'un ennemi dans un
+	# body_entered (cf. level.gd _on_enemy_killed, appelé pendant le flush
+	# des requêtes). Ajouter un Ammo (corps physique) et toucher à son état
+	# de collision pendant le flush est interdit par le moteur (« Can't
+	# change this state while flushing queries ») — même règle que
+	# l'add_child différé d'EnemyDeathBurst. Le directeur (Timer) et les
+	# appels hors flush ne voient qu'une frame de décalage, invisible.
+	_spawn_ammo.call_deferred(poids)
+
+
+func _spawn_ammo(poids: Array[float]) -> void:
 	var ammo: Ammo = ammo_scene.instantiate()
 	ammo.ammo_type = _pick_ammo_type(poids)
 	ammo.position = position

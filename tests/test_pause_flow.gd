@@ -30,7 +30,9 @@ func _ready() -> void:
 	# --- Scénario E : nouvelle manette sans déconnexion -> ignorée ---
 	PlayerManager._on_joy_connection_changed(5, true)
 	check(str(PlayerManager.game_players) == str([0, 1]), "E: nouvelle manette ne crée pas de joueur")
-	check(5 in PlayerManager.known_controllers, "E: la manette est connue (pour le prochain Home)")
+	# Depuis 562ddfa, le pad ne rejoint qu'en appuyant sur un bouton : une
+	# manette branchée en cours de partie n'est connue qu'APRÈS cet appui
+	check(not 5 in PlayerManager.known_controllers, "E: la manette branchée sans appui n'est pas connue")
 
 	# --- Scénario B : déconnexion -> pause immédiate + place libre ---
 	var disconnect_events: Array = []
@@ -99,11 +101,11 @@ func _ready() -> void:
 	check(PlayerManager.game_players.is_empty(), "11: état de partie vidé")
 	check(not get_tree().paused, "11: arbre non pausé pour Home")
 
-	# --- Nouvelle partie : les manettes connectées peuvent rejoindre ---
+	# --- Nouvelle partie : la manette ignorée appuie sur « Rejoindre » ---
 	PlayerManager._on_joy_connection_changed(5, false)  # la 5 avait été ignorée
-	PlayerManager._add_controller(5)
+	PlayerManager._try_join(5)  # elle presse « Rejoindre » sur Home
 	PlayerManager.start_game()
-	check(5 in PlayerManager.game_players, "11: la manette ignorée devient joueur à la nouvelle partie")
+	check(5 in PlayerManager.game_players, "11: la manette ignorée rejoint la nouvelle partie")
 
 	if failures == 0:
 		print("TEST: TOUS LES TESTS PASSENT")

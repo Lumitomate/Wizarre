@@ -34,8 +34,16 @@ const SPAWN_TIME_FACTOR_PER_WAVE := 1.03
 func _ready() -> void:
 	add_to_group("ammo_spawn_director_group")
 	# Vague 0 (première vague) = vitesse de base, puis léger ralentissement
-	$Cycle.wait_time = cycle_duration * pow(SPAWN_TIME_FACTOR_PER_WAVE, GlobalInfo.run_info["level_number"])
+	$Cycle.wait_time = cycle_duration * pow(SPAWN_TIME_FACTOR_PER_WAVE, Run.wave_number())
 	$Cycle.start()
+
+
+# Arrête le cycle de tir des munitions (statut requis entre les vagues
+# ou au passage au shop : cf. level.gd / _on_enemy_killed).
+func stop_spawning() -> void:
+	$Cycle.stop()
+	set_physics_process(false)
+	set_process(false)
 
 
 func _on_cycle_timeout() -> void:

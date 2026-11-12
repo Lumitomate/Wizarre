@@ -7,9 +7,10 @@ extends Node
 
 const EXPECTED_ANIMS := {
 	"attack_fire": {"frames": 12, "speed": 24.0, "loop": false},
+	"death": {"frames": 8, "speed": 5.0, "loop": false},
 	"fall": {"frames": 4, "speed": 12.0, "loop": false},
 	"idle": {"frames": 8, "speed": 12.0, "loop": true},
-	"jump": {"frames": 8, "speed": 24.0, "loop": false},
+	"jump": {"frames": 12, "speed": 24.0, "loop": false},
 	"walk": {"frames": 12, "speed": 24.0, "loop": true},
 }
 
@@ -33,9 +34,6 @@ func _ready() -> void:
 	# chargés (comme en jeu) : on reproduit ces conditions
 	var holder := Node2D.new()
 	add_child(holder)
-	# Sorts par défaut (tubes remplis), comme au spawn réel du jeu
-	var default_spells: Dictionary = GlobalInfo.run_info["players_info"]["default"]["spells"].duplicate(true)
-	GlobalInfo.run_info["players_info"][0] = {"lives": 3, "energy_counts": [3, 3, 3], "spells": default_spells}
 	sorcerer.controller_id = 0
 	sorcerer.sorcerer_color = GlobalEnum.SorcererColor.Blue
 	holder.add_child(sorcerer)

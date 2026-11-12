@@ -10,7 +10,7 @@ var sorcier_test: Sorcerer
 
 
 func _ready() -> void:
-	var scene: PackedScene = load("res://scenes/niveaux/magasin/magasin_intro/shop_2players_intro.tscn")
+	var scene: PackedScene = load("res://scenes/niveaux/magasin/magasin_intro/shop_4players_intro.tscn")
 	inst = scene.instantiate()
 	var holder := Node2D.new()
 	add_child(holder)

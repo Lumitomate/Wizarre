@@ -119,6 +119,10 @@ func _porte_dieu(couloir: int) -> Node:
 
 
 ## Bulle d'un couloir (même ordre que _porte_dieu).
+## La scène 4 joueurs utilise encore les bulles de verre (Bubble,
+## Bubble2, Bubble3, Bubble4) : la base gère les deux cas (Cabin →
+## rituel cabine, sinon → contact ZoneContact). La migration complète
+## vers les cabines est suivie dans tickets/002.
 func _bulle(couloir: int) -> Node2D:
 	match couloir:
 		COULOIR_HAUT_GAUCHE:

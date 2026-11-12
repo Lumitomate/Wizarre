@@ -37,7 +37,7 @@ func _configurer_couloirs(nb_joueurs: int) -> void:
 		# L'objet de la bulle 2 a déjà été demandé (spawner exécuté avant
 		# ce _ready, ajout différé) : il est éliminé dès son entrée dans
 		# l'arbre — il resterait sinon prisonnier sous les blocs.
-		$Bubble2.child_entered_tree.connect(_eliminer_objet_bulle2)
+		$Bubble3.child_entered_tree.connect(_eliminer_objet_bulle2)
 
 
 ## À 1 joueur, tout objet qui entre sous la bulle 2 est éliminé : la salle
@@ -55,8 +55,10 @@ func _eliminer_objet_bulle2(child: Node) -> void:
 ## éliminé à son entrée dans l'arbre, et un objet neuf est respawné avec
 ## le bon type (spawn_object relit chosen_object_type).
 func _coordonner_types_objets() -> void:
-	var spawner_haut: Node = $Bubble/SpawnerObjet
-	var spawner_bas: Node = $Bubble2/SpawnerObjet
+	# La cabine s'appelle "Bubble2" dans la scène (instance de
+	# bubble2.tscn ; "BubbleCabine" est le nom de sa racine interne).
+	var spawner_haut: Node = $Bubble2/SpawnerObjet
+	var spawner_bas: Node = $Bubble3/SpawnerObjet
 	if "chosen_object_type" not in spawner_haut or "chosen_object_type" not in spawner_bas:
 		return
 	if spawner_haut.chosen_object_type != spawner_bas.chosen_object_type:
@@ -88,9 +90,9 @@ func _on_objet_bas_remplacement(child: Node, spawner_bas: Node) -> void:
 func _bulle(couloir: int) -> Node2D:
 	match couloir:
 		COULOIR_HAUT:
-			return $Bubble
-		_:
 			return $Bubble2
+		_:
+			return $Bubble3
 
 
 ## Porte dieu d'un couloir (0 = haut, 1 = bas).

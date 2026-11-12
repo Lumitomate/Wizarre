@@ -83,8 +83,12 @@ func _ready() -> void:
 	# validée : l'objet flotte derrière la bulle fermée jusqu'à ce qu'on
 	# la touche). Seuls les couloirs actifs sont écoutés.
 	for couloir: int in _couloirs_actifs:
-		_bulle(couloir).get_node("ZoneContact").body_entered.connect(
-			_on_bulle_contactee.bind(couloir))
+		var cible := _bulle(couloir)
+		if cible is Cabin:
+			(cible as Cabin).sort_installe.connect(_on_cabine_installee.bind(couloir))
+		else:
+			cible.get_node("ZoneContact").body_entered.connect(
+				_on_bulle_contactee.bind(couloir))
 	# Porte de sortie : la traversée emmène tout le monde au niveau 1.
 	if not $ShopDoor.shop_entered.is_connected(_on_shop_door_shop_entered):
 		$ShopDoor.shop_entered.connect(_on_shop_door_shop_entered)
@@ -152,6 +156,8 @@ func _on_objet_spawned(child: Node, couloir: int) -> void:
 ## (une seule fois), sa collision sautera à la frame de cassure (cf.
 ## _process) et l'objet flottant derrière devient prenable.
 func _on_bulle_contactee(body: Node2D, couloir: int) -> void:
+	if _est_cabine(couloir):
+		return
 	if not (body is Sorcerer):
 		return
 	if couloir not in _couloirs_actifs or _bulles_cassees.get(couloir, false):
@@ -165,7 +171,7 @@ func _process(_delta: float) -> void:
 	# (pattern du magasin course). Une bulle intacte (Idle, frame 0) garde
 	# sa collision : elle bloque le passage jusqu'à son ouverture.
 	for couloir: int in _couloirs_actifs:
-		if _bulles_cassees.get(couloir, false):
+		if _bulles_cassees.get(couloir, false) and not _est_cabine(couloir):
 			_collision_bulle_si_cassee(_bulle(couloir))
 
 
@@ -179,10 +185,27 @@ func _collision_bulle_si_cassee(bulle: Node2D) -> void:
 ## du couloir s'ouvre (anim dieu). Le passage dans la ZonePassage ouvrira
 ## ensuite la ShopDoor (cf. _on_zone_passage).
 func _on_objet_attrape(_sorcier: Sorcerer, couloir: int) -> void:
+	_ouvrir_porte_couloir(couloir)
+
+
+## Cabine d'un couloir : le sort est installé (juste avant la réouverture
+## des portes de la cabine) → même effet que la prise d'objet.
+func _on_cabine_installee(_sorcier: Sorcerer, _tube: int, _type: int, _tier: int,
+		couloir: int) -> void:
+	_ouvrir_porte_couloir(couloir)
+
+
+## Marque l'objet du couloir comme pris et ouvre sa porte dieu.
+func _ouvrir_porte_couloir(couloir: int) -> void:
 	_objets_pris[couloir] = true
 	var porte: Node = _porte_dieu(couloir)
 	if porte != null:
 		porte.ouvrir()
+
+
+## Une cabine remplace-t-elle la bulle de ce couloir ?
+func _est_cabine(couloir: int) -> bool:
+	return _bulle(couloir) is Cabin
 
 
 ## Passage franchi via ZonePassage : le bind place le couloir APRÈS le

@@ -30,22 +30,14 @@ func _process(_delta: float) -> void:
 		
 func check_door_opening_condition() -> void:
 	
-	var run_info = GlobalInfo.run_info
-	
 	match door_type:
 		GlobalEnum.DoorType.TIME:
-			if run_info["run_duration"] < 20000:
+			if Run.run_duration < 20000:
 				can_open = true
 		GlobalEnum.DoorType.FRIENDSHIP:
-			can_open = true
-			for k in GlobalInfo.run_info["players_info"].keys():
-				if str(k) != "default" and GlobalInfo.run_info["players_info"][k]["lives"] == 0:
-					can_open = false
+			can_open = not Run.any_player_dead()
 		GlobalEnum.DoorType.NO_DAMAGE:
-			for k in GlobalInfo.run_info["players_info"].keys():
-				if str(k) != "default" and GlobalInfo.run_info["players_info"][k]["lives"] != 3:
-					can_open = false
-			can_open = true
+			can_open = Run.all_players_full_lives()
 	
 
 

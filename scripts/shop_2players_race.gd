@@ -1,8 +1,8 @@
 extends Node2D
 ## Magasin course à 2 joueurs : arrivée par les portes d'entrée (une par
 ## couloir), génération procédurale du layout des 2 couloirs (le MÊME
-## layout pour les 2 joueurs), bulle de verre ouverte dès l'arrivée avec un
-## objet spawné en son centre, sortie par la ShopDoor.
+## layout pour les 2 joueurs), cabine (remplace la bulle de verre) qui
+## contient l'objet, sortie par la ShopDoor.
 ##
 ## Le layout est régénéré à CHAQUE arrivée dans la scène : faire un level et
 ## retomber sur ce magasin donne un parcours différent. La propriété
@@ -14,6 +14,11 @@ signal save_data
 ## Nombre de portes d'entrée dont la cinématique n'est pas encore finie :
 ## le sablier démarre quand la dernière a terminé (tous les joueurs libres)
 var _portes_entree_actives := 0
+
+## Le sablier a fini de s'écouler (la sortie peut s'ouvrir).
+var _sablier_fini := false
+## La porte de sortie a été ouverte (une fois pour toutes).
+var _sortie_ouverte := false
 
 ## Seed de génération (-1 = aléatoire à chaque arrivée dans le magasin)
 @export var layout_seed: int = -1
@@ -35,14 +40,15 @@ func _ready() -> void:
 		var player: Sorcerer = PlayerManager.players.get(controller_id)
 		if player != null:
 			player.in_shop = true
-	# La porte de sortie s'ouvre dès l'arrivée dans la salle
-	$ShopDoor.play()
+	# La porte de sortie reste FERMÉE : elle ne s'ouvre qu'à la fin du
+	# sablier, et seulement si personne n'occupe la cabine (cf.
+	# _essayer_ouvrir_sortie).
+	$Sablier.ecoulement_termine.connect(_on_sablier_fini)
 	# La rotation du sablier démarre avec l'ouverture des portes d'entrée
 	$Sablier.demarrer_rotation()
 	_generate_corridors()
-	# La bulle s'ouvre dès l'arrivée (anim de cassure) ; sa hitbox saute
-	# à la frame 15 dans _process, libérant l'objet spawné en son centre
-	$Bubble/AnimatedSprite2D_Bulle.play("default")
+	# L'objet est porté par la cabine (BubbleCabine), qui gère tout son rituel
+	# d'entrée : plus de bulle à casser ici.
 	# Cinématique d'arrivée : UNE porte par joueur (1 couloir chacun),
 	# chaque porte lance sa propre séquence ; le dégel des joueurs se fait
 	# à la refermeture de leur porte (cf. entry_door_cinematic.gd)
@@ -65,10 +71,30 @@ func _on_porte_entree_terminee() -> void:
 		$Sablier.demarrer()
 
 
+## Fin du sablier : la porte de sortie pourra s'ouvrir (si le caisson est
+## libre — sinon on attend qu'il se libère).
+func _on_sablier_fini() -> void:
+	_sablier_fini = true
+
+
 func _process(_delta: float) -> void:
-	var bubble_collision: CollisionShape2D = $Bubble/CollisionShape2D
-	if not bubble_collision.disabled and $Bubble/AnimatedSprite2D_Bulle.frame >= 15:
-		bubble_collision.set_deferred("disabled", true)
+	_essayer_ouvrir_sortie()
+
+
+## Ouvre la porte de sortie quand les conditions sont réunies : sablier
+## terminé ET caisson libre. Une fois ouverte, elle ne se referme pas.
+func _essayer_ouvrir_sortie() -> void:
+	if _sortie_ouverte or not _sablier_fini:
+		return
+	# Le nœud de la cabine s'appelle "Bubble2" dans la scène (instance de
+	# bubble2.tscn, dont la racine interne s'appelle BubbleCabine) :
+	# chercher "BubbleCabine" ici retournait null et la porte s'ouvrait
+	# sans attendre la libération du caisson.
+	var caisson := get_node_or_null("Bubble2")
+	if caisson is Cabin and (caisson as Cabin).est_occupee():
+		return
+	_sortie_ouverte = true
+	$ShopDoor.play()
 
 
 ## Génère UN SEUL layout 17×4 et l'applique à l'identique aux 2 couloirs

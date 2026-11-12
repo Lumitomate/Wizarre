@@ -73,4 +73,8 @@ enum Location {
 	SHOP_2PLAYERS_INTRO,
 	SHOP_4PLAYERS_INTRO,
 	SHOP_GAMBLING,
+	BOSS_FIGHT,
+	# Ajouté EN FIN d'enum : les scènes .tscn stockent les Locations en
+	# int — les valeurs existantes ne doivent jamais bouger.
+	SHOP_4PLAYERS_REFLEX,
 }

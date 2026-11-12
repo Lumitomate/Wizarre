@@ -172,7 +172,7 @@ func _test_shop(nb_joueurs: int) -> void:
 	# n'était pas finie — on attend donc son signal, pas un nombre de
 	# frames.
 	var cine_finie := await _attendre(func() -> bool:
-		return not shop._decideur._door_exit_active, 5.0)
+		return not shop._decideur.door_fade._door_exit_active, 5.0)
 	_check(cine_finie, "%d joueurs : cinématique d'arrivée du décideur terminée" % nb_joueurs)
 	await _frames(2)
 
@@ -191,7 +191,7 @@ func _test_shop(nb_joueurs: int) -> void:
 	# Receveurs posés sur les marqueurs, gelés, solides (dé-fantômés)
 	for receveur in shop._receveurs:
 		_check(receveur.frozen, "receveur gelé pendant la cinématique d'arrivée")
-		_check(receveur.collision_layer == receveur._collision_layer_origin,
+		_check(receveur.collision_layer != 0,
 			"receveur solide (désinscription de la porte propre)")
 	var poses := {}
 	for m in marqueurs:

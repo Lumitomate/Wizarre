@@ -39,18 +39,16 @@ func _physics_process(_delta: float) -> void:
 					sells += 1
 		print("scellement: ", sells, "/112 blocs (attendu 112)")
 		var objs: Array[String] = []
-		for bubble_name in ["Bubble", "Bubble2"]:
+		for bubble_name in ["Bubble2", "Bubble3"]:
 			for c: Node in inst.get_node(bubble_name).get_children():
 				if c is AttackObject:
 					objs.append(bubble_name)
-		print("objets sous bulles: ", objs, " (['Bubble'] attendu à 1 joueur: objet bas éliminé)")
+		print("objets sous cabines: ", objs, " (['Bubble2'] attendu à 1 joueur: objet bas éliminé)")
 		print("porte dieu haut ouverte: ", inst.get_node("PorteMagasinEpreuve").opened, " (false attendu)")
 	if step == 6:
-		# Simule la prise de l'objet du couloir haut
-		for c: Node in inst.get_node("Bubble").get_children():
-			if c is AttackObject:
-				c.attrapee.emit(null)
-				print(">>> objet haut pris")
+		# Simule l'installation du sort par la cabine du couloir haut
+		inst.get_node("Bubble2").sort_installe.emit(null, 0, GlobalEnum.AttackType.F1, 0)
+		print(">>> sort installé (cabine haut)")
 	if step == 8:
 		print("porte dieu ouverte après prise: ", inst.get_node("PorteMagasinEpreuve").opened, " (true attendu)")
 		inst._on_zone_passage(sorcier_test, 0)

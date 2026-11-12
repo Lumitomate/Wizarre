@@ -137,12 +137,76 @@ func _cas_plaque_reflex() -> void:
 	var reflex: Node2D = load(PLAQUE_REFLEX).instantiate()
 	add_child(reflex)
 	await get_tree().physics_frame
-	# PlateLeft à (−64,−3), collision en (0,−6) de 32×4 → haut à −11
-	await _poser_sorcier(Vector2(-64, -11.0 - PIEDS))
+	# PlateLeft à (−89,−3), collision en (0,−6) de 32×4 → haut à −11
+	await _poser_sorcier(Vector2(-89, -11.0 - PIEDS))
 	_check(sorcier.is_on_floor(), "plaque réflexe : le sorcier est posé sur la plaque gauche")
 	await _mesurer("plaque réflexe gauche (4 px)",
 		func() -> void: reflex._on_plate_body_entered(sorcier, "left"), 4.0)
 	await _ranger()
+	reflex.queue_free()
+	await get_tree().physics_frame
+
+
+## Épreuve réflexe complète : les 2 plaques maintenues jusqu'au bout des
+## animations d'énergie → la cabine (verrouillée de base dans la scène)
+## ouvre ses portes, une fois pour toutes. Lancé après _cas_plaque_reflex
+## (même montage de scène).
+func _cas_epreuve_reflex() -> void:
+	var reflex: Node2D = load(PLAQUE_REFLEX).instantiate()
+	add_child(reflex)
+	await get_tree().physics_frame
+
+	var reussie := [false]
+	reflex.epreuve_reussie.connect(func() -> void: reussie[0] = true)
+	var cabine: Cabin = reflex.get_node("Cabine")
+	var porte_verrou := cabine.get_node("AnimatedSprite2D_porte") as AnimatedSprite2D
+
+	# Cabine fermée de base : porte sur sa dernière frame (fermée).
+	_check(cabine.verrouillee, "épreuve réflexe : la cabine est verrouillée de base")
+	_check(porte_verrou.frame == porte_verrou.sprite_frames.get_frame_count(porte_verrou.animation) - 1,
+		"épreuve réflexe : la porte de la cabine est fermée de base")
+
+	# Deux sorciers réels posés sur les deux plaques : la détection
+	# physique fait le reste (comme en jeu).
+	var s1: Sorcerer = load(SORCIER).instantiate()
+	s1.controller_id = 0
+	s1.load_data()
+	s1.input_device = 100
+	add_child(s1)
+	s1.global_position = Vector2(-89, -11.0 - PIEDS)
+	var s2: Sorcerer = load(SORCIER).instantiate()
+	s2.controller_id = 1
+	s2.load_data()
+	s2.input_device = 101
+	add_child(s2)
+	s2.global_position = Vector2(86, -11.0 - PIEDS)
+
+	# Attente de la réussite : les 2 animations d'énergie doivent
+	# atteindre leur dernière frame EN MÊME TEMPS.
+	var t := 0
+	while not reussie[0] and t < 1200:
+		await get_tree().physics_frame
+		t += 1
+	_check(reussie[0], "épreuve réflexe : epreuve_reussie émis (2 plaques synchronisées)")
+	_check(not cabine.verrouillee, "épreuve réflexe : la cabine s'est déverrouillée")
+
+	# Les portes s'ouvrent par animation : atteindre le bout.
+	t = 0
+	while porte_verrou.frame > 0 and t < 600:
+		await get_tree().physics_frame
+		t += 1
+	_check(porte_verrou.frame == 0, "épreuve réflexe : les portes de la cabine sont ouvertes")
+
+	# One-shot : les joueurs relâchent les plaques, rien ne se referme.
+	s1.global_position = Vector2(-400, -11.0 - PIEDS)
+	s2.global_position = Vector2(400, -11.0 - PIEDS)
+	for i in 30:
+		await get_tree().physics_frame
+	_check(porte_verrou.frame == 0,
+		"épreuve réflexe : les portes restent ouvertes après relâchement des plaques")
+
+	s1.queue_free()
+	s2.queue_free()
 	reflex.queue_free()
 	await get_tree().physics_frame
 
@@ -155,6 +219,7 @@ func _ready() -> void:
 	await _cas_machine()
 	await _cas_plaque_generique()
 	await _cas_plaque_reflex()
+	await _cas_epreuve_reflex()
 
 	if _failures == 0:
 		print("RESULT: PASS")

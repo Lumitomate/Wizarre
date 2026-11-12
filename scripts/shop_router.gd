@@ -12,6 +12,9 @@ extends Node
 ## Magasins disponibles (GlobalEnum.Location) :
 ##  - SHOP                : magasin classique (tubes à échanger, bulles)
 ##  - SHOP_2PLAYERS_REFLEX: épreuve de réflexe (2 joueurs)
+##  - SHOP_4PLAYERS_REFLEX: épreuve de réflexe (3-4 joueurs, 2
+##                          dispositifs ; à 3, les épreuves se font l'une
+##                          après l'autre)
 ##  - SHOP_2PLAYERS_RACE  : épreuve de course (2 joueurs, 2 couloirs)
 ##  - SHOP_4PLAYERS_RACE  : épreuve de course (3-4 joueurs, 1 couloir/joueur)
 ##  - SHOP_HANDS          : Shophands (3-4 joueurs, don d'un objet par le
@@ -48,18 +51,20 @@ extends Node
 @export var magasins_3_joueurs: Array[GlobalEnum.Location] = [
 	GlobalEnum.Location.SHOP_HANDS,
 	GlobalEnum.Location.SHOP_4PLAYERS_RACE,
+	GlobalEnum.Location.SHOP_4PLAYERS_REFLEX,
 	GlobalEnum.Location.SHOP_GAMBLING,
 ]
-@export var poids_3_joueurs: Array[float] = [1.0, 1.0, 1.0]
+@export var poids_3_joueurs: Array[float] = [1.0, 1.0, 1.0, 1.0]
 
 @export_group("Magasin à 4 joueurs")
 @export var magasins_4_joueurs: Array[GlobalEnum.Location] = [
 	GlobalEnum.Location.SHOP_HANDS,
 	GlobalEnum.Location.SHOP_4PLAYERS_RACE,
+	GlobalEnum.Location.SHOP_4PLAYERS_REFLEX,
 	GlobalEnum.Location.SHOP,
 	GlobalEnum.Location.SHOP_GAMBLING,
 ]
-@export var poids_4_joueurs: Array[float] = [1.0, 1.0, 1.0, 1.0]
+@export var poids_4_joueurs: Array[float] = [1.0, 1.0, 1.0, 1.0, 1.0]
 
 
 ## Tire au hasard le magasin d'un passage, selon le nombre de joueurs de la

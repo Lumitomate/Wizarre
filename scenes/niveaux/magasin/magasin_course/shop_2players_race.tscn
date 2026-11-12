@@ -3,27 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://uxkqejiw3420" path="res://assets/sprites/Map1/Terrain1_Fond.png" id="1_cwiyp"]
 [ext_resource type="Texture2D" uid="uid://cwnnjo6qndca4" path="res://assets/sprites/Map1/TileMap_Terrain1.png" id="2_x73y1"]
 [ext_resource type="PackedScene" uid="uid://bukoipryxc5tk" path="res://scenes/niveaux/terrain1/map1_level_exit_door.tscn" id="3_v7c2e"]
-[ext_resource type="Texture2D" uid="uid://ci4ksrxtd1ovq" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreBase.png" id="5_vweo4"]
-[ext_resource type="Texture2D" uid="uid://dyjo7chhbyq1q" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé1.png" id="6_sydql"]
-[ext_resource type="Texture2D" uid="uid://6rpiahc8fgoj" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé2.png" id="7_8lex0"]
-[ext_resource type="Texture2D" uid="uid://ch5iotc66uxan" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé3.png" id="8_ahidb"]
-[ext_resource type="Texture2D" uid="uid://beokmydpouhdr" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé4.png" id="9_owdfl"]
-[ext_resource type="Texture2D" uid="uid://d1m7yxucd2vps" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé5.png" id="10_mkg81"]
-[ext_resource type="Texture2D" uid="uid://rqlu5tkfmr7t" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé6.png" id="11_ujplr"]
-[ext_resource type="Texture2D" uid="uid://do2whdngpwv3s" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé7.png" id="12_q7ab4"]
-[ext_resource type="Texture2D" uid="uid://d2i3bs7l6v8l4" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé8.png" id="13_vmcyn"]
-[ext_resource type="Texture2D" uid="uid://ck0nhlg42ei0s" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé9.png" id="14_3ipc8"]
-[ext_resource type="Texture2D" uid="uid://cru32wxiv4mei" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé10.png" id="15_1ny1s"]
-[ext_resource type="Texture2D" uid="uid://77ajpq4hj870" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé11.png" id="16_3my8n"]
-[ext_resource type="Texture2D" uid="uid://dw0uup17ankao" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé12.png" id="17_nwt2c"]
-[ext_resource type="Texture2D" uid="uid://bdyo1ttbpied2" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé13.png" id="18_a735w"]
-[ext_resource type="Texture2D" uid="uid://u4w73l3nt626" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé14.png" id="19_8ictw"]
-[ext_resource type="Texture2D" uid="uid://ccfgyulou77um" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé15.png" id="20_dc1yq"]
-[ext_resource type="Texture2D" uid="uid://by6iihxgjv4ul" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé16.png" id="21_287ww"]
-[ext_resource type="Texture2D" uid="uid://dhc3naivp2b1b" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé17.png" id="22_obxwj"]
-[ext_resource type="Texture2D" uid="uid://c0onvqsvtxc5o" path="res://assets/sprites/Magasin/BulleVerre/BulleVerreCassée/BulleVerreCassé18.png" id="23_l4j4e"]
+[ext_resource type="PackedScene" uid="uid://myri74emnk1u" path="res://scenes/niveaux/magasin/bubble2.tscn" id="21_epcw0"]
 [ext_resource type="Script" uid="uid://xggpbvhulp2b" path="res://scripts/shop_2players_race.gd" id="24_script"]
-[ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_object.tscn" id="25_spawner"]
 [ext_resource type="PackedScene" uid="uid://cdyq6i8q65yee" path="res://scenes/outils/sablier.tscn" id="38_287ww"]
 [ext_resource type="PackedScene" uid="uid://boimaa7xbqo45" path="res://scenes/niveaux/magasin/shop_trial_door.tscn" id="39_obxwj"]
 [ext_resource type="Script" uid="uid://d1fs3iipk82ph" path="res://scripts/trial_door_closing.gd" id="40_ferme"]
@@ -218,80 +199,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_0xteb"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_vweo4")
-}],
-"loop": 0,
-"name": &"Idle",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("6_sydql")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_8lex0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_ahidb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_owdfl")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_mkg81")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_ujplr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_q7ab4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_vmcyn")
-}, {
-"duration": 1.0,
-"texture": ExtResource("14_3ipc8")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_1ny1s")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_3my8n")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_nwt2c")
-}, {
-"duration": 1.0,
-"texture": ExtResource("18_a735w")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_8ictw")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_dc1yq")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_287ww")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22_obxwj")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_l4j4e")
-}],
-"loop": 0,
-"name": &"default",
-"speed": 12.0
-}]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0q3ep"]
-radius = 25.0
-height = 58.0
-
 [node name="Shop2PlayersRace" type="Node2D" unique_id=1366964163]
 scale = Vector2(0.7, 0.7)
 script = ExtResource("24_script")
@@ -333,21 +240,6 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_porteentree")
 script = ExtResource("door_cine")
 
-[node name="Bubble" type="StaticBody2D" parent="." unique_id=1547859875]
-position = Vector2(1744, 577.28546)
-scale = Vector2(2, 2)
-
-[node name="AnimatedSprite2D_Bulle" type="AnimatedSprite2D" parent="Bubble" unique_id=1744804348]
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_0xteb")
-animation = &"Idle"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bubble" unique_id=1190424554]
-position = Vector2(0, -2)
-shape = SubResource("CapsuleShape2D_0q3ep")
-
-[node name="SpawnerObjet" parent="Bubble" unique_id=639970300 instance=ExtResource("25_spawner")]
-
 [node name="Sablier" parent="." unique_id=1477993193 instance=ExtResource("38_287ww")]
 z_index = 50
 position = Vector2(1579.7144, 316.2859)
@@ -357,6 +249,10 @@ duree_ecoulement = 5.0
 [node name="PorteMagasinEpreuve" parent="." unique_id=1860909474 instance=ExtResource("39_obxwj")]
 position = Vector2(1548.5718, 575.71436)
 script = ExtResource("40_ferme")
+
+[node name="Bubble2" parent="." unique_id=33019894 instance=ExtResource("21_epcw0")]
+position = Vector2(1705.7141, 528.57153)
+scale = Vector2(2, 2)
 
 [connection signal="shop_entered" from="ShopDoor" to="." method="_on_shop_door_shop_entered"]
 [connection signal="ecoulement_termine" from="Sablier" to="PorteMagasinEpreuve" method="fermer"]

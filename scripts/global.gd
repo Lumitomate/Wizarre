@@ -18,6 +18,8 @@ var scenes = {
 	GlobalEnum.Location.SHOP_2PLAYERS_INTRO: "res://scenes/niveaux/magasin/magasin_intro/shop_2players_intro.tscn",
 	GlobalEnum.Location.SHOP_4PLAYERS_INTRO: "res://scenes/niveaux/magasin/magasin_intro/shop_4players_intro.tscn",
 	GlobalEnum.Location.SHOP_GAMBLING: "res://scenes/niveaux/magasin/magasin_casino/shop_gambling.tscn",
+	GlobalEnum.Location.BOSS_FIGHT: "res://scenes/niveaux/terrain1/boss_fight.tscn",
+	GlobalEnum.Location.SHOP_4PLAYERS_REFLEX: "res://scenes/niveaux/magasin/magasin_reflex/shop_4players_reflex.tscn",
 }
 
 func _ready() -> void:
@@ -33,6 +35,7 @@ func goto_scene(scene: GlobalEnum.Location) -> void:
 	# réflexe, course ou Shophands — cf. scripts/shop_router.gd
 	if scene == GlobalEnum.Location.SHOP:
 		scene = ShopRouter.tirer_magasin(PlayerManager.game_players.size())
+	scene = _redirection_boss(scene)
 	if scene == GlobalEnum.Location.HOMEPAGE:
 		# Retour sur Home : la partie précédente est terminée. Toutes les
 		# manettes connectées pourront créer des joueurs à la prochaine partie
@@ -43,6 +46,23 @@ func goto_scene(scene: GlobalEnum.Location) -> void:
 		PlayerManager.start_game()
 	PlayerManager.save_players_data()
 	_deferred_goto_scene.call_deferred(scenes[scene])
+
+## Redirection de fin de magasin : la salle du boss suit le magasin qui
+## vient après la 4e vague affichée à l'écran ("IV" — vague 3 en
+## numérotation interne, d'où level_number == 4 ici : l'incrément de fin
+## de niveau a déjà eu lieu). L'incrément supplémentaire (4 → 5) empêche
+## de retomber sur le boss au magasin suivant : la vague d'après
+## redevient un niveau classique (elle affiche VI).
+## Fonction pure isolée pour être testable headless — cf.
+## tests/test_parcours.tscn.
+func _redirection_boss(scene: GlobalEnum.Location) -> GlobalEnum.Location:
+	if scene != GlobalEnum.Location.LEVEL:
+		return scene
+	if Run.wave_number() != 4:
+		return scene
+	Run.consume_boss_slot()
+	return GlobalEnum.Location.BOSS_FIGHT
+
 
 func _deferred_goto_scene(path: String) -> void:
 	current_scene.free()

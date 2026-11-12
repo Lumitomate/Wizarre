@@ -1,12 +1,14 @@
 extends Area2D
-## Épreuve de réflexe à 2 plaques de pression avec bulle de verre :
+## Épreuve de réflexe à 2 plaques de pression avec cabine :
 ## - un joueur sur une plaque → la plaque descend de PLATE_DESCENT px,
 ##   puis l'animation d'énergie de son côté se lance vers l'avant ;
 ## - si le joueur quitte la plaque → elle remonte et l'animation repart
 ##   dans l'autre sens depuis la frame où elle en était ;
 ## - si les 2 plaques sont maintenues ET que les 2 animations sont à la
-##   dernière frame en même temps → la bulle s'ouvre (cassure de verre) et
-##   sa hitbox saute, libérant l'objet qu'elle bloquait.
+##   dernière frame en même temps → l'épreuve est réussie : la cabine
+##   (verrouillée de base, cf. cabin.gd) ouvre ses portes et le signal
+##   epreuve_reussie est émis. L'ouverture est one-shot : rien ne la
+##   referme ensuite, même si les joueurs relâchent les plaques.
 ##
 ## Le mouvement (vitesse, courbe, durée de remontée) vient de
 ## PressurePlateMotion — la loi commune aux plaques du jeu, dont CES
@@ -23,19 +25,16 @@ extends Area2D
 ## le framerate (sinon : set_state(FALL) parasite + saut bloqué).
 ## Même montage que l'ascenseur (map1_elevator.tscn).
 
-signal bubble_opened
+signal epreuve_reussie
 
 ## Course de l'enfoncement (px) : seul réglage propre à ces plaques.
 ## La durée s'en déduit (cf. PressurePlateMotion.duree).
 const PLATE_DESCENT := 4.0
-# Frame à partir de laquelle la hitbox de la bulle saute (comme bubble.gd)
-const BUBBLE_OPEN_FRAME := 15
 
 var _plates := {}
-var _bubble_opened := false
+var _epreuve_reussie := false
 
-@onready var _bubble_sprite: AnimatedSprite2D = $Bubble/AnimatedSprite2D_Bulle
-@onready var _bubble_collision: CollisionShape2D = $Bubble/CollisionShape2D
+@onready var _cabine: Cabin = $Cabine
 
 
 func _ready() -> void:
@@ -64,17 +63,15 @@ func _ready() -> void:
 		var area: Area2D = plate["area"]
 		area.body_entered.connect(_on_plate_body_entered.bind(side))
 		area.body_exited.connect(_on_plate_body_exited.bind(side))
-	_bubble_sprite.play("Idle")
 
 
 func _process(_delta: float) -> void:
-	if _bubble_opened:
-		# La hitbox de la bulle saute à la frame 15 de la cassure
-		if not _bubble_collision_cleared() and _bubble_sprite.frame >= BUBBLE_OPEN_FRAME:
-			_bubble_collision.set_deferred("disabled", true)
+	if _epreuve_reussie:
 		return
 	if _both_plates_fully_energized():
-		_open_bubble()
+		_epreuve_reussie = true
+		_cabine.ouvrir()
+		epreuve_reussie.emit()
 
 
 func _on_plate_body_entered(body: Node2D, side: String) -> void:
@@ -130,10 +127,6 @@ func _plate_kill_tween(plate: Dictionary) -> void:
 		(existing as Tween).kill()
 
 
-func _bubble_collision_cleared() -> bool:
-	return _bubble_collision.disabled
-
-
 ## Les 2 plaques enfoncées ET les 2 animations d'énergie à leur dernière frame
 func _both_plates_fully_energized() -> bool:
 	for side: String in _plates:
@@ -144,11 +137,3 @@ func _both_plates_fully_energized() -> bool:
 		if energy.frame < energy.sprite_frames.get_frame_count(energy.animation) - 1:
 			return false
 	return true
-
-
-## Ouverture de la bulle : anim de cassure, puis la hitbox saute
-## (déclenché dans _process à la frame BUBBLE_OPEN_FRAME).
-func _open_bubble() -> void:
-	_bubble_opened = true
-	_bubble_sprite.play("default")
-	bubble_opened.emit()

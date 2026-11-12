@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://myri74emnk1u"]
 
+[ext_resource type="PackedScene" uid="uid://dudn21tws6os" path="res://scenes/entities/players/sac/tuyau/pipe.tscn" id="1_5g03m"]
 [ext_resource type="Texture2D" uid="uid://cfgo33a8mkgrp" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Box_Ouverture/Bulle_V2_Box_Ouverture_1.png" id="1_y4425"]
 [ext_resource type="Texture2D" uid="uid://bs2vnrvly2yl3" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Box_Ouverture/Bulle_V2_Box_Ouverture_2.png" id="2_1xeei"]
 [ext_resource type="Texture2D" uid="uid://b0whmbtypmw6f" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Box_Ouverture/Bulle_V2_Box_Ouverture_3.png" id="3_usgpj"]
@@ -12,20 +13,20 @@
 [ext_resource type="Texture2D" uid="uid://c1ermmld8v445" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Box_Ouverture/Bulle_V2_Box_Ouverture_10.png" id="10_07txi"]
 [ext_resource type="Texture2D" uid="uid://c8rf0ft8p2sdh" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Box_Ouverture/Bulle_V2_Box_Ouverture_11.png" id="11_hl38s"]
 [ext_resource type="Texture2D" uid="uid://clr4luja12cp0" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Box_Ouverture/Bulle_V2_Box_Ouverture_12.png" id="12_ig7wu"]
-[ext_resource type="Texture2D" uid="uid://cys1up08p8se8" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_12.png" id="13_y0nvx"]
-[ext_resource type="Texture2D" uid="uid://bccimyajq8i8u" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_11.png" id="14_thpuo"]
-[ext_resource type="Texture2D" uid="uid://wlmhdnsuu2d2" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_10.png" id="15_mj1i7"]
-[ext_resource type="Texture2D" uid="uid://d24g8yxayd8jc" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_9.png" id="16_flypr"]
-[ext_resource type="Texture2D" uid="uid://dnmrdps8qn83q" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_8.png" id="17_oqxow"]
-[ext_resource type="Texture2D" uid="uid://cmc2x0ynv8k3t" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_7.png" id="18_cbsix"]
-[ext_resource type="Texture2D" uid="uid://bvet353ha087l" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_6.png" id="19_if76q"]
-[ext_resource type="Texture2D" uid="uid://3sekr77h87d0" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_5.png" id="20_ha2rd"]
-[ext_resource type="Texture2D" uid="uid://chhg2b7vn834k" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_4.png" id="21_mmgwd"]
-[ext_resource type="Texture2D" uid="uid://dtwyrkoy4hmqy" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_3.png" id="22_qs41p"]
-[ext_resource type="Texture2D" uid="uid://cvk2iclqhlduf" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_2.png" id="23_6nv1v"]
-[ext_resource type="Texture2D" uid="uid://br60unyps15rc" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_1.png" id="24_tcgdw"]
+[ext_resource type="Texture2D" uid="uid://lf5y70rpw735" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_12.png" id="15_6nv1v"]
+[ext_resource type="Texture2D" uid="uid://cv1gbqtqdr41x" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_11.png" id="16_tcgdw"]
+[ext_resource type="Texture2D" uid="uid://djsjhr13i5wuo" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_10.png" id="17_7eum1"]
+[ext_resource type="Texture2D" uid="uid://bsepckokt4cy4" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_9.png" id="18_7cddn"]
+[ext_resource type="Texture2D" uid="uid://ycr788oxkboy" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_8.png" id="19_ab43s"]
+[ext_resource type="Texture2D" uid="uid://dne2x86og8m66" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_7.png" id="20_ycsc7"]
+[ext_resource type="Texture2D" uid="uid://myp3hui7ktsc" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_6.png" id="21_66aww"]
+[ext_resource type="Texture2D" uid="uid://bysqq21i7arns" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_5.png" id="22_bd8d2"]
+[ext_resource type="Texture2D" uid="uid://b7n4bbm2sj6s5" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_4.png" id="23_svbdk"]
+[ext_resource type="Texture2D" uid="uid://brj342e860mka" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_3.png" id="24_xwa60"]
 [ext_resource type="Texture2D" uid="uid://bag5tvejfb345" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Receptacle_1.png" id="25_7eum1"]
+[ext_resource type="Texture2D" uid="uid://b8aa8d25omp4o" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_2.png" id="25_054s7"]
 [ext_resource type="Texture2D" uid="uid://3ntv6iao1gk1" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Bras/BulleV2_Bras_Energie/BulleV2_Bras_energie_1.png" id="26_7cddn"]
+[ext_resource type="Texture2D" uid="uid://wm2xk3wr8wix" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Ouverture/BulleV2_Porte_Ouverture/BulleV2_Porte_Ouverture_V2_1.png" id="26_v2pnw"]
 [ext_resource type="Texture2D" uid="uid://cstn813gic3l1" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Bras/BulleV2_Bras_Energie/BulleV2_Bras_energie_2.png" id="27_ab43s"]
 [ext_resource type="Texture2D" uid="uid://bkxij73q4n2p" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Bras/BulleV2_Bras_Energie/BulleV2_Bras_energie_3.png" id="28_ycsc7"]
 [ext_resource type="Texture2D" uid="uid://732uv6jx6gaq" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Bras/BulleV2_Bras_Energie/BulleV2_Bras_energie_4.png" id="29_66aww"]
@@ -398,6 +399,30 @@
 [ext_resource type="Texture2D" uid="uid://8an0xqbf3con" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Explosion/BulleV2_Explosion_26.png" id="396_81dqc"]
 [ext_resource type="Texture2D" uid="uid://6t0tvnyo5goa" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Explosion/BulleV2_Explosion_27.png" id="397_0iuu5"]
 [ext_resource type="Texture2D" uid="uid://cpvqnsnnspxp2" path="res://assets/sprites/Magasin/BulleV2/BulleV2_Explosion/BulleV2_Explosion_28.png" id="398_1ribx"]
+[ext_resource type="Texture2D" uid="uid://ioc28t37y7e4" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonLumiere_1.png" id="399_jpvtr"]
+[ext_resource type="Texture2D" uid="uid://drcy618kkprv3" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonLumiere_2.png" id="400_5g03m"]
+[ext_resource type="Texture2D" uid="uid://b2utbsqsnq04i" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonLumiere_3.png" id="401_6a7y6"]
+[ext_resource type="Texture2D" uid="uid://dv6pc40dko845" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonC_Lumi_1.png" id="401_hnono"]
+[ext_resource type="Texture2D" uid="uid://ceomkdvpeuqww" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonLumiere_4.png" id="402_07txi"]
+[ext_resource type="Texture2D" uid="uid://clabp702deggm" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonC_Lumi_2.png" id="402_m32i4"]
+[ext_resource type="Texture2D" uid="uid://b1dqnrh5bnsy0" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonC_Lumi_3.png" id="403_1q5ap"]
+[ext_resource type="Texture2D" uid="uid://durfsrlfirab7" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonLumiere_5.png" id="403_hl38s"]
+[ext_resource type="Texture2D" uid="uid://dojnl3p3jn1l3" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonC_Lumi_4.png" id="404_0gndy"]
+[ext_resource type="Texture2D" uid="uid://bpy5q42oqi527" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonLumiere_6.png" id="404_ig7wu"]
+[ext_resource type="Script" uid="uid://dwf4yocewfhim" path="res://scripts/cabin.gd" id="405_cabin"]
+[ext_resource type="Texture2D" uid="uid://qkwgpaco7h58" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonC_Lumi_5.png" id="405_jf5pj"]
+[ext_resource type="Texture2D" uid="uid://c7rp1my3bvrb3" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonC_Lumi_6.png" id="406_ghytn"]
+[ext_resource type="PackedScene" uid="uid://skihs4kpo87" path="res://scenes/spawner_object.tscn" id="406_spawn"]
+[ext_resource type="SpriteFrames" uid="uid://8uk7loemon06" path="res://scenes/entities/players/sac/tuyau/spell_icons.tres" id="407_icons"]
+[ext_resource type="Texture2D" uid="uid://bkafmlpml0nvi" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonT_Lumi_1.png" id="407_ktf6q"]
+[ext_resource type="Texture2D" uid="uid://jgymssqgdw4s" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonT_Lumi_2.png" id="408_gxoam"]
+[ext_resource type="Texture2D" uid="uid://dxj52t4b5stj1" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonT_Lumi_3.png" id="409_238r7"]
+[ext_resource type="Texture2D" uid="uid://ch7lyj4jy70uv" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonT_Lumi_4.png" id="410_rjw34"]
+[ext_resource type="Texture2D" uid="uid://bwwkdjis4bjiw" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonT_Lumi_5.png" id="411_fj7da"]
+[ext_resource type="Texture2D" uid="uid://cxiuyics6iqvg" path="res://assets/sprites/Magasin/BulleV2/BulleV2_BoutonLumiere/BulleV2_BoutonT_Lumi_6.png" id="412_iu1wm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_702tw"]
+size = Vector2(39, 57)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_702tw"]
 animations = [{
@@ -438,57 +463,54 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("12_ig7wu")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"default",
-"speed": 5.0
+"speed": 12.0
 }]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1rv7g"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("13_y0nvx")
+"texture": ExtResource("15_6nv1v")
 }, {
 "duration": 1.0,
-"texture": ExtResource("14_thpuo")
+"texture": ExtResource("16_tcgdw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("15_mj1i7")
+"texture": ExtResource("17_7eum1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("16_flypr")
+"texture": ExtResource("18_7cddn")
 }, {
 "duration": 1.0,
-"texture": ExtResource("17_oqxow")
+"texture": ExtResource("19_ab43s")
 }, {
 "duration": 1.0,
-"texture": ExtResource("18_cbsix")
+"texture": ExtResource("20_ycsc7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("19_if76q")
+"texture": ExtResource("21_66aww")
 }, {
 "duration": 1.0,
-"texture": ExtResource("20_ha2rd")
+"texture": ExtResource("22_bd8d2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("21_mmgwd")
+"texture": ExtResource("23_svbdk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("22_qs41p")
+"texture": ExtResource("24_xwa60")
 }, {
 "duration": 1.0,
-"texture": ExtResource("23_6nv1v")
+"texture": ExtResource("25_054s7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("24_tcgdw")
+"texture": ExtResource("26_v2pnw")
 }],
 "loop": 0,
 "name": &"default",
 "speed": 12.0
 }]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_702tw"]
-size = Vector2(39, 57)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_olbfw"]
 animations = [{
@@ -1635,45 +1657,202 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1rv7g"]
-size = Vector2(38, 38)
+[sub_resource type="SpriteFrames" id="SpriteFrames_xty43"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("401_hnono")
+}, {
+"duration": 1.0,
+"texture": ExtResource("402_m32i4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("403_1q5ap")
+}, {
+"duration": 1.0,
+"texture": ExtResource("404_0gndy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("405_jf5pj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("406_ghytn")
+}],
+"loop": 0,
+"name": &"button_light_fossil",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("407_ktf6q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("408_gxoam")
+}, {
+"duration": 1.0,
+"texture": ExtResource("409_238r7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("410_rjw34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("411_fj7da")
+}, {
+"duration": 1.0,
+"texture": ExtResource("412_iu1wm")
+}],
+"loop": 0,
+"name": &"button_light_pure",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("399_jpvtr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("400_5g03m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("401_6a7y6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("402_07txi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("403_hl38s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("404_ig7wu")
+}],
+"loop": 0,
+"name": &"button_light_tainted",
+"speed": 6.0
+}]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ekyp3"]
+[node name="BubbleCabine" type="Node2D" unique_id=33019894]
+script = ExtResource("405_cabin")
 
-[node name="Bubble2" type="Area2D" unique_id=33019894]
+[node name="Reperes" type="StaticBody2D" parent="." unique_id=1430886712]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D_Interieur" type="CollisionShape2D" parent="Reperes" unique_id=976581365]
+position = Vector2(-22.5, 25.5)
+shape = SubResource("RectangleShape2D_702tw")
+
+[node name="ZoneEntree" type="Area2D" parent="." unique_id=512898243]
+
+[node name="Murs" type="Node2D" parent="." unique_id=444505493]
+
+[node name="Pipe Fossil" parent="." unique_id=1720044893 instance=ExtResource("1_5g03m")]
+position = Vector2(-36.5, -7)
+
+[node name="Pipe energy" parent="." unique_id=332804625 instance=ExtResource("1_5g03m")]
+position = Vector2(-22.5, -7)
+energy_type = 1
+
+[node name="Pipe tainted" parent="." unique_id=1207492811 instance=ExtResource("1_5g03m")]
+position = Vector2(-8.5, -7)
+energy_type = 2
 
 [node name="AnimatedSprite2D_box" type="AnimatedSprite2D" parent="." unique_id=704539015]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_702tw")
+frame = 11
 
 [node name="AnimatedSprite2D_porte" type="AnimatedSprite2D" parent="." unique_id=760320776]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_1rv7g")
-
-[node name="CollisionShape2D_Interieur" type="CollisionShape2D" parent="." unique_id=976581365]
-position = Vector2(-22.5, 25.5)
-shape = SubResource("RectangleShape2D_702tw")
+frame = 11
+frame_progress = 1.0
 
 [node name="BulleV2Receptacle1" type="Sprite2D" parent="." unique_id=1034276219]
+z_index = 5
 texture_filter = 1
 texture = ExtResource("25_7eum1")
 
 [node name="AnimatedSprite2D_bras" type="AnimatedSprite2D" parent="." unique_id=1243460816]
+z_index = 6
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_olbfw")
 animation = &"bras_energie"
-frame = 114
-frame_progress = 1.0
 
 [node name="AnimatedSprite2D_explosion" type="AnimatedSprite2D" parent="." unique_id=221593350]
+z_index = 6
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_3m2ya")
-frame = 27
+
+[node name="BoutonsLumiere" type="Node2D" parent="." unique_id=936506072]
+
+[node name="BoutonLumiere_fossil" type="AnimatedSprite2D" parent="BoutonsLumiere" unique_id=402284665]
+z_index = 5
+texture_filter = 1
+position = Vector2(-30.5, 13)
+sprite_frames = SubResource("SpriteFrames_xty43")
+animation = &"button_light_fossil"
+frame = 6
 frame_progress = 1.0
 
-[node name="CollisionShape2D_placeobjet" type="CollisionShape2D" parent="." unique_id=1542505014]
-position = Vector2(26, 33)
-shape = SubResource("RectangleShape2D_1rv7g")
+[node name="Icone" type="AnimatedSprite2D" parent="BoutonsLumiere/BoutonLumiere_fossil" unique_id=1993682074]
+visible = false
+z_index = 1
+texture_filter = 1
+position = Vector2(0, 4.5)
+scale = Vector2(0.5000002, 0.5000002)
+sprite_frames = ExtResource("407_icons")
+animation = &"Icone_AtkF1"
 
-[node name="AnimatedSprite2D_TuyauFossil" type="AnimatedSprite2D" parent="." unique_id=1763970918]
-sprite_frames = SubResource("SpriteFrames_ekyp3")
+[node name="BoutonLumiere_energy" type="AnimatedSprite2D" parent="BoutonsLumiere" unique_id=2138769107]
+z_index = 5
+texture_filter = 1
+position = Vector2(-22.5, 5.5)
+sprite_frames = SubResource("SpriteFrames_xty43")
+animation = &"button_light_pure"
+frame = 6
+frame_progress = 1.0
+
+[node name="Icone" type="AnimatedSprite2D" parent="BoutonsLumiere/BoutonLumiere_energy" unique_id=1188089639]
+visible = false
+z_index = 1
+texture_filter = 1
+position = Vector2(0, 5.9)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("407_icons")
+animation = &"Icone_AtkL1"
+
+[node name="BoutonLumiere_tainted" type="AnimatedSprite2D" parent="BoutonsLumiere" unique_id=936506073]
+z_index = 5
+texture_filter = 1
+position = Vector2(-14, 13)
+sprite_frames = SubResource("SpriteFrames_xty43")
+animation = &"button_light_tainted"
+
+[node name="Icone" type="AnimatedSprite2D" parent="BoutonsLumiere/BoutonLumiere_tainted" unique_id=1425378079]
+visible = false
+z_index = 1
+texture_filter = 1
+position = Vector2(-0.5, 4.5)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("407_icons")
+animation = &"Icone_AtkG1"
+
+[node name="SpawnerObjet" parent="." unique_id=1088749077 instance=ExtResource("406_spawn")]
+position = Vector2(26, 33)
+
+[node name="Icones" type="Node2D" parent="." unique_id=1993682073]
+
+[node name="IconeReceptacle" type="AnimatedSprite2D" parent="Icones" unique_id=1599722854]
+z_index = 5
+texture_filter = 1
+position = Vector2(15.5, -13.5)
+sprite_frames = ExtResource("407_icons")
+animation = &"Icone_AtkF1"

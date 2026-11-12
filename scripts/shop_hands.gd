@@ -80,7 +80,7 @@ func _ready() -> void:
 	if porte != null and _decideur != null:
 		porte.reinitialiser_inscriptions()
 		porte.inscrire_sorcier(_decideur, 0)
-		_decideur._door_cine = porte
+		_decideur.door_fade.link_door(porte)
 		porte.cinematique_terminee.connect(_on_cinematique_terminee)
 		porte.lancer_cinematique()
 	else:
@@ -132,11 +132,8 @@ func _representer_receveurs() -> void:
 	for i in _receveurs.size():
 		var receveur: Sorcerer = _receveurs[i]
 		receveur.position = marqueurs[i % marqueurs.size()].position
-		receveur._door_cine = null
-		receveur.collision_layer = receveur._collision_layer_origin
-		receveur.dash_shader_material.set_shader_parameter("arrival_fade", 1.0)
-		if receveur.has_node("PipeManager"):
-			receveur.get_node("PipeManager").modulate.a = 1.0
+		receveur.door_fade.clear_door_link()
+		receveur.door_fade.reveal_arrival()
 
 
 ## Scelle l'espace du bas (variante 3 joueurs, règle validée) : la rangée

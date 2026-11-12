@@ -1,8 +1,8 @@
 extends Node2D
 ## Magasin course à 3-4 joueurs : arrivée par 4 portes d'entrée (2 à
 ## gauche, 2 à droite), 4 zones procédurales 6×5 en SYMÉTRIE MIROIR (2 à
-## gauche, 2 à droite), sortie centrale (ShopDoor) et bulle centrale avec
-## un objet spawné en son centre.
+## gauche, 2 à droite), sortie centrale (ShopDoor) et cabine centrale
+## (remplace la bulle de verre, cf. cabin.gd) qui contient l'objet.
 ##
 ## ZONES PROCÉDURALES 6×5 (coords de TileMap) :
 ##  - gauche  : (3,3)-(8,7)   et (3,10)-(8,14)   — layout TEL QUEL
@@ -12,11 +12,10 @@ extends Node2D
 ## Les 4 zones sont toujours remplies ; à 3 joueurs, le 4e couloir reste
 ## vide (sa porte d'entrée se referme seule, cf. entry_door_cinematic.gd).
 ##
-## PORTES D'ÉPREUVE LIÉES : 2 portes (une par côté), 2 sabliers. Les 2
-## sabliers démarrent leur rotation avec l'ouverture des portes d'entrée ;
-## la fin du premier écoulement referme LES DEUX portes ; un joueur qui
-## passe par L'UNE des hitbox de passage les réouvre TOUTES LES DEUX
-## (verrou partagé).
+## PORTE D'ÉPREUVE : une seule porte, juste devant la cabine. 2 sabliers
+## (un par côté) : ils démarrent leur rotation avec l'ouverture des
+## portes d'entrée ; la fin du premier écoulement referme la porte ; un
+## joueur qui passe par sa hitbox de passage la réouvre pour de bon.
 
 signal save_data
 
@@ -37,6 +36,11 @@ const ZONES_DROITE := [Vector2i(19, 3), Vector2i(19, 10)]
 # les sabliers passent à l'écoulement quand la dernière a terminé
 var _portes_entree_actives := 0
 
+# Nombre de sabliers qui ont fini de s'écouler : la sortie attend les DEUX.
+var _sabliers_finis := 0
+# La porte de sortie a été ouverte (une fois pour toutes).
+var _sortie_ouverte := false
+
 
 func _ready() -> void:
 	# Spawn les joueurs via PlayerManager (joueurs figés au démarrage de
@@ -47,21 +51,22 @@ func _ready() -> void:
 		var player: Sorcerer = PlayerManager.players.get(controller_id)
 		if player != null:
 			player.in_shop = true
-	# La porte de sortie s'ouvre dès l'arrivée dans la salle
-	$ShopDoor.play()
+	# La porte de sortie reste FERMÉE : elle ne s'ouvre qu'à la fin des
+	# DEUX sabliers, et seulement si personne n'occupe la cabine (cf.
+	# _essayer_ouvrir_sortie).
 	# La rotation des 2 sabliers démarre avec l'ouverture des portes
 	# d'entrée ; la fin d'un écoulement referme les 2 portes d'épreuve
 	for sablier in _sabliers():
 		sablier.demarrer_rotation()
 		sablier.ecoulement_termine.connect(_fermer_portes_epreuve)
-	# Hitbox de passage des 2 portes liées : croiser l'une déverrouille
-	# les deux (verrou partagé)
+		sablier.ecoulement_termine.connect(_on_sablier_fini)
+	# Hitbox de passage de la porte d'épreuve : la traverser la déverrouille
+	# pour de bon
 	for porte in _portes_epreuve():
 		porte.get_node("ZonePassage").body_entered.connect(_on_zone_passage_traversee)
 	_generate_zones()
-	# La bulle s'ouvre dès l'arrivée (anim de cassure) ; sa hitbox saute
-	# à la frame 15 dans _process, libérant l'objet spawné en son centre
-	$Bubble/AnimatedSprite2D_Bulle.play("default")
+	# L'objet est porté par la cabine (BubbleCabine), qui gère tout son
+	# rituel d'entrée : plus de bulle à casser ici.
 	# Cinématique d'arrivée : UNE porte par joueur (1 couloir chacun) ;
 	# à 3 joueurs, la porte restante se referme seule
 	for child in get_children():
@@ -74,13 +79,11 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	var bubble_collision: CollisionShape2D = $Bubble/CollisionShape2D
-	if not bubble_collision.disabled and $Bubble/AnimatedSprite2D_Bulle.frame >= 15:
-		bubble_collision.set_deferred("disabled", true)
+	_essayer_ouvrir_sortie()
 
 
 func _portes_epreuve() -> Array:
-	return [$PorteMagasinEpreuve, $PorteMagasinEpreuve2]
+	return [$PorteMagasinEpreuve]
 
 
 func _sabliers() -> Array:
@@ -102,15 +105,38 @@ func _demarrer_ecoulement() -> void:
 		sablier.demarrer()
 
 
-## Fin d'un écoulement de sablier : les DEUX portes d'épreuve se ferment
-## (le fermer() est ignoré si une porte est déjà verrouillée ouverte).
+## Fin d'UN sablier : la porte d'épreuve se ferme et le compteur de
+## sortie avance (la porte de sortie attend les deux sabliers).
+func _on_sablier_fini() -> void:
+	_sabliers_finis += 1
+
+
+## Ouvre la porte de sortie quand les conditions sont réunies : les DEUX
+## sabliers terminés ET cabine libre. Une fois ouverte, elle ne se
+## referme pas.
+func _essayer_ouvrir_sortie() -> void:
+	if _sortie_ouverte or _sabliers_finis < _sabliers().size():
+		return
+	# Le nœud de la cabine s'appelle "Bubble2" dans la scène (instance de
+	# bubble2.tscn, dont la racine interne s'appelle BubbleCabine) :
+	# chercher "BubbleCabine" ici retournait null et la porte s'ouvrait
+	# sans attendre la libération du caisson.
+	var caisson := get_node_or_null("Bubble2")
+	if caisson is Cabin and (caisson as Cabin).est_occupee():
+		return
+	_sortie_ouverte = true
+	$ShopDoor.play()
+
+
+## Fin d'un écoulement de sablier : la porte d'épreuve se ferme
+## (le fermer() est ignoré si la porte est déjà verrouillée ouverte).
 func _fermer_portes_epreuve() -> void:
 	for porte in _portes_epreuve():
 		porte.fermer()
 
 
-## Un joueur a passé la hitbox d'UNE des portes : les DEUX se réouvrent
-## et restent ouvertes (verrou partagé).
+## Un joueur a passé la hitbox de la porte : elle se réouvre et reste
+## ouverte pour de bon.
 func _on_zone_passage_traversee(body: Node2D) -> void:
 	if not (body is Sorcerer):
 		return

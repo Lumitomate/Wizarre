@@ -63,14 +63,16 @@ func _ready() -> void:
 	var tirage_3: int = router.tirer_magasin(3)
 	_check(tirage_3 == GlobalEnum.Location.SHOP_HANDS
 		or tirage_3 == GlobalEnum.Location.SHOP_4PLAYERS_RACE
+		or tirage_3 == GlobalEnum.Location.SHOP_4PLAYERS_REFLEX
 		or tirage_3 == GlobalEnum.Location.SHOP_GAMBLING,
-		"3 joueurs : shophands, course ou casino")
+		"3 joueurs : shophands, course, réflexe ou casino")
 	var tirage_4: int = router.tirer_magasin(4)
 	_check(tirage_4 == GlobalEnum.Location.SHOP_HANDS
 		or tirage_4 == GlobalEnum.Location.SHOP_4PLAYERS_RACE
+		or tirage_4 == GlobalEnum.Location.SHOP_4PLAYERS_REFLEX
 		or tirage_4 == GlobalEnum.Location.SHOP
 		or tirage_4 == GlobalEnum.Location.SHOP_GAMBLING,
-		"4 joueurs : shophands, course, classique ou casino")
+		"4 joueurs : shophands, course, réflexe, classique ou casino")
 
 	# Mode test : le forçage court-circuite le tirage (intégration casino)
 	router.forcer_magasin = true

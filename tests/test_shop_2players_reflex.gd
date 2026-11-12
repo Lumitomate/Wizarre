@@ -42,7 +42,7 @@ func _attendre(cond: Callable, max_frames: int) -> bool:
 
 
 func _zone_active() -> bool:
-	return not (inst.get_node("ShopDoor/Area2D/CollisionShape2D") as CollisionShape2D).disabled
+	return not (inst.get_node("ShopDoor/CollisionShape2D") as CollisionShape2D).disabled
 
 
 func _pret() -> void:
@@ -63,7 +63,7 @@ func _scenar() -> void:
 	_check(cabine != null and cabine.verrouillee,
 		"la cabine est verrouillée à l'arrivée")
 	_check(cabine.etat == Cabin.Etat.ACTIVE, "la cabine démarre libre (ACTIVE)")
-	var porte: AnimatedSprite2D = inst.get_node("ShopDoor")
+	var porte: Area2D = inst.get_node("ShopDoor")
 	_check(not porte.is_playing() and not _zone_active(),
 		"la porte de sortie est FERMÉE à l'arrivée (épreuve pas faite)")
 

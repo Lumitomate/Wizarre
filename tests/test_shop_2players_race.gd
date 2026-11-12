@@ -39,7 +39,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	step += 1
 	var porte := inst.get_node("ShopDoor")
-	var zone := porte.get_node("Area2D/CollisionShape2D") as CollisionShape2D
+	var zone := porte.get_node("CollisionShape2D") as CollisionShape2D
 	caisson = inst.get_node_or_null("Bubble2") as Cabin
 
 	if step == 3:

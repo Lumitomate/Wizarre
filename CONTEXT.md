@@ -92,6 +92,11 @@ _Avoid_: Gate, Portal, Exit
 
 ## State
 
+**Cabin**:
+The shop fixture that replaces the glass Bubble. A sorcerer locks inside, chooses an attack tube, and a robotic arm installs the shop's power-up into that tube. The cabin holds a power-up while unused, and is inert once consumed.
+Naming: the node instantiated in the shop scenes is `Bubble2`; its internal root (scene `bubble2.tscn`, script `cabin.gd`) is named `BubbleCabine`. A shop script that looks for `BubbleCabine` from the scene root gets `null` — look up `Bubble2` instead.
+_Avoid_: Bubble V2, Bulle, Machine
+
 **State**:
 A sorcerer's current animation/movement state: Idle, Run, Jump, Fall, or Attack.
 _Avoid_: Mode, Phase, Pose

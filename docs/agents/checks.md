@@ -85,3 +85,9 @@ Deux formes acceptées :
 À la fin d'une session qui a mis en place un mode test : vérifier que le
 jeu se comporte normalement SANS variable d'environnement (lancer
 `godot --headless res://tests/test_parcours.tscn`, qui teste les deux).
+
+## Un jalon validé = un commit
+
+Dès qu'un jalon passe la suite complète (`tests/parallel.sh`), le
+committer — même en WIP (`wip: ...`). Le travail non commité est la
+première cause de perte : la récupération coûte une session entière.

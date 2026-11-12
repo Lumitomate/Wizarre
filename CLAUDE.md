@@ -31,3 +31,8 @@ Lancer les tests headless, vérifier la compilation, et la règle des modes
 test (jamais câblés en dur, interrupteur `WIZARDE_TEST_*`) : voir
 `docs/agents/checks.md`. Avant de déclarer un changement de routage fait,
 valider avec `tests/test_parcours.tscn`.
+
+### Travail perdu
+
+Modif écrasée ou fichiers restaurés par erreur : lire
+`docs/agents/recuperation-perdue.md` avant toute récupération.

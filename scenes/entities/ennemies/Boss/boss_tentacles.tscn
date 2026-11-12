@@ -1,0 +1,254 @@
+[gd_scene format=3 uid="uid://cqdctc1bl2wj6"]
+
+[ext_resource type="Texture2D" uid="uid://bcworrt6bf16f" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/bossOeil1.png" id="1_0lg6v"]
+[ext_resource type="Texture2D" uid="uid://cmrmm72ywuuxq" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_1/bossOeil1_1.png" id="2_xv7hs"]
+[ext_resource type="Texture2D" uid="uid://015wx4mdvqj6" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_1/bossOeil1_2.png" id="3_fvy6l"]
+[ext_resource type="Texture2D" uid="uid://g5b0bhqbtq20" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_1/bossOeil1_3.png" id="4_820g3"]
+[ext_resource type="Texture2D" uid="uid://csuxu11qfely4" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_1/bossOeil1_4.png" id="5_ggh5e"]
+[ext_resource type="Texture2D" uid="uid://bbm6s6crqm3fj" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_1/bossOeil1_5.png" id="6_r3qyi"]
+[ext_resource type="Texture2D" uid="uid://b876gnc0v3j5i" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_1/bossOeil1_6.png" id="7_okuxp"]
+[ext_resource type="Texture2D" uid="uid://det6vjox0f58r" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_1/bossOeil1_7.png" id="8_wclky"]
+[ext_resource type="Texture2D" uid="uid://c0xtuywnelbi4" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_2/bossOeil2_1.png" id="9_rxyy2"]
+[ext_resource type="Texture2D" uid="uid://duhvxxfwoyo65" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_2/bossOeil2_2.png" id="10_7rpml"]
+[ext_resource type="Texture2D" uid="uid://bomytqxj0u4us" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_2/bossOeil2_3.png" id="11_ikqty"]
+[ext_resource type="Texture2D" uid="uid://bleshldwpdgki" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_2/bossOeil2_4.png" id="12_iqgt8"]
+[ext_resource type="Texture2D" uid="uid://bkn53cutkps" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_2/bossOeil2_5.png" id="13_gne6c"]
+[ext_resource type="Texture2D" uid="uid://d1nemenfmes6u" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_2/bossOeil2_6.png" id="14_7h71y"]
+[ext_resource type="Texture2D" uid="uid://c4ixyhgpdi0eg" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_2/bossOeil2_7.png" id="15_vtdv6"]
+[ext_resource type="Texture2D" uid="uid://c6i46i2qg1oqw" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_3/bossOeil3_1.png" id="16_4t2hy"]
+[ext_resource type="Texture2D" uid="uid://c7of6yw6ng12b" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_3/bossOeil3_2.png" id="17_amuhr"]
+[ext_resource type="Texture2D" uid="uid://8ciwocyxdnxc" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_3/bossOeil3_3.png" id="18_h4us0"]
+[ext_resource type="Texture2D" uid="uid://plo5xowbpq4a" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_3/bossOeil3_4.png" id="19_w3spk"]
+[ext_resource type="Texture2D" uid="uid://ceb8d4hedkdtb" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_3/bossOeil3_5.png" id="20_tub7s"]
+[ext_resource type="Texture2D" uid="uid://dw3tiikdqh6dt" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_3/bossOeil3_6.png" id="21_6nm36"]
+[ext_resource type="Texture2D" uid="uid://dvg34wfgrxci8" path="res://assets/sprites/Monstres/Boss/Boss1/yeux/Oeil_3/bossOeil3_7.png" id="22_vvn67"]
+[ext_resource type="Texture2D" uid="uid://c8uofpgav3mt8" path="res://assets/sprites/Monstres/Boss/Boss1/Squelette/bossSquelette_1.png" id="23_05jsd"]
+[ext_resource type="Texture2D" uid="uid://dhf5l327a215d" path="res://assets/sprites/Monstres/Boss/Boss1/Squelette/bossSquelette_2.png" id="24_8ak8x"]
+[ext_resource type="Texture2D" uid="uid://b4e85pn083dii" path="res://assets/sprites/Monstres/Boss/Boss1/Squelette/bossSquelette_3.png" id="25_g2565"]
+[ext_resource type="Texture2D" uid="uid://yl6vjyft4pgv" path="res://assets/sprites/Monstres/Boss/Boss1/Squelette/bossSquelette_4.png" id="26_lqq5x"]
+[ext_resource type="Texture2D" uid="uid://b0fs7dxqk8723" path="res://assets/sprites/Monstres/Boss/Boss1/Tentacule/Boss1_Tentacule2.png" id="27_f7qhr"]
+[ext_resource type="Texture2D" uid="uid://w7uby6rhkc18" path="res://assets/sprites/Monstres/Boss/Boss1/Tentacule/Boss1_Tentacule1.png" id="28_c3qmq"]
+[ext_resource type="Script" uid="uid://cp2fear7tbghb" path="res://scripts/boss_half.gd" id="29_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_702tw"]
+radius = 37.01351
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1rv7g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_xv7hs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_fvy6l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_820g3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ggh5e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_r3qyi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_okuxp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wclky")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_olbfw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_rxyy2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_7rpml")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ikqty")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_iqgt8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_gne6c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_7h71y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_vtdv6")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3m2ya"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_4t2hy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_amuhr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_h4us0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_w3spk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_tub7s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_6nm36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_vvn67")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 24.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_702tw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_05jsd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_8ak8x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_g2565")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_lqq5x")
+}],
+"loop": 2,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_702tw"]
+radius = 11.0
+height = 60.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_702tw"]
+size = Vector2(79, 448)
+
+[node name="BossTentacles" type="Area2D" unique_id=599976523]
+script = ExtResource("29_script")
+
+[node name="Oeil1" type="Area2D" parent="." unique_id=1521268317]
+
+[node name="BossOeil1" type="Sprite2D" parent="Oeil1" unique_id=1645423255]
+texture_filter = 1
+position = Vector2(25, -128)
+texture = ExtResource("1_0lg6v")
+
+[node name="CollisionShape2D_Oeil1" type="CollisionShape2D" parent="Oeil1" unique_id=1642784657]
+position = Vector2(25, -128)
+shape = SubResource("CircleShape2D_702tw")
+
+[node name="Oeil2" type="Area2D" parent="." unique_id=1225665394]
+position = Vector2(0, 128)
+
+[node name="BossOeil2" type="Sprite2D" parent="Oeil2" unique_id=522218206]
+texture_filter = 1
+position = Vector2(25, -128)
+texture = ExtResource("1_0lg6v")
+
+[node name="CollisionShape2D_Oeil2" type="CollisionShape2D" parent="Oeil2" unique_id=532549201]
+position = Vector2(25, -128)
+shape = SubResource("CircleShape2D_702tw")
+
+[node name="Oeil3" type="Area2D" parent="." unique_id=2040189537]
+position = Vector2(0, 257)
+
+[node name="BossOeil3" type="Sprite2D" parent="Oeil3" unique_id=491481082]
+texture_filter = 1
+position = Vector2(25, -128)
+texture = ExtResource("1_0lg6v")
+
+[node name="CollisionShape2D_Oeil3" type="CollisionShape2D" parent="Oeil3" unique_id=1890026537]
+position = Vector2(25, -128)
+shape = SubResource("CircleShape2D_702tw")
+
+[node name="AnimatedSprite2D_Oeil1" type="AnimatedSprite2D" parent="." unique_id=959681447]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_1rv7g")
+
+[node name="AnimatedSprite2D_Oeil2" type="AnimatedSprite2D" parent="." unique_id=960983343]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_olbfw")
+
+[node name="AnimatedSprite2D_Oeil3" type="AnimatedSprite2D" parent="." unique_id=435799945]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_3m2ya")
+
+[node name="AnimatedSprite2D_Squelette" type="AnimatedSprite2D" parent="." unique_id=506025093]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_702tw")
+frame_progress = 0.11140345
+
+[node name="PrototypeTentacule" type="Node2D" parent="." unique_id=813613437]
+visible = false
+scale = Vector2(2, 2)
+
+[node name="Area2D_tentacle_articulation" type="Area2D" parent="PrototypeTentacule" unique_id=1611994854]
+monitoring = false
+monitorable = false
+
+[node name="Sprite2D_articulation" type="Sprite2D" parent="PrototypeTentacule/Area2D_tentacle_articulation" unique_id=998808133]
+texture_filter = 1
+position = Vector2(-1, 0)
+texture = ExtResource("27_f7qhr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PrototypeTentacule/Area2D_tentacle_articulation" unique_id=1725287633]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_702tw")
+
+[node name="Marker2D" type="Marker2D" parent="PrototypeTentacule/Area2D_tentacle_articulation" unique_id=1910752550]
+position = Vector2(-17, 0)
+
+[node name="Marker2D2" type="Marker2D" parent="PrototypeTentacule/Area2D_tentacle_articulation" unique_id=366271884]
+position = Vector2(17, 0)
+
+[node name="Area2D_tentacle_extremite" type="Area2D" parent="PrototypeTentacule" unique_id=191649166]
+monitoring = false
+monitorable = false
+
+[node name="Sprite2D_extremite" type="Sprite2D" parent="PrototypeTentacule/Area2D_tentacle_extremite" unique_id=1164444208]
+texture_filter = 1
+texture = ExtResource("28_c3qmq")
+
+[node name="CollisionShape2D_extremite" type="CollisionShape2D" parent="PrototypeTentacule/Area2D_tentacle_extremite" unique_id=1517754776]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_702tw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=908691878]
+position = Vector2(-24.5, 0)
+shape = SubResource("RectangleShape2D_702tw")
+
+[node name="Marker2DSpawn" type="Marker2D" parent="." unique_id=211903726]
+position = Vector2(30, -193)
+
+[node name="Marker2DSpawn2" type="Marker2D" parent="." unique_id=110130589]
+position = Vector2(30, -64)
+
+[node name="Marker2DSpawn3" type="Marker2D" parent="." unique_id=1587057742]
+position = Vector2(30, 67)
+
+[node name="Marker2DSpawn4" type="Marker2D" parent="." unique_id=1987662426]
+position = Vector2(30, 195)

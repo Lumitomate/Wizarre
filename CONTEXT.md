@@ -76,6 +76,11 @@ _Avoid_: Chooser, Dealer, Giver
 An item dropped by enemies or placed in the shop. Collecting it changes a sorcerer's attack configuration.
 _Avoid_: Pickup, Bonus, Collectible
 
+**Cabin**:
+The shop fixture that replaces the glass Bubble. A sorcerer locks inside, chooses an attack tube, and a robotic arm installs the shop's power-up into that tube. The cabin holds a power-up while unused, and is inert once consumed.
+Naming: the node instantiated in the shop scenes is `Bubble2`; its internal root (scene `bubble_cabine.tscn`, script `cabin.gd`) is named `BubbleCabine`. A shop script that looks for `BubbleCabine` from the scene root gets `null` — look up `Bubble2` instead.
+_Avoid_: Bubble V2, Bulle, Machine
+
 ## World
 
 **Controller**:
@@ -91,11 +96,6 @@ An animated barrier that opens when a condition is met (time elapsed, friendship
 _Avoid_: Gate, Portal, Exit
 
 ## State
-
-**Cabin**:
-The shop fixture that replaces the glass Bubble. A sorcerer locks inside, chooses an attack tube, and a robotic arm installs the shop's power-up into that tube. The cabin holds a power-up while unused, and is inert once consumed.
-Naming: the node instantiated in the shop scenes is `Bubble2`; its internal root (scene `bubble2.tscn`, script `cabin.gd`) is named `BubbleCabine`. A shop script that looks for `BubbleCabine` from the scene root gets `null` — look up `Bubble2` instead.
-_Avoid_: Bubble V2, Bulle, Machine
 
 **State**:
 A sorcerer's current animation/movement state: Idle, Run, Jump, Fall, or Attack.

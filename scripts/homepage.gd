@@ -1,6 +1,11 @@
 extends Node2D
 
 func _ready():
+	# Échauffement du rendu (anti micro-freezes à la première attaque,
+	# première explosion, premières particules) : toutes les attaques et
+	# effets sont affichés une frame derrière l'écran home, cachés par
+	# l'interface. Inactif en headless — cf. scripts/warmup_rendu.gd.
+	WarmupRendu.lancer(self)
 	# can_fire=true : les attaques sont utilisables sur l'écran home
 	# (tir ami : les joueurs peuvent s'atteindre entre eux).
 	# PAS de tubes_selectable ici : X/Y/B doivent uniquement TIRER — en
@@ -34,10 +39,7 @@ func add_player_hud(controller_id):
 	player_info.position = Vector2(8, 25) + Vector2(hud_offset, 0)
 	player_info.set_bg_color(slot)
 
-	if controller_id in GlobalInfo.run_info["players_info"].keys():
-		player_info.load_data(GlobalInfo.run_info["players_info"][controller_id])
-	else:
-		player_info.load_data(GlobalInfo.run_info["players_info"]["default"])
+	player_info.load_data(Run.player_snapshot(controller_id))
 
 	var player = PlayerManager.players[controller_id]
 	player.ammo_changed.connect(player_info._on_ammo_changed)

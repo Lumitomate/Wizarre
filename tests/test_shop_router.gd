@@ -2,7 +2,8 @@ extends Node2D
 
 ## Test headless du ShopRouter (lancer : godot --headless
 ## res://tests/test_shop_router.tscn) : tirage pondéré par nombre de
-## joueurs, poids nuls, listes vides, et accessibilité de l'autoload.
+## joueurs, poids nuls, listes vides, modes de forçage de test, et
+## accessibilité de l'autoload.
 
 var _failures := 0
 
@@ -83,6 +84,22 @@ func _ready() -> void:
 			forçages_ok = false
 	_check(forçages_ok, "mode test : casino forcé pour 1, 2, 3 et 4 joueurs")
 	router.forcer_magasin = false
+
+	# Mode test course : à 2 et 3 joueurs, TOUJOURS la course ; les autres
+	# comptes restent sur le tirage normal.
+	router.forcer_course = true
+	var course_toujours := true
+	for i in 60:
+		if router.tirer_magasin(2) != GlobalEnum.Location.SHOP_2PLAYERS_RACE:
+			course_toujours = false
+		if router.tirer_magasin(3) != GlobalEnum.Location.SHOP_4PLAYERS_RACE:
+			course_toujours = false
+	_check(course_toujours, "mode test : course forcée à 2 et 3 joueurs")
+	router.forcer_course = false
+	var tirage_1_course: int = router.tirer_magasin(1)
+	_check(tirage_1_course == GlobalEnum.Location.SHOP
+		or tirage_1_course == GlobalEnum.Location.SHOP_GAMBLING,
+		"forcer_course désactivé : retour au tirage normal (1 joueur)")
 
 	# Listes vides / poids tous nuls : fallback propre (pas de crash)
 	router.magasins_1_joueur = [] as Array[GlobalEnum.Location]

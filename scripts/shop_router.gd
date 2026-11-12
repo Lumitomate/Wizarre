@@ -29,6 +29,13 @@ extends Node
 @export var forcer_magasin: bool = false
 @export var magasin_force: GlobalEnum.Location = GlobalEnum.Location.SHOP_GAMBLING
 
+## MODE TEST (temporaire) : si activé, à 2 et 3 joueurs le tirage
+## renvoie TOUJOURS le magasin course (2 joueurs → course 2 ; 3 joueurs
+## → course 3-4). Les autres comptes de joueurs restent sur le tirage
+## normal. Désactivé par défaut (cf. docs/agents/checks.md : jamais de
+## routage de test câblé en dur).
+@export var forcer_course: bool = false
+
 @export_group("Magasin à 1 joueur")
 ## Magasins possibles quand la partie compte 1 joueur.
 @export var magasins_1_joueur: Array[GlobalEnum.Location] = [
@@ -73,6 +80,13 @@ func tirer_magasin(nb_joueurs: int) -> GlobalEnum.Location:
 	# Mode test : on court-circuite le tirage pondéré.
 	if forcer_magasin:
 		return magasin_force
+	# Mode test course : forçage limité à 2 et 3 joueurs.
+	if forcer_course:
+		match nb_joueurs:
+			2:
+				return GlobalEnum.Location.SHOP_2PLAYERS_RACE
+			3:
+				return GlobalEnum.Location.SHOP_4PLAYERS_RACE
 	var magasins: Array = []
 	var poids: Array = []
 	match nb_joueurs:

@@ -27,7 +27,7 @@ The specific spell a sorcerer fires. There are 13 types across 4 elements: Fireb
 _Avoid_: Spell, Ability, Move
 
 **Element**:
-The family of attack types sharing the first letter of their type code (F, G, L, P). All attacks of the same element owned by a sorcerer share a tier.
+The group of attack types sharing the first letter of their type code (F, G, L, P). All attacks of the same element owned by a sorcerer share a tier. An attack and a power-up belong to an Element; only a tube belongs to a Family. The two are independent: a power-up of any element can be placed into any attack tube, whatever that tube's family.
 _Avoid_: Family (reserved for tubes), Type, Kind
 
 **Attack Tier**:
@@ -42,6 +42,14 @@ _Avoid_: Ammo (colloquial), Bullet, Charge
 Dealt to enemies or to the sorcerer. Reduces lives by the damage amount. A sorcerer with 0 lives dies.
 _Avoid_: HP, Hit Points, Health
 
+**Protection**:
+The module that owns a sorcerer's damage state: invincibility windows, the damage cooldown, hit feedback (red flash, knockback, damage label), and the race between the dash protection and the damage cooldown. Lives are owned by the Sorcerer; the Protection module only reports hits to it.
+_Avoid_: Shield, Defense, Invulnerability (reserved for the state)
+
+**Invincibility**:
+The state during which a sorcerer cannot be touched. Sources: the damage cooldown right after a hit, the dash itself, and the short window after a dash ends. While invincible, the sorcerer is "untouchable" — targeting attacks (Carnivorous) must not pick it as a prey. The Protection module decides when invincibility starts and ends.
+_Avoid_: Immunity, Untouchable (as a noun), I-frames
+
 **Lives**:
 A sorcerer's remaining survivability. Starts at 3. Reaching 0 means death.
 _Avoid_: Hearts, Life Points
@@ -49,6 +57,10 @@ _Avoid_: Hearts, Life Points
 **Dash**:
 A short burst of speed that makes the sorcerer briefly invincible and lets it pass through enemies and other players. Dashing also cancels an ongoing aiming action (LightBow, LightTarget).
 _Avoid_: Sprint, Rush, Roll
+
+**Dust**:
+The module that renders the sorcerer's contact smoke (puffs at landing, takeoff, wall slide start, and wall jump; continuous emission during a wall slide). The Sorcerer reports the contact event and its geometry (feet/wall position); the Dust module decides the visuals: threshold, fan, surface tinting.
+_Avoid_: Smoke, Particles, Dust Cloud (for a single particle)
 
 ## Progression
 
@@ -59,6 +71,10 @@ _Avoid_: Game, Session, Playthrough
 **Level**:
 A combat arena containing enemies, obstacles, and a portal to the shop. Each level requires killing a target number of enemies before the exit opens.
 _Avoid_: Stage, Wave, Arena
+
+**Wave**:
+The combat stages of a run as numbered on screen with roman numerals (I, II, III...). The first level shows I. The boss fight occupies the fifth slot: it follows the shop visited after wave IV, and the numbering resumes at VI after the boss.
+_Avoid_: using Wave as a synonym of Level (a wave is a number on screen, a level is a place)
 
 **Shop**:
 A rest area between levels where sorcerers can change their attack types and tiers. Access is automatic when the level's enemy quota is met.
@@ -73,7 +89,7 @@ The sorcerer randomly chosen at each Shophands visit to decide who receives the 
 _Avoid_: Chooser, Dealer, Giver
 
 **Power-up**:
-An item dropped by enemies or placed in the shop. Collecting it changes a sorcerer's attack configuration.
+An item dropped by enemies or placed in the shop, carrying a single attack type (hence an Element — never a Family). Collecting it changes a sorcerer's attack configuration; it can be assigned to any of the sorcerer's three attack tubes.
 _Avoid_: Pickup, Bonus, Collectible
 
 **Cabin**:

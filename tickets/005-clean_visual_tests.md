@@ -1,6 +1,26 @@
 # Ticket 005 — Nettoyage des tests visuels
 
-## Statut : ready-for-agent
+## Statut : ready-for-agent — inventaire terminé, décision propriétaire requise
+
+## Inventaire (sous-agent, session /retro)
+9 scènes candidates à l'archivage/suppression :
+- `tests/_check_ammo_sprites.tscn`
+- `tests/_check_cast_shape.tscn`
+- `tests/_check_dash_invincibility.tscn`
+- `tests/_check_impact_render.tscn`
+- `tests/_check_kill_render.tscn`
+- `tests/_check_loaded_sprites.tscn`
+- `tests/_check_shader_render.tscn`
+- `tests/_preview_cabine_icones.tscn`
+- `tests/_preview_cast_shape.tscn`
+
+Toutes les scènes `test_*.tscn` (tests headless) sont conservées. Aucun fichier supprimé à ce stade.
+
+## Décision attendue du propriétaire
+Suppression directe ou déplacement vers `archive/` ?
+
+## Note
+`docs/agents/checks.md` désigne les `_check_*_render.tscn` comme patron pour les vérifications visuelles (shader) — vérifier que le patron référencé reste accessible si archivé.
 
 ## Priorité : moyenne
 

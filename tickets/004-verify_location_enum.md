@@ -1,6 +1,10 @@
 # Ticket 004 — Vérification de l'enum Location
 
-## Statut : ready-for-agent
+## Statut : fixed (validé par sous-agent, session /retro)
+
+## Résultat de validation
+- Aucune incohérence détectée : `BOSS_FIGHT` (index 10) et `SHOP_4PLAYERS_REFLEX` (index 11) sont mappés dans `global.gd`, utilisés par `teleport_zone.gd` et `shop_router.gd`, et couverts par `test_parcours.gd` et `test_shop_router.gd`.
+- Seule valeur int en dur dans un .tscn : `homepage.tscn` (`destination = 1` → `LEVEL`, valeur préexistante, non impactée).
 
 ## Priorité : haute
 

@@ -16,6 +16,11 @@ extends Node2D
 ## (un par côté) : ils démarrent leur rotation avec l'ouverture des
 ## portes d'entrée ; la fin du premier écoulement referme la porte ; un
 ## joueur qui passe par sa hitbox de passage la réouvre pour de bon.
+##
+## PORTE DE SORTIE : fermée à l'arrivée ; elle s'ouvre à la PREMIÈRE de
+## ces deux échéances — fin du rituel de la cabine (attaque installée)
+## ou fin des DEUX sabliers (fermeture de la porte d'épreuve). Une fois
+## ouverte, elle ne se referme jamais.
 
 signal save_data
 
@@ -51,9 +56,14 @@ func _ready() -> void:
 		var player: Sorcerer = PlayerManager.players.get(controller_id)
 		if player != null:
 			player.in_shop = true
-	# La porte de sortie reste FERMÉE : elle ne s'ouvre qu'à la fin des
-	# DEUX sabliers, et seulement si personne n'occupe la cabine (cf.
-	# _essayer_ouvrir_sortie).
+	# La porte de sortie reste FERMÉE à l'arrivée : elle s'ouvre à la
+	# PREMIÈRE de ces deux échéances (règle validée avec le propriétaire,
+	# comme dans la course 2 joueurs) : la fin du rituel de la cabine
+	# (sort_installe), ou la fin des DEUX sabliers (l'instant où la porte
+	# d'épreuve se referme quand elle le peut — un joueur qui a passé la
+	# hitbox l'a déverrouillée pour de bon, et le rituel ouvrira la
+	# sortie à son tour : aucun blocage possible).
+	(get_node("Bubble2") as Cabin).sort_installe.connect(_essayer_ouvrir_sortie)
 	# La rotation des 2 sabliers démarre avec l'ouverture des portes
 	# d'entrée ; la fin d'un écoulement referme les 2 portes d'épreuve
 	for sablier in _sabliers():
@@ -76,10 +86,6 @@ func _ready() -> void:
 			child.lancer_cinematique()
 	if _portes_entree_actives == 0:
 		_demarrer_ecoulement()
-
-
-func _process(_delta: float) -> void:
-	_essayer_ouvrir_sortie()
 
 
 func _portes_epreuve() -> Array:
@@ -106,23 +112,21 @@ func _demarrer_ecoulement() -> void:
 
 
 ## Fin d'UN sablier : la porte d'épreuve se ferme et le compteur de
-## sortie avance (la porte de sortie attend les deux sabliers).
+## sortie avance (les DEUX sabliers sont requis pour l'échéance sablier
+## de la sortie).
 func _on_sablier_fini() -> void:
 	_sabliers_finis += 1
+	if _sabliers_finis >= _sabliers().size():
+		_essayer_ouvrir_sortie()
 
 
-## Ouvre la porte de sortie quand les conditions sont réunies : les DEUX
-## sabliers terminés ET cabine libre. Une fois ouverte, elle ne se
-## referme pas.
-func _essayer_ouvrir_sortie() -> void:
-	if _sortie_ouverte or _sabliers_finis < _sabliers().size():
-		return
-	# Le nœud de la cabine s'appelle "Bubble2" dans la scène (instance de
-	# bubble_cabine.tscn, dont la racine interne s'appelle BubbleCabine) :
-	# chercher "BubbleCabine" ici retournait null et la porte s'ouvrait
-	# sans attendre la libération du caisson.
-	var caisson := get_node_or_null("Bubble2")
-	if caisson is Cabin and (caisson as Cabin).est_occupee():
+## Ouvre la porte de sortie (première échéance : fin du rituel de la
+## cabine, ou fin des deux sabliers — les deux événements sont connectés
+## ici). Une fois ouverte, elle ne se referme pas. Les paramètres
+## absorbent les 4 arguments du signal sort_installe (inutilisés ici).
+func _essayer_ouvrir_sortie(_s: Sorcerer = null, _t: int = 0, _ty: int = 0,
+		_ti: int = 0) -> void:
+	if _sortie_ouverte:
 		return
 	_sortie_ouverte = true
 	$ShopDoor.play()

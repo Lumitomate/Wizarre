@@ -19,9 +19,11 @@ extends Node2D
 ##
 ## PORTE DE SORTIE : fermée à l'arrivée ; elle s'ouvre à la PREMIÈRE de
 ## ces deux échéances — fin du rituel de la cabine (attaque installée)
-## ou fin des DEUX sabliers SUIVIE de la descente complète de la porte
-## d'épreuve (répit des retardataires, cf. _on_sablier_fini). Une fois
-## ouverte, elle ne se referme jamais.
+## ou fermeture TOTALE de la porte d'épreuve (elle a touché le sol).
+## Si un retardataire a dashé sous la porte pendant la descente, elle ne
+## se refermera jamais : la sortie attend alors la fin du rituel (le
+## filet de sécurité ne joue que si personne n'entre jamais dans la
+## cabine). Une fois ouverte, elle ne se referme jamais.
 
 signal save_data
 
@@ -42,8 +44,8 @@ const ZONES_DROITE := [Vector2i(19, 3), Vector2i(19, 10)]
 # les sabliers passent à l'écoulement quand la dernière a terminé
 var _portes_entree_actives := 0
 
-# Nombre de sabliers qui ont fini de s'écouler : la sortie attend les DEUX.
-var _sabliers_finis := 0
+# Le filet de sécurité de la sortie a été armé (une seule fois).
+var _filet_arme := false
 # La porte de sortie a été ouverte (une fois pour toutes).
 var _sortie_ouverte := false
 
@@ -60,16 +62,20 @@ func _ready() -> void:
 	# La porte de sortie reste FERMÉE à l'arrivée : elle s'ouvre à la
 	# PREMIÈRE de ces deux échéances (règle validée avec le propriétaire,
 	# comme dans la course 2 joueurs) : la fin du rituel de la cabine
-	# (sort_installe), ou la fin des DEUX sabliers SUIVIE de la descente
-	# COMPLÈTE de la porte d'épreuve (répit des retardataires, cf.
-	# _on_sablier_fini).
+	# (sort_installe), ou la fermeture TOTALE de la porte d'épreuve
+	# (signal fermee — elle a touché le sol ; la descente démarre à la fin
+	# du PREMIER sablier, les deux tournant en parallèle). Si un
+	# retardataire dash sous la porte pendant la descente, elle ne se
+	# refermera jamais : la sortie attend la fin du rituel (cf. le filet).
 	(get_node("Bubble2") as Cabin).sort_installe.connect(_essayer_ouvrir_sortie)
+	_portes_epreuve()[0].fermee.connect(_essayer_ouvrir_sortie)
+	# Filet de sécurité : armé au premier écoulement (cf. _armer_filet_sortie).
 	# La rotation des 2 sabliers démarre avec l'ouverture des portes
 	# d'entrée ; la fin d'un écoulement referme les 2 portes d'épreuve
 	for sablier in _sabliers():
 		sablier.demarrer_rotation()
 		sablier.ecoulement_termine.connect(_fermer_portes_epreuve)
-		sablier.ecoulement_termine.connect(_on_sablier_fini)
+		sablier.ecoulement_termine.connect(_armer_filet_sortie)
 	# Hitbox de passage de la porte d'épreuve : la traverser la déverrouille
 	# pour de bon
 	for porte in _portes_epreuve():
@@ -111,18 +117,23 @@ func _demarrer_ecoulement() -> void:
 		sablier.demarrer()
 
 
-## Fin d'UN sablier : la porte d'épreuve se ferme et le compteur avance.
-## Quand les DEUX ont fini : la sortie attend la fin TOTALE de la
-## fermeture de la porte d'épreuve — le répit des retardataires, celui
-## qui a dashé sous la porte pendant qu'elle descendait a exactement le
-## temps de la descente pour atteindre la cabine (même mécanique que la
-## course 2 joueurs ; les deux scènes n'ont pas de classe de base).
-func _on_sablier_fini() -> void:
-	_sabliers_finis += 1
-	if _sabliers_finis < _sabliers().size() or _sortie_ouverte:
+## Filet de sécurité (ne devrait JAMAIS jouer en jeu normal — même
+## mécanique que la course 2 joueurs ; les deux scènes n'ont pas de
+## classe de base) : la porte défi déverrouillée par un passage ne se
+## refermera jamais ; si en plus personne n'entre jamais dans la cabine,
+## la sortie resterait fermée pour toujours. Le filet l'ouvre après un
+## long délai — JAMAIS pendant un rituel : cabine occupée à l'échéance →
+## la fin du rituel ouvrira la sortie.
+const DUREE_FILET := 10.0
+
+
+func _armer_filet_sortie() -> void:
+	if _filet_arme or _sortie_ouverte:
 		return
-	get_tree().create_timer(_portes_epreuve()[0].duree_fermeture()).timeout.connect(
-		_essayer_ouvrir_sortie)
+	_filet_arme = true
+	get_tree().create_timer(DUREE_FILET).timeout.connect(func() -> void:
+		if not _sortie_ouverte and not (get_node("Bubble2") as Cabin).est_occupee():
+			_essayer_ouvrir_sortie())
 
 
 ## Ouvre la porte de sortie (première échéance : fin du rituel de la

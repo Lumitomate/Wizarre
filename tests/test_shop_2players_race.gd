@@ -2,10 +2,12 @@ extends Node
 ## Test headless du magasin course à 2 joueurs — règle de sortie validée :
 ##  - la porte de sortie est FERMÉE à l'arrivée ;
 ##  - elle s'ouvre à la PREMIÈRE de ces deux échéances : fin du rituel de
-##    la cabine (sort_installe) OU fin du sablier — plus d'attente
-##    « caisson libre » ;
-##  - une fois ouverte, elle ne se referme jamais.
-## Deux scénarios sur deux instances fraîches (la sortie, une fois
+##    la cabine (sort_installe) OU fermeture TOTALE de la porte défi
+##    (elle a touché le sol) ;
+##  - si un joueur dash sous la porte pendant la descente, elle se
+##    réouvre pour de bon et ne se refermera JAMAIS : la sortie attend
+##    alors la fin du rituel (jamais d'ouverture avant).
+## Trois scénarios sur trois instances fraîches (la sortie, une fois
 ## ouverte, ne se referme pas). Lancé :
 ## godot --headless res://tests/test_shop_2players_race.tscn
 
@@ -51,16 +53,15 @@ func _charger_scene() -> void:
 
 func _physics_process(_delta: float) -> void:
 	step += 1
-	if _scenario == 1:
-		_scenario_sablier()
-	else:
-		_scenario_rituel()
+	match _scenario:
+		1: _scenario_descente()
+		2: _scenario_rituel()
+		3: _scenario_dash()
 
 
-## Scénario 1 : le sablier expire pendant que le rituel est EN COURS —
-## la sortie attend la descente COMPLÈTE de la porte défi (répit des
-## retardataires), puis s'ouvre ; le rituel en cours ne la bloque plus.
-func _scenario_sablier() -> void:
+## Scénario 1 : descente normale — personne ne passe, la porte défi
+## touche le sol et la sortie s'ouvre (rituel en cours ou pas).
+func _scenario_descente() -> void:
 	if step == 3:
 		_check(caisson != null and not caisson.est_occupee(),
 			"le caisson démarre libre")
@@ -70,26 +71,22 @@ func _scenario_sablier() -> void:
 		_check(caisson.est_occupee(), "le rituel démarre (caisson occupé)")
 	if step == 6:
 		inst.get_node("Sablier").ecoulement_termine.emit()
-		print(">>> fin du sablier pendant le rituel")
+		print(">>> fin du sablier : la porte défi commence sa descente")
 	if step == 8:
-		_check(_porte_fermee(),
-			"répit : la sortie attend la descente complète de la porte défi")
+		_check(_porte_fermee(), "la sortie attend la descente complète")
 	if step == 120:
-		# Descente de la porte défi : 20 frames à 12 fps ≈ 1,7 s ≈ 100 frames
-		# physiques — le répit est écoulé.
+		# Descente de la porte défi : ~20 frames à 12 fps ≈ 1,7 s ≈ 100
+		# frames physiques — la porte a touché le sol.
 		_check(inst.get_node("ShopDoor").is_playing(),
-			"la sortie s'ouvre à la fin de la descente, rituel en cours ou pas")
+			"la sortie s'ouvre à la fermeture TOTALE de la porte défi")
 		_fin_scenario()
 
 
-## Scénario 2 (instance fraîche) : la fin du rituel de la cabine ouvre la
-## sortie SANS attendre la fin du sablier.
+## Scénario 2 : la fin du rituel ouvre la sortie SANS attendre le sablier.
 func _scenario_rituel() -> void:
 	if step == 3:
 		_check(_porte_fermee(), "la porte de sortie est FERMÉE à l'arrivée")
 	if step == 5:
-		# Fin du rituel (attaque installée) — sablier NON fini (son
-		# écoulement automatique dure 4 s, largement plus loin).
 		caisson.sort_installe.emit(sorcier, 0, GlobalEnum.AttackType.L1, 0)
 		print(">>> fin du rituel de la cabine")
 	if step == 7:
@@ -98,12 +95,41 @@ func _scenario_rituel() -> void:
 		_fin_scenario()
 
 
+## Scénario 3 (LE BUG RAPPORTÉ) : un joueur dash sous la porte défi
+## pendant sa descente → elle se réouvre pour de bon et ne se refermera
+## JAMAIS → la sortie ne doit PAS s'ouvrir à ce moment ; elle attend la
+## fin du rituel.
+func _scenario_dash() -> void:
+	if step == 3:
+		_check(_porte_fermee(), "la porte de sortie est FERMÉE à l'arrivée")
+	if step == 4:
+		inst.get_node("Sablier").ecoulement_termine.emit()
+		print(">>> fin du sablier : descente de la porte défi")
+	if step == 6:
+		# Le dash : un joueur passe pendant la descente → réouverture
+		# définitive (la porte ne touchera jamais le sol).
+		inst.get_node("PorteMagasinEpreuve").deverrouiller()
+		print(">>> dash sous la porte défi pendant la descente")
+	if step == 120:
+		# La descente (≈1,7 s) est largement écoulée : la porte ne s'est
+		# JAMAIS refermée, la sortie doit toujours être fermée.
+		_check(_porte_fermee(),
+			"la sortie ne s'ouvre PAS : la porte défi ne s'est jamais refermée")
+	if step == 122:
+		caisson.sort_installe.emit(sorcier, 0, GlobalEnum.AttackType.G1, 0)
+		print(">>> fin du rituel de la cabine")
+	if step == 124:
+		_check(inst.get_node("ShopDoor").is_playing(),
+			"la sortie s'ouvre à la fin du rituel (seule échéance restante)")
+		_fin_scenario()
+
+
 func _fin_scenario() -> void:
 	inst.queue_free()
 	sorcier.queue_free()
 	step = 0
-	if _scenario == 1:
-		_scenario = 2
+	if _scenario < 3:
+		_scenario += 1
 		_charger_scene()
 		return
 	if _failures == 0:

@@ -2,7 +2,7 @@ extends Node
 ## Test headless de la fumée de contact : chute RÉELLE du sorcier sur un
 ## sol factice → bouffée à l'atterrissage ; modulation par la vitesse
 ## (grande chute → plus de particules que petite chute) ; seuil (force
-## sous POUSSIERE_SEUIL_VITESSE → rien) ; force max → le quota complet.
+## sous Dust.SPEED_THRESHOLD → rien) ; force max → le quota complet.
 ## Lancé comme scène : godot --headless res://tests/test_poussiere.tscn
 
 var step := 0
@@ -87,16 +87,16 @@ func _physics_process(_delta: float) -> void:
 					compte_chute_longue >= compte_chute_courte, " (true attendu)")
 				# Seuil : juste en dessous → aucune particule de plus
 				var base := _compter_particules()
-				sorcier.spawn_poussiere(sorcier.global_position, Vector2.UP,
-					Sorcerer.POUSSIERE_SEUIL_VITESSE - 1.0)
+				sorcier.dust.spawn_puff(sorcier.global_position, Vector2.UP,
+					Dust.SPEED_THRESHOLD - 1.0)
 				print("seuil respecté (rien sous 400 px/s): ",
 					_compter_particules() == base, " (true attendu)")
 				# Force maximale → le quota complet de particules
-				sorcier.spawn_poussiere(sorcier.global_position, Vector2.UP,
-					Sorcerer.POUSSIERE_VITESSE_MAX)
+				sorcier.dust.spawn_puff(sorcier.global_position, Vector2.UP,
+					Dust.MAX_SPEED)
 				var apres := _compter_particules() - base
 				print("force max → ", apres, " particules (",
-					Sorcerer.POUSSIERE_FORCE_MAX, " attendu)")
+					Dust.FORCE_MAX, " attendu)")
 				print("=== TEST TERMINÉ ===")
 				get_tree().quit()
 			elif step > 300:

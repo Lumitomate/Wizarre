@@ -185,7 +185,7 @@ func _update_respawn(delta: float) -> void:
 	if _respawn_timer < respawn_delay:
 		return
 	respawn_delay = -1.0   # une seule fois
-	GlobalInfo.run_info["players_info"].erase(controller_id)
+	Run.forget_player(controller_id)
 	PlayerManager.spawn_player(get_parent(), controller_id, _respawn_config)
 
 

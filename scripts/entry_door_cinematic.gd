@@ -54,7 +54,7 @@ func inscrire_sorcier(sorcier: Sorcerer, rang: int) -> void:
 func reinitialiser_inscriptions() -> void:
 	for sorcier in _en_attente:
 		if sorcier != null and is_instance_valid(sorcier):
-			sorcier._door_cine = null
+			sorcier.door_fade.clear_door_link()
 	_en_attente.clear()
 
 

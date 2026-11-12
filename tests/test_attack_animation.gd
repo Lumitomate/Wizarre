@@ -21,9 +21,6 @@ func _ready() -> void:
 	var scene: PackedScene = load("res://scenes/entities/players/sorcerer.tscn")
 	var holder := Node2D.new()
 	add_child(holder)
-	# Sorts par défaut (tubes remplis), comme au spawn réel du jeu
-	var default_spells: Dictionary = GlobalInfo.run_info["players_info"]["default"]["spells"].duplicate(true)
-	GlobalInfo.run_info["players_info"][0] = {"lives": 3, "energy_counts": [3, 3, 3], "spells": default_spells}
 	var sorcerer: Sorcerer = scene.instantiate()
 	sorcerer.controller_id = 0
 	sorcerer.sorcerer_color = GlobalEnum.SorcererColor.Red

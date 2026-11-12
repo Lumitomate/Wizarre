@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://bgd2bh1dj4h4s"]
 
 [ext_resource type="Script" uid="uid://b7cwfl6277f1o" path="res://scripts/sorcerer.gd" id="1_oqr0g"]
+[ext_resource type="Script" path="res://scripts/protection.gd" id="pr_1"]
+[ext_resource type="Script" path="res://scripts/door_fade.gd" id="df_1"]
+[ext_resource type="Script" path="res://scripts/dust.gd" id="du_1"]
 [ext_resource type="PackedScene" uid="uid://fq0kkjjmxkuf" path="res://scenes/entities/players/sac/pipe_manager.tscn" id="2_vuix5"]
 [ext_resource type="Shader" uid="uid://dylx6il08tpoj" path="res://assets/shaders/wizard_color.gdshader" id="3_jonpg"]
 [ext_resource type="Texture2D" uid="uid://bw7lv5n4v0ux8" path="res://assets/sprites/Sorciers/sorcier_v2/SorcierV2_AtkFeu_/Sorciers_v2_Atk_1.png" id="4_k8hdi"]
@@ -294,17 +297,19 @@ metadata/_edit_group_ = true
 [node name="AttackCooldown" type="Timer" parent="." unique_id=681222162]
 wait_time = 0.4
 
-[node name="DamageCooldown" type="Timer" parent="." unique_id=1327057034]
-wait_time = 0.7
+[node name="Protection" type="Node" parent="."]
+script = ExtResource("pr_1")
+
+[node name="DoorFade" type="Node" parent="."]
+script = ExtResource("df_1")
+
+[node name="Dust" type="Node" parent="."]
+script = ExtResource("du_1")
 
 [node name="DashDuration" type="Timer" parent="." unique_id=1655140733]
 wait_time = 0.1
 
 [node name="DashCooldown" type="Timer" parent="." unique_id=604006859]
 
-[node name="DashInvicibiliyAfter" type="Timer" parent="." unique_id=1551192393]
-wait_time = 0.5
-
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
-[connection signal="timeout" from="DamageCooldown" to="." method="_on_damage_cooldown_timeout"]
-[connection signal="timeout" from="DashInvicibiliyAfter" to="." method="_on_dash_invicibiliy_after_timeout"]
+

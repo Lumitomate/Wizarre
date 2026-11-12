@@ -58,209 +58,51 @@ var input_device: int = -1
 # Sorcier d'affichage (écran de pause) : idle + soulèvement de tuyaux
 # uniquement — ni physique, ni déplacement, ni saut, ni attaque, ni dash
 var frozen: bool = false
-# Cinématique d'arrivée (sortie de la porte d'entrée) : phase en cours,
-# gelée jusqu'à la refermeture de la porte. Gérée par la porte
-# (EntryDoorCinematic) : start_door_exit() lance la sortie de ce sorcier.
-var _door_exit_active := false
-var _door_exit_phase := 0          # 0 = fade sur place, 1 = décalage latéral
-var _door_exit_target := Vector2.ZERO
-var _door_exit_decalage: int = 0   # sens du décalage : -1 gauche, +1 droite, 0 aucun
-var _door_exit_dernier := false    # dernier sorti : prévient la porte de refermer
-## La porte d'où ce sorcier sort (référence directe : dans les scènes à
-## plusieurs portes, chercher par type retournerait toujours la première)
-var _door_cine: EntryDoorCinematic = null
-## Couche de collision d'origine, restaurée à la fin de la sortie de porte
-var _collision_layer_origin: int = 1
+# Traversée de porte (cinématique d'arrivée + fondu de sortie) : le module
+# DoorFade décide des tweens, du shader, des exceptions de collision et du
+# fade du sac. Les portes appellent le Sorcerer : la façade délègue au
+# module (une seule chose à connaître pour les portes : le Sorcerer).
+@onready var door_fade: DoorFade = $DoorFade
 
-# Cinématique d'arrivée : durée du fade bas→haut et vitesse de décalage
-const DOOR_EXIT_FADE_DURATION := 0.6
-const DOOR_EXIT_WALK_SPEED := 120.0
+# Fumée de contact : le Sorcerer raconte ses événements (atterrissage,
+# décollage, glissade, wall jump) — le module Dust décide du rendu
+# (seuil, éventail, teinte par la surface).
+@onready var dust: Dust = $Dust
 
 
 ## Vrai si ce sorcier est rattaché à une porte d'entrée cinématique
 func _has_entry_door_cinematic() -> bool:
-	return _door_cine != null and is_instance_valid(_door_cine)
+	return door_fade.has_entry_door_cinematic()
 
 
 ## Sortie de porte (cinématique d'arrivée), appelée par EntryDoorCinematic
-## au tour du sorcier : fade d'opacité du bas vers le haut (anim walk sur
-## place), puis décalage latéral vers target. `dernier` = ce sorcier est le
-## dernier de la porte : quand son fade est fini, la porte se referme.
+## au tour du sorcier : délègue au module DoorFade (fade, décalage, snap).
 func start_door_exit(target: Vector2, dernier: bool) -> void:
-	_door_exit_active = true
-	_door_exit_phase = 0
-	_door_exit_dernier = dernier
-	# Sens du décalage déduit de la cible (la porte fournit la position
-	# finale : centre = pas de décalage)
-	_door_exit_decalage = 0
-	if absf(target.x - position.x) > 1.0:
-		_door_exit_decalage = 1 if target.x > position.x else -1
-	_door_exit_target = target
-	# Marche sur place pendant le fade (impression de sortir en marchant)
-	$AnimatedSprite2D.play("walk")
-	# Pose les pieds sur la ligne de sol réelle de la scène (le bas du
-	# sprite de porte peut être enfoncé sous le sol selon les décors)
-	_door_exit_snap_to_ground()
-	# Sac invisible au départ : son fade démarre à la MOITIÉ du fade du corps
-	if has_node("PipeManager"):
-		$PipeManager.modulate.a = 0.0
-	# Fade bas → haut en DOOR_EXIT_FADE_DURATION (tween sur le paramètre shader)
-	var tween := create_tween()
-	tween.tween_method(_set_arrival_fade, 0.0, 1.0, DOOR_EXIT_FADE_DURATION)
-	tween.tween_callback(_on_door_exit_fade_done)
-	# Sac : fade 0 → 1 sur la 2e moitié du fade du corps (démarre à 50 %)
-	if has_node("PipeManager"):
-		var tween_sac := create_tween()
-		tween_sac.tween_interval(DOOR_EXIT_FADE_DURATION * 0.5)
-		tween_sac.tween_property($PipeManager, "modulate:a", 1.0, DOOR_EXIT_FADE_DURATION * 0.5)
-
-
-func _set_arrival_fade(v: float) -> void:
-	dash_shader_material.set_shader_parameter("arrival_fade", v)
-
-
-func _on_door_exit_fade_done() -> void:
-	# Fade terminé : le shader d'arrivée est désactivé (1.0 = tout visible,
-	# aucun coût dans le shader), le sprite est un sprite normal
-	_set_arrival_fade(1.0)
-	# Sécurité : le sac est bien entièrement visible (son tween couvre la
-	# 2e moitié du fade du corps, donc il vient de se terminer)
-	if has_node("PipeManager"):
-		$PipeManager.modulate.a = 1.0
-	if _door_exit_decalage == 0:
-		# Rang centre (ou porte à un seul sorcier) : pas de décalage, la
-		# sortie est déjà terminée
-		_finish_door_exit()
-	else:
-		_door_exit_phase = 1
-		$AnimatedSprite2D.flip_h = _door_exit_decalage < 0
-
-
-func _finish_door_exit() -> void:
-	_door_exit_active = false
-	# Sorcier en place : idle (ne marche plus dans le vide), puis contrôles
-	# immédiats — pas d'attente de la refermeture de la porte, qui n'est
-	# que cosmétique. La collision est restaurée : il redevient solide.
-	$AnimatedSprite2D.play("idle")
-	frozen = false
-	collision_layer = _collision_layer_origin
-	# La sortie est complète : la porte peut faire sortir le suivant
-	door_exit_done.emit()
-	if _door_exit_dernier:
-		# Dernier sorcier apparu : SA porte se referme (pendant que tout le
-		# monde peut déjà jouer)
-		if _door_cine != null and is_instance_valid(_door_cine):
-			_door_cine.porte_dernier_sorcier_sorti()
-
-
-## Pose les pieds du sorcier sur la ligne de sol de la scène : ray vers le
-## bas depuis le centre de la porte (même principe que le snap de la
-## ronce P3). Le bas du sprite de porte peut être enfoncé sous le sol
-## affiché selon les scènes (ex. level : la porte est dans le socle) : si
-## le départ du ray est DANS un solide, on remonte par paliers de 64 px
-## jusqu'à trouver une face de sol praticable.
-func _door_exit_snap_to_ground() -> void:
-	var space_state := get_world_2d().direct_space_state
-	# Exclut tous les sorciers : les autres attendent au même point de la
-	# porte et ne doivent pas servir de "sol"
-	var exclude: Array[RID] = [get_rid()]
-	for player in get_tree().get_nodes_in_group("player_group"):
-		if player != self and is_instance_valid(player):
-			exclude.append(player.get_rid())
-	var porte_global := global_position
-	if _door_cine != null and is_instance_valid(_door_cine):
-		porte_global = _door_cine.global_position
-	for palier in range(0, 5):
-		var depart := porte_global + Vector2(0, -32.0 - 64.0 * palier)
-		var query := PhysicsRayQueryParameters2D.create(
-			depart, depart + Vector2(0, 500.0 + 64.0 * palier)
-		)
-		query.exclude = exclude
-		var result := space_state.intersect_ray(query)
-		# Ne retient qu'une face orientée vers le haut (un vrai sol)
-		if result and result["normal"].y < -0.5:
-			position.y = get_parent().to_local(result["position"]).y - 32.0
-			return
+	door_fade.start_door_exit(target, dernier)
 
 # --- Fondu de sortie (porte de sortie de boutique / de niveau) ---
-# Miroir du fade d'arrivée : tween arrival_fade 1 → 0 sur le même shader,
-# sac en parallèle. Lancé par la porte de sortie (exit_doors.gd) quand un
-# joueur entre dans sa zone ; la téléportation n'a lieu qu'à la fin du
-# fondu (micro-validation par temps passé devant la porte). Si le joueur
-# quitte la zone, la porte appelle cancel_exit_fade() : retour express
-# vers opaque et progression réinitialisée (le prochain contact repart
-# de zéro).
-
-## Durée du fondu de sortie : identique au fade d'arrivée
-const EXIT_FADE_DURATION := DOOR_EXIT_FADE_DURATION
-## Durée du retour express vers opaque quand le fondu est annulé
-const EXIT_FADE_RETURN_DURATION := 0.2
-
-var _exit_fade_active: bool = false
-var _exit_fade_tween: Tween = null
+# Miroir du fade d'arrivée : le module DoorFade possède les deux transitions
+# (tweens, shader, exceptions de collision, fade du sac).
 
 ## Démarre le fondu de sortie. `on_done` est appelé à la fin du fondu :
 ## validation définitive (la porte téléporte alors tout le monde).
 func start_exit_fade(on_done: Callable) -> void:
-	if _exit_fade_active:
-		return
-	_exit_fade_active = true
-	# Fantôme vis-à-vis des autres joueurs pendant le fondu, SANS toucher
-	# aux collision_layers : l'Area2D de la porte détecte les corps via
-	# collision_mask — un layer à 0 la ferait "perdre" le sorcier
-	# (body_exited immédiat) et annulerait le fondu aussitôt. Les
-	# exceptions n'affectent que les contacts entre corps.
-	for other in get_tree().get_nodes_in_group("player_group"):
-		if other != self and other is Node2D:
-			add_collision_exception_with(other)
-	# Départ du fondu : valeur actuelle du shader (1.0 en jeu normal)
-	var depart: float = dash_shader_material.get_shader_parameter("arrival_fade")
-	_exit_fade_tween = create_tween()
-	_exit_fade_tween.set_parallel(true)
-	_exit_fade_tween.tween_method(_set_arrival_fade, depart, 0.0, EXIT_FADE_DURATION)
-	if has_node("PipeManager"):
-		_exit_fade_tween.tween_property($PipeManager, "modulate:a", 0.0, EXIT_FADE_DURATION)
-	_exit_fade_tween.chain().tween_callback(_finish_exit_fade.bind(on_done))
+	door_fade.start_exit_fade(on_done)
 
 ## Annule le fondu en cours (joueur sorti de la zone de la porte) :
 ## retour express vers opaque, progression repartira de zéro au prochain
 ## contact. Sans effet si le fondu est déjà terminé (validation
 ## définitive) ou jamais démarré.
 func cancel_exit_fade() -> void:
-	if not _exit_fade_active:
-		return
-	_exit_fade_active = false
-	_remove_exit_fade_exceptions()
-	if _exit_fade_tween != null and _exit_fade_tween.is_valid():
-		_exit_fade_tween.kill()
-	_exit_fade_tween = null
-	# Retour express corps + sac vers l'opacité normale
-	var depart: float = dash_shader_material.get_shader_parameter("arrival_fade")
-	var tween := create_tween()
-	tween.set_parallel(true)
-	tween.tween_method(_set_arrival_fade, depart, 1.0, EXIT_FADE_RETURN_DURATION)
-	if has_node("PipeManager"):
-		tween.tween_property($PipeManager, "modulate:a", 1.0, EXIT_FADE_RETURN_DURATION)
-
-## Fin du fondu : plus rien à annuler, la téléportation est lancée.
-func _finish_exit_fade(on_done: Callable) -> void:
-	_exit_fade_active = false
-	_exit_fade_tween = null
-	_remove_exit_fade_exceptions()
-	on_done.call()
-
-func _remove_exit_fade_exceptions() -> void:
-	for other in get_tree().get_nodes_in_group("player_group"):
-		if other != self and other is Node2D:
-			remove_collision_exception_with(other)
+	door_fade.cancel_exit_fade()
 
 # --- Dash ---
 @export var dash_speed: int = 1200
 @export var dash_duration: float = 0.1 # durée du dash en secondes
 @export var dash_cooldown: float = 1.0 # temps avant de pouvoir redasher
 @export var dash_invisible_alpha: float = 0.25 # transparence pendant le dash
-@export var dash_invincible: bool = true # optionnel : intouchable pendant le dash
-@export var dash_invincible_after_duration: float = 0.5 # temps d'invincibilité après le dash
+# (l'invincibilité du dash — pendant et post-dash — vit dans le module
+# Protection : post_dash_duration)
 @export var dash_ignore_groups: Array[String] = ["enemy_group", "player_group"] # groupes à traverser pendant le dash
 @export var dash_unstuck_distance: float = 40.0 # distance en dessous de laquelle on considère 2 joueurs "superposés" en fin de dash
 @export var dash_unstuck_push: float = 24.0 # écart appliqué pour les séparer proprement
@@ -276,8 +118,6 @@ var _dash_trail_material: ShaderMaterial = null
 var dash_direction: Vector2 = Vector2.RIGHT
 var dash_shader_material: ShaderMaterial
 var dash_trail_accumulator: float = 0.0
-
-var damage_label_scene: PackedScene = preload("res://scenes/hud/hud_damage_label.tscn")
 
 var lives: int = 3
 var screen_size: Vector2
@@ -304,7 +144,12 @@ var in_homepage: bool = false
 var tubes_selectable: bool = false
 var selected_tube: int = -1
 var can_fire: bool = true
-var can_take_damage: bool = true
+## Façade duck-typing (les boss lisent body.get("can_take_damage") avant
+## d'appeler hit()) : lecture seule, la source de vérité est le module
+## Protection. Pour rendre intouchable : hit() / dash_started() du module.
+var can_take_damage: bool:
+	get:
+		return not $Protection.is_untouchable()
 var level_scale: Vector2
 
 # Après une détonation de mine, on attend le relâchement du bouton
@@ -338,42 +183,11 @@ var last_wall_jump_side: int = 0 # côté du mur du dernier wall jump (-1 = mur 
 # la poussière masque la lumière, elle ne l'ajoute pas) qui jaillit aux
 # instants où le corps rencontre une surface, style Dead Cells :
 # atterrissage, premier contact d'une glissade murale, poussée du wall
-# jump, et émission continue pendant la glissade. Intensité proportionnelle
-# à la vitesse du contact : sous le seuil, rien (les micro-contacts ne
-# fument pas) ; au-delà, le nombre de particules grimpe jusqu'au max.
-# Seuil calé sur la gravité du jeu (fall_acceleration = 3000) : 400 px/s
-# ≈ une chute de 27 px minimum ; 1200 px/s ≈ une chute de 240 px = nuage max.
-const POUSSIERE_TAILLE := 3          # px écran par pixel de fumée
-const POUSSIERE_COULEURS: Array[Color] = [
-	Color(1, 1, 1), Color(0.85, 0.85, 0.85), Color(0.7, 0.7, 0.7)]
-const POUSSIERE_FORCE_MIN := 3       # particules au contact le plus doux
-const POUSSIERE_FORCE_MAX := 8       # particules au contact le plus violent
-const POUSSIERE_SEUIL_VITESSE := 400.0  # px/s : en dessous, pas de fumée
-const POUSSIERE_VITESSE_MAX := 1200.0   # px/s : au-delà, force maximale
-const POUSSIERE_DUREE := 0.35        # durée de vie d'une particule (s)
-const POUSSIERE_DISTANCE := 16.0     # dispersion depuis le point de contact (px)
-const POUSSIERE_DERIVE_HAUT := 10.0  # dérive verticale vers le haut (la fumée monte)
-const POUSSIERE_GLISCADE_INTERVAL := 0.07  # délai entre 2 particules pendant une glissade (s)
-## Teinture par la surface : mélange entre la couleur moyenne de la tuile
-## touchée et le blanc (0 = couleur brute du sol, 1 = blanc pur). 0.5 :
-## la fumée garde sa nature claire et lisible tout en prenant la teinte
-## du sol (briques violettes → fumée mauve claire).
-const POUSSIERE_TEINTE_MIX := 0.5
-## Écart angulaire de l'éventail (demi-angle autour de la normale). Au
-## sol : ±90° → les particules partent STRICTEMENT sur les côtés
-## (l'horizontale), jamais vers le haut — la dérive les fait monter
-## ensuite. Au mur : plus resserré (±60°).
-const POUSSIERE_EVENTAIL_SOL := PI / 2.0
-const POUSSIERE_EVENTAIL_MUR := PI / 3.0
-## Remontée du point d'émission au sol : les pixels de 3 px sont centrés
-## sur le point de contact, 2 px au-dessus de la surface les fait
-## flotter JUSTE au-dessus du sol au lieu d'à moitié dedans.
-const POUSSIERE_HAUSSE_PIEDS := 2.0
-
-var poussiere_glissade_accum: float = 0.0  # accumulateur d'émission continue de glissade
+# jump, et émission continue pendant la glissade. Le Sorcerer raconte
+# l'événement (position de contact, force) : le module Dust décide du
+# rendu (seuil, éventail, teinte par la surface).
 var etait_au_sol: bool = false       # is_on_floor() de la frame précédente (détection d'atterrissage)
 var etait_en_glissade: bool = false  # glissade de la frame précédente (détection du contact du mur)
-static var _poussiere_texture: ImageTexture = null
 
 # --- Squash & stretch : état des effets visuels ---
 var _squash_tween: Tween = null       # tween d'anticipation ou d'atterrissage en cours
@@ -381,32 +195,25 @@ var _squash_x := 0.0                  # écart d'échelle horizontale du tween p
 var _squash_y := 0.0                  # écart d'échelle verticale du tween ponctuel
 var _inclinaison := 0.0               # rotation lissée de course (radians)
 
-# --- Échantillonnage de la couleur de surface ---
-# La fumée prend la teinte de la tuile touchée (moyenne de la tuile,
-# mélangée à du blanc, cf. POUSSIERE_TEINTE_MIX). Coût : l'image de
-# l'atlas du tileset est décodée UNE fois par texture (cache statique),
-# la moyenne de chaque tuile est calculée à sa première utilisation
-# (cache statique) — ensuite, un atterrissage ne coûte que des lectures
-# en mémoire. Pas de tuile sous le contact (portes, sprites non-tuilés)
-# → repli sur le blanc-gris d'origine.
-var _tilemap_memo: TileMapLayer = null  # TileMapLayer du niveau, trouvé une fois
-static var _surface_images: Dictionary = {}   # texture de l'atlas → Image décodée
-static var _moyennes_tuiles: Dictionary = {}  # "textureId_x_y" → Color moyenne
-
 var current_state: GlobalEnum.State = GlobalEnum.State.IDLE
 # Vrai tant que l'animation d'attaque cosmétique est en cours (elle est
 # alors coupée par un changement d'état, ou relancée par un nouveau tir)
 var is_playing_attack: bool = false
 
-var is_hit_flash: bool = false
-var hit_flash_timer: float = 0.0
 var hit_knockback_velocity: Vector2 = Vector2.ZERO
 var hit_knockback_timer: float = 0.0
-var hit_flash_duration: float = 0.5  # durée totale du flash
-var hit_flash_interval: float = 0.05  # intervalle de clignotement
 
 func _ready() -> void:
 	add_to_group("player_group")
+	# Le module DoorFade reçoit la référence au sorcier AVANT l'auto-inscription
+	# (le link de porte ci-dessous passe par le module) et relaie son signal
+	# de fin de sortie : la porte écoute la façade du Sorcerer.
+	door_fade.setup(self)
+	door_fade.door_exit_done.connect(func(): door_exit_done.emit())
+	# Le module Dust reçoit la référence au sorcier : la fumée de contact
+	# s'attache au niveau (le parent du sorcier) et échantillonne la
+	# surface du TileMapLayer du niveau.
+	dust.setup(self)
 	# Nouvelle run : réarme le verrou du fondu de game over (variable static,
 	# elle persiste sinon d'une partie à l'autre)
 	_game_over_fade_started = false
@@ -444,7 +251,7 @@ func _ready() -> void:
 			var door_cine := door as EntryDoorCinematic
 			if door_cine != null:
 				door_cine.inscrire_sorcier(self, 0)
-				_door_cine = door_cine
+				door_fade.link_door(door_cine)
 		else:
 			var door: Node2D = entry_doors[0]
 			# Départ au centre de la porte, pieds posés sur la ligne de sol
@@ -454,7 +261,7 @@ func _ready() -> void:
 			var door_cine := door as EntryDoorCinematic
 			if door_cine != null:
 				door_cine.inscrire_sorcier(self, rank)
-				_door_cine = door_cine
+				door_fade.link_door(door_cine)
 	else:
 		position = (1.4 * screen_size / 2) + Vector2(slot * 64, 128)
 		position += Vector2(0, SPRITE_SIZE * slot)
@@ -465,6 +272,11 @@ func _ready() -> void:
 	# l'état réellement chargé
 	if has_node("PipeManager"):
 		$PipeManager.setup(self)
+	# Le module Protection reçoit la référence au sorcier et signale les
+	# coups reçus : les vies sont décrémentées ici, la mort reste au Sorcerer.
+	if has_node("Protection"):
+		$Protection.setup(self)
+		$Protection.hit_taken.connect(_on_protection_hit_taken)
 	load_data()
 	lives = 3
 
@@ -477,15 +289,7 @@ func _ready() -> void:
 	# joueur a besoin de ses propres couleurs de shader) → le fade 0 est
 	# appliqué juste après sa création (voir _apply_arrival_fade_0)
 	if _has_entry_door_cinematic():
-		frozen = true
-		$AnimatedSprite2D.play("idle")
-		# Sac invisible tant que la cinématique ne l'a pas révélé
-		if has_node("PipeManager"):
-			$PipeManager.modulate.a = 0.0
-		# Fantôme pendant l'attente et le fade : les sorciers attendent tous
-		# au même point (le centre de la porte), sans se bloquer mutuellement
-		_collision_layer_origin = collision_layer
-		collision_layer = 0
+		door_fade.prepare_arrival_cinematic()
 	else:
 		$AnimatedSprite2D.play("walk")
 
@@ -511,7 +315,7 @@ func _ready() -> void:
 	# Le sorcier arrive par une porte : invisible tant que la cinématique
 	# d'arrivée ne l'a pas fait sortir (le fade est animé via le shader)
 	if frozen and _has_entry_door_cinematic():
-		dash_shader_material.set_shader_parameter("arrival_fade", 0.0)
+		door_fade.apply_arrival_fade_0()
 
 
 func set_state(new_state: GlobalEnum.State) -> void:
@@ -619,19 +423,8 @@ func _process(_delta: float) -> void:
 	
 
 func _physics_process(delta: float) -> void:
-	# Cinématique d'arrivée : le sorcier est gelé (frozen) pendant le fade
-	# sur place ; ici on pilote uniquement le décalage latéral de fin de
-	# sortie (marche contrôlée, pas d'inputs, pas de gravité) — AVANT le
-	# check frozen, puisque le sorcier reste gelé jusqu'à la fin de
-	# la cinématique
-	if _door_exit_active and _door_exit_phase == 1:
-		var reste := _door_exit_target.x - position.x
-		if absf(reste) <= DOOR_EXIT_WALK_SPEED * delta:
-			position = Vector2(_door_exit_target.x, position.y)
-			_finish_door_exit()
-		else:
-			position.x += signf(reste) * DOOR_EXIT_WALK_SPEED * delta
-		return
+	# (Le décalage latéral de fin de sortie de porte est piloté par le
+	# module DoorFade, qui a son propre _physics_process.)
 
 	# Sorcier d'affichage : aucune physique (il resterait sinon en chute
 	# sur l'écran de pause, et le bouton de saut le ferait sauter)
@@ -701,11 +494,10 @@ func _physics_process(delta: float) -> void:
 		# Décollage : même bouffée qu'à l'atterrissage (pieds, éventail
 		# latéral), force indexée sur l'impulsion du saut — la fumée
 		# reste au point de départ, elle matérialise l'envol
-		spawn_poussiere(_position_pieds(), Vector2.UP, jump_impulse_min, POUSSIERE_EVENTAIL_SOL)
+		dust.jump_takeoff(_position_pieds(), jump_impulse_min)
 
 	# --- Dead Cells style hit flash & blink ---
-	if is_hit_flash:
-		_update_hit_flash(delta)
+	# (le clignotement de dégât est piloté par le module Protection)
 
 	# Knockback basé sur la direction du dash
 	if hit_knockback_timer > 0:
@@ -747,15 +539,12 @@ func _physics_process(delta: float) -> void:
 		# chute à l'impact), puis émission continue légère tant que la
 		# glissade dure (les bottes raclent le mur)
 		if not etait_en_glissade:
-			spawn_poussiere(_position_contact_mur(wall_side), Vector2(-wall_side, 0), absf(velocity.y), POUSSIERE_EVENTAIL_MUR)
+			dust.wall_slide_start(_position_contact_mur(wall_side), wall_side, absf(velocity.y))
 		else:
-			poussiere_glissade_accum += delta
-			if poussiere_glissade_accum >= POUSSIERE_GLISCADE_INTERVAL:
-				poussiere_glissade_accum = 0.0
-				_spawn_particule_poussiere(_position_contact_mur(wall_side), Vector2(-wall_side, 0), POUSSIERE_EVENTAIL_MUR)
+			dust.wall_slide_tick(_position_contact_mur(wall_side), wall_side, delta)
 	else:
 		wall_slide_timer = 0.0 # on repose le compteur dès qu'on quitte le mur
-		poussiere_glissade_accum = 0.0
+		dust.wall_slide_end()
 	etait_en_glissade = touching_wall
 	is_wall_sliding = touching_wall and wall_slide_timer <= wall_slide_max_duration
 
@@ -784,7 +573,7 @@ func _physics_process(delta: float) -> void:
 			# MAJORITÉ vers le bas (la poussière délogée tombe le long du mur).
 			# mur_cote clampe l'arrivée du côté libre : sans lui, l'éventail
 			# vers le bas renverrait une moitié des particules DANS le mur.
-			spawn_poussiere(_position_contact_mur(wall_side), Vector2.DOWN, POUSSIERE_VITESSE_MAX, POUSSIERE_EVENTAIL_MUR, wall_side)
+			dust.wall_jump(_position_contact_mur(wall_side), wall_side)
 
 			# 4 : impulsion diagonale opposée au mur, légèrement modulée par le stick.
 			# Pousser plus loin du mur écarte la trajectoire, pousser vers le mur la resserre,
@@ -810,7 +599,7 @@ func _physics_process(delta: float) -> void:
 		# Atterrissage : transition air → sol avec une vitesse de chute
 		# suffisante → bouffée proportionnelle à l'impact
 		if not etait_au_sol and vitesse_avant > 0.0:
-			spawn_poussiere(_position_pieds(), Vector2.UP, vitesse_avant, POUSSIERE_EVENTAIL_SOL)
+			dust.landing(_position_pieds(), vitesse_avant)
 			# Squash d'impact, force ∝ vitesse d'atterrissage (mêmes
 			# données que la fumée) ; l'overshoot fait le rebond discret
 			_lancer_squash_atterrissage(clampf(vitesse_avant / atterrissage_vitesse_max, 0.25, 1.0))
@@ -822,20 +611,6 @@ func _physics_process(delta: float) -> void:
 		if velocity.y > 0:
 			set_state(GlobalEnum.State.FALL)
 	etait_au_sol = is_on_floor()
-
-
-func _update_hit_flash(delta: float) -> void:
-	hit_flash_timer += delta
-	# Clignotement: alterne entre rouge et transparent
-	var blink := fmod(hit_flash_timer, hit_flash_interval * 2.0)
-	if blink < hit_flash_interval:
-		$AnimatedSprite2D.modulate = Color(2.0, 0.3, 0.3, 0.7)  # rouge
-	else:
-		$AnimatedSprite2D.modulate = Color(1.0, 1.0, 1.0, 0.4)  # transparent
-	if hit_flash_timer >= hit_flash_duration:
-		is_hit_flash = false
-		hit_flash_timer = 0.0
-		$AnimatedSprite2D.modulate = Color(1.0, 1.0, 1.0, 1.0)  # reset
 
 
 func spawn_dash_afterimage() -> void:
@@ -966,164 +741,17 @@ func _appliquer_squash_atterrissage(t: float, force: float) -> void:
 	_maj_sprite()
 
 
-# --- Fumée de contact : implémentation ---
-
-## Bouffée de poussière au point de contact `centre`. `force` = vitesse du
-## contact (px/s) : en dessous de POUSSIERE_SEUIL_VITESSE, rien ; au-delà,
-## le nombre de particules monte linéairement jusqu'à POUSSIERE_FORCE_MAX.
-## `normale` = normale de la surface (UP au sol, horizontale au mur) :
-## les particules jaillissent en éventail autour de cette normale.
-func spawn_poussiere(centre: Vector2, normale: Vector2, force: float,\
-		eventail: float = POUSSIERE_EVENTAIL_MUR, mur_cote: int = 0) -> void:
-	if force < POUSSIERE_SEUIL_VITESSE:
-		return
-	var intensite := clampf(
-		(force - POUSSIERE_SEUIL_VITESSE) / (POUSSIERE_VITESSE_MAX - POUSSIERE_SEUIL_VITESSE),
-		0.0, 1.0)
-	var nombre := roundi(lerpf(POUSSIERE_FORCE_MIN, POUSSIERE_FORCE_MAX, intensite))
-	for i in nombre:
-		_spawn_particule_poussiere(centre, normale, eventail, mur_cote)
-
-
-## Une particule de fumée : pixel carré blanc-gris (nuance tirée au
-## hasard, comme le sang des ennemis a ses 3 couleurs), blending NORMAL
-## (pas de matériau : la poussière masque au lieu d'illuminer), éjectée
-## en éventail autour de `normale`, dérive vers le haut, fondu, puis
-## auto-libération. Ajoutée au PARENT du sorcier (le niveau) en
-## coordonnées GLOBALES : la fumée RESTE à l'endroit du contact au lieu
-## de suivre le sorcier — c'est elle qui matérialise d'où il a sauté.
-## Le tween est créé sur la particule elle-même : si le sorcier meurt
-## pendant, les particules finissent leur fondu et se libèrent seules.
-func _spawn_particule_poussiere(centre: Vector2, normale: Vector2,\
-		eventail: float = POUSSIERE_EVENTAIL_MUR, mur_cote: int = 0) -> void:
-	if _poussiere_texture == null:
-		_poussiere_texture = _generer_texture_carre(POUSSIERE_TAILLE)
-	var particule := Sprite2D.new()
-	particule.texture = _poussiere_texture
-	particule.set_meta("poussiere", true)  # repérable par les tests
-	var teinte := _nuance_poussiere(_couleur_surface(centre))
-	particule.modulate = Color(teinte.r, teinte.g, teinte.b, 1.0)
-	particule.z_index = 4
-	get_parent().add_child(particule)
-	particule.global_position = centre
-	var angle := normale.angle() + randf_range(-eventail, eventail)
-	var arrivee := centre \
-		+ Vector2.from_angle(angle) * POUSSIERE_DISTANCE * randf_range(0.3, 1.0) \
-		+ Vector2(0, -POUSSIERE_DERIVE_HAUT * randf_range(0.5, 1.0))
-	# Au mur : l'éventail peut renvoyer une particule DANS le mur — on
-	# clampe l'arrivée du côté libre (au moins 3 px du point de contact)
-	if mur_cote != 0:
-		var libre := -mur_cote
-		arrivee.x = centre.x + maxf((arrivee.x - centre.x) * libre, 3.0) * libre
-	var tween := particule.create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(particule, "global_position", arrivee, POUSSIERE_DUREE)\
-		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property(particule, "modulate:a", 0.0, POUSSIERE_DUREE * 0.5)\
-		.set_delay(POUSSIERE_DUREE * 0.5)
-	tween.chain().tween_callback(particule.queue_free)
-
-
-## Couleur de FUMÉE pour un contact au point global `centre` : une des
-## 3 nuances de la teinte de la surface (mélangée au blanc, cf.
-## POUSSIERE_TEINTE_MIX), ou une des 3 nuances de gris d'origine si la
-## surface n'est pas une tuile (repli blanc-gris).
-func _nuance_poussiere(teinte: Color) -> Color:
-	if teinte == Color.WHITE:
-		return POUSSIERE_COULEURS[randi_range(0, POUSSIERE_COULEURS.size() - 1)]
-	match randi_range(0, 2):
-		0: return teinte.darkened(0.15)
-		1: return teinte
-		_: return teinte.lerp(Color.WHITE, 0.3)
-
-
-## Couleur de la surface au point global `centre` : moyenne de la tuile
-## du TileMapLayer du niveau sous ce point, mélangée au blanc. Blanc pur
-## si pas de tuile (repli) ou si la tuile est entièrement transparente.
-func _couleur_surface(centre: Vector2) -> Color:
-	var tilemap := _trouver_tilemap()
-	if tilemap == null:
-		return Color.WHITE
-	var cellule := tilemap.local_to_map(tilemap.to_local(centre))
-	var tuile: TileData = tilemap.get_cell_tile_data(cellule)
-	if tuile == null:
-		return Color.WHITE
-	var source := tilemap.tile_set.get_source(tilemap.get_cell_source_id(cellule)) as TileSetAtlasSource
-	if source == null or source.texture == null:
-		return Color.WHITE
-	var atlas_coords: Vector2i = tilemap.get_cell_atlas_coords(cellule)
-	var cle := "%s_%d_%d" % [source.texture.get_instance_id(), atlas_coords.x, atlas_coords.y]
-	if _moyennes_tuiles.has(cle):
-		return _moyennes_tuiles[cle].lerp(Color.WHITE, POUSSIERE_TEINTE_MIX)
-	var moyenne := _moyenne_tuile(source, atlas_coords)
-	_moyennes_tuiles[cle] = moyenne
-	return moyenne.lerp(Color.WHITE, POUSSIERE_TEINTE_MIX)
-
-
-## TileMapLayer du niveau : premier trouvé parmi les descendants du
-## parent du sorcier (le niveau), mémorisé (la recherche est coûteuse,
-## elle n'arrive qu'une fois par sorcier).
-func _trouver_tilemap() -> TileMapLayer:
-	if _tilemap_memo != null and is_instance_valid(_tilemap_memo):
-		return _tilemap_memo
-	var racine := get_parent()
-	if racine == null:
-		return null
-	var trouves := racine.find_children("*", "TileMapLayer", true, false)
-	if trouves.is_empty():
-		return null
-	_tilemap_memo = trouves[0]
-	return _tilemap_memo
-
-
-## Moyenne des pixels OPAQUES de la tuile `atlas_coords` dans l'atlas
-## `source` (les pixels transparents des tuiles à contours sont ignorés).
-func _moyenne_tuile(source: TileSetAtlasSource, atlas_coords: Vector2i) -> Color:
-	var img := _image_de_texture(source.texture)
-	if img == null:
-		return Color.WHITE
-	var taille := source.texture_region_size
-	var origine := atlas_coords * taille
-	var r := 0.0
-	var g := 0.0
-	var b := 0.0
-	var n := 0
-	for y in range(origine.y, origine.y + taille.y):
-		for x in range(origine.x, origine.x + taille.x):
-			var pixel := img.get_pixel(x, y)
-			if pixel.a > 0.0:
-				r += pixel.r
-				g += pixel.g
-				b += pixel.b
-				n += 1
-	if n == 0:
-		return Color.WHITE
-	return Color(r / n, g / n, b / n)
-
-
-## Image décodée d'une texture d'atlas (cache statique : le décodage
-## n'arrive qu'une fois par texture, pour tout le jeu).
-static func _image_de_texture(texture: Texture2D) -> Image:
-	if _surface_images.has(texture):
-		return _surface_images[texture]
-	var img := texture.get_image()
-	if img == null:
-		return null
-	if img.is_compressed():
-		img.decompress()
-	_surface_images[texture] = img
-	return img
-
-
 ## Position globale des pieds du sorcier (bas de la capsule de collision),
-## scale du corps compris.
+## scale du corps compris. Le décalage de remontée (2 px au-dessus de la
+## surface) appartient au module Dust — les pieds flottent JUSTE au-dessus
+## du sol.
 func _position_pieds() -> Vector2:
 	var forme := $CollisionShape2D as CollisionShape2D
 	if forme == null or not forme.shape is CapsuleShape2D:
 		return global_position
 	var capsule := forme.shape as CapsuleShape2D
 	return global_position + Vector2(forme.position.x, forme.position.y + capsule.height * 0.5) * scale \
-		+ Vector2(0, -POUSSIERE_HAUSSE_PIEDS)
+		+ Vector2(0, -Dust.FEET_LIFT)
 
 
 ## Point de contact avec le mur du côté `wall_side` (-1 = gauche, +1 = droite),
@@ -1134,14 +762,6 @@ func _position_contact_mur(wall_side: int) -> Vector2:
 	if forme != null and forme.shape is CapsuleShape2D:
 		rayon = (forme.shape as CapsuleShape2D).radius
 	return global_position + Vector2(wall_side * (rayon + 2.0), 0) * scale
-
-
-## Texture d'un carré blanc plein (pixel de fumée) — cache statique,
-## identique pour tous les sorciers.
-func _generer_texture_carre(taille: int) -> ImageTexture:
-	var img := Image.create(taille, taille, false, Image.FORMAT_RGBA8)
-	img.fill(Color(1, 1, 1, 1))
-	return ImageTexture.create_from_image(img)
 
 
 func stop_dash_on_collision() -> void:
@@ -1162,7 +782,6 @@ func start_dash() -> void:
 	_freeze_own_bramble()
 	is_dashing = true
 	can_dash = false
-	dash_invincible = true
 
 	# On dash dans la direction actuelle du stick, ou dans le sens du regard
 	# si le stick est au repos (ATTENTION : pas de "flip_h and -1 or 1" —
@@ -1179,7 +798,10 @@ func start_dash() -> void:
 
 	$AnimatedSprite2D.modulate.a = dash_invisible_alpha
 	dash_shader_material.set_shader_parameter("white_amount", 1.0)
-	can_take_damage = false
+	# L'invincibilité du dash est décidée par le module Protection : le
+	# Sorcerer raconte son dash, le module gère la fenêtre (et la fenêtre
+	# post-dash à la fin).
+	$Protection.dash_started()
 
 	dash_trail_accumulator = 0.0
 	spawn_dash_afterimage()
@@ -1199,9 +821,9 @@ func end_dash() -> void:
 
 	$AnimatedSprite2D.modulate.a = 1.0
 	dash_shader_material.set_shader_parameter("white_amount", 0.0)
-	# L'invincibilité continue après le dash via le timer
-	$DashInvicibiliyAfter.wait_time = dash_invincible_after_duration
-	$DashInvicibiliyAfter.start()
+	# L'invincibilité continue après le dash via la fenêtre post-dash
+	# (gérée par le module Protection)
+	$Protection.dash_ended()
 	$DashCooldown.start()
 
 
@@ -1247,6 +869,20 @@ const TUBE_CLOSE_DELAY := 0.8
 ## sélectionné un autre tube entre-temps, on ne touche à rien).
 func _close_tube_after_swap(tube_index: int) -> void:
 	if not is_inside_tree() or selected_tube != tube_index:
+		return
+	var previous := selected_tube
+	selected_tube = -1
+	if has_node("PipeManager"):
+		$PipeManager.apply_selection(-1, previous)
+
+## Referme d'autorité le tube sélectionné, sans appui joueur. Appelée par
+## la cabine à l'enfermement (le sac est masqué pendant le rituel : il ne
+## doit pas réapparaître avec un tube levé — la fermeture après échange ne
+## concerne que le tube qui a reçu l'objet) et par les portes de sortie
+## (les tubes se rabattent dès que le sorcier quitte la boutique). Sans
+## effet si aucun tube n'est sélectionné.
+func fermer_tube_selectionne() -> void:
+	if selected_tube == -1:
 		return
 	var previous := selected_tube
 	selected_tube = -1
@@ -1553,47 +1189,27 @@ func consume_energy(tube_index: int, amount: int) -> bool:
 
 ## Vrai tant que ce sorcier ne peut pas être blessé : dash (pendant et
 ## 0,5 s après), délai après un dégât reçu, et toute future source
-## d'invincibilité ajoutée à can_take_damage. Les attaques qui ciblent
-## (ex. têtes carnivores P1) s'en servent pour ne pas viser ni consommer
-## une proie invincible — un dash est une esquive totale.
-func est_intouchable() -> bool:
-	return not can_take_damage
+## d'invincibilité. Les attaques qui ciblent (ex. têtes carnivores P1)
+## s'en servent pour ne pas viser ni consommer une proie invincible —
+## un dash est une esquive totale. Façade : la source de vérité est le
+## module Protection.
+func is_untouchable() -> bool:
+	return $Protection.is_untouchable()
 
 
+## Délègue au module Protection (source de vérité de l'invincibilité,
+## du feedback et du knockback). Le module émet hit_taken() : les vies
+## sont décrémentées ici (la mort reste au Sorcerer).
 func hit(damage: int) -> void:
-	if can_take_damage:
-		lives -= damage
-		var damage_label = damage_label_scene.instantiate()
-		damage_label.position = level_scale * (position - Vector2(0, 64))
-		life_changed.emit(lives)
-		if lives == 0:
-			die()
-		$DamageCooldown.start()
-		can_take_damage = false
-		# --- Dead Cells style damage feedback ---
-		is_hit_flash = true
-		hit_flash_timer = 0.0  # délai avant le premier flash
-		# Flash rouge identique à celui du monstre (enemy_flying.gd) :
-		# montée au rouge vif en 0,05 s puis retour à la normale en 0,15 s.
-		# Passe par self_modulate pour ne pas interférer avec le modulate
-		# utilisé par le clignotement
-		$AnimatedSprite2D.self_modulate = Color.WHITE
-		var red_flash := create_tween()
-		red_flash.tween_property($AnimatedSprite2D, "self_modulate", Color(1.0, 0.1, 0.1, 1.0), 0.05)
-		red_flash.tween_property($AnimatedSprite2D, "self_modulate", Color.WHITE, 0.15)
-		hit_knockback_timer = 0.3  # durée du knockback (secondes)
-		# Knockback basé sur la direction de l'ennemi (repoussé par lui)
-		# On cherche l'ennemi le plus proche pour définir la direction du
-		# knockback (logique mutualisée dans EntityFinder). Sans ennemi :
-		# repoussé vers le haut, comme avant.
-		var plus_proche := EntityFinder.plus_proche(self, global_position, ["enemy_group"])
-		var direction_knockback := Vector2.ZERO
-		if plus_proche != null:
-			direction_knockback = (position - plus_proche.global_position).normalized()
-		var kb_x = direction_knockback.x * 1000.0
-		var kb_y = direction_knockback.y * 1000.0 - 200.0
-		hit_knockback_velocity = Vector2(kb_x, kb_y)
-		# --- Fin ---
+	$Protection.hit(damage)
+
+
+## Réception d'un coup passé à travers la Protection : vies puis mort.
+func _on_protection_hit_taken(damage: int) -> void:
+	lives -= damage
+	life_changed.emit(lives)
+	if lives == 0:
+		die()
 
 
 # Anti-double-déclenchement : si plusieurs sorciers meurent dans la même
@@ -1622,7 +1238,7 @@ func die() -> void:
 		# Sans ça, les données exportées à la mort (export_data) et le
 		# niveau de vague atteint seraient rechargés au prochain spawn.
 		# NB : jamais sur la homepage — les joueurs y ressuscitent tous.
-		GlobalInfo.reset_run()
+		Run.reset_run()
 		if not _game_over_fade_started:
 			_game_over_fade_started = true
 			_fade_to_homepage()
@@ -1672,20 +1288,10 @@ func _other_players_alive() -> bool:
 
 
 func export_data() -> void:
-	GlobalInfo.run_info["players_info"][controller_id] = {
-		"lives": lives,
-		"energy_counts": energy_counts,
-		"spells": spells
-	}
+	Run.save_sorcerer(self)
 
 func load_data() -> void:
-	var data_to_load = GlobalInfo.run_info["players_info"]["default"].duplicate(true)
-	if controller_id in GlobalInfo.run_info["players_info"].keys():
-		data_to_load = GlobalInfo.run_info["players_info"][controller_id]
-		
-	lives = data_to_load["lives"]
-	energy_counts = data_to_load["energy_counts"]
-	spells = data_to_load["spells"]
+	Run.load_sorcerer(self)
 	SpellRules.normalize_spell_tiers(spells)
 	
 	# Le PipeManager (déjà branché via setup()) se resynchronise avec les
@@ -1697,25 +1303,9 @@ func _on_attack_cooldown_timeout() -> void:
 	can_fire = true
 
 
-func _on_damage_cooldown_timeout() -> void:
-	# Ne lève PAS l'invincibilité si une protection de dash est encore
-	# active (dash en cours, ou fenêtre de 0,5 s après le dash). Sinon un
-	# dégât reçu juste avant un dash annulerait l'invincibilité du dash en
-	# cours de route (ex. : mort en dashant à travers une colonne de feu
-	# parce que le cooldown du coup précédent expirait pendant le dash).
-	# C'est _on_dash_invicibiliy_after_timeout qui lèvera l'invincibilité
-	# à la fin de la protection du dash.
-	if is_dashing or not $DashInvicibiliyAfter.is_stopped():
-		return
-	can_take_damage = true
-	# --- Fin du feedback de dégât ---
-
 func _on_dash_duration_timeout() -> void:
 	end_dash()
 
-
-func _on_dash_invicibiliy_after_timeout() -> void:
-	can_take_damage = true
 
 func _on_dash_cooldown_timeout() -> void:
 	can_dash = true
